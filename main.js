@@ -39,6 +39,7 @@ function updateGameArea() {
   manageMushrooms();
   manageGamePiece();
   manageLasers();
+  checkCollisions();
   updateHud();
   checkLevelEndConditions();
 }
