@@ -12,16 +12,16 @@ Tues, April 5, 2017
   - DONE extract those elements out into a separate js file
 
 Weds, April 5, 2017
-- random mushroom placement
-  - number of mushrooms random between 2 numbers
+- DONE random mushroom placement (in a grid)
+  - BONUS number of mushrooms random between 2 numbers
   - 'mushrooms' change color when you shoot them for 3-4 different colors, then disappear
 
+Thurs, April 6, 2017
 - single-unit centipede to figure out direction reversing
   - down one 'row' (screen height/20) unless bottom, then up
     - if going up, only go up to limit of gamePiece boundary
   - reverse direction
 
-Thurs, April 6, 2017
 - how to chain centipedes?
     - could give them IDs and treat them like a linked list, each one behind following the one in front
 
