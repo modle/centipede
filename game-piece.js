@@ -9,6 +9,11 @@ var gamePieceStartX = (canvasWidth - gamePieceWidth) / 2
 var gamePieceStartY = canvasHeight * .9
 // - (gamePieceHeight / 2)
 
+function manageGamePiece() {
+  moveGamePiece();
+  updateGamePiece();
+}
+
 function updateGamePiece() {
   gamePiece.newPos();
   gamePiece.update();
@@ -22,7 +27,7 @@ function resetGamePiecePosition() {
 function moveGamePiece() {
   gamePiece.speedX = 0;
   gamePiece.speedY = 0;
-  // stop game piece from going beyond boundaries (bottom 20% of screen)
+  // stop game piece from going beyond boundaries (bottom 20% of screen only)
   // move game piece
   // left
   if (gameArea.keys && gameArea.keys[65] && gamePiece.getLeft() > 0) {

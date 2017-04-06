@@ -27,28 +27,16 @@ function reset() {
 // this gets executed every interval
 function updateGameArea() {
   if (paused) {
-    pausedMessage.text = "Paused: Spacebar to Continue";
-    if (gameArea.frameNo == 0) {
-      pausedMessage.text = "Press Spacebar to Start";
-    }
-    pausedMessage.update();
+    managePause();
     return;
   }
-  if (died.text) {
-    wait(2000);
-    resetGamePiecePosition();
-    died.text = "";
-  }
-  if (levelOver.text) {
-    wait(2000);
-    loadNextLevel();
-    levelOver.text = "";
-  }
+  manageLevel();
+  manageDeath();
   clearGameAreaAndBumpFrame();
-  moveGamePiece();
-  updateGamePiece();
-  checkLevelEndConditions();
+  manageGamePiece();
+  manageLasers();
   updateHud();
+  checkLevelEndConditions();
 }
 
 function clearGameAreaAndBumpFrame() {

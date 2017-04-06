@@ -13,6 +13,13 @@ var lives = defaultLives;
 var levelTimeLimit = 30;
 var currentLevel = 1;
 
+function updateHud() {
+  updateScore();
+  updateTimer();
+  updateLives();
+  updateLevel();
+}
+
 function changeScore(change) {
   scoreValue += change;
   if (scoreValue < 0) {
@@ -40,14 +47,27 @@ function updateTimer() {
   timer.update();
 }
 
-function updateHud() {
-  updateScore();
-  updateTimer();
-  updateLives();
-  updateLevel();
+function managePause() {
+  pausedMessage.text = "Paused: Spacebar to Continue";
+  if (gameArea.frameNo == 0) {
+    pausedMessage.text = "Press Spacebar to Start";
+  }
+  pausedMessage.update();
+  return;
 }
 
-function resetHud() {
-  scoreValue = 0;
-  lives = defaultLives;
+function manageLevel() {
+  if (levelOver.text) {
+    wait(2000);
+    loadNextLevel();
+    levelOver.text = "";
+  }
+}
+
+function manageDeath() {
+  if (died.text) {
+    wait(2000);
+    resetGamePiecePosition();
+    died.text = "";
+  }
 }

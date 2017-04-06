@@ -1,24 +1,54 @@
-- set up canvas
-- set up gamePiece boundary
+Tues, April 5, 2017
+- DONE set up canvas
+
+- DONE set up gamePiece boundary
   - what happens when game piece reaches boundary?
     - Just stop adding to that direction.
     - Look at how human movement is handled at the edge of the screen in Robotron
-- add bullet shooting upward only (space?)
+
+- DONE add bullet shooting upward only (space? no, shift)
+
+- DONE use same score/level/timer/lives counters as robotron
+  - DONE extract those elements out into a separate js file
+
+Weds, April 5, 2017
 - random mushroom placement
   - number of mushrooms random between 2 numbers
+  - 'mushrooms' change color when you shoot them for 3-4 different colors, then disappear
+
 - single-unit centipede to figure out direction reversing
   - down one 'row' (screen height/20) unless bottom, then up
     - if going up, only go up to limit of gamePiece boundary
   - reverse direction
+
+Thurs, April 6, 2017
 - how to chain centipedes?
-  - could give them IDs and treat them like a linked list, each one behind following the one in front
-- 'mushrooms' change color when you shoot them for 3-4 different colors, then disappear
+    - could give them IDs and treat them like a linked list, each one behind following the one in front
+
+- centipede or spider hitting player resets all monsters on the screen and spawns a new centipede
+
 - shooting centipedes
   - if centipede movement handling is done correctly, breaking the centipede by shooting it should be handled automatically
-- annoying jumpy spider
-- the worm that moves across the top
-- centipede or spider hitting player resets all monsters on the screen and spawns a new centipede
+
 - destroying centipede ends level
   - all 'mushrooms' revert back to original color and player gets bonus points
-- use same score/level/timer/lives counters as robotron
-  - DONE extract those elements out into a separate js file
+
+Fri, April 7, 2017
+- extra monsters
+  - annoying jumpy spider
+  - the worm that moves across the top
+
+
+- Difficulty scaling
+  - longer centipedes
+  - faster centipedes
+
+- power ups
+  - more bullets
+  - shield
+  - bombs!
+
+Sat, April 8, 2017
+- Extra things to wrap it up
+  - pausing
+  - resetting
