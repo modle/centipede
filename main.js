@@ -26,13 +26,17 @@ function reset() {
 
 // this gets executed every interval
 function updateGameArea() {
+  // check game conditions
   if (paused) {
     managePause();
     return;
   }
   manageLevel();
   manageDeath();
+  // clear the canvas
   clearGameAreaAndBumpFrame();
+  // make things happen
+  manageMushrooms();
   manageGamePiece();
   manageLasers();
   updateHud();
