@@ -31,7 +31,7 @@ yEligiblePositions = []
 
 function getEligiblePositions() {
   x = 0;
-  y = 0;
+  y = gridSquareSide * 2;
   while (x < canvasWidth) {
     xEligiblePositions.push(x);
     x += gridSquareSide;
