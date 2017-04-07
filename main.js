@@ -41,19 +41,11 @@ function updateGameArea() {
   manageLasers();
   checkCollisions();
   updateHud();
-  checkLevelEndConditions();
 }
 
 function clearGameAreaAndBumpFrame() {
   gameArea.clear();
   gameArea.frameNo += 1;
-}
-
-function checkLevelEndConditions() {
-  if (getTime() < 1) {
-    levelOver.text = "Time's up! Loading next level...";
-  }
-  levelOver.update();
 }
 
 function loadNextLevel() {
