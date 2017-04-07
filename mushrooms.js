@@ -16,7 +16,7 @@ function spawnMushrooms(amount) {
   while (mushrooms.length < amount) {
     x = xEligiblePositions[Math.floor(Math.random()*xEligiblePositions.length)];
     y = yEligiblePositions[Math.floor(Math.random()*yEligiblePositions.length)];
-    mushrooms.push(new component(canvasWidth / 25, canvasHeight / 22, "Plum", x, y));
+    mushrooms.push(new component(gridSquareSide, gridSquareSide, "Plum", x, y));
   }
 }
 
@@ -30,16 +30,14 @@ xEligiblePositions = []
 yEligiblePositions = []
 
 function getEligiblePositions() {
-  xSpacing = canvasWidth / 25;
-  ySpacing = canvasHeight / 22;
   x = 0;
   y = 0;
   while (x < canvasWidth) {
     xEligiblePositions.push(x);
-    x += xSpacing;
+    x += gridSquareSide;
   }
   while (y < canvasHeight * .75) {
     yEligiblePositions.push(y);
-    y += ySpacing;
+    y += gridSquareSide;
   }
 }

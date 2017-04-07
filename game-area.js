@@ -1,7 +1,11 @@
-var canvasWidth = getWidth() * .8;
-var canvasHeight = getHeight() * .8;
 
-var gamePieceTopLimit = canvasHeight - canvasHeight / 5;
+
+var canvasWidth = Math.min(getWidth(), getHeight()) * .8;
+var canvasHeight = canvasWidth;
+var gridDivisor = 25;
+var gridSquareSide = canvasWidth / gridDivisor;
+
+var gamePieceTopLimit = canvasHeight * .8;
 
 var gameArea = {
   canvas : document.createElement("canvas"),
