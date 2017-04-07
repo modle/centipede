@@ -13,10 +13,9 @@ function manageMushrooms() {
 }
 
 function spawnMushrooms(amount) {
-  getEligiblePositions();
   while (mushrooms.length < amount) {
-    x = xEligiblePositions[Math.floor(Math.random()*xEligiblePositions.length)];
-    y = yEligiblePositions[Math.floor(Math.random()*yEligiblePositions.length)];
+    x = xVertices[Math.floor(Math.random()*xVertices.length)];
+    y = yVertices[Math.floor(Math.random()*yVertices.length)];
     mushrooms.push(new component(gridSquareSide, gridSquareSide, "Plum", x, y));
   }
 }
@@ -24,21 +23,5 @@ function spawnMushrooms(amount) {
 function updateMushrooms() {
   for (i = 0; i < mushrooms.length; i += 1) {
     mushrooms[i].update();
-  }
-}
-
-xEligiblePositions = []
-yEligiblePositions = []
-
-function getEligiblePositions() {
-  x = 0;
-  y = firstMushroomLayer;
-  while (x < canvasWidth) {
-    xEligiblePositions.push(x);
-    x += gridSquareSide;
-  }
-  while (y < canvasHeight * .75) {
-    yEligiblePositions.push(y);
-    y += gridSquareSide;
   }
 }

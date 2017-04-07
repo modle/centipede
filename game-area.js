@@ -1,11 +1,13 @@
 
-
-var canvasWidth = Math.min(getWidth(), getHeight()) * .8;
+var canvasWidth = Math.ceil(Math.min(getWidth(), getHeight()) * .8);
 var canvasHeight = canvasWidth;
 var gridDivisor = 25;
-var gridSquareSide = canvasWidth / gridDivisor;
+var gridSquareSide = Math.floor(canvasWidth / gridDivisor);
 
 var gamePieceTopLimit = canvasHeight * .8;
+
+var xVertices = []
+var yVertices = []
 
 var gameArea = {
   canvas : document.createElement("canvas"),
@@ -33,5 +35,18 @@ var gameArea = {
   },
   stop : function() {
     clearInterval(this.interval);
+  }
+}
+
+function getGridVertices() {
+  x = 0;
+  y = firstMushroomLayer;
+  while (x < canvasWidth) {
+    xVertices.push(Math.ceil(x));
+    x += gridSquareSide;
+  }
+  while (y < canvasHeight * .75) {
+    yVertices.push(Math.ceil(y));
+    y += gridSquareSide;
   }
 }
