@@ -33,6 +33,13 @@ function component(width, height, color, x, y, type, extra1, extra2) {
     }
     return crash;
   }
+  this.crashWithSidesOnly = function(otherObject) {
+    var crash = true;
+    if (this.getRight() < otherObject.getLeft() || this.getLeft() > otherObject.getRight()) {
+      crash = false;
+    }
+    return crash;
+  }
   this.getMiddleX = function() {
     return this.x + this.width / 2;
   }
