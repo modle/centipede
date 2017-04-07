@@ -14,7 +14,8 @@ Tues, April 5, 2017
 Weds, April 5, 2017
 - DONE random mushroom placement (in a grid)
   - BONUS number of mushrooms random between 2 numbers
-  - 'mushrooms' change color when you shoot them for 3-4 different colors, then disappear
+  - DONE mushrooms disappear when shot
+  - BONUS 'mushrooms' change color when you shoot them for 3-4 different colors, then disappear
 
 Thurs, April 6, 2017
 - single-unit centipede to figure out direction reversing
@@ -25,7 +26,7 @@ Thurs, April 6, 2017
 - how to chain centipedes?
     - could give them IDs and treat them like a linked list, each one behind following the one in front
 
-- centipede or spider hitting player resets all monsters on the screen and spawns a new centipede
+- centipede hitting player resets all monsters on the screen and spawns a new centipede
 
 - shooting centipedes
   - if centipede movement handling is done correctly, breaking the centipede by shooting it should be handled automatically
@@ -34,7 +35,7 @@ Thurs, April 6, 2017
   - all 'mushrooms' revert back to original color and player gets bonus points
 
 Fri, April 7, 2017
-- extra monsters
+- extra monsters, including collisions
   - annoying jumpy spider
   - the worm that moves across the top
 

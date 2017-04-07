@@ -1,5 +1,5 @@
-var canvasWidth = 900;
-var canvasHeight = 810;
+var canvasWidth = getWidth() * .8;
+var canvasHeight = getHeight() * .8;
 
 var gamePieceTopLimit = canvasHeight - canvasHeight / 5;
 
