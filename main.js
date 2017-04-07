@@ -37,6 +37,7 @@ function updateGameArea() {
   clearGameAreaAndBumpFrame();
   // make things happen
   manageMushrooms();
+  manageCentipedes();
   manageGamePiece();
   manageLasers();
   checkCollisions();

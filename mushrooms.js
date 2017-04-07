@@ -3,6 +3,7 @@
 
 var mushrooms = [];
 var mushroomPointValue = 1;
+var firstMushroomLayer = gridSquareSide * 2;
 
 function manageMushrooms() {
   if (gameArea.frameNo == 1) {
@@ -31,7 +32,7 @@ yEligiblePositions = []
 
 function getEligiblePositions() {
   x = 0;
-  y = gridSquareSide * 2;
+  y = firstMushroomLayer;
   while (x < canvasWidth) {
     xEligiblePositions.push(x);
     x += gridSquareSide;

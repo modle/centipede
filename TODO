@@ -26,13 +26,15 @@ Thurs, April 6, 2017
 - how to chain centipedes?
     - could give them IDs and treat them like a linked list, each one behind following the one in front
 
-- centipede hitting player resets all monsters on the screen and spawns a new centipede
+- player collision: centipede hitting player resets all monsters on the screen and spawns a new centipede
+  - mushroom resetting? or does that happen when centipede dies? or x number of centipedes die?
 
 - shooting centipedes
   - if centipede movement handling is done correctly, breaking the centipede by shooting it should be handled automatically
 
 - destroying centipede ends level
   - all 'mushrooms' revert back to original color and player gets bonus points
+    - does it? see player collision above
 
 Fri, April 7, 2017
 - extra monsters, including collisions
