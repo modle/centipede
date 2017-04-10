@@ -1,4 +1,4 @@
-var intervalDivisor = 2;
+var intervalDivisor = 20;
 
 function everyinterval(n) {
   if ((gameArea.frameNo / n) % 1 == 0) {return true;}

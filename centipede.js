@@ -49,18 +49,21 @@ function updateCentipedes() {
       continue;
     }
     // at first layer of mushrooms, move right
-    if (centipedes[i].getRight() > canvasWidth) {
-      centipedes[i].directionX = -1;
-      centipedes[i].directionY = 1;
-      if (centipedes[i].getBottom() > canvasHeight) {
-        centipedes[i].directionY = -1;
+    // if collision with mushroom, go down a layer and reverse horizontal
+    if (centipedes[i].distanceMovedY == 0) {
+      if (centipedes[i].getRight() > canvasWidth) {
+        centipedes[i].directionX = -1;
+        centipedes[i].directionY = 1;
+        if (centipedes[i].getBottom() > canvasHeight) {
+          centipedes[i].directionY = -1;
+        }
       }
-    }
-    if (centipedes[i].getLeft() < 0) {
-      centipedes[i].directionX = 1;
-      centipedes[i].directionY = 1;
-      if (centipedes[i].getBottom() > canvasHeight) {
-        centipedes[i].directionY = -1;
+      if (centipedes[i].getLeft() < 0) {
+        centipedes[i].directionX = 1;
+        centipedes[i].directionY = 1;
+        if (centipedes[i].getBottom() > canvasHeight) {
+          centipedes[i].directionY = -1;
+        }
       }
     }
     centipedes[i].x += getCentipedeSpeed() * centipedes[i].directionX;
