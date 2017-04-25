@@ -3,9 +3,13 @@
 
 var centipedes = [];
 var centipedeInterval = 10;
-var centipedeBaseSpeed = 2;
+var centipedeBaseSpeed = 1;
 var maxCentipedes = 1;
 var centipedePointValue = 1;
+var centipedeHorizontalDirection = 1;
+var reverseDirection = false;
+var moveDown = true;
+
 
 function manageCentipedes() {
   if (gameArea.frameNo == 1 || everyinterval(centipedeInterval)) {
@@ -26,48 +30,82 @@ function spawnCentipedes() {
   }
 }
 
-function updateCentipedes() {
+function hasCollidedWithWall(centipede) {
+  // don't change directions at canvas edge here
+  if (centipede.getLeft() < 10 || centipede.getRight() > canvasWidth - 10) {
+    return true
+  }
+  return false
+}
+
+function updateCentipedeCoordinates() {
   for (i = 0; i < centipedes.length; i += 1) {
-    // from spawn until it reaches the first layer of mushrooms, just move down
-    console.log(centipedes[i].distanceMovedY);
-    if (centipedes[i].distanceMovedY == gridSquareSide) {
-      centipedes[i].directionY = 0;
-      centipedes[i].distanceMovedY = 0;
-      // don't change directions at canvas edge here
-      if (centipedes[i].getLeft() > 10 || centipedes[i].getRight() < canvasWidth - 10) {
-        centipedes[i].directionX *= -1;
-      }
-      continue;
-    }
-    if (centipedes[i].y < firstMushroomLayer - 1) {
-      centipedes[i].y += centipedes[i].directionY;
-      continue;
-    }
     if (centipedes[i].directionY != 0) {
       centipedes[i].y += centipedes[i].directionY;
-      centipedes[i].distanceMovedY += 1;
-      continue;
+      centipedes[i].distanceMovedY += centipedes[i].directionY;
+      centipedes[i].directionY = 0;
+    } else {
+      centipedes[i].x += getCentipedeSpeed() * centipedes[i].directionX;
     }
-    // at first layer of mushrooms, move right
-    // if collision with mushroom, go down a layer and reverse horizontal
-    if (centipedes[i].distanceMovedY == 0) {
-      if (centipedes[i].getRight() > canvasWidth) {
-        centipedes[i].directionX = -1;
-        centipedes[i].directionY = 1;
-        if (centipedes[i].getBottom() > canvasHeight) {
-          centipedes[i].directionY = -1;
-        }
-      }
-      if (centipedes[i].getLeft() < 0) {
-        centipedes[i].directionX = 1;
-        centipedes[i].directionY = 1;
-        if (centipedes[i].getBottom() > canvasHeight) {
-          centipedes[i].directionY = -1;
-        }
-      }
-    }
-    centipedes[i].x += getCentipedeSpeed() * centipedes[i].directionX;
   }
+}
+
+function determineCentipedeDirections() {
+  for (i = 0; i < centipedes.length; i += 1) {
+    console.log("determineCentipedeDirections", moveDown, reverseDirection, centipedes[i].directionX, centipedes[i].distanceMovedY)
+    if (centipedes[i].y < firstMushroomLayer - 1) {
+      // move down after start until specified layer
+      moveDown = true;
+      return;
+    }
+    if (centipedes[i].distanceMovedY == 0) {
+      // check collisions
+      if (hasCollidedWithWall(centipedes[i])) {
+        console.log("has collided with wall")
+        reverseDirection = true;
+        moveDown = true;
+        return;
+      }
+      // if (hasCollidedWithMushroom(centipedes[i])) {
+      //   reverseDirection = true;
+      //   moveDown = true;
+      //   return;
+      // }
+      return;
+    }
+    if (centipedes[i].distanceMovedY < gridSquareSide) {
+      moveDown = true;
+      return;
+    }
+    if (centipedes[i].distanceMovedY >= gridSquareSide) {
+      reverseDirection = true;
+      moveDown = false;
+      centipedes[i].distanceMovedY = 0;
+    }
+  }
+}
+
+function updateCentipedeDirections() {
+  if (moveDown) {
+    for (i = 0; i < centipedes.length; i += 1) {
+      // console.log("updateCentipedeDirections", moveDown, reverseDirection, centipedes[i].directionX, centipedes[i].distanceMovedY)
+      centipedes[i].directionY = 1;
+    }
+    moveDown = false;
+  }
+  if (reverseDirection) {
+    for (i = 0; i < centipedes.length; i += 1) {
+      // console.log("updateCentipedeDirections", moveDown, reverseDirection, centipedes[i].directionX, centipedes[i].distanceMovedY)
+      centipedes[i].directionX *= -1;
+    }
+    reverseDirection = false;
+  }
+}
+
+function updateCentipedes() {
+  determineCentipedeDirections();
+  updateCentipedeDirections();
+  updateCentipedeCoordinates();
   for (i = 0; i < centipedes.length; i += 1) {
     centipedes[i].update();
   }

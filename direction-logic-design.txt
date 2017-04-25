@@ -1,0 +1,10 @@
+what conditions cause a centipede to reverse direction?
+- collision with mushroom
+- collision with wall
+
+when should a centipede stop moving downward?
+- after it has moved one full row downward
+
+need to divide the update phase into 2 steps
+- step 1: determine direction
+- step 2: move in that direction
