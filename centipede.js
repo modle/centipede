@@ -8,8 +8,6 @@ var centipedeInterval = 10;
 var centipedeBaseSpeed = 1;
 var maxCentipedes = 1;
 var centipedePointValue = 1;
-var centipedeHorizontalDirection = 1;
-
 
 function manageCentipedes() {
   if (gameArea.frameNo == 1 || everyinterval(centipedeInterval)) {
@@ -35,10 +33,7 @@ function spawnCentipedes() {
 
 function hasCollidedWithWall(centipede) {
   // only want to register a collision if the game piece has moved a certain distance away from the wall since the previous collision
-  if ((centipede.getLeft() < 1 || centipede.getRight() > canvasWidth - 1) && centipede.distanceMovedX > gridSquareSide) {
-    return true;
-  }
-  return false;
+  return ((centipede.getLeft() < 1 || centipede.getRight() > canvasWidth - 1) && centipede.distanceMovedX > gridSquareSide);
 }
 
 // determines when to move downward and reverse direction
@@ -65,16 +60,17 @@ function determineCentipedeDirections() {
         return;
       }
       // if (hasCollidedWithMushroom(centipedes[i])) {
-      //   reverseDirection = true;
-      //   moveDown = true;
+      //   centipedes[i].moveDown = true;
       //   return;
       // }
       return;
     }
+    // keep moving down until desired amount of pixels
     if (centipedes[i].distanceMovedY < gridSquareSide) {
       centipedes[i].moveDown = true;
       return;
     }
+    // only reverse if all other conditions are false
     if (centipedes[i].distanceMovedY >= gridSquareSide) {
       centipedes[i].reverseDirection = true;
       centipedes[i].moveDown = false;
@@ -100,14 +96,21 @@ function updateCentipedeDirections() {
 // updates coordinates of centipede objects
 function updateCentipedeCoordinates() {
   for (i = 0; i < centipedes.length; i += 1) {
+    // if moving vertically, don't move horizontally
     if (centipedes[i].directionY !== 0) {
       centipedes[i].y += centipedes[i].directionY;
       centipedes[i].distanceMovedY += centipedes[i].directionY;
       centipedes[i].directionY = 0;
     } else {
       toMoveX = getCentipedeSpeed() * centipedes[i].directionX;
-      centipedes[i].x += toMoveX;
-      centipedes[i].distanceMovedX += Math.abs(toMoveX);
+      newPositionX = centipedes[i].x + toMoveX;
+      // don't update the x position, instead flag move down, if updating x would put the centipede outside the gameArea
+      if (newPositionX < canvasWidth && newPositionX > 0) {
+        centipedes[i].x = newPositionX;
+        centipedes[i].distanceMovedX += Math.abs(toMoveX);
+      } else {
+        centipedes[i].moveDown = true;
+      }
     }
   }
 }

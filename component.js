@@ -37,7 +37,8 @@ function component(width, height, color, x, y, type, extra1, extra2) {
   };
   this.crashWithSidesOnly = function(otherObject) {
     var crash = true;
-    if (this.getRight() < otherObject.getLeft() || this.getLeft() > otherObject.getRight()) {
+    // delay collision slightly by allowing objects to overlap by 1 pixel
+    if (this.getRight() < otherObject.getLeft() + 1 || this.getLeft() > otherObject.getRight() - 1) {
       crash = false;
     }
     return crash;
