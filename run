@@ -1,0 +1,3 @@
+#!/bin/bash
+nohup xdg-open index.html
+rm nohup.out

@@ -9,8 +9,6 @@ var centipedeBaseSpeed = 1;
 var maxCentipedes = 1;
 var centipedePointValue = 1;
 var centipedeHorizontalDirection = 1;
-var reverseDirection = false;
-var moveDown = true;
 
 
 function manageCentipedes() {
@@ -28,44 +26,42 @@ function spawnCentipedes() {
     centipede.directionY = 1;
     centipede.directionX = 1;
     centipede.distanceMovedY = 0;
+    centipede.distanceMovedX = 0;
+    centipede.reverseDirection = false;
+    centipede.moveDown = true;
     centipedes.push(centipede);
   }
 }
 
 function hasCollidedWithWall(centipede) {
-  // don't change directions at canvas edge here
-  if (centipede.getLeft() < 10 || centipede.getRight() > canvasWidth - 10) {
+  // only want to register a collision if the game piece has moved a certain distance away from the wall since the previous collision
+  if ((centipede.getLeft() < 1 || centipede.getRight() > canvasWidth - 1) && centipede.distanceMovedX > gridSquareSide) {
     return true;
   }
   return false;
 }
 
-function updateCentipedeCoordinates() {
-  for (i = 0; i < centipedes.length; i += 1) {
-    if (centipedes[i].directionY !== 0) {
-      centipedes[i].y += centipedes[i].directionY;
-      centipedes[i].distanceMovedY += centipedes[i].directionY;
-      centipedes[i].directionY = 0;
-    } else {
-      centipedes[i].x += getCentipedeSpeed() * centipedes[i].directionX;
-    }
-  }
-}
-
+// determines when to move downward and reverse direction
 function determineCentipedeDirections() {
   for (i = 0; i < centipedes.length; i += 1) {
-    console.log("determineCentipedeDirections", moveDown, reverseDirection, centipedes[i].directionX, centipedes[i].distanceMovedY);
+    console.log("determineCentipedeDirections",
+      "\nmoveDown:"+centipedes[i].moveDown,
+      "\nreverseDirection:"+centipedes[i].reverseDirection,
+      "\ndirectionX:"+centipedes[i].directionX,
+      "\ndistanceMovedY:"+centipedes[i].distanceMovedY,
+      "\ndistanceMovedX:"+centipedes[i].distanceMovedX
+    );
+    // move down after start until specified layer
     if (centipedes[i].y < firstMushroomLayer - 1) {
-      // move down after start until specified layer
-      moveDown = true;
+      centipedes[i].moveDown = true;
       return;
     }
+    // only check collisions once centipede has moved a certain distance
     if (centipedes[i].distanceMovedY === 0) {
-      // check collisions
+      // check collision with walls
       if (hasCollidedWithWall(centipedes[i])) {
-        console.log("has collided with wall");
-        reverseDirection = true;
-        moveDown = true;
+        centipedes[i].distanceMovedX = 0;
+        centipedes[i].moveDown = true;
         return;
       }
       // if (hasCollidedWithMushroom(centipedes[i])) {
@@ -76,34 +72,47 @@ function determineCentipedeDirections() {
       return;
     }
     if (centipedes[i].distanceMovedY < gridSquareSide) {
-      moveDown = true;
+      centipedes[i].moveDown = true;
       return;
     }
     if (centipedes[i].distanceMovedY >= gridSquareSide) {
-      reverseDirection = true;
-      moveDown = false;
+      centipedes[i].reverseDirection = true;
+      centipedes[i].moveDown = false;
       centipedes[i].distanceMovedY = 0;
     }
   }
 }
 
+// sets direction variables on the centipede objects
 function updateCentipedeDirections() {
-  if (moveDown) {
-    for (i = 0; i < centipedes.length; i += 1) {
-      // console.log("updateCentipedeDirections", moveDown, reverseDirection, centipedes[i].directionX, centipedes[i].distanceMovedY)
+  for (i = 0; i < centipedes.length; i += 1) {
+    if (centipedes[i].moveDown) {
       centipedes[i].directionY = 1;
+      centipedes[i].moveDown = false;
     }
-    moveDown = false;
-  }
-  if (reverseDirection) {
-    for (i = 0; i < centipedes.length; i += 1) {
-      // console.log("updateCentipedeDirections", moveDown, reverseDirection, centipedes[i].directionX, centipedes[i].distanceMovedY)
+    if (centipedes[i].reverseDirection) {
       centipedes[i].directionX *= -1;
+      centipedes[i].reverseDirection = false;
     }
-    reverseDirection = false;
   }
 }
 
+// updates coordinates of centipede objects
+function updateCentipedeCoordinates() {
+  for (i = 0; i < centipedes.length; i += 1) {
+    if (centipedes[i].directionY !== 0) {
+      centipedes[i].y += centipedes[i].directionY;
+      centipedes[i].distanceMovedY += centipedes[i].directionY;
+      centipedes[i].directionY = 0;
+    } else {
+      toMoveX = getCentipedeSpeed() * centipedes[i].directionX;
+      centipedes[i].x += toMoveX;
+      centipedes[i].distanceMovedX += Math.abs(toMoveX);
+    }
+  }
+}
+
+// triggered each refresh cycle
 function updateCentipedes() {
   determineCentipedeDirections();
   updateCentipedeDirections();
