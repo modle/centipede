@@ -69,6 +69,12 @@ function determineCentipedeDirections() {
     if (centipedes[i].getBottom() > canvasHeight) {
       centipedes[i].reverseDirectionY = true;
     }
+    // toggle Y direction if centipede is above gamePieceTopLimit and distanceMovedFromBottom > 0
+    // reset distanceMovedFromBottom so this only triggers once
+    if (centipedes[i].getTop() < gamePieceTopLimit && centipedes[i].distanceMovedFromBottom > 0) {
+      centipedes[i].reverseDirectionY = true;
+      centipedes[i].distanceMovedFromBottom = 0;
+    }
     // only check collisions once centipede has moved a certain distance
     if (centipedes[i].distanceMovedY === 0) {
       // check collision with walls
@@ -118,7 +124,9 @@ function updateCentipedeCoordinates() {
     if (centipedes[i].moveVertically) {
       centipedes[i].y += centipedes[i].directionY;
       centipedes[i].distanceMovedY += Math.abs(centipedes[i].directionY);
-      // centipedes[i].directionY = 0;
+      if (centipedes[i].directionY === -1) {
+        centipedes[i].distanceMovedFromBottom += Math.abs(centipedes[i].directionY);
+      }
     } else {
       toMoveX = getCentipedeSpeed() * centipedes[i].directionX;
       newPositionX = centipedes[i].x + toMoveX;
