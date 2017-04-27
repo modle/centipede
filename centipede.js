@@ -21,12 +21,13 @@ function spawnCentipedes() {
     x = canvasWidth / 2;
     y = 0;
     centipede = new component(gridSquareSide, gridSquareSide, "blue", x, y);
-    centipede.directionY = 1;
     centipede.directionX = 1;
-    centipede.distanceMovedY = 0;
+    centipede.directionY = 1;
     centipede.distanceMovedX = 0;
-    centipede.reverseDirection = false;
-    centipede.moveDown = true;
+    centipede.distanceMovedY = 0;
+    centipede.reverseDirectionX = false
+    centipede.reverseDirectionY = false;
+    centipede.moveVertically = true;
     centipedes.push(centipede);
   }
 }
@@ -50,15 +51,16 @@ function hasCollidedWithMushroom(centipede) {
 function determineCentipedeDirections() {
   for (i = 0; i < centipedes.length; i += 1) {
     console.log("determineCentipedeDirections",
-      "\nmoveDown:"+centipedes[i].moveDown,
-      "\nreverseDirection:"+centipedes[i].reverseDirection,
+      "\nmoveVertically:"+centipedes[i].moveVertically,
+      "\nreverseDirectionX:"+centipedes[i].reverseDirectionX,
+      "\nreverseDirectionY:"+centipedes[i].reverseDirectionY,
       "\ndirectionX:"+centipedes[i].directionX,
       "\ndistanceMovedY:"+centipedes[i].distanceMovedY,
       "\ndistanceMovedX:"+centipedes[i].distanceMovedX
     );
     // move down after start until specified layer
     if (centipedes[i].y < firstMushroomLayer - 1) {
-      centipedes[i].moveDown = true;
+      centipedes[i].moveVertically = true;
       return;
     }
     // only check collisions once centipede has moved a certain distance
@@ -66,24 +68,24 @@ function determineCentipedeDirections() {
       // check collision with walls
       if (hasCollidedWithWall(centipedes[i])) {
         centipedes[i].distanceMovedX = 0;
-        centipedes[i].moveDown = true;
+        centipedes[i].moveVertically = true;
         return;
       }
       if (hasCollidedWithMushroom(centipedes[i])) {
-        centipedes[i].moveDown = true;
+        centipedes[i].moveVertically = true;
         return;
       }
       return;
     }
     // keep moving down until desired amount of pixels
     if (centipedes[i].distanceMovedY < gridSquareSide) {
-      centipedes[i].moveDown = true;
+      centipedes[i].moveVertically = true;
       return;
     }
     // only reverse if all other conditions are false
     if (centipedes[i].distanceMovedY >= gridSquareSide) {
-      centipedes[i].reverseDirection = true;
-      centipedes[i].moveDown = false;
+      centipedes[i].reverseDirectionX = true;
+      centipedes[i].moveVertically = false;
       centipedes[i].distanceMovedY = 0;
     }
   }
@@ -92,13 +94,13 @@ function determineCentipedeDirections() {
 // sets direction variables on the centipede objects
 function updateCentipedeDirections() {
   for (i = 0; i < centipedes.length; i += 1) {
-    if (centipedes[i].moveDown) {
-      centipedes[i].directionY = 1;
-      centipedes[i].moveDown = false;
+    if (centipedes[i].reverseDirectionY) {
+      centipedes[i].directionY *= -1;
+      centipedes[i].reverseDirectionY = false;
     }
-    if (centipedes[i].reverseDirection) {
+    if (centipedes[i].reverseDirectionX) {
       centipedes[i].directionX *= -1;
-      centipedes[i].reverseDirection = false;
+      centipedes[i].reverseDirectionX = false;
     }
   }
 }
@@ -107,19 +109,19 @@ function updateCentipedeDirections() {
 function updateCentipedeCoordinates() {
   for (i = 0; i < centipedes.length; i += 1) {
     // if moving vertically, don't move horizontally
-    if (centipedes[i].directionY !== 0) {
+    if (centipedes[i].moveVertically) {
       centipedes[i].y += centipedes[i].directionY;
       centipedes[i].distanceMovedY += centipedes[i].directionY;
-      centipedes[i].directionY = 0;
+      // centipedes[i].directionY = 0;
     } else {
       toMoveX = getCentipedeSpeed() * centipedes[i].directionX;
       newPositionX = centipedes[i].x + toMoveX;
-      // don't update the x position, instead flag move down, if updating x would put the centipede outside the gameArea
+      // don't update the x position, instead flag moveVertically, if updating x would put the centipede outside the gameArea
       if (newPositionX < canvasWidth && newPositionX > 0) {
         centipedes[i].x = newPositionX;
         centipedes[i].distanceMovedX += Math.abs(toMoveX);
       } else {
-        centipedes[i].moveDown = true;
+        centipedes[i].moveVertically = true;
       }
     }
   }
