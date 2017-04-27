@@ -36,6 +36,16 @@ function hasCollidedWithWall(centipede) {
   return ((centipede.getLeft() < 1 || centipede.getRight() > canvasWidth - 1) && centipede.distanceMovedX > gridSquareSide);
 }
 
+
+function hasCollidedWithMushroom(centipede) {
+  for (j = 0; j < mushrooms.length; j += 1) {
+    if (centipede.crashWithSidesOnly(mushrooms[j]) && Math.abs(centipede.y - mushrooms[j].y) < 5 && centipede.distanceMovedX > gridSquareSide) {
+      return true;
+    }
+  }
+  return false;
+}
+
 // determines when to move downward and reverse direction
 function determineCentipedeDirections() {
   for (i = 0; i < centipedes.length; i += 1) {
@@ -59,10 +69,10 @@ function determineCentipedeDirections() {
         centipedes[i].moveDown = true;
         return;
       }
-      // if (hasCollidedWithMushroom(centipedes[i])) {
-      //   centipedes[i].moveDown = true;
-      //   return;
-      // }
+      if (hasCollidedWithMushroom(centipedes[i])) {
+        centipedes[i].moveDown = true;
+        return;
+      }
       return;
     }
     // keep moving down until desired amount of pixels
