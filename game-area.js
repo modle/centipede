@@ -1,16 +1,17 @@
+/*jslint white: true */
 
-var canvasWidth = Math.ceil(Math.min(getWidth(), getHeight()) * .8);
+var canvasWidth = Math.ceil(Math.min(getWidth(), getHeight()) * 0.8);
 var canvasHeight = canvasWidth;
 var gridDivisor = 25;
 var gridSquareSide = Math.floor(canvasWidth / gridDivisor);
 
-var gamePieceTopLimit = canvasHeight * .8;
+var gamePieceTopLimit = canvasHeight * 0.8;
 
-var xVertices = []
-var yVertices = []
+var xVertices = [];
+var yVertices = [];
 
 var gameArea = {
-  canvas : document.createElement("canvas"),
+        canvas : document.createElement("canvas"),
   start : function() {
     paused = true;
     this.canvas.width = canvasWidth;
@@ -25,10 +26,10 @@ var gameArea = {
     window.addEventListener('keydown', function (e) {
       gameArea.keys = (gameArea.keys || []);
       gameArea.keys[e.keyCode] = (e.type == "keydown");
-    })
+    });
     window.addEventListener('keyup', function (e) {
       gameArea.keys[e.keyCode] = (e.type == "keydown");
-    })
+    });
   },
   clear : function() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -36,7 +37,7 @@ var gameArea = {
   stop : function() {
     clearInterval(this.interval);
   }
-}
+};
 
 function getGridVertices() {
   x = 0;
@@ -45,7 +46,7 @@ function getGridVertices() {
     xVertices.push(Math.ceil(x));
     x += gridSquareSide;
   }
-  while (y < canvasHeight * .75) {
+  while (y < canvasHeight * 0.75) {
     yVertices.push(Math.ceil(y));
     y += gridSquareSide;
   }

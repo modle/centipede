@@ -1,3 +1,5 @@
+/*jslint white: true */
+
 /* Collisions */
 /***********************************/
 var floatingPoints = [];
@@ -42,11 +44,11 @@ function checkCentipedeCollisionWithMushrooms() {
 }
 
 function addNewFloatingPoint(x, y, points, action) {
-  symbol = "+"
-  color = "black"
+  symbol = "+";
+  color = "black";
   if (action == "lose") {
-    symbol = "-"
-    color = "red"
+    symbol = "-";
+    color = "red";
   }
   newPoint = new component("20px", "Consolas", color, x, y, "text");
   newPoint.text = symbol + points;

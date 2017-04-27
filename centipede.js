@@ -1,3 +1,5 @@
+/*jslint white: true */
+
 /* Centipedes */
 /***********************************/
 
@@ -33,14 +35,14 @@ function spawnCentipedes() {
 function hasCollidedWithWall(centipede) {
   // don't change directions at canvas edge here
   if (centipede.getLeft() < 10 || centipede.getRight() > canvasWidth - 10) {
-    return true
+    return true;
   }
-  return false
+  return false;
 }
 
 function updateCentipedeCoordinates() {
   for (i = 0; i < centipedes.length; i += 1) {
-    if (centipedes[i].directionY != 0) {
+    if (centipedes[i].directionY !== 0) {
       centipedes[i].y += centipedes[i].directionY;
       centipedes[i].distanceMovedY += centipedes[i].directionY;
       centipedes[i].directionY = 0;
@@ -52,16 +54,16 @@ function updateCentipedeCoordinates() {
 
 function determineCentipedeDirections() {
   for (i = 0; i < centipedes.length; i += 1) {
-    console.log("determineCentipedeDirections", moveDown, reverseDirection, centipedes[i].directionX, centipedes[i].distanceMovedY)
+    console.log("determineCentipedeDirections", moveDown, reverseDirection, centipedes[i].directionX, centipedes[i].distanceMovedY);
     if (centipedes[i].y < firstMushroomLayer - 1) {
       // move down after start until specified layer
       moveDown = true;
       return;
     }
-    if (centipedes[i].distanceMovedY == 0) {
+    if (centipedes[i].distanceMovedY === 0) {
       // check collisions
       if (hasCollidedWithWall(centipedes[i])) {
-        console.log("has collided with wall")
+        console.log("has collided with wall");
         reverseDirection = true;
         moveDown = true;
         return;

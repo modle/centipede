@@ -1,3 +1,5 @@
+/*jslint white: true */
+
 var paused = true;
 
 // invoked on page load
@@ -13,13 +15,13 @@ window.addEventListener('keydown', function (e) {
   if (e.keyCode == 32) {
     paused = !paused;
   }
-})
+});
 
 window.addEventListener('keydown', function (e) {
   if (e.keyCode == 13) {
-    reset()
+    reset();
   }
-})
+});
 
 function reset() {
   gameArea.stop();

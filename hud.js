@@ -1,3 +1,5 @@
+/*jslint white: true */
+
 var score = new component("30px", "Consolas", "black", canvasWidth/10, 40, "text");
 var livesDisplay = new component("30px", "Consolas", "black", canvasWidth/2, 40, "text");
 var level = new component("30px", "Consolas", "black", canvasWidth/3*2, 40, "text");
@@ -42,7 +44,7 @@ function updateScore() {
 
 function managePause() {
   pausedMessage.text = "Paused: Spacebar to Continue";
-  if (gameArea.frameNo == 0) {
+  if (gameArea.frameNo === 0) {
     pausedMessage.text = "Press Spacebar to Start";
   }
   pausedMessage.update();

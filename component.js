@@ -1,3 +1,5 @@
+/*jslint white: true */
+
 function component(width, height, color, x, y, type, extra1, extra2) {
   this.gamearea = gameArea;
   this.remove = false;
@@ -21,41 +23,41 @@ function component(width, height, color, x, y, type, extra1, extra2) {
     } else {
       ctx.fillRect(this.x, this.y, this.width, this.height);
     }
-  }
+  };
   this.newPos = function() {
     this.x += this.speedX;
     this.y += this.speedY;
-  }
+  };
   this.crashWith = function(otherObject) {
     var crash = true;
     if (this.getBottom() < otherObject.getTop() || this.getTop() > otherObject.getBottom() || this.getRight() < otherObject.getLeft() || this.getLeft() > otherObject.getRight()) {
       crash = false;
     }
     return crash;
-  }
+  };
   this.crashWithSidesOnly = function(otherObject) {
     var crash = true;
     if (this.getRight() < otherObject.getLeft() || this.getLeft() > otherObject.getRight()) {
       crash = false;
     }
     return crash;
-  }
+  };
   this.getMiddleX = function() {
     return this.x + this.width / 2;
-  }
+  };
   this.getMiddleY = function() {
     return this.y + this.height / 2;
-  }
+  };
   this.getTop = function() {
     return this.y;
-  }
+  };
   this.getBottom = function() {
     return this.y + this.height;
-  }
+  };
   this.getLeft = function() {
     return this.x;
-  }
+  };
   this.getRight = function() {
     return this.x + this.width;
-  }
+  };
 }

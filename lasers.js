@@ -1,3 +1,5 @@
+/*jslint white: true */
+
 /* Lasers */
 /***********************************/
 
@@ -22,7 +24,7 @@ function makeLasers() {
   if (gameArea.keys[16] || gameArea.keys[37] || gameArea.keys[38] || gameArea.keys[39] || gameArea.keys[40]) {
     speedY = -1 * laserSpeed;
   }
-  if (speedY != 0) {
+  if (speedY !== 0) {
     lasers.push(new component(laserSideLength, laserSideLength, "green", gamePiece.x + gamePiece.width / 2, gamePiece.y + gamePiece.height / 2, "laser", speedX, speedY));
   }
 }
