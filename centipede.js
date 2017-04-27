@@ -25,6 +25,7 @@ function spawnCentipedes() {
     centipede.directionY = 1;
     centipede.distanceMovedX = 0;
     centipede.distanceMovedY = 0;
+    centipede.distanceMovedFromBottom = 0;
     centipede.reverseDirectionX = false
     centipede.reverseDirectionY = false;
     centipede.moveVertically = true;
@@ -54,6 +55,7 @@ function determineCentipedeDirections() {
       "\nmoveVertically:"+centipedes[i].moveVertically,
       "\nreverseDirectionX:"+centipedes[i].reverseDirectionX,
       "\nreverseDirectionY:"+centipedes[i].reverseDirectionY,
+      "\ndistanceMovedFromBottom:"+centipedes[i].distanceMovedFromBottom,
       "\ndirectionX:"+centipedes[i].directionX,
       "\ndistanceMovedY:"+centipedes[i].distanceMovedY,
       "\ndistanceMovedX:"+centipedes[i].distanceMovedX
@@ -62,6 +64,10 @@ function determineCentipedeDirections() {
     if (centipedes[i].y < firstMushroomLayer - 1) {
       centipedes[i].moveVertically = true;
       return;
+    }
+    // toggle Y direction if distanceMovedFromBottom is 0 and centipede.bottom > canvasHeight
+    if (centipedes[i].getBottom() > canvasHeight) {
+      centipedes[i].reverseDirectionY = true;
     }
     // only check collisions once centipede has moved a certain distance
     if (centipedes[i].distanceMovedY === 0) {
@@ -111,7 +117,7 @@ function updateCentipedeCoordinates() {
     // if moving vertically, don't move horizontally
     if (centipedes[i].moveVertically) {
       centipedes[i].y += centipedes[i].directionY;
-      centipedes[i].distanceMovedY += centipedes[i].directionY;
+      centipedes[i].distanceMovedY += Math.abs(centipedes[i].directionY);
       // centipedes[i].directionY = 0;
     } else {
       toMoveX = getCentipedeSpeed() * centipedes[i].directionX;
