@@ -1,3 +1,12 @@
-#!/bin/bash
-nohup xdg-open index.html
+#!/usr/bin/env bash
+
+unameOutput="$(uname -o)"
+echo "${unameOutput}"
+
+if [ "${unameOutput}" == "Cygwin" ]; then
+    nohup cygstart index.html
+elif [ "${unameOutput}" == "Linux" ]; then
+    nohup xdg-open index.html
+fi
 rm nohup.out
+
