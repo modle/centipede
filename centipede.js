@@ -6,7 +6,7 @@
 var centipedes = [];
 var centipedeInterval = 10;
 var centipedeBaseSpeed = 1;
-var maxCentipedes = 1;
+var maxCentipedes = 100;
 var centipedePointValue = 1;
 
 function manageCentipedes() {
@@ -17,7 +17,7 @@ function manageCentipedes() {
 }
 
 function spawnCentipedes() {
-  while (centipedes.length < maxCentipedes) {
+  if (centipedes.length < maxCentipedes) {
     x = canvasWidth / 2;
     y = 0;
     centipede = new component(gridSquareSide, gridSquareSide, "blue", x, y);
@@ -29,6 +29,11 @@ function spawnCentipedes() {
     centipede.reverseDirectionX = false
     centipede.reverseDirectionY = false;
     centipede.moveVertically = true;
+    for (i = 0; i < centipedes.length; i += 1) {
+      if (centipedes[i].crashWith(centipede)) {
+        return;
+      }
+    }
     centipedes.push(centipede);
   }
 }
@@ -130,7 +135,7 @@ function updateCentipedeCoordinates() {
     } else {
       toMoveX = getCentipedeSpeed() * centipedes[i].directionX;
       newPositionX = centipedes[i].x + toMoveX;
-      // don't update the x position, instead flag moveVertically, if updating x would put the centipede outside the gameArea
+      // if updating x would put the centipede outside the gameArea, don't update the x position, instead flag moveVertically
       if (newPositionX < canvasWidth && newPositionX > 0) {
         centipedes[i].x = newPositionX;
         centipedes[i].distanceMovedX += Math.abs(toMoveX);
