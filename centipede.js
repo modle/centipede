@@ -68,7 +68,7 @@ function determineCentipedeDirections() {
     // move down after start until specified layer
     if (centipedes[i].y < firstMushroomLayer - 1) {
       centipedes[i].moveVertically = true;
-      return;
+      continue;
     }
     // toggle Y direction if distanceMovedFromBottom is 0 and centipede.bottom > canvasHeight
     if (centipedes[i].getBottom() > canvasHeight) {
@@ -86,18 +86,18 @@ function determineCentipedeDirections() {
       if (hasCollidedWithWall(centipedes[i])) {
         centipedes[i].distanceMovedX = 0;
         centipedes[i].moveVertically = true;
-        return;
+        continue;
       }
       if (hasCollidedWithMushroom(centipedes[i])) {
         centipedes[i].moveVertically = true;
-        return;
+        continue;
       }
-      return;
+      continue;
     }
     // keep moving down until desired amount of pixels
     if (centipedes[i].distanceMovedY < gridSquareSide) {
       centipedes[i].moveVertically = true;
-      return;
+      continue;
     }
     // only reverse if all other conditions are false
     if (centipedes[i].distanceMovedY >= gridSquareSide) {
