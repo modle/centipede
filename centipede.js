@@ -6,8 +6,10 @@
 var centipedes = [];
 var centipedeInterval = 10;
 var centipedeBaseSpeed = 1;
-var maxCentipedes = 20;
+var defaultMaxCentipedes = 10;
 var centipedePointValue = 1;
+// use a var to count centipedes instead of length of array
+var centipedesSpawned = 0;
 
 function manageCentipedes() {
   if (gameArea.frameNo == 1 || everyinterval(centipedeInterval)) {
@@ -17,7 +19,7 @@ function manageCentipedes() {
 }
 
 function spawnCentipedes() {
-  if (centipedes.length < maxCentipedes) {
+  if (centipedesSpawned < defaultMaxCentipedes + currentLevel) {
     x = canvasWidth / 2;
     y = 0;
     centipede = new component(gridSquareSide, gridSquareSide, "blue", x, y);
@@ -29,12 +31,14 @@ function spawnCentipedes() {
     centipede.reverseDirectionX = false
     centipede.reverseDirectionY = false;
     centipede.moveVertically = true;
+    centipede.pointValue = 5 + currentLevel;
     for (i = 0; i < centipedes.length; i += 1) {
       if (centipedes[i].crashWith(centipede)) {
         return;
       }
     }
     centipedes.push(centipede);
+    centipedesSpawned++;
   }
 }
 

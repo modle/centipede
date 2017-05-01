@@ -6,20 +6,21 @@ var floatingPoints = [];
 floatingPointCycleDuration = 50;
 
 function checkCollisions() {
-    checkLaserCollisionWithMushrooms();
+    checkLaserCollision(mushrooms);
+    checkLaserCollision(centipedes);
 }
 
-function checkLaserCollisionWithMushrooms() {
+function checkLaserCollision(targets) {
   for (i = 0; i < lasers.length; i += 1) {
-    for (j = 0; j < mushrooms.length; j += 1) {
-      if (lasers[i].crashWith(mushrooms[j])) {
+    for (j = 0; j < targets.length; j += 1) {
+      if (lasers[i].crashWith(targets[j])) {
         // add floating point
-        addNewFloatingPoint(mushrooms[j].getMiddleX(), mushrooms[j].getMiddleY(), mushroomPointValue, "gain");
-        // remove monster and set laser removal to pending
-        mushrooms.splice(j, 1);
-        lasers[i].remove = true;
+        addNewFloatingPoint(targets[j].getMiddleX(), targets[j].getMiddleY(), targets[j].pointValue, "gain");
         // update scoreValue
-        changeScore(mushroomPointValue);
+        changeScore(targets[j].pointValue);
+        // remove target and set laser removal to pending
+        targets.splice(j, 1);
+        lasers[i].remove = true;
       }
     }
     if (lasers[i].remove) {
