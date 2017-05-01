@@ -41,13 +41,14 @@ function updateGameArea() {
   // clear the canvas
   clearGameAreaAndBumpFrame();
   // make things happen
+  checkCollisions();
   manageMushrooms();
   manageCentipedes();
-  manageGamePiece();
   manageLasers();
-  checkCollisions();
-  updateFloatingPoints();
+  manageGamePiece();
   updateHud();
+  updateFloatingPoints();
+  checkLevelEndConditions();
 }
 
 function clearGameAreaAndBumpFrame() {
@@ -55,8 +56,24 @@ function clearGameAreaAndBumpFrame() {
   gameArea.frameNo += 1;
 }
 
+function checkLevelEndConditions() {
+  if (centipedes.length === 0) {
+    levelOver.text = "Level clear! Loading next level...";
+  }
+  levelOver.update();
+}
+
+function manageLevel() {
+  if (levelOver.text) {
+    wait(2000);
+    loadNextLevel();
+    levelOver.text = "";
+  }
+}
+
 function loadNextLevel() {
   gameArea.frameNo = 0;
+  centipedesSpawned = 0;
   resetGamePiecePosition();
   currentLevel += 1;
 }

@@ -51,14 +51,6 @@ function managePause() {
   return;
 }
 
-function manageLevel() {
-  if (levelOver.text) {
-    wait(2000);
-    loadNextLevel();
-    levelOver.text = "";
-  }
-}
-
 function manageDeath() {
   if (died.text) {
     wait(2000);
