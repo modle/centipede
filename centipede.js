@@ -6,7 +6,7 @@
 var centipedes = [];
 var centipedeInterval = 10;
 var centipedeBaseSpeed = 1;
-var maxCentipedes = 100;
+var maxCentipedes = 20;
 var centipedePointValue = 1;
 
 function manageCentipedes() {
@@ -99,7 +99,7 @@ function determineCentipedeDirections() {
       centipedes[i].moveVertically = true;
       continue;
     }
-    // only reverse if all other conditions are false
+    // only reverse horizontally if all other conditions are false
     if (centipedes[i].distanceMovedY >= gridSquareSide) {
       centipedes[i].reverseDirectionX = true;
       centipedes[i].moveVertically = false;
@@ -113,6 +113,7 @@ function updateCentipedeDirections() {
   for (i = 0; i < centipedes.length; i += 1) {
     if (centipedes[i].reverseDirectionY) {
       centipedes[i].directionY *= -1;
+      centipedes[i].distanceMovedY = 0;
       centipedes[i].reverseDirectionY = false;
     }
     if (centipedes[i].reverseDirectionX) {
