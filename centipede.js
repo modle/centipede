@@ -23,6 +23,7 @@ function spawnCentipedes() {
     x = canvasWidth / 2;
     y = 0;
     centipede = new component(gridSquareSide, gridSquareSide, "blue", x, y);
+    centipede.name = "centipede";
     centipede.directionX = 1;
     centipede.directionY = 1;
     centipede.distanceMovedX = 0;

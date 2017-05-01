@@ -21,6 +21,9 @@ function checkLaserCollision(targets) {
           // update scoreValue
           changeScore(targets[j].pointValue);
           // remove target and set laser removal to pending
+          if (targets[j].name === 'centipede') {
+            mushrooms.push(generateMushroom(targets[j].x, targets[j].y));
+          }
           targets.splice(j, 1);
         } else {
           targets[j].height *= 0.5;
