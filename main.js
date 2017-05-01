@@ -46,6 +46,7 @@ function updateGameArea() {
   manageGamePiece();
   manageLasers();
   checkCollisions();
+  updateFloatingPoints();
   updateHud();
 }
 
