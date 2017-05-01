@@ -5,7 +5,7 @@ echo "${unameOutput}"
 
 if [ "${unameOutput}" == "Cygwin" ]; then
     nohup cygstart index.html
-elif [ "${unameOutput}" == "Linux" ]; then
+elif [ "${unameOutput}" == "GNU/Linux" ]; then
     nohup xdg-open index.html
 fi
 rm nohup.out

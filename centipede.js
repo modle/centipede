@@ -32,6 +32,7 @@ function spawnCentipedes() {
     centipede.reverseDirectionY = false;
     centipede.moveVertically = true;
     centipede.pointValue = 5 + currentLevel;
+    centipede.hitPoints = 1;
     for (i = 0; i < centipedes.length; i += 1) {
       if (centipedes[i].crashWith(centipede)) {
         return;
@@ -60,15 +61,6 @@ function hasCollidedWithMushroom(centipede) {
 // determines when to move downward and reverse direction
 function determineCentipedeDirections() {
   for (i = 0; i < centipedes.length; i += 1) {
-    console.log("determineCentipedeDirections",
-      "\nmoveVertically:"+centipedes[i].moveVertically,
-      "\nreverseDirectionX:"+centipedes[i].reverseDirectionX,
-      "\nreverseDirectionY:"+centipedes[i].reverseDirectionY,
-      "\ndistanceMovedFromBottom:"+centipedes[i].distanceMovedFromBottom,
-      "\ndirectionX:"+centipedes[i].directionX,
-      "\ndistanceMovedY:"+centipedes[i].distanceMovedY,
-      "\ndistanceMovedX:"+centipedes[i].distanceMovedX
-    );
     // move down after start until specified layer
     if (centipedes[i].y < firstMushroomLayer - 1) {
       centipedes[i].moveVertically = true;
