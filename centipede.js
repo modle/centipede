@@ -160,4 +160,5 @@ function getCentipedeSpeed() {
 
 function clearCentipedes() {
   centipedes = [];
+  centipedesSpawned = 0;
 }

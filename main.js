@@ -31,13 +31,19 @@ function reset() {
 
 // this gets executed every interval
 function updateGameArea() {
-  // check game conditions
   if (paused) {
     managePause();
     return;
   }
-  manageLevel();
-  manageDeath();
+  // check game conditions
+  if (died.text) {
+    manageDeath();
+    return;
+  }
+  if (levelOver.text) {
+    manageLevel();
+    return;
+  }
   // clear the canvas
   clearGameAreaAndBumpFrame();
   // make things happen
@@ -48,7 +54,6 @@ function updateGameArea() {
   manageGamePiece();
   updateHud();
   updateFloatingPoints();
-  checkLevelEndConditions();
 }
 
 function clearGameAreaAndBumpFrame() {
@@ -56,24 +61,31 @@ function clearGameAreaAndBumpFrame() {
   gameArea.frameNo += 1;
 }
 
-function checkLevelEndConditions() {
-  if (centipedes.length === 0) {
-    levelOver.text = "Level clear! Loading next level...";
-  }
-  levelOver.update();
-}
-
 function manageLevel() {
-  if (levelOver.text) {
-    wait(2000);
-    loadNextLevel();
-    levelOver.text = "";
-  }
+  wait(2000);
+  loadNextLevel();
+  levelOver.text = "";
 }
 
 function loadNextLevel() {
   gameArea.frameNo = 0;
-  centipedesSpawned = 0;
+  clearCentipedes();
   resetGamePiecePosition();
   currentLevel += 1;
+}
+
+function manageDeath() {
+  wait(2000);
+  clearCentipedes();
+  resetGamePiecePosition();
+  died.text = "";
+}
+
+function managePause() {
+  pausedMessage.text = "Paused: Spacebar to Continue";
+  if (gameArea.frameNo === 0) {
+    pausedMessage.text = "Press Spacebar to Start";
+  }
+  pausedMessage.update();
+  return;
 }

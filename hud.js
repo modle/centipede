@@ -7,6 +7,7 @@ var pausedMessage = new component("50px", "Consolas", "Black", canvasWidth/4, ca
 var died = new component("50px", "Consolas", "Black", canvasWidth/4, canvasHeight/4, "text");
 var levelOver = new component("40px", "Consolas", "black", canvasWidth/4, canvasHeight/5*2, "text");
 levelOver.text = "";
+died.text = "";
 
 var scoreValue = 0;
 var defaultLives = 3;
@@ -42,19 +43,7 @@ function updateScore() {
   score.update();
 }
 
-function managePause() {
-  pausedMessage.text = "Paused: Spacebar to Continue";
-  if (gameArea.frameNo === 0) {
-    pausedMessage.text = "Press Spacebar to Start";
-  }
-  pausedMessage.update();
-  return;
-}
-
-function manageDeath() {
-  if (died.text) {
-    wait(2000);
-    resetGamePiecePosition();
-    died.text = "";
-  }
+function setLevelOver() {
+  levelOver.text = "Level clear! Loading next level...";
+  levelOver.update();
 }

@@ -8,6 +8,7 @@ floatingPointCycleDuration = 50;
 function checkCollisions() {
   checkLaserCollision(mushrooms);
   checkLaserCollision(centipedes);
+  checkGamePieceCollisionWithCentipede();
 }
 
 function checkLaserCollision(targets) {
@@ -23,6 +24,9 @@ function checkLaserCollision(targets) {
           // remove target and set laser removal to pending
           if (targets[j].name === 'centipede') {
             mushrooms.push(generateMushroom(targets[j].x, targets[j].y));
+            if (targets.length === 1) {
+              setLevelOver();
+            }
           }
           targets.splice(j, 1);
         } else {
@@ -36,6 +40,27 @@ function checkLaserCollision(targets) {
     }
   }
 }
+
+function checkGamePieceCollisionWithCentipede() {
+  for (i = 0; i < centipedes.length; i += 1) {
+    if (gamePiece.crashWith(centipedes[i])) {
+      died.text = "BOOM! You died.";
+      died.update();
+      lives -= 1;
+      if (lives > 0) {
+        return;
+      }
+      gameArea.stop();
+      gameOver = new component("100px", "Consolas", "pink", canvasWidth/4, canvasHeight/2, "text");
+      gameOver.text = "Game Over";
+      gameOver.update();
+      tooBad = new component("40px", "Consolas", "black", canvasWidth/4, canvasHeight/2 + canvasHeight/4, "text");
+      tooBad.text = "TFB";
+      tooBad.update();
+    }
+  }
+}
+
 
 function addNewFloatingPoint(x, y, points, action) {
   symbol = "+";
