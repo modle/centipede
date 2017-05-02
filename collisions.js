@@ -61,6 +61,14 @@ function checkGamePieceCollisionWithCentipede() {
   }
 }
 
+function collidesWithMushrooms(gamePiece) {
+  for (i = 0; i < mushrooms.length; i += 1) {
+    if (gamePiece.crashWith(mushrooms[i])) {
+      return true;
+    }
+  }
+  return false;
+}
 
 function addNewFloatingPoint(x, y, points, action) {
   symbol = "+";
