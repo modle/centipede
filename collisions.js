@@ -42,8 +42,6 @@ function checkLaserCollision(targets) {
 function checkGamePieceCollisionWithCentipede() {
   for (i = 0; i < centipedes.length; i += 1) {
     if (gamePiece.crashWith(centipedes[i])) {
-      diedText.text = "BOOM! You died.";
-      diedText.update();
       died = true;
       lives -= 1;
       if (lives > 0) {

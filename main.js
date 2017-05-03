@@ -82,8 +82,10 @@ function setLevelOverText() {
 function manageLevel() {
   gameArea.frameNo = 0;
   clearCentipedes();
+  clearLasers();
   resetGamePiecePosition();
-  currentLevel += 1;  levelOverText.text = "";
+  currentLevel += 1;
+  levelOverText.text = "";
   levelOver = false;
 }
 
@@ -106,5 +108,4 @@ function managePause() {
     pausedMessage.text = "Press Spacebar to Start";
   }
   pausedMessage.update();
-  return;
 }
