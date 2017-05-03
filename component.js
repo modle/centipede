@@ -20,6 +20,30 @@ function component(width, height, color, x, y, type, extra1, extra2) {
       this.speedX = extra1;
       this.speedY = extra2;
       ctx.fillRect(this.x, this.y, this.width, this.height);
+    } else if (this.type == "centipede") {
+      ctx.beginPath();
+      if (this.moveVertically) {
+        if (this.directionY > 0) {
+          ctx.moveTo(this.x, this.y);
+          ctx.lineTo(this.x + this.width, this.y);
+          ctx.lineTo(this.x + this.width/2, this.y);
+        } else if (this.directionY < 0) {
+          ctx.moveTo(this.x + this.width/2, this.y);
+          ctx.lineTo(this.x + this.width, this.y + this.height);
+          ctx.lineTo(this.x, this.y + this.height);
+        }
+      } else {
+        if (this.directionX > 0) {
+          ctx.moveTo(this.x, this.y);
+          ctx.lineTo(this.x + this.width, this.y + this.height/2);
+          ctx.lineTo(this.x, this.y + this.height);
+        } else if (this.directionX < 0) {
+          ctx.moveTo(this.x + this.width, this.y);
+          ctx.lineTo(this.x, this.y + this.height/2);
+          ctx.lineTo(this.x + this.width, this.y + this.height);
+        }
+      }
+      ctx.fill();
     } else {
       ctx.fillRect(this.x, this.y, this.width, this.height);
     }

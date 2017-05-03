@@ -1,38 +1,38 @@
 Tues, April 5, 2017
-- DONE set up canvas
+- (DONE) set up canvas
 
-- DONE set up gamePiece boundary
+- (DONE) set up gamePiece boundary
   - what happens when game piece reaches boundary?
     - Just stop adding to that direction.
     - Look at how human movement is handled at the edge of the screen in Robotron
 
-- DONE add bullet shooting upward only (space? no, shift)
+- (DONE) add bullet shooting upward only (space? no, shift)
 
-- DONE use same score/level/timer/lives counters as robotron
-  - DONE extract those elements out into a separate js file
+- (DONE) use same score/level/timer/lives counters as robotron
+  - (DONE) extract those elements out into a separate js file
 
 Weds, April 5, 2017
-- DONE random mushroom placement (in a grid)
+- (DONE) random mushroom placement (in a grid)
   - BONUS number of mushrooms random between 2 numbers
-  - DONE mushrooms disappear when shot
+  - (DONE) mushrooms disappear when shot
   - BONUS 'mushrooms' change color when you shoot them for 3-4 different colors, then disappear
 
 Thurs, April 6, 2017
-- single-unit centipede to figure out direction reversing
+- (DONE) single-unit centipede to figure out direction reversing
   - down one 'row' (screen height/20) unless bottom, then up
     - if going up, only go up to limit of gamePiece boundary
   - reverse direction
 
-- how to chain centipedes?
+- (DONE - don't need to) how to chain centipedes?
     - could give them IDs and treat them like a linked list, each one behind following the one in front
 
-- player collision: centipede hitting player resets all monsters on the screen and spawns a new centipede
+- (DONE) player collision: centipede hitting player resets all monsters on the screen and spawns a new centipede
   - mushroom resetting? or does that happen when centipede dies? or x number of centipedes die?
 
-- shooting centipedes
-  - if centipede movement handling is done correctly, breaking the centipede by shooting it should be handled automatically
+- (DONE) shooting centipedes
+  - if centipede movement handling is done correctly, breaking the centipede by shooting it should be handled automatically (yes, it did)
 
-- destroying centipede ends level
+- (DONE) destroying centipede ends level
   - all 'mushrooms' revert back to original color and player gets bonus points
     - does it? see player collision above
 
@@ -43,7 +43,7 @@ Fri, April 7, 2017
 
 
 - Difficulty scaling
-  - longer centipedes
+  - (DONE) longer centipedes
   - faster centipedes
 
 - power ups
@@ -53,5 +53,5 @@ Fri, April 7, 2017
 
 Sat, April 8, 2017
 - Extra things to wrap it up
-  - pausing
+  - (DONE) pausing
   - resetting

@@ -11,8 +11,8 @@ var xVertices = [];
 var yVertices = [];
 
 var gameArea = {
-        canvas : document.createElement("canvas"),
-  start : function() {
+  canvas : document.createElement("canvas"),
+    start : function() {
     paused = true;
     this.canvas.width = canvasWidth;
     this.canvas.height = canvasHeight;

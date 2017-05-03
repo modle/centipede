@@ -30,7 +30,6 @@ function updateMushrooms() {
 
 function generateMushroom(x, y) {
   mushroom = new component(gridSquareSide, gridSquareSide, 'brown', x, y);
-  mushroom.name = "mushroom";
   mushroom.pointValue = currentLevel;
   mushroom.hitPoints = 4;
   return mushroom;
