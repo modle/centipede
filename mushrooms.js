@@ -9,7 +9,7 @@ var firstMushroomLayer = gridSquareSide * 2;
 
 function manageMushrooms() {
   if (gameArea.frameNo == 1) {
-    spawnMushrooms(100);
+    spawnMushrooms(50);
   }
   updateMushrooms();
 }

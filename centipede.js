@@ -5,7 +5,7 @@
 
 var centipedes = [];
 var centipedeInterval = 10;
-var centipedeBaseSpeed = 1;
+var centipedeBaseSpeed = 0;
 var defaultMaxCentipedes = 10;
 var centipedePointValue = 1;
 // use a var to count centipedes instead of length of array
@@ -132,7 +132,7 @@ function updateCentipedeCoordinates() {
         centipedes[i].distanceMovedFromBottom += Math.abs(centipedes[i].directionY);
       }
     } else {
-      toMoveX = getCentipedeSpeed() * centipedes[i].directionX;
+      toMoveX = centipedes[i].directionX;
       newPositionX = centipedes[i].x + toMoveX;
       // if updating x would put the centipede outside the gameArea, don't update the x position, instead flag moveVertically
       if (newPositionX < canvasWidth && newPositionX > 0) {
