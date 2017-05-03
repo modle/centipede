@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 jslint *.js > jslint-output
 jshint *.js > jshint-output

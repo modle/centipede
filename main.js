@@ -1,6 +1,8 @@
 /*jslint white: true */
 
 var paused = true;
+var died = false;
+var levelOver = false;
 
 // invoked on page load
 function startGame() {
@@ -31,54 +33,71 @@ function reset() {
 
 // this gets executed every interval
 function updateGameArea() {
+  // check game conditions and update messages
   if (paused) {
     managePause();
     return;
   }
-  // check game conditions
-  if (died.text) {
-    manageDeath();
-    return;
-  }
-  if (levelOver.text) {
-    manageLevel();
-    return;
-  }
   // clear the canvas
-  clearGameAreaAndBumpFrame();
+  checkLevelEndConditions();
+  startNextFrame();
+  updateHud();
   // make things happen
   checkCollisions();
   manageMushrooms();
   manageCentipedes();
   manageLasers();
   manageGamePiece();
-  updateHud();
+  if (levelOver) {
+    setLevelOverText();
+    wait(2000);
+    manageLevel();
+    return;
+  }
+  if (died) {
+    setDiedText();
+    wait(2000);
+    manageDeath();
+    return;
+  }
   updateFloatingPoints();
 }
 
-function clearGameAreaAndBumpFrame() {
+function checkLevelEndConditions() {
+  if (centipedesSpawned === centipedesKilled && gameArea.frameNo !== 0) {
+    levelOver = true;
+  }
+}
+
+function startNextFrame() {
   gameArea.clear();
   gameArea.frameNo += 1;
 }
 
-function manageLevel() {
-  wait(2000);
-  loadNextLevel();
-  levelOver.text = "";
+function setLevelOverText() {
+  levelOverText.text = "Level clear! Loading next level...";
+  levelOverText.update();
 }
 
-function loadNextLevel() {
+function manageLevel() {
   gameArea.frameNo = 0;
   clearCentipedes();
   resetGamePiecePosition();
-  currentLevel += 1;
+  currentLevel += 1;  levelOverText.text = "";
+  levelOver = false;
+}
+
+function setDiedText() {
+  diedText.text = "BOOM! You died.";
+  diedText.update();
 }
 
 function manageDeath() {
-  wait(2000);
+  gameArea.frameNo = 0;
   clearCentipedes();
   resetGamePiecePosition();
-  died.text = "";
+  diedText.text = "";
+  died = false;
 }
 
 function managePause() {

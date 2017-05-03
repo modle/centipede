@@ -9,7 +9,6 @@ var gamePieceWidth = 30;
 var gamePieceHeight = 30;
 var gamePieceStartX = (canvasWidth - gamePieceWidth) / 2;
 var gamePieceStartY = canvasHeight * 0.9;
-// - (gamePieceHeight / 2)
 
 function manageGamePiece() {
   moveGamePiece();

@@ -24,9 +24,7 @@ function checkLaserCollision(targets) {
           // remove target and set laser removal to pending
           if (targets[j].name === 'centipede') {
             mushrooms.push(generateMushroom(targets[j].x, targets[j].y));
-            if (targets.length === 1) {
-              setLevelOver();
-            }
+            centipedesKilled += 1;
           }
           targets.splice(j, 1);
         } else {
@@ -44,8 +42,9 @@ function checkLaserCollision(targets) {
 function checkGamePieceCollisionWithCentipede() {
   for (i = 0; i < centipedes.length; i += 1) {
     if (gamePiece.crashWith(centipedes[i])) {
-      died.text = "BOOM! You died.";
-      died.update();
+      diedText.text = "BOOM! You died.";
+      diedText.update();
+      died = true;
       lives -= 1;
       if (lives > 0) {
         return;

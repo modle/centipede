@@ -10,6 +10,7 @@ var defaultMaxCentipedes = 10;
 var centipedePointValue = 1;
 // use a var to count centipedes instead of length of array
 var centipedesSpawned = 0;
+var centipedesKilled = 0;
 
 function manageCentipedes() {
   if (gameArea.frameNo == 1 || everyinterval(centipedeInterval)) {
@@ -29,7 +30,7 @@ function spawnCentipedes() {
     centipede.distanceMovedX = 0;
     centipede.distanceMovedY = 0;
     centipede.distanceMovedFromBottom = 0;
-    centipede.reverseDirectionX = false
+    centipede.reverseDirectionX = false;
     centipede.reverseDirectionY = false;
     centipede.moveVertically = true;
     centipede.pointValue = 5 + currentLevel;
@@ -161,4 +162,5 @@ function getCentipedeSpeed() {
 function clearCentipedes() {
   centipedes = [];
   centipedesSpawned = 0;
+  centipedesKilled = 0;
 }
