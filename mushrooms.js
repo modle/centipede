@@ -7,6 +7,8 @@ var mushrooms = [];
 var mushroomPointValue = 1;
 var firstMushroomLayer = gridSquareSide * 2;
 var maxMushrooms = 50;
+var coordinateScaleFactor = gridSquareSide * 0.1;
+var mushroomSide = gridSquareSide * 0.8;
 
 function manageMushrooms() {
   if (gameArea.frameNo == 1) {
@@ -19,7 +21,7 @@ function spawnMushrooms(amount) {
   while (mushrooms.length < amount) {
     x = xVertices[Math.floor(Math.random() * xVertices.length)];
     y = yVertices[Math.floor(Math.random() * yVertices.length)];
-    if (x < canvasWidth - gridSquareSide) {
+    if (x < canvasWidth - coordinateScaleFactor) {
       mushrooms.push(generateMushroom(x, y));
     }
   }
@@ -32,7 +34,7 @@ function updateMushrooms() {
 }
 
 function generateMushroom(x, y) {
-  mushroom = new component(gridSquareSide * 0.8, gridSquareSide * 0.8, "teal", x + gridSquareSide * 0.1, y + gridSquareSide * 0.1);
+  mushroom = new component(mushroomSide, mushroomSide, "teal", x + coordinateScaleFactor, y + coordinateScaleFactor);
   mushroom.pointValue = currentLevel;
   mushroom.hitPoints = 4;
   return mushroom;

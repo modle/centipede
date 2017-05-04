@@ -1,7 +1,7 @@
 /*jslint white: true */
 
-var canvasWidth = Math.ceil(Math.min(getWidth(), getHeight()) * 0.8);
-var canvasHeight = canvasWidth;
+var canvasWidth = 800;
+var canvasHeight = 800;
 var gridDivisor = 25;
 var gridSquareSide = Math.floor(canvasWidth / gridDivisor);
 
