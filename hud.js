@@ -1,7 +1,7 @@
 /*jslint white: true */
 
 var score = new component("30px", "Consolas", "black", canvasWidth/10, 40, "text");
-var livesDisplay = new component("30px", "Consolas", "black", canvasWidth/2, 40, "text");
+var livesDisplay = new component("30px", "Consolas", "black", canvasWidth/5*2, 40, "text");
 var level = new component("30px", "Consolas", "black", canvasWidth/3*2, 40, "text");
 var pausedMessage = new component("50px", "Consolas", "Black", canvasWidth/4, canvasHeight/4, "text");
 var diedText = new component("50px", "Consolas", "Black", canvasWidth/4, canvasHeight/4, "text");

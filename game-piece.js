@@ -4,7 +4,7 @@
 /***********************************/
 
 var gamePiece;
-var gamePieceSpeed = 5;
+var gamePieceSpeed = 2;
 var gamePieceWidth = 30;
 var gamePieceHeight = 30;
 var gamePieceStartX = (canvasWidth - gamePieceWidth) / 2;
@@ -30,6 +30,62 @@ function moveGamePiece() {
   // stop game piece from going beyond boundaries (bottom 20% of screen only)
   // move game piece
   // FIXME: abstract this better
+  // up right
+  if (gameArea.keys && gameArea.keys[87] && gamePiece.getTop() > gamePieceTopLimit && gameArea.keys[68] && gamePiece.getRight() < canvasWidth) {
+    // move it
+    gamePiece.speedX = gamePieceSpeed;
+    gamePiece.speedY = -gamePieceSpeed;
+    gamePiece.newPos();
+    // if it collides, move it back
+    if (collidesWithMushrooms(gamePiece)) {
+      gamePiece.speedX = -gamePieceSpeed;
+      gamePiece.speedY = gamePieceSpeed;
+      gamePiece.newPos();
+    }
+    return;
+  }
+  // up left
+  if (gameArea.keys && gameArea.keys[87] && gamePiece.getTop() > gamePieceTopLimit && gameArea.keys[65] && gamePiece.getLeft() > 0) {
+    // move it
+    gamePiece.speedX = -gamePieceSpeed;
+    gamePiece.speedY = -gamePieceSpeed;
+    gamePiece.newPos();
+    // if it collides, move it back
+    if (collidesWithMushrooms(gamePiece)) {
+      gamePiece.speedX = gamePieceSpeed;
+      gamePiece.speedY = gamePieceSpeed;
+      gamePiece.newPos();
+    }
+    return;
+  }
+  // down right
+  if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < canvasHeight && gameArea.keys[68] && gamePiece.getRight() < canvasWidth) {
+    // move it
+    gamePiece.speedX = gamePieceSpeed;
+    gamePiece.speedY = gamePieceSpeed;
+    gamePiece.newPos();
+    // if it collides, move it back
+    if (collidesWithMushrooms(gamePiece)) {
+      gamePiece.speedX = -gamePieceSpeed;
+      gamePiece.speedY = -gamePieceSpeed;
+      gamePiece.newPos();
+    }
+    return;
+  }
+  // down left
+  if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < canvasHeight && gameArea.keys[65] && gamePiece.getLeft() > 0) {
+    // move it
+    gamePiece.speedX = -gamePieceSpeed;
+    gamePiece.speedY = gamePieceSpeed;
+    gamePiece.newPos();
+    // if it collides, move it back
+    if (collidesWithMushrooms(gamePiece)) {
+      gamePiece.speedX = gamePieceSpeed;
+      gamePiece.speedY = -gamePieceSpeed;
+      gamePiece.newPos();
+    }
+    return;
+  }
   // left
   if (gameArea.keys && gameArea.keys[65] && gamePiece.getLeft() > 0) {
     // move it
@@ -40,6 +96,7 @@ function moveGamePiece() {
       gamePiece.speedX = gamePieceSpeed;
       gamePiece.newPos();
     }
+    return;
   }
   // right
   if (gameArea.keys && gameArea.keys[68] && gamePiece.getRight() < canvasWidth) {
@@ -51,6 +108,7 @@ function moveGamePiece() {
       gamePiece.speedX = -gamePieceSpeed;
       gamePiece.newPos();
     }
+    return;
   }
   // up
   if (gameArea.keys && gameArea.keys[87] && gamePiece.getTop() > gamePieceTopLimit) {
@@ -62,6 +120,7 @@ function moveGamePiece() {
       gamePiece.speedY = gamePieceSpeed;
       gamePiece.newPos();
     }
+    return;
   }
   // down
   if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < canvasHeight) {
@@ -73,5 +132,6 @@ function moveGamePiece() {
       gamePiece.speedY = -gamePieceSpeed;
       gamePiece.newPos();
     }
+    return;
   }
 }
