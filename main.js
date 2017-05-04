@@ -91,7 +91,7 @@ function manageLevel() {
 }
 
 function setDiedText() {
-  diedText.text = "BOOM! You died.";
+  diedText.text = "You died.";
   diedText.update();
 }
 
