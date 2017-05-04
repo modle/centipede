@@ -95,7 +95,7 @@ function getUpTriangle(ctx, myObject) {
   vertices['x2'] = myObject.x + myObject.width/2;
   vertices['y2'] = myObject.y;
   vertices['x3'] = myObject.x + myObject.width;
-  vertices['y3'] = myObject.y;
+  vertices['y3'] = myObject.y + myObject.height;
   return vertices;
 }
 
