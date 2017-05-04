@@ -61,7 +61,6 @@ function killPlayer() {
 
 function showGameOver() {
   gameArea.stop();
-  gameOver = new component("100px", "Consolas", "pink", canvasWidth/4, canvasHeight/2, "text");
   gameOver.text = "Game Over";
   gameOver.update();
 }

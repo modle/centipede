@@ -43,13 +43,13 @@ function updateGameArea() {
   startNextFrame();
   updateHud();
   // make things happen
-  checkCollisions();
   manageMushrooms();
   manageCentipedes();
   manageWorms();
   manageSpiders();
   manageLasers();
   manageGamePiece();
+  checkCollisions();
   if (levelOver) {
     setLevelOverText();
     wait(2000);
