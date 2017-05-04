@@ -5,8 +5,8 @@
 
 var wormPointValue = 50;
 var worms = [];
-var wormMaxInterval = 5000;
-var wormMinInterval = 3000;
+var wormMaxInterval = 8000;
+var wormMinInterval = 5000;
 var wormInterval = getRandom(wormMinInterval, wormMaxInterval);
 
 function manageWorms() {
@@ -23,7 +23,7 @@ function spawnWorm() {
   y = canvasHeight / 10;
   var worm = new component(gridSquareSide * 2, gridSquareSide / 2, "orange", x, y, "worm");
   worm.speedX = 0.5;
-  worm.pointValue = wormPointValue + currentLevel - 1;
+  worm.pointValue = wormPointValue * currentLevel;
   worm.hitPoints = 1;
   worms.push(worm);
 }

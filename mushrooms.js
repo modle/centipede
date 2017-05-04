@@ -18,7 +18,9 @@ function spawnMushrooms(amount) {
   while (mushrooms.length < amount) {
     x = xVertices[Math.floor(Math.random() * xVertices.length)];
     y = yVertices[Math.floor(Math.random() * yVertices.length)];
-    mushrooms.push(generateMushroom(x, y));
+    if (x < canvasWidth - gridSquareSide) {
+      mushrooms.push(generateMushroom(x, y));
+    }
   }
 }
 
@@ -29,7 +31,7 @@ function updateMushrooms() {
 }
 
 function generateMushroom(x, y) {
-  mushroom = new component(gridSquareSide, gridSquareSide, 'brown', x, y);
+  mushroom = new component(gridSquareSide, gridSquareSide, "teal", x, y);
   mushroom.pointValue = currentLevel;
   mushroom.hitPoints = 4;
   return mushroom;

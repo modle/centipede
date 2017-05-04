@@ -25,7 +25,7 @@ function makeLasers() {
     speedY = -1 * laserSpeed;
   }
   if (speedY !== 0) {
-    lasers.push(new component(laserSideLength, laserSideLength, "green", gamePiece.x + gamePiece.width / 2, gamePiece.y + gamePiece.height / 2, "laser", speedX, speedY));
+    lasers.push(new component(laserSideLength, laserSideLength, "purple", gamePiece.x + gamePiece.width / 2, gamePiece.y + gamePiece.height / 2, "laser", speedX, speedY));
   }
 }
 
