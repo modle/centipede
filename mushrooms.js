@@ -6,10 +6,11 @@
 var mushrooms = [];
 var mushroomPointValue = 1;
 var firstMushroomLayer = gridSquareSide * 2;
+var maxMushrooms = 50;
 
 function manageMushrooms() {
   if (gameArea.frameNo == 1) {
-    spawnMushrooms(50);
+    spawnMushrooms(maxMushrooms);
   }
   updateMushrooms();
 }
@@ -31,7 +32,7 @@ function updateMushrooms() {
 }
 
 function generateMushroom(x, y) {
-  mushroom = new component(gridSquareSide, gridSquareSide, "teal", x, y);
+  mushroom = new component(gridSquareSide * 0.8, gridSquareSide * 0.8, "teal", x + gridSquareSide * 0.1, y + gridSquareSide * 0.1);
   mushroom.pointValue = currentLevel;
   mushroom.hitPoints = 4;
   return mushroom;
