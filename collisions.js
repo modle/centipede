@@ -9,7 +9,9 @@ function checkCollisions() {
   checkLaserCollision(mushrooms);
   checkLaserCollision(centipedes);
   checkLaserCollision(worms);
-  checkGamePieceCollisionWithCentipede();
+  checkLaserCollision(spiders);
+  checkGamePieceCollisionWithEnemy(centipedes);
+  checkGamePieceCollisionWithEnemy(spiders);
 }
 
 function checkLaserCollision(targets) {
@@ -40,9 +42,9 @@ function checkLaserCollision(targets) {
   }
 }
 
-function checkGamePieceCollisionWithCentipede() {
-  for (i = 0; i < centipedes.length; i += 1) {
-    if (gamePiece.crashWith(centipedes[i])) {
+function checkGamePieceCollisionWithEnemy(targets) {
+  for (i = 0; i < targets.length; i += 1) {
+    if (gamePiece.crashWith(targets[i])) {
       killPlayer();
       if (lives > 0) {
         return;

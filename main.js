@@ -47,6 +47,7 @@ function updateGameArea() {
   manageMushrooms();
   manageCentipedes();
   manageWorms();
+  manageSpiders();
   manageLasers();
   manageGamePiece();
   if (levelOver) {
@@ -81,10 +82,7 @@ function setLevelOverText() {
 }
 
 function manageLevel() {
-  gameArea.frameNo = 0;
-  clearCentipedes();
-  clearLasers();
-  resetGamePiecePosition();
+  resetEverything();
   currentLevel += 1;
   levelOverText.text = "";
   levelOver = false;
@@ -96,9 +94,7 @@ function setDiedText() {
 }
 
 function manageDeath() {
-  gameArea.frameNo = 0;
-  clearCentipedes();
-  resetGamePiecePosition();
+  resetEverything();
   diedText.text = "";
   died = false;
 }
@@ -109,4 +105,13 @@ function managePause() {
     pausedMessage.text = "Press Spacebar to Start";
   }
   pausedMessage.update();
+}
+
+function resetEverything() {
+  gameArea.frameNo = 0;
+  clearCentipedes();
+  clearSpiders();
+  clearWorms();
+  clearLasers();
+  resetGamePiecePosition();
 }

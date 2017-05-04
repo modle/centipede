@@ -5,8 +5,8 @@
 
 var wormPointValue = 50;
 var worms = [];
-var wormMaxInterval = 8000;
 var wormMinInterval = 5000;
+var wormMaxInterval = 8000;
 var wormInterval = getRandom(wormMinInterval, wormMaxInterval);
 
 function manageWorms() {
