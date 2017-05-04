@@ -25,12 +25,12 @@ function component(width, height, color, x, y, type, extra1, extra2) {
       if (this.moveVertically) {
         if (this.directionY > 0) {
           ctx.moveTo(this.x, this.y);
+          ctx.lineTo(this.x + this.width/2, this.y + this.height);
           ctx.lineTo(this.x + this.width, this.y);
-          ctx.lineTo(this.x + this.width/2, this.y);
         } else if (this.directionY < 0) {
-          ctx.moveTo(this.x + this.width/2, this.y);
-          ctx.lineTo(this.x + this.width, this.y + this.height);
-          ctx.lineTo(this.x, this.y + this.height);
+          ctx.moveTo(this.x, this.y + this.height);
+          ctx.lineTo(this.x + this.width/2, this.y);
+          ctx.lineTo(this.x + this.width, this.y);
         }
       } else {
         if (this.directionX > 0) {
