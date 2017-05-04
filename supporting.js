@@ -20,6 +20,10 @@ function wait(ms) {
   while(d2-d < ms);
 }
 
+function getRandom(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
 function getWidth() {
   if (self.innerWidth) {
     return self.innerWidth;

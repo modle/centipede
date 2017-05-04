@@ -46,6 +46,7 @@ function updateGameArea() {
   checkCollisions();
   manageMushrooms();
   manageCentipedes();
+  manageWorms();
   manageLasers();
   manageGamePiece();
   if (levelOver) {
