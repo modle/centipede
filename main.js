@@ -3,6 +3,8 @@
 var paused = true;
 var died = false;
 var levelOver = false;
+var delayed = 0;
+var delayEndTime = 300;
 
 // invoked on page load
 function startGame() {
@@ -38,6 +40,15 @@ function updateGameArea() {
     managePause();
     return;
   }
+  if (died && delayed < delayEndTime) {
+    delayed++;
+    return;
+  }
+  if (died) {
+    manageDeath();
+    delayed = 0;
+    return;
+  }
   // clear the canvas
   checkLevelEndConditions();
   startNextFrame();
@@ -49,20 +60,16 @@ function updateGameArea() {
   manageSpiders();
   manageLasers();
   manageGamePiece();
+  // check game conditions
   checkCollisions();
-  if (levelOver) {
-    setLevelOverText();
-    wait(2000);
-    manageLevel();
-    return;
-  }
+  updateFloatingPoints();
   if (died) {
     setDiedText();
-    wait(2000);
-    manageDeath();
     return;
   }
-  updateFloatingPoints();
+  if (levelOver) {
+    manageLevel();
+  }
 }
 
 function checkLevelEndConditions() {
@@ -76,16 +83,10 @@ function startNextFrame() {
   gameArea.frameNo += 1;
 }
 
-function setLevelOverText() {
-  levelOverText.text = "Level clear! Loading next level...";
-  levelOverText.update();
-}
-
 function manageLevel() {
-  resetEverything();
-  currentLevel += 1;
-  levelOverText.text = "";
+  resetSomeThings();
   levelOver = false;
+  currentLevel += 1;
 }
 
 function setDiedText() {
@@ -94,7 +95,7 @@ function setDiedText() {
 }
 
 function manageDeath() {
-  resetEverything();
+  resetMoreThings();
   diedText.text = "";
   died = false;
 }
@@ -107,11 +108,15 @@ function managePause() {
   pausedMessage.update();
 }
 
-function resetEverything() {
+function resetSomeThings() {
   gameArea.frameNo = 0;
   clearCentipedes();
-  clearSpiders();
-  clearWorms();
   clearLasers();
+}
+
+function resetMoreThings() {
+  resetSomeThings();
+  clearWorms();
+  clearSpiders();
   resetGamePiecePosition();
 }

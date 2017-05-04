@@ -7,6 +7,7 @@ var lasers = [];
 var laserSpeed = 5;
 var laserSideLength = 5;
 var laserInterval = 10;
+var maxLasers = 1;
 
 function manageLasers() {
   makeLasers();
@@ -15,7 +16,7 @@ function manageLasers() {
 }
 
 function makeLasers() {
-  if (!lasers || lasers.length > 1 || !gameArea.keys || !everyinterval(laserInterval)) {
+  if (!lasers || lasers.length === maxLasers || !gameArea.keys || !everyinterval(laserInterval)) {
     return;
   }
   var speedX = 0;
