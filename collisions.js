@@ -42,20 +42,25 @@ function checkLaserCollision(targets) {
 function checkGamePieceCollisionWithCentipede() {
   for (i = 0; i < centipedes.length; i += 1) {
     if (gamePiece.crashWith(centipedes[i])) {
-      died = true;
-      lives -= 1;
+      killPlayer();
       if (lives > 0) {
         return;
       }
-      gameArea.stop();
-      gameOver = new component("100px", "Consolas", "pink", canvasWidth/4, canvasHeight/2, "text");
-      gameOver.text = "Game Over";
-      gameOver.update();
-      tooBad = new component("40px", "Consolas", "black", canvasWidth/4, canvasHeight/2 + canvasHeight/4, "text");
-      tooBad.text = "TFB";
-      tooBad.update();
+      showGameOver();
     }
   }
+}
+
+function killPlayer() {
+  died = true;
+  lives -= 1;
+}
+
+function showGameOver() {
+  gameArea.stop();
+  gameOver = new component("100px", "Consolas", "pink", canvasWidth/4, canvasHeight/2, "text");
+  gameOver.text = "Game Over";
+  gameOver.update();
 }
 
 function collidesWithMushrooms(gamePiece) {
