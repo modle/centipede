@@ -10,8 +10,6 @@ var delayEndTime = 300;
 function startGame() {
   gamePiece = new component(gamePieceWidth, gamePieceHeight, "red", gamePieceStartX, gamePieceStartY, 0, 0);
   getGridVertices();
-  console.log(yVertices);
-  console.log(canvasWidth / gridDivisor);
   gameArea.start();
 }
 

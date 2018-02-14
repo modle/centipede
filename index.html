@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <script src="js/component.js"></script>
   <script src="js/supporting.js"></script>
   <script src="js/game-area.js"></script>
@@ -13,20 +15,14 @@
   <script src="js/spider.js"></script>
   <script src="js/centipede.js"></script>
   <script src="js/mushrooms.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <style>
-    canvas {
-      border:1px solid #d3d3d3;
-      background-color: #f1f1f1;
-    }
-  </style>
 </head>
 <body onload="startGame()">
-  <div>
+  <div class="instructions">
     <p>
       <strong>Centipede!</strong><br>
       <strong>WASD</strong> : move<br>
       <strong>Arrows</strong> : shoot<br>
     </p>
+  </div>
 </body>
 </html>

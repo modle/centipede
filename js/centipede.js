@@ -61,7 +61,6 @@ function hasCollidedWithWall(centipede) {
   return ((centipede.getLeft() < 1 || centipede.getRight() > canvasWidth - 1) && centipede.distanceMovedX > gridSquareSide);
 }
 
-
 function hasCollidedWithMushroom(centipede) {
   for (j = 0; j < mushrooms.length; j += 1) {
     if (centipede.crashWithSidesOnly(mushrooms[j]) && Math.abs(centipede.y - mushrooms[j].y) < 5 && centipede.distanceMovedX > gridSquareSide) {
