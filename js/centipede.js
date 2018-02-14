@@ -19,29 +19,41 @@ function manageCentipedes() {
   updateCentipedes();
 }
 
-function spawnCentipedes() {
-  if (centipedesSpawned < defaultMaxCentipedes + currentLevel) {
-    x = canvasWidth / 2;
-    y = 0;
-    centipede = new component(gridSquareSide, gridSquareSide, "blue", x, y, "centipede");
-    centipede.directionX = 1;
-    centipede.directionY = 1;
-    centipede.distanceMovedX = 0;
-    centipede.distanceMovedY = 0;
-    centipede.distanceMovedFromBottom = 0;
-    centipede.reverseDirectionX = false;
-    centipede.reverseDirectionY = false;
-    centipede.moveVertically = true;
-    centipede.pointValue = 5 + currentLevel;
-    centipede.hitPoints = 1;
-    for (i = 0; i < centipedes.length; i += 1) {
-      if (centipedes[i].crashWith(centipede)) {
-        return;
-      }
+function constructCentipede() {
+  x = canvasWidth / 2;
+  y = 0;
+  color = 'blue';
+  type = 'centipede';
+  centipede = new component(gridSquareSide, gridSquareSide, color, x, y, type);
+  centipede.directionX = 1;
+  centipede.directionY = 1;
+  centipede.distanceMovedX = 0;
+  centipede.distanceMovedY = 0;
+  centipede.distanceMovedFromBottom = 0;
+  centipede.reverseDirectionX = false;
+  centipede.reverseDirectionY = false;
+  centipede.moveVertically = true;
+  centipede.pointValue = 5 + currentLevel;
+  centipede.hitPoints = 1;
+  return centipede;
+}
+
+function addToCentipedes() {
+  centipede = constructCentipede();
+  for (i = 0; i < centipedes.length; i += 1) {
+    if (centipedes[i].crashWith(centipede)) {
+      return;
     }
-    centipedes.push(centipede);
-    centipedesSpawned++;
   }
+  centipedes.push(centipede);
+  centipedesSpawned++;
+}
+
+function spawnCentipedes() {
+  if (centipedesSpawned >= defaultMaxCentipedes + currentLevel) {
+    return;
+  }
+  addToCentipedes();
 }
 
 function hasCollidedWithWall(centipede) {
