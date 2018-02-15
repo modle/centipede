@@ -8,22 +8,14 @@ var delayEndTime = 300;
 
 // invoked on page load
 function startGame() {
+  if (isMobile()) {
+    showMobile();
+    return;
+  }
   gamePiece = new component(gamePieceWidth, gamePieceHeight, "red", gamePieceStartX, gamePieceStartY, 0, 0);
   getGridVertices();
   gameArea.start();
 }
-
-window.addEventListener('keydown', function (e) {
-  if (e.keyCode == 32) {
-    paused = !paused;
-  }
-});
-
-window.addEventListener('keydown', function (e) {
-  if (e.keyCode == 13) {
-    reset();
-  }
-});
 
 function reset() {
   gameArea.stop();
