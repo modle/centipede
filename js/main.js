@@ -47,7 +47,7 @@ function updateGameArea() {
   centipedeHandler.manage();
   manageWorms();
   manageSpiders();
-  manageLasers();
+  laserHandler.manage();
   manageGamePiece();
   // check game conditions
   checkCollisions();
@@ -100,7 +100,7 @@ function managePause() {
 function resetSomeThings() {
   gameArea.frameNo = 0;
   centipedeHandler.clear();
-  clearLasers();
+  laserHandler.clear();
 }
 
 function resetMoreThings() {

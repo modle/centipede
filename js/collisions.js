@@ -15,9 +15,10 @@ function checkCollisions() {
 }
 
 function checkLaserCollision(targets) {
-  for (i = 0; i < lasers.length; i += 1) {
+  // TODO there's a lot going on here; possibly move the removal to a separate function
+  for (i = 0; i < laserHandler.lasers.length; i += 1) {
     for (j = 0; j < targets.length; j += 1) {
-      if (lasers[i].crashWith(targets[j])) {
+      if (laserHandler.lasers[i].crashWith(targets[j])) {
         targets[j].hitPoints--;
         if (targets[j].hitPoints <= 0) {
           // add floating point
@@ -33,11 +34,11 @@ function checkLaserCollision(targets) {
         } else {
           targets[j].height *= 0.5;
         }
-        lasers[i].remove = true;
+        laserHandler.lasers[i].remove = true;
       }
     }
-    if (lasers[i].remove) {
-      lasers.splice(i, 1);
+    if (laserHandler.lasers[i].remove) {
+      laserHandler.lasers.splice(i, 1);
     }
   }
 }
