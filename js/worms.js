@@ -19,9 +19,9 @@ function manageWorms() {
 }
 
 function spawnWorm() {
-  x = -canvasWidth / 10;
-  y = canvasHeight / 10;
-  var worm = new component(gridSquareSide * 2, gridSquareSide / 2, "orange", x, y, "worm");
+  x = -gameArea.canvas.width / 10;
+  y = gameArea.canvas.height / 10;
+  var worm = new component(gameArea.gridSquareSideLength * 2, gameArea.gridSquareSideLength / 2, "orange", x, y, "worm");
   worm.speedX = 0.5;
   worm.pointValue = wormPointValue * currentLevel;
   worm.hitPoints = 1;

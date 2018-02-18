@@ -43,7 +43,7 @@ var centipedeHandler = {
     y = 0;
     color = 'blue';
     type = 'centipede';
-    centipede = new component(gridSquareSide, gridSquareSide, color, x, y, type);
+    centipede = new component(gameArea.gridSquareSideLength, gameArea.gridSquareSideLength, color, x, y, type);
     centipede.directionX = 1;
     centipede.directionY = 1;
     centipede.distanceMovedX = 0;
@@ -68,12 +68,12 @@ var centipedeHandler = {
   determineDirections : function() {
     for (i = 0; i < this.centipedes.length; i += 1) {
       // move down after start until specified layer
-      if (this.centipedes[i].y < firstMushroomLayer - 1) {
+      if (this.centipedes[i].y < gameArea.firstMushroomLayer - 1) {
         this.centipedes[i].moveVertically = true;
         continue;
       }
       // toggle Y direction if distanceMovedFromBottom is 0 and centipede.bottom > canvasHeight
-      if (this.centipedes[i].getBottom() > canvasHeight) {
+      if (this.centipedes[i].getBottom() > gameArea.canvas.height) {
         this.centipedes[i].reverseDirectionY = true;
       }
       // toggle Y direction if centipede is above gamePieceTopLimit and distanceMovedFromBottom > 0
@@ -97,12 +97,12 @@ var centipedeHandler = {
         continue;
       }
       // keep moving down until desired amount of pixels
-      if (this.centipedes[i].distanceMovedY < gridSquareSide) {
+      if (this.centipedes[i].distanceMovedY < gameArea.gridSquareSideLength) {
         this.centipedes[i].moveVertically = true;
         continue;
       }
       // only reverse horizontally if all other conditions are false
-      if (this.centipedes[i].distanceMovedY >= gridSquareSide) {
+      if (this.centipedes[i].distanceMovedY >= gameArea.gridSquareSideLength) {
         this.centipedes[i].reverseDirectionX = true;
         this.centipedes[i].moveVertically = false;
         this.centipedes[i].distanceMovedY = 0;
@@ -110,11 +110,11 @@ var centipedeHandler = {
     }
   },
   hasCollidedWithWall : function(centipede) {
-    return ((centipede.getLeft() < 1 || centipede.getRight() > canvasWidth - 1) && centipede.distanceMovedX > gridSquareSide);
+    return ((centipede.getLeft() < 1 || centipede.getRight() > canvasWidth - 1) && centipede.distanceMovedX > gameArea.gridSquareSideLength);
   },
   hasCollidedWithMushroom : function(centipede) {
     for (j = 0; j < mushrooms.length; j += 1) {
-      if (centipede.crashWithSidesOnly(mushrooms[j]) && Math.abs(centipede.y - mushrooms[j].y) < 5 && centipede.distanceMovedX > gridSquareSide) {
+      if (centipede.crashWithSidesOnly(mushrooms[j]) && Math.abs(centipede.y - mushrooms[j].y) < 5 && centipede.distanceMovedX > gameArea.gridSquareSideLength) {
         return true;
       }
     }

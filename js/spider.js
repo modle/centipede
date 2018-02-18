@@ -21,7 +21,7 @@ function manageSpiders() {
 function spawnSpider() {
   x = -canvasWidth / 20;
   y = gamePieceTopLimit;
-  var spider = new component(gridSquareSide * 0.3, gridSquareSide * 0.8, "fuchsia", x, y, "spider");
+  var spider = new component(gameArea.gridSquareSideLength * 0.3, gameArea.gridSquareSideLength * 0.8, "fuchsia", x, y, "spider");
   spider.speedX = 1;
   spider.speedY = 1;
   spider.directionY = 1;
@@ -39,7 +39,7 @@ function updateSpiders() {
     spiders[i].speedY = getRandom(0, 1) * spiders[i].directionY;
     spiders[i].newPos();
     spiders[i].update();
-    if (spiders[i].y + spiders[i].height > canvasHeight) {
+    if (spiders[i].y + spiders[i].height > gameArea.canvas.height) {
       spiders[i].directionY = -1;
     }
     if (spiders[i].y < gamePieceTopLimit) {

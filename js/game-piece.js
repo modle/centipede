@@ -8,7 +8,7 @@ var gamePieceSpeed = 2;
 var gamePieceWidth = 30;
 var gamePieceHeight = 30;
 var gamePieceStartX = (canvasWidth - gamePieceWidth) / 2;
-var gamePieceStartY = canvasHeight * 0.9;
+var gamePieceStartY = gameArea.canvas.height * 0.9;
 
 function manageGamePiece() {
   moveGamePiece();
@@ -59,7 +59,7 @@ function moveGamePiece() {
     return;
   }
   // down right
-  if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < canvasHeight && gameArea.keys[68] && gamePiece.getRight() < canvasWidth) {
+  if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < gameArea.canvas.height && gameArea.keys[68] && gamePiece.getRight() < canvasWidth) {
     // move it
     gamePiece.speedX = gamePieceSpeed;
     gamePiece.speedY = gamePieceSpeed;
@@ -73,7 +73,7 @@ function moveGamePiece() {
     return;
   }
   // down left
-  if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < canvasHeight && gameArea.keys[65] && gamePiece.getLeft() > 0) {
+  if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < gameArea.canvas.height && gameArea.keys[65] && gamePiece.getLeft() > 0) {
     // move it
     gamePiece.speedX = -gamePieceSpeed;
     gamePiece.speedY = gamePieceSpeed;
@@ -123,7 +123,7 @@ function moveGamePiece() {
     return;
   }
   // down
-  if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < canvasHeight) {
+  if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < gameArea.canvas.height) {
     // move it
     gamePiece.speedY = gamePieceSpeed;
     gamePiece.newPos();
