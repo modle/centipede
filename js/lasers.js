@@ -4,10 +4,6 @@
 /***********************************/
 
 var lasers = [];
-var laserSpeed = 5;
-var laserSideLength = 5;
-var laserInterval = 10;
-var maxLasers = 1;
 
 function manageLasers() {
   makeLasers();
@@ -16,17 +12,17 @@ function manageLasers() {
 }
 
 function makeLasers() {
-  if (!lasers || lasers.length === maxLasers || !gameArea.keys || !everyinterval(laserInterval)) {
+  if (!lasers || lasers.length === knobsAndLevers.maxLasers || !gameArea.keys || !everyinterval(knobsAndLevers.laserInterval)) {
     return;
   }
   var speedX = 0;
   var speedY = 0;
   // up
   if (gameArea.keys[16] || gameArea.keys[37] || gameArea.keys[38] || gameArea.keys[39] || gameArea.keys[40]) {
-    speedY = -1 * laserSpeed;
+    speedY = -1 * knobsAndLevers.laserSpeed;
   }
   if (speedY !== 0) {
-    lasers.push(new component(laserSideLength, laserSideLength, "purple", gamePiece.x + gamePiece.width / 2, gamePiece.y + gamePiece.height / 2, "laser", speedX, speedY));
+    lasers.push(new component(knobsAndLevers.laserSideLength, knobsAndLevers.laserSideLength, "purple", gamePiece.x + gamePiece.width / 2, gamePiece.y + gamePiece.height / 2, "laser", speedX, speedY));
   }
 }
 

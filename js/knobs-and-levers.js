@@ -8,6 +8,10 @@ var knobsAndLevers = {
   gamePieceHeight : 30,
   gamePieceStartX : 0,
   gamePieceStartY : 0,
+  laserSpeed : 5,
+  laserSideLength : 5,
+  laserInterval : 10,
+  maxLasers : 1,
   initialize : function() {
     console.log('initializing knobsAndLevers');
     this.gamePieceTopLimit = this.canvasHeight * 0.8;
