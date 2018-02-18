@@ -4,11 +4,6 @@
 /***********************************/
 
 var gamePiece;
-var gamePieceSpeed = 2;
-var gamePieceWidth = 30;
-var gamePieceHeight = 30;
-var gamePieceStartX = (gameArea.canvas.width - gamePieceWidth) / 2;
-var gamePieceStartY = gameArea.canvas.height * 0.9;
 
 function manageGamePiece() {
   moveGamePiece();
@@ -20,13 +15,14 @@ function updateGamePiece() {
 }
 
 function resetGamePiecePosition() {
-  gamePiece.x = gamePieceStartX;
-  gamePiece.y = gamePieceStartY;
+  gamePiece.x = knobsAndLevers.gamePieceStartX;
+  gamePiece.y = knobsAndLevers.gamePieceStartY;
 }
 
 function moveGamePiece() {
   gamePiece.speedX = 0;
   gamePiece.speedY = 0;
+  let gamePieceSpeed = knobsAndLevers.gamePieceSpeed;
   // stop game piece from going beyond boundaries (bottom 20% of screen only)
   // move game piece
   // FIXME: abstract this better

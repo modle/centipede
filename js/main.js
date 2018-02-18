@@ -12,8 +12,7 @@ function startGame() {
     showMobile();
     return;
   }
-  gamePiece = new component(gamePieceWidth, gamePieceHeight, "red", gamePieceStartX, gamePieceStartY, 0, 0);
-  // gameArea.getGridVertices();
+  gamePiece = new component(knobsAndLevers.gamePieceWidth, knobsAndLevers.gamePieceHeight, "red", knobsAndLevers.gamePieceStartX, knobsAndLevers.gamePieceStartY, 0, 0);
   gameArea.start();
 }
 
