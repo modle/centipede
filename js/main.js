@@ -45,7 +45,7 @@ function updateGameArea() {
   updateHud();
   // make things happen
   manageMushrooms();
-  manageCentipedes();
+  centipedeHandler.manage();
   manageWorms();
   manageSpiders();
   manageLasers();
@@ -63,7 +63,7 @@ function updateGameArea() {
 }
 
 function checkLevelEndConditions() {
-  if (centipedesSpawned === centipedesKilled && gameArea.frameNo !== 0) {
+  if (centipedeHandler.numberSpawned === centipedeHandler.numberKilled && gameArea.frameNo !== 0) {
     levelOver = true;
   }
 }
@@ -100,7 +100,7 @@ function managePause() {
 
 function resetSomeThings() {
   gameArea.frameNo = 0;
-  clearCentipedes();
+  centipedeHandler.clear();
   clearLasers();
 }
 

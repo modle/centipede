@@ -7,10 +7,10 @@ floatingPointCycleDuration = 50;
 
 function checkCollisions() {
   checkLaserCollision(mushrooms);
-  checkLaserCollision(centipedes);
+  checkLaserCollision(centipedeHandler.centipedes);
   checkLaserCollision(worms);
   checkLaserCollision(spiders);
-  checkGamePieceCollisionWithEnemy(centipedes);
+  checkGamePieceCollisionWithEnemy(centipedeHandler.centipedes);
   checkGamePieceCollisionWithEnemy(spiders);
 }
 
@@ -27,7 +27,7 @@ function checkLaserCollision(targets) {
           // remove target and set laser removal to pending
           if (targets[j].type === 'centipede') {
             mushrooms.push(generateMushroom(targets[j].x, targets[j].y));
-            centipedesKilled += 1;
+            centipedeHandler.numberKilled += 1;
           }
           targets.splice(j, 1);
         } else {
