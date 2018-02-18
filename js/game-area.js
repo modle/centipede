@@ -1,16 +1,12 @@
 /*jslint white: true */
 
-const canvasWidth = 800;
-const canvasHeight = 800;
-const gridDivisor = 25;
-const gamePieceTopLimit = canvasHeight * 0.8;
-
 var gameArea = {
   canvas : document.createElement("canvas"),
   gridSquareSideLength : 0,
   firstMushroomLayer : 0,
   xVertices : [],
   yVertices : [],
+  gamePieceTopLimit : knobsAndLevers.gamePieceTopLimit,
   start : function() {
     paused = true;
     this.context = this.canvas.getContext("2d");
@@ -35,7 +31,7 @@ var gameArea = {
   getXVertices : function() {
     x = 0;
     vertices = [];
-    while (x < canvasWidth) {
+    while (x < this.canvas.width) {
       vertices.push(Math.ceil(x));
       x += this.gridSquareSideLength;
     };
@@ -56,10 +52,11 @@ var gameArea = {
   stop : function() {
     clearInterval(this.interval);
   },
-  setParameters: function() {
-    this.canvas.width = canvasWidth;
-    this.canvas.height = canvasHeight;
-    this.gridSquareSideLength = Math.floor(canvasWidth / gridDivisor);
+  initialize: function() {
+    console.log('initializing gameArea');
+    this.canvas.width = knobsAndLevers.canvasWidth;
+    this.canvas.height = knobsAndLevers.canvasHeight;
+    this.gridSquareSideLength = Math.floor(this.canvas.width / knobsAndLevers.gridDivisor);
     this.firstMushroomLayer = this.gridSquareSideLength * 2;
     this.setGridVertices();
   }
@@ -67,4 +64,4 @@ var gameArea = {
 
 // one property of an object can't be used to set another if they are both generated at object create time
 // so we call a setParameters function to update them after the object has been created
-gameArea.setParameters();
+gameArea.initialize();

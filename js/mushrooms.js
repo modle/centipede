@@ -20,7 +20,7 @@ function spawnMushrooms(amount) {
   while (mushrooms.length < amount) {
     x = gameArea.xVertices[Math.floor(Math.random() * gameArea.xVertices.length)];
     y = gameArea.yVertices[Math.floor(Math.random() * gameArea.yVertices.length)];
-    if (x < canvasWidth - coordinateScaleFactor) {
+    if (x < gameArea.canvas.width - coordinateScaleFactor) {
       mushrooms.push(generateMushroom(x, y));
     }
   }

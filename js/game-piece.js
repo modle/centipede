@@ -7,7 +7,7 @@ var gamePiece;
 var gamePieceSpeed = 2;
 var gamePieceWidth = 30;
 var gamePieceHeight = 30;
-var gamePieceStartX = (canvasWidth - gamePieceWidth) / 2;
+var gamePieceStartX = (gameArea.canvas.width - gamePieceWidth) / 2;
 var gamePieceStartY = gameArea.canvas.height * 0.9;
 
 function manageGamePiece() {
@@ -31,7 +31,7 @@ function moveGamePiece() {
   // move game piece
   // FIXME: abstract this better
   // up right
-  if (gameArea.keys && gameArea.keys[87] && gamePiece.getTop() > gamePieceTopLimit && gameArea.keys[68] && gamePiece.getRight() < canvasWidth) {
+  if (gameArea.keys && gameArea.keys[87] && gamePiece.getTop() > gameArea.gamePieceTopLimit && gameArea.keys[68] && gamePiece.getRight() < gameArea.canvas.width) {
     // move it
     gamePiece.speedX = gamePieceSpeed;
     gamePiece.speedY = -gamePieceSpeed;
@@ -45,7 +45,7 @@ function moveGamePiece() {
     return;
   }
   // up left
-  if (gameArea.keys && gameArea.keys[87] && gamePiece.getTop() > gamePieceTopLimit && gameArea.keys[65] && gamePiece.getLeft() > 0) {
+  if (gameArea.keys && gameArea.keys[87] && gamePiece.getTop() > gameArea.gamePieceTopLimit && gameArea.keys[65] && gamePiece.getLeft() > 0) {
     // move it
     gamePiece.speedX = -gamePieceSpeed;
     gamePiece.speedY = -gamePieceSpeed;
@@ -59,7 +59,7 @@ function moveGamePiece() {
     return;
   }
   // down right
-  if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < gameArea.canvas.height && gameArea.keys[68] && gamePiece.getRight() < canvasWidth) {
+  if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < gameArea.canvas.height && gameArea.keys[68] && gamePiece.getRight() < gameArea.canvas.width) {
     // move it
     gamePiece.speedX = gamePieceSpeed;
     gamePiece.speedY = gamePieceSpeed;
@@ -99,7 +99,7 @@ function moveGamePiece() {
     return;
   }
   // right
-  if (gameArea.keys && gameArea.keys[68] && gamePiece.getRight() < canvasWidth) {
+  if (gameArea.keys && gameArea.keys[68] && gamePiece.getRight() < gameArea.canvas.width) {
     // move it
     gamePiece.speedX = gamePieceSpeed;
     gamePiece.newPos();
@@ -111,7 +111,7 @@ function moveGamePiece() {
     return;
   }
   // up
-  if (gameArea.keys && gameArea.keys[87] && gamePiece.getTop() > gamePieceTopLimit) {
+  if (gameArea.keys && gameArea.keys[87] && gamePiece.getTop() > gameArea.gamePieceTopLimit) {
     // move it
     gamePiece.speedY = -gamePieceSpeed;
     gamePiece.newPos();

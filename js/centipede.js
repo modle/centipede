@@ -39,7 +39,7 @@ var centipedeHandler = {
     this.add(centipede);
   },
   construct : function() {
-    x = canvasWidth / 2;
+    x = gameArea.canvas.width / 2;
     y = 0;
     color = 'blue';
     type = 'centipede';
@@ -72,13 +72,13 @@ var centipedeHandler = {
         this.centipedes[i].moveVertically = true;
         continue;
       }
-      // toggle Y direction if distanceMovedFromBottom is 0 and centipede.bottom > canvasHeight
+      // toggle Y direction if distanceMovedFromBottom is 0 and centipede.bottom > gameArea.canvas.height
       if (this.centipedes[i].getBottom() > gameArea.canvas.height) {
         this.centipedes[i].reverseDirectionY = true;
       }
-      // toggle Y direction if centipede is above gamePieceTopLimit and distanceMovedFromBottom > 0
+      // toggle Y direction if centipede is above gameArea.gamePieceTopLimit and distanceMovedFromBottom > 0
       // reset distanceMovedFromBottom so this only triggers once
-      if (this.centipedes[i].getTop() < gamePieceTopLimit && this.centipedes[i].distanceMovedFromBottom > 0) {
+      if (this.centipedes[i].getTop() < gameArea.gamePieceTopLimit && this.centipedes[i].distanceMovedFromBottom > 0) {
         this.centipedes[i].reverseDirectionY = true;
         this.centipedes[i].distanceMovedFromBottom = 0;
       }
@@ -110,7 +110,7 @@ var centipedeHandler = {
     }
   },
   hasCollidedWithWall : function(centipede) {
-    return ((centipede.getLeft() < 1 || centipede.getRight() > canvasWidth - 1) && centipede.distanceMovedX > gameArea.gridSquareSideLength);
+    return ((centipede.getLeft() < 1 || centipede.getRight() > gameArea.canvas.width - 1) && centipede.distanceMovedX > gameArea.gridSquareSideLength);
   },
   hasCollidedWithMushroom : function(centipede) {
     for (j = 0; j < mushrooms.length; j += 1) {
@@ -146,7 +146,7 @@ var centipedeHandler = {
         toMoveX = this.centipedes[i].directionX;
         newPositionX = this.centipedes[i].x + toMoveX;
         // if updating x would put the centipede outside the gameArea, don't update the x position, instead flag moveVertically
-        if (newPositionX < canvasWidth && newPositionX > 0) {
+        if (newPositionX < gameArea.canvas.width && newPositionX > 0) {
           this.centipedes[i].x = newPositionX;
           this.centipedes[i].distanceMovedX += Math.abs(toMoveX);
         } else {

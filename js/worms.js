@@ -38,7 +38,7 @@ function updateWorms() {
 function clearWormsOutsideCanvas() {
   if (!worms) { return; }
   for (i = 0; i < worms.length; i += 1) {
-    if (worms[i].x > canvasWidth) {
+    if (worms[i].x > gameArea.canvas.width) {
       worms.splice(i, 1);
     }
   }

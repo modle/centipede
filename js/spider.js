@@ -10,6 +10,7 @@ var spiderMinInterval = 1;
 var spiderInterval = getRandom(spiderMinInterval, spiderMaxInterval);
 
 function manageSpiders() {
+  // console.log('got here, spiders are', spiders);
   clearSpidersOutsideCanvas();
   if (everyinterval(spiderInterval) && spiders.length < 1) {
     spiderInterval = getRandom(spiderMinInterval, spiderMaxInterval);
@@ -19,8 +20,8 @@ function manageSpiders() {
 }
 
 function spawnSpider() {
-  x = -canvasWidth / 20;
-  y = gamePieceTopLimit;
+  x = -gameArea.canvas.width / 20;
+  y = gameArea.gamePieceTopLimit;
   var spider = new component(gameArea.gridSquareSideLength * 0.3, gameArea.gridSquareSideLength * 0.8, "fuchsia", x, y, "spider");
   spider.speedX = 1;
   spider.speedY = 1;
@@ -42,7 +43,7 @@ function updateSpiders() {
     if (spiders[i].y + spiders[i].height > gameArea.canvas.height) {
       spiders[i].directionY = -1;
     }
-    if (spiders[i].y < gamePieceTopLimit) {
+    if (spiders[i].y < gameArea.gamePieceTopLimit) {
       spiders[i].directionY = 1;
     }
   }
@@ -51,7 +52,7 @@ function updateSpiders() {
 function clearSpidersOutsideCanvas() {
   if (!spiders) { return; }
   for (i = 0; i < spiders.length; i += 1) {
-    if (spiders[i].x > canvasWidth) {
+    if (spiders[i].x > gameArea.canvas.width) {
       spiders.splice(i, 1);
     }
   }
