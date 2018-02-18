@@ -23,6 +23,7 @@ function reset() {
 
 // this gets executed every interval
 function updateGameArea() {
+  console.log(spiderHandler.spiders.length);
   // check game conditions and update messages
   if (paused) {
     managePause();
@@ -45,7 +46,7 @@ function updateGameArea() {
   mushroomHandler.manage();
   centipedeHandler.manage();
   manageWorms();
-  manageSpiders();
+  spiderHandler.manage();
   laserHandler.manage();
   gamePieceHandler.manage();
   // check game conditions
@@ -105,6 +106,6 @@ function resetSomeThings() {
 function resetMoreThings() {
   resetSomeThings();
   clearWorms();
-  clearSpiders();
+  spiderHandler.clear();
   gamePieceHandler.reset();
 }

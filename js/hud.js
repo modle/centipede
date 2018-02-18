@@ -47,6 +47,6 @@ function resetHud() {
   lives = defaultLives;
   currentLevel = 1;
   centipedeHandler.clear();
-  clearSpiders();
+  spiderHandler.clear();
   mushroomHandler.clear();
 }

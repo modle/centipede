@@ -9,9 +9,9 @@ function checkCollisions() {
   checkLaserCollision(mushroomHandler.mushrooms);
   checkLaserCollision(centipedeHandler.centipedes);
   checkLaserCollision(worms);
-  checkLaserCollision(spiders);
+  checkLaserCollision(spiderHandler.spiders);
   checkGamePieceCollisionWithEnemy(centipedeHandler.centipedes);
-  checkGamePieceCollisionWithEnemy(spiders);
+  checkGamePieceCollisionWithEnemy(spiderHandler.spiders);
 }
 
 function checkLaserCollision(targets) {

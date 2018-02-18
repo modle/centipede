@@ -1,8 +1,4 @@
 /*jslint white: true */
-
-/* Game Piece */
-/***********************************/
-
 var gamePieceHandler = {
   gamePiece : new component(knobsAndLevers.gamePieceWidth, knobsAndLevers.gamePieceHeight, "red", knobsAndLevers.gamePieceStartX, knobsAndLevers.gamePieceStartY, 0, 0),
   manage : function() {
