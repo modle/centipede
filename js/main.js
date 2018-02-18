@@ -43,7 +43,7 @@ function updateGameArea() {
   startNextFrame();
   updateHud();
   // make things happen
-  manageMushrooms();
+  mushroomHandler.manage();
   centipedeHandler.manage();
   manageWorms();
   manageSpiders();

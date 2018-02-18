@@ -113,8 +113,8 @@ var centipedeHandler = {
     return ((centipede.getLeft() < 1 || centipede.getRight() > gameArea.canvas.width - 1) && centipede.distanceMovedX > gameArea.gridSquareSideLength);
   },
   hasCollidedWithMushroom : function(centipede) {
-    for (j = 0; j < mushrooms.length; j += 1) {
-      if (centipede.crashWithSidesOnly(mushrooms[j]) && Math.abs(centipede.y - mushrooms[j].y) < 5 && centipede.distanceMovedX > gameArea.gridSquareSideLength) {
+    for (j = 0; j < mushroomHandler.mushrooms.length; j += 1) {
+      if (centipede.crashWithSidesOnly(mushroomHandler.mushrooms[j]) && Math.abs(centipede.y - mushroomHandler.mushrooms[j].y) < 5 && centipede.distanceMovedX > gameArea.gridSquareSideLength) {
         return true;
       }
     }
