@@ -1,8 +1,4 @@
 /*jslint white: true */
-
-/* Centipedes */
-/***********************************/
-
 var centipedeHandler = {
   baseSpeed : 0,
   speed : 0,

@@ -48,5 +48,6 @@ function resetHud() {
   currentLevel = 1;
   centipedeHandler.clear();
   spiderHandler.clear();
+  wormHandler.clear();
   mushroomHandler.clear();
 }

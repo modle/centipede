@@ -44,6 +44,6 @@ window.addEventListener('keydown', function (e) {
 
 window.addEventListener('keydown', function (e) {
   if (e.keyCode == 13) {
-    reset()
+    reset();
   }
 })

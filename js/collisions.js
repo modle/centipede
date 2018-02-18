@@ -8,7 +8,7 @@ floatingPointCycleDuration = 50;
 function checkCollisions() {
   checkLaserCollision(mushroomHandler.mushrooms);
   checkLaserCollision(centipedeHandler.centipedes);
-  checkLaserCollision(worms);
+  checkLaserCollision(wormHandler.worms);
   checkLaserCollision(spiderHandler.spiders);
   checkGamePieceCollisionWithEnemy(centipedeHandler.centipedes);
   checkGamePieceCollisionWithEnemy(spiderHandler.spiders);
