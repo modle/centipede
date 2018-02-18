@@ -12,7 +12,6 @@ function startGame() {
     showMobile();
     return;
   }
-  gamePiece = new component(knobsAndLevers.gamePieceWidth, knobsAndLevers.gamePieceHeight, "red", knobsAndLevers.gamePieceStartX, knobsAndLevers.gamePieceStartY, 0, 0);
   gameArea.start();
 }
 
@@ -48,7 +47,7 @@ function updateGameArea() {
   manageWorms();
   manageSpiders();
   laserHandler.manage();
-  manageGamePiece();
+  gamePieceHandler.manage();
   // check game conditions
   checkCollisions();
   updateFloatingPoints();
@@ -107,5 +106,5 @@ function resetMoreThings() {
   resetSomeThings();
   clearWorms();
   clearSpiders();
-  resetGamePiecePosition();
+  gamePieceHandler.reset();
 }

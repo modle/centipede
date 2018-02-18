@@ -45,7 +45,7 @@ function checkLaserCollision(targets) {
 
 function checkGamePieceCollisionWithEnemy(targets) {
   for (i = 0; i < targets.length; i += 1) {
-    if (gamePiece.crashWith(targets[i])) {
+    if (gamePieceHandler.gamePiece.crashWith(targets[i])) {
       killPlayer();
       if (lives > 0) {
         return;
