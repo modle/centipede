@@ -91,7 +91,7 @@ function updateGameState() {
   laserHandler.manage();
   gamePieceHandler.manage();
   // check game conditions
-  checkCollisions();
+  collisions.check();
   updateFloatingPoints();
   if (died) {
     gameHandler.setDiedText();

@@ -33,7 +33,7 @@ levelOverTextParams.y = gameArea.canvas.height/5*2;
 
 var gameOverTextParams = Object.assign({}, baseTextParams);
 gameOverTextParams.fontSize = "100px";
-gameOverTextParams.fontSize = "navy";
+gameOverTextParams.color = "navy";
 gameOverTextParams.y = gameArea.canvas.height/2;
 
 var score = new component(scoreParams);

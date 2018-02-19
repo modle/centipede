@@ -26,7 +26,7 @@ var gamePieceHandler = {
       gamePiece.speedY = -gamePieceSpeed;
       gamePiece.newPos();
       // if it collides, move it back
-      if (collidesWithMushrooms(gamePiece)) {
+      if (collisions.withMushrooms(gamePiece)) {
         gamePiece.speedX = -gamePieceSpeed;
         gamePiece.speedY = gamePieceSpeed;
         gamePiece.newPos();
@@ -40,7 +40,7 @@ var gamePieceHandler = {
       gamePiece.speedY = -gamePieceSpeed;
       gamePiece.newPos();
       // if it collides, move it back
-      if (collidesWithMushrooms(gamePiece)) {
+      if (collisions.withMushrooms(gamePiece)) {
         gamePiece.speedX = gamePieceSpeed;
         gamePiece.speedY = gamePieceSpeed;
         gamePiece.newPos();
@@ -54,7 +54,7 @@ var gamePieceHandler = {
       gamePiece.speedY = gamePieceSpeed;
       gamePiece.newPos();
       // if it collides, move it back
-      if (collidesWithMushrooms(gamePiece)) {
+      if (collisions.withMushrooms(gamePiece)) {
         gamePiece.speedX = -gamePieceSpeed;
         gamePiece.speedY = -gamePieceSpeed;
         gamePiece.newPos();
@@ -68,7 +68,7 @@ var gamePieceHandler = {
       gamePiece.speedY = gamePieceSpeed;
       gamePiece.newPos();
       // if it collides, move it back
-      if (collidesWithMushrooms(gamePiece)) {
+      if (collisions.withMushrooms(gamePiece)) {
         gamePiece.speedX = gamePieceSpeed;
         gamePiece.speedY = -gamePieceSpeed;
         gamePiece.newPos();
@@ -81,7 +81,7 @@ var gamePieceHandler = {
       gamePiece.speedX = -gamePieceSpeed;
       gamePiece.newPos();
       // if it collides, move it back
-      if (collidesWithMushrooms(gamePiece)) {
+      if (collisions.withMushrooms(gamePiece)) {
         gamePiece.speedX = gamePieceSpeed;
         gamePiece.newPos();
       }
@@ -93,7 +93,7 @@ var gamePieceHandler = {
       gamePiece.speedX = gamePieceSpeed;
       gamePiece.newPos();
       // if it collides, move it back
-      if (collidesWithMushrooms(gamePiece)) {
+      if (collisions.withMushrooms(gamePiece)) {
         gamePiece.speedX = -gamePieceSpeed;
         gamePiece.newPos();
       }
@@ -105,7 +105,7 @@ var gamePieceHandler = {
       gamePiece.speedY = -gamePieceSpeed;
       gamePiece.newPos();
       // if it collides, move it back
-      if (collidesWithMushrooms(gamePiece)) {
+      if (collisions.withMushrooms(gamePiece)) {
         gamePiece.speedY = gamePieceSpeed;
         gamePiece.newPos();
       }
@@ -117,7 +117,7 @@ var gamePieceHandler = {
       gamePiece.speedY = gamePieceSpeed;
       gamePiece.newPos();
       // if it collides, move it back
-      if (collidesWithMushrooms(gamePiece)) {
+      if (collisions.withMushrooms(gamePiece)) {
         gamePiece.speedY = -gamePieceSpeed;
         gamePiece.newPos();
       }
