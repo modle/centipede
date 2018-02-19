@@ -14,7 +14,7 @@ var centipedeHandler = {
     this.update();
   },
   update : function() {
-    this.speed = this.baseSpeed + currentLevel;
+    this.speed = this.baseSpeed + metrics.currentLevel;
     this.determineDirections();
     this.updateDirections();
     this.updateCoordinates();
@@ -23,7 +23,7 @@ var centipedeHandler = {
     }
   },
   spawn : function() {
-    if (this.numberSpawned >= this.maxNumber + currentLevel) {
+    if (this.numberSpawned >= this.maxNumber + metrics.currentLevel) {
       return;
     }
     centipede = this.construct();
@@ -52,7 +52,7 @@ var centipedeHandler = {
     centipede.reverseDirectionX = false;
     centipede.reverseDirectionY = false;
     centipede.moveVertically = true;
-    centipede.pointValue = 5 + currentLevel;
+    centipede.pointValue = 5 + metrics.currentLevel;
     centipede.hitPoints = 1;
     return centipede;
   },

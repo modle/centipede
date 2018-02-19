@@ -40,17 +40,11 @@ var mushroomHandler = {
       extraArgs : {type : "mushroom"}
     };
     mushroom = new component(mushroomArgs);
-    mushroom.pointValue = currentLevel;
+    mushroom.pointValue = metrics.currentLevel;
     mushroom.hitPoints = 4;
     return mushroom;
   },
   clear : function() {
     this.mushrooms = [];
-  },
-  initialize : function() {
-    //
   }
-
 }
-
-mushroomHandler.initialize();

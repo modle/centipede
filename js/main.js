@@ -31,23 +31,23 @@ var gameHandler = {
   manageLevel : function() {
     this.resetSomeThings();
     levelOver = false;
-    currentLevel += 1;
+    metrics.currentLevel += 1;
   },
   setDiedText : function() {
-    diedText.text = "You died.";
-    diedText.update();
+    textHandler.diedText.text = "You died.";
+    textHandler.diedText.update();
   },
   managePause : function() {
-    pausedMessage.text = "Paused: Spacebar to Continue";
+    textHandler.pausedMessage.text = "Paused: Spacebar to Continue";
     if (gameArea.frameNo === 0) {
-      pausedMessage.text = "Press Spacebar to Start";
+      textHandler.pausedMessage.text = "Press Spacebar to Start";
     }
-    pausedMessage.update();
+    textHandler.pausedMessage.update();
     // pausedBackground.update();
   },
   manageDeath : function() {
     this.resetMoreThings();
-    diedText.text = "";
+    textHandler.diedText.text = "";
     died = false;
   },
   resetSomeThings : function() {
@@ -92,7 +92,7 @@ function updateGameState() {
   gamePieceHandler.manage();
   // check game conditions
   collisions.check();
-  updateFloatingPoints();
+  metrics.updateFloatingPoints();
   if (died) {
     gameHandler.setDiedText();
     return;

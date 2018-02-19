@@ -12,7 +12,6 @@ var gameArea = {
     this.context = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     this.frameNo = 0;
-    this.timeRemaining = levelTimeLimit;
     // set interval at which function updateGameArea is executed
     // 1000 ms divided by second parameter
     this.interval = setInterval(updateGameState, intervalDivisor);
@@ -67,6 +66,7 @@ var gameArea = {
     this.gridSquareSideLength = Math.floor(this.canvas.width / knobsAndLevers.gridDivisor);
     this.firstMushroomLayer = this.gridSquareSideLength * 2;
     this.setGridVertices();
+    console.log("gameArea initialized");
   }
 };
 

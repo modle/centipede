@@ -134,6 +134,7 @@ var gamePieceHandler = {
       extraArgs : {type : "gamePiece", speed : {x : 0, y : 0}}
     };
     this.gamePiece = new component(gamePieceArgs);
+    console.log("gamePiece initialized");
   }
 }
 

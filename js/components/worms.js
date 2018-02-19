@@ -31,7 +31,7 @@ var wormHandler = {
       extraArgs : {type : "worm", speed : {x : 0.5, y : 0}}
     };
     var worm = new component(wormArgs);
-    worm.pointValue = wormPointValue * currentLevel;
+    worm.pointValue = wormPointValue * metrics.currentLevel;
     worm.hitPoints = 1;
     this.worms.push(worm);
   },

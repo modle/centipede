@@ -30,7 +30,7 @@ var spiderHandler = {
     };
     let spider = new component(spiderArgs);
     spider.directionY = 1;
-    spider.pointValue = spiderPointValue * currentLevel;
+    spider.pointValue = spiderPointValue * metrics.currentLevel;
     spider.hitPoints = 1;
     this.spiders.push(spider);
   },

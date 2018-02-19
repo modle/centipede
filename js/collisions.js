@@ -22,9 +22,9 @@ var collisions = {
           targets[j].hitPoints--;
           if (targets[j].hitPoints <= 0) {
             // add floating point
-            addNewFloatingPoint(targets[j].getMiddleX(), targets[j].getMiddleY(), targets[j].pointValue, "gain");
+            metrics.addNewFloatingPoint(targets[j].getMiddleX(), targets[j].getMiddleY(), targets[j].pointValue, "gain");
             // update scoreValue
-            hudHandler.changeScore(targets[j].pointValue);
+            metrics.changeScore(targets[j].pointValue);
             // remove target and set laser removal to pending
             if (targets[j].type === 'centipede') {
               mushroomHandler.mushrooms.push(mushroomHandler.generate(targets[j].x, targets[j].y));
@@ -46,7 +46,7 @@ var collisions = {
     for (i = 0; i < targets.length; i += 1) {
       if (gamePieceHandler.gamePiece.crashWith(targets[i])) {
         this.killPlayer();
-        if (lives > 0) {
+        if (metrics.lives > 0) {
           return;
         }
         this.showGameOver();
@@ -55,12 +55,12 @@ var collisions = {
   },
   killPlayer : function() {
     died = true;
-    lives -= 1;
+    metrics.lives -= 1;
   },
   showGameOver : function() {
     gameArea.stop();
-    gameOver.text = "Game Over";
-    gameOver.update();
+    textHandler.gameOver.text = "Game Over";
+    textHandler.gameOver.update();
   },
   withMushrooms : function(gamePiece) {
     for (i = 0; i < mushroomHandler.mushrooms.length; i += 1) {
@@ -69,37 +69,5 @@ var collisions = {
       }
     }
     return false;
-  }
-}
-
-function addNewFloatingPoint(x, y, points, action) {
-  symbol = "+";
-  color = "black";
-  if (action == "lose") {
-    symbol = "-";
-    color = "red";
-  }
-  let pointArgs = {
-    fontSize : "20px",
-    fontType : "Consolas",
-    color : color,
-    x : x,
-    y : y,
-    extraArgs : {type : "text"}
-  };
-  newPoint = new component(pointArgs);
-  newPoint.text = symbol + points;
-  newPoint.cycleNumber = 0;
-  floatingPoints.push(newPoint);
-}
-
-function updateFloatingPoints() {
-  for (i = 0; i < floatingPoints.length; i += 1) {
-    floatingPoints[i].cycleNumber += 1;
-    floatingPoints[i].y -= 1;
-    floatingPoints[i].update();
-    if (floatingPoints[i].cycleNumber > floatingPointCycleDuration) {
-      floatingPoints.splice(i, 1);
-    }
   }
 }
