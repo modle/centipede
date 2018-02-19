@@ -1,17 +1,13 @@
 /*jslint white: true */
-
-/* Worms */
-/***********************************/
-
 var wormPointValue = 50;
 var worms = [];
-var wormMinInterval = 20;
-var wormMaxInterval = 20;
+var wormMinInterval = 100;
+var wormMaxInterval = 100;
 // var wormMinInterval = 2000;
 // var wormMaxInterval = 4000;
 var wormInterval = getRandom(wormMinInterval, wormMaxInterval);
 
-var wormHandler = {
+var worms = {
   worms : [],
   manage : function() {
     this.clearOutsideCanvas();

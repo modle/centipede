@@ -7,18 +7,18 @@ floatingPointCycleDuration = 50;
 
 var collisions = {
   check : function() {
-    this.checkLaser(mushroomHandler.mushrooms);
-    this.checkLaser(centipedeHandler.centipedes);
-    this.checkLaser(wormHandler.worms);
-    this.checkLaser(spiderHandler.spiders);
-    this.checkGamePieceVsEnemy(centipedeHandler.centipedes);
-    this.checkGamePieceVsEnemy(spiderHandler.spiders);
+    this.checkLaser(mushrooms.mushrooms);
+    this.checkLaser(centipedes.centipedes);
+    this.checkLaser(worms.worms);
+    this.checkLaser(spiders.spiders);
+    this.checkGamePieceVsEnemy(centipedes.centipedes);
+    this.checkGamePieceVsEnemy(spiders.spiders);
   },
   checkLaser : function(targets) {
     // TODO there's a lot going on here; possibly move the removal to a separate function
-    for (i = 0; i < laserHandler.lasers.length; i += 1) {
+    for (i = 0; i < lasers.lasers.length; i += 1) {
       for (j = 0; j < targets.length; j += 1) {
-        if (laserHandler.lasers[i].crashWith(targets[j])) {
+        if (lasers.lasers[i].crashWith(targets[j])) {
           targets[j].hitPoints--;
           if (targets[j].hitPoints <= 0) {
             // add floating point
@@ -27,18 +27,18 @@ var collisions = {
             metrics.changeScore(targets[j].pointValue);
             // remove target and set laser removal to pending
             if (targets[j].type === 'centipede') {
-              mushroomHandler.mushrooms.push(mushroomHandler.generate(targets[j].x, targets[j].y));
-              centipedeHandler.numberKilled += 1;
+              mushrooms.mushrooms.push(mushrooms.generate(targets[j].x, targets[j].y));
+              centipedes.numberKilled += 1;
             }
             targets.splice(j, 1);
           } else {
             targets[j].height *= 0.5;
           }
-          laserHandler.lasers[i].remove = true;
+          lasers.lasers[i].remove = true;
         }
       }
-      if (laserHandler.lasers[i].remove) {
-        laserHandler.lasers.splice(i, 1);
+      if (lasers.lasers[i].remove) {
+        lasers.lasers.splice(i, 1);
       }
     }
   },
@@ -59,12 +59,12 @@ var collisions = {
   },
   showGameOver : function() {
     gameArea.stop();
-    textHandler.gameOver.text = "Game Over";
-    textHandler.gameOver.update();
+    texts.gameOver.text = "Game Over";
+    texts.gameOver.update();
   },
   withMushrooms : function(gamePiece) {
-    for (i = 0; i < mushroomHandler.mushrooms.length; i += 1) {
-      if (gamePiece.crashWith(mushroomHandler.mushrooms[i])) {
+    for (i = 0; i < mushrooms.mushrooms.length; i += 1) {
+      if (gamePiece.crashWith(mushrooms.mushrooms[i])) {
         return true;
       }
     }

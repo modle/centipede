@@ -20,7 +20,7 @@ var gameHandler = {
     this.start();
   },
   checkLevelEndConditions : function() {
-    if (centipedeHandler.numberSpawned === centipedeHandler.numberKilled && gameArea.frameNo !== 0) {
+    if (centipedes.numberSpawned === centipedes.numberKilled && gameArea.frameNo !== 0) {
       levelOver = true;
     }
   },
@@ -34,31 +34,31 @@ var gameHandler = {
     metrics.currentLevel += 1;
   },
   setDiedText : function() {
-    textHandler.diedText.text = "You died.";
-    textHandler.diedText.update();
+    texts.diedText.text = "You died.";
+    texts.diedText.update();
   },
   managePause : function() {
-    textHandler.pausedMessage.text = "Paused: Spacebar to Continue";
+    texts.pausedMessage.text = "Paused: Spacebar to Continue";
     if (gameArea.frameNo === 0) {
-      textHandler.pausedMessage.text = "Press Spacebar to Start";
+      texts.pausedMessage.text = "Press Spacebar to Start";
     }
-    textHandler.pausedMessage.update();
+    texts.pausedMessage.update();
     // pausedBackground.update();
   },
   manageDeath : function() {
     this.resetMoreThings();
-    textHandler.diedText.text = "";
+    texts.diedText.text = "";
     died = false;
   },
   resetSomeThings : function() {
     gameArea.frameNo = 0;
-    centipedeHandler.clear();
-    laserHandler.clear();
+    centipedes.clear();
+    lasers.clear();
   },
   resetMoreThings : function() {
     this.resetSomeThings();
-    wormHandler.clear();
-    spiderHandler.clear();
+    worms.clear();
+    spiders.clear();
     gamePieceHandler.reset();
   }
 }
@@ -84,11 +84,11 @@ function updateGameState() {
   gameHandler.startNextFrame();
   hudHandler.update();
   // make things happen
-  mushroomHandler.manage();
-  centipedeHandler.manage();
-  wormHandler.manage();
-  spiderHandler.manage();
-  laserHandler.manage();
+  mushrooms.manage();
+  centipedes.manage();
+  worms.manage();
+  spiders.manage();
+  lasers.manage();
   gamePieceHandler.manage();
   // check game conditions
   collisions.check();

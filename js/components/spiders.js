@@ -1,15 +1,11 @@
 /*jslint white: true */
-
-/* Spiders */
-/***********************************/
-
 var spiderPointValue = 20;
 var spiders = [];
 var spiderMaxInterval = 20;
 var spiderMinInterval = 1;
 var spiderInterval = getRandom(spiderMinInterval, spiderMaxInterval);
 
-var spiderHandler = {
+var spiders = {
   spiders : [],
   manage : function() {
     this.clearOutsideCanvas();

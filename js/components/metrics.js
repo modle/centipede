@@ -1,3 +1,4 @@
+/*jslint white: true */
 var metrics = {
   lives : knobsAndLevers.defaultLives,
   currentLevel : 1,
@@ -36,7 +37,7 @@ var metrics = {
       if (floatingPoints[i].cycleNumber > floatingPointCycleDuration) {
         floatingPoints.splice(i, 1);
       }
-    }  
+    }
   },
   reset : function() {
     this.lives = knobsAndLevers.defaultLives;
@@ -48,7 +49,7 @@ var metrics = {
     scoreParams.x = gameArea.canvas.width/10;
     scoreParams.y = knobsAndLevers.gameInfoTextHeight;
     this.score = new component(scoreParams);
-    console.log("metrics initialized");    
+    console.log("metrics initialized");
   }
 }
 

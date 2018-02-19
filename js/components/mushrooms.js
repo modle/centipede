@@ -1,14 +1,10 @@
 /*jslint white: true */
-
-/* Mushrooms */
-/***********************************/
-
 var mushroomPointValue = 1;
 var maxMushrooms = 50;
 var coordinateScaleFactor = gameArea.gridSquareSideLength * 0.1;
 var mushroomSide = gameArea.gridSquareSideLength * 0.8;
 
-var mushroomHandler = {
+var mushrooms = {
   mushrooms : [],
   manage : function() {
     if (gameArea.frameNo == 1) {
