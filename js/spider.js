@@ -20,11 +20,15 @@ var spiderHandler = {
     this.update();
   },
   spawn : function() {
-    let x = -gameArea.canvas.width / 20;
-    let y = gameArea.gamePieceTopLimit;
-    let spider = new component(gameArea.gridSquareSideLength * 0.3, gameArea.gridSquareSideLength * 0.8, "fuchsia", x, y, "spider");
-    spider.speedX = 1;
-    spider.speedY = 1;
+    let spiderArgs = {
+      width: gameArea.gridSquareSideLength * 0.3,
+      height : gameArea.gridSquareSideLength * 0.8,
+      color : "fuchsia",
+      x : -gameArea.canvas.width / 20,
+      y : gameArea.gamePieceTopLimit,
+      extraArgs : {type : "spider", speed : {x : 1, y : 1}}
+    };
+    let spider = new component(spiderArgs);
     spider.directionY = 1;
     spider.pointValue = spiderPointValue * currentLevel;
     spider.hitPoints = 1;

@@ -82,7 +82,15 @@ function addNewFloatingPoint(x, y, points, action) {
     symbol = "-";
     color = "red";
   }
-  newPoint = new component("20px", "Consolas", color, x, y, "text");
+  let pointArgs = {
+    fontSize: "20px",
+    fontType : "Consolas",
+    color : color,
+    x : x,
+    y : y,
+    extraArgs : {type : "text"}
+  };
+  newPoint = new component(pointArgs);
   newPoint.text = symbol + points;
   newPoint.cycleNumber = 0;
   floatingPoints.push(newPoint);

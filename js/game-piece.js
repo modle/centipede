@@ -1,6 +1,5 @@
 /*jslint white: true */
 var gamePieceHandler = {
-  gamePiece : new component(knobsAndLevers.gamePieceWidth, knobsAndLevers.gamePieceHeight, "red", knobsAndLevers.gamePieceStartX, knobsAndLevers.gamePieceStartY, 0, 0),
   manage : function() {
     this.move();
     this.update();
@@ -124,5 +123,18 @@ var gamePieceHandler = {
       }
       return;
     }
+  },
+  initialize : function() {
+    let gamePieceArgs = {
+      width: knobsAndLevers.gamePieceWidth,
+      height : knobsAndLevers.gamePieceHeight,
+      color : "red",
+      x : knobsAndLevers.gamePieceStartX,
+      y : knobsAndLevers.gamePieceStartY,
+      extraArgs : {type : "gamePiece", speed : {x : 0, y : 0}}
+    };
+    this.gamePiece = new component(gamePieceArgs);
   }
 }
+
+gamePieceHandler.initialize();

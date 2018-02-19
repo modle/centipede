@@ -22,10 +22,15 @@ var wormHandler = {
     this.update();
   },
   spawn : function() {
-    x = -gameArea.canvas.width / 10;
-    y = gameArea.canvas.height / 10;
-    var worm = new component(gameArea.gridSquareSideLength * 2, gameArea.gridSquareSideLength / 2, "orange", x, y, "worm");
-    worm.speedX = 0.5;
+    let wormArgs = {
+      width: gameArea.gridSquareSideLength * 2,
+      height : gameArea.gridSquareSideLength / 2,
+      color : "orange",
+      x : -gameArea.canvas.width / 10,
+      y : gameArea.canvas.height / 10,
+      extraArgs : {type : "worm", speed : {x : 0.5, y : 0}}
+    };
+    var worm = new component(wormArgs);
     worm.pointValue = wormPointValue * currentLevel;
     worm.hitPoints = 1;
     this.worms.push(worm);

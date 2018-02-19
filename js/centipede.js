@@ -35,11 +35,15 @@ var centipedeHandler = {
     this.add(centipede);
   },
   construct : function() {
-    x = gameArea.canvas.width / 2;
-    y = 0;
-    color = 'blue';
-    type = 'centipede';
-    centipede = new component(gameArea.gridSquareSideLength, gameArea.gridSquareSideLength, color, x, y, type);
+    let centipedeArgs = {
+      width: gameArea.gridSquareSideLength,
+      height : gameArea.gridSquareSideLength,
+      color : "blue",
+      x : gameArea.canvas.width / 2,
+      y : 0,
+      extraArgs : {type : "centipede"}
+    };
+    centipede = new component(centipedeArgs);
     centipede.directionX = 1;
     centipede.directionY = 1;
     centipede.distanceMovedX = 0;

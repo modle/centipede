@@ -1,27 +1,32 @@
 /*jslint white: true */
 
-function component(width, height, color, x, y, type, extra1, extra2) {
+function component(args) {
   this.gamearea = gameArea;
   this.remove = false;
-  this.type = type;
-  this.width = width;
-  this.height = height;
   this.speedX = 0;
   this.speedY = 0;
-  this.x = x;
-  this.y = y;
+  this.x = args.x;
+  this.y = args.y;
+  this.width = args.width;
+  this.height = args.height;
+  this.type = args.extraArgs.type;
+  this.color = args.color;
+  if (Array.from(Object.keys(args.extraArgs)).includes('speed')) {
+    this.speedX = args.extraArgs.speed.x;
+    this.speedY = args.extraArgs.speed.y;
+  };
   this.update = function() {
     ctx = gameArea.context;
-    ctx.fillStyle = color;
+    ctx.fillStyle = this.color;
     if (this.type == "text") {
-      ctx.font = this.width + " " + this.height;
+      ctx.font = args.fontSize + " " + args.fontType;
       ctx.fillText(this.text, this.x, this.y);
     } else if (this.type == "laser") {
-      this.speedX = extra1;
-      this.speedY = extra2;
       ctx.fillRect(this.x, this.y, this.width, this.height);
     } else if (this.type == "centipede") {
       this.makeACentipede();
+    } else if (this.type == "background") {
+      ctx.fillRect(this.x, this.y, this.width, this.height);
     } else {
       ctx.fillRect(this.x, this.y, this.width, this.height);
     }

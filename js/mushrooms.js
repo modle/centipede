@@ -31,7 +31,15 @@ var mushroomHandler = {
     }
   },
   generate : function(x, y) {
-    mushroom = new component(mushroomSide, mushroomSide, "teal", x + coordinateScaleFactor, y + coordinateScaleFactor);
+    let mushroomArgs = {
+      width: mushroomSide,
+      height : mushroomSide,
+      color : "teal",
+      x : x + coordinateScaleFactor,
+      y : y + coordinateScaleFactor,
+      extraArgs : {type : "mushroom"}
+    };
+    mushroom = new component(mushroomArgs);
     mushroom.pointValue = currentLevel;
     mushroom.hitPoints = 4;
     return mushroom;

@@ -43,6 +43,7 @@ var gameHandler = {
       pausedMessage.text = "Press Spacebar to Start";
     }
     pausedMessage.update();
+    // pausedBackground.update();
   },
   manageDeath : function() {
     this.resetMoreThings();

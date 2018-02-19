@@ -62,7 +62,6 @@ var gameArea = {
     clearInterval(this.interval);
   },
   initialize: function() {
-    console.log('initializing gameArea');
     this.canvas.width = knobsAndLevers.canvasWidth;
     this.canvas.height = knobsAndLevers.canvasHeight;
     this.gridSquareSideLength = Math.floor(this.canvas.width / knobsAndLevers.gridDivisor);

@@ -8,18 +8,24 @@ var laserHandler = {
   },
   spawn : function() {
     let lasers = this.lasers;
+    let gamePiece = gamePieceHandler.gamePiece;
+    let laserArgs = {
+      width: knobsAndLevers.laserSideLength,
+      height : knobsAndLevers.laserSideLength,
+      color : "purple",
+      x : gamePiece.x + gamePiece.width / 2,
+      y : gamePiece.y + gamePiece.height / 2,
+      extraArgs : {type : "laser", speed : {x : 0, y : 0}}
+    };
     if (lasers.length === knobsAndLevers.maxLasers || !gameArea.keys || !everyinterval(knobsAndLevers.laserInterval)) {
       return;
     }
-    var speedX = 0;
-    var speedY = 0;
-    // up
+    // if fire key is pressed
     if (gameArea.keys[16] || gameArea.keys[37] || gameArea.keys[38] || gameArea.keys[39] || gameArea.keys[40] || gameArea.keys['LMB']) {
-      speedY = -1 * knobsAndLevers.laserSpeed;
+      laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laserSpeed;
     }
-    let gamePiece = gamePieceHandler.gamePiece;
-    if (speedY !== 0) {
-      lasers.push(new component(knobsAndLevers.laserSideLength, knobsAndLevers.laserSideLength, "purple", gamePiece.x + gamePiece.width / 2, gamePiece.y + gamePiece.height / 2, "laser", speedX, speedY));
+    if (laserArgs.extraArgs.speed.y !== 0) {
+      lasers.push(new component(laserArgs));
     }
   },
   update : function() {

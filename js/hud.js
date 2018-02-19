@@ -1,12 +1,48 @@
 /*jslint white: true */
 
-var score = new component("30px", "Consolas", "black", gameArea.canvas.width/10, 40, "text");
-var livesDisplay = new component("30px", "Consolas", "black", gameArea.canvas.width/5*2, 40, "text");
-var level = new component("30px", "Consolas", "black", gameArea.canvas.width/3*2, 40, "text");
-var pausedMessage = new component("30px", "Consolas", "Black", gameArea.canvas.width/4, gameArea.canvas.height/4, "text");
-var diedText = new component("50px", "Consolas", "Black", gameArea.canvas.width/4, gameArea.canvas.height/4, "text");
-var levelOverText = new component("40px", "Consolas", "black", gameArea.canvas.width/4, gameArea.canvas.height/5*2, "text");
-var gameOver = new component("100px", "Consolas", "navy", gameArea.canvas.width/4, gameArea.canvas.height/2, "text");
+const textTypeArgs = {type:"text"};
+var baseTextParams = {
+  fontSize : "30px",
+  fontType : "Consolas",
+  color : "black",
+  x : gameArea.canvas.height/4,
+  extraArgs : textTypeArgs
+};
+
+const gameInfoTextHeight = 40;
+var scoreParams = Object.assign({}, baseTextParams);
+scoreParams.x = gameArea.canvas.width/10;
+scoreParams.y = gameInfoTextHeight;
+var livesParams = Object.assign({}, baseTextParams);
+livesParams.x = gameArea.canvas.width/5*2;
+livesParams.y = gameInfoTextHeight;
+var levelParams = Object.assign({}, baseTextParams);
+levelParams.x = gameArea.canvas.width/3*2;
+levelParams.y = gameInfoTextHeight;
+
+var pausedMessageTextParams = Object.assign({}, baseTextParams);
+pausedMessageTextParams.y = gameArea.canvas.height/4;
+
+var diedTextParams = Object.assign({}, baseTextParams);
+diedTextParams.fontSize = "50px";
+diedTextParams.y = gameArea.canvas.height/4;
+
+var levelOverTextParams = Object.assign({}, baseTextParams);
+levelOverTextParams.fontSize = "40px";
+levelOverTextParams.y = gameArea.canvas.height/5*2;
+
+var gameOverTextParams = Object.assign({}, baseTextParams);
+gameOverTextParams.fontSize = "100px";
+gameOverTextParams.fontSize = "navy";
+gameOverTextParams.y = gameArea.canvas.height/2;
+
+var score = new component(scoreParams);
+var livesDisplay = new component(livesParams);
+var level = new component(levelParams);
+var pausedMessage = new component(pausedMessageTextParams);
+var diedText = new component(diedTextParams);
+var levelOverText = new component(levelOverTextParams);
+var gameOver = new component(gameOverTextParams);
 
 var scoreValue = 0;
 var defaultLives = 3;
