@@ -17,6 +17,15 @@ var gameArea = {
     // 1000 ms divided by second parameter
     this.interval = setInterval(updateGameState, intervalDivisor);
     gameArea.keys = (gameArea.keys || []);
+    this.addEventListeners();
+  },
+  addEventListeners : function() {
+    window.addEventListener('mousedown', function (e) {
+      gameArea.keys['LMB'] = (e.type === "mousedown" && event.which === 1);
+    });
+    window.addEventListener('mouseup', function (e) {
+      gameArea.keys['LMB'] = (e.type === "mousedown" && event.which === 1);
+    });
     window.addEventListener('keydown', function (e) {
       gameArea.keys[e.keyCode] = (e.type == "keydown");
     });

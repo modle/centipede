@@ -14,7 +14,7 @@ var laserHandler = {
     var speedX = 0;
     var speedY = 0;
     // up
-    if (gameArea.keys[16] || gameArea.keys[37] || gameArea.keys[38] || gameArea.keys[39] || gameArea.keys[40]) {
+    if (gameArea.keys[16] || gameArea.keys[37] || gameArea.keys[38] || gameArea.keys[39] || gameArea.keys[40] || gameArea.keys['LMB']) {
       speedY = -1 * knobsAndLevers.laserSpeed;
     }
     let gamePiece = gamePieceHandler.gamePiece;
