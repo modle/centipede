@@ -16,7 +16,7 @@ var gameHandler = {
   },
   reset : function() {
     gameArea.stop();
-    resetHud();
+    hudHandler.reset();
     this.start();
   },
   checkLevelEndConditions : function() {
@@ -82,7 +82,7 @@ function updateGameState() {
   // clear the canvas
   gameHandler.checkLevelEndConditions();
   gameHandler.startNextFrame();
-  updateHud();
+  hudHandler.update();
   // make things happen
   mushroomHandler.manage();
   centipedeHandler.manage();

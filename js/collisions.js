@@ -24,7 +24,7 @@ function checkLaserCollision(targets) {
           // add floating point
           addNewFloatingPoint(targets[j].getMiddleX(), targets[j].getMiddleY(), targets[j].pointValue, "gain");
           // update scoreValue
-          changeScore(targets[j].pointValue);
+          hudHandler.changeScore(targets[j].pointValue);
           // remove target and set laser removal to pending
           if (targets[j].type === 'centipede') {
             mushroomHandler.mushrooms.push(mushroomHandler.generate(targets[j].x, targets[j].y));
@@ -83,7 +83,7 @@ function addNewFloatingPoint(x, y, points, action) {
     color = "red";
   }
   let pointArgs = {
-    fontSize: "20px",
+    fontSize : "20px",
     fontType : "Consolas",
     color : color,
     x : x,

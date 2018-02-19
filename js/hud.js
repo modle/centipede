@@ -50,40 +50,37 @@ var lives = defaultLives;
 var levelTimeLimit = 30;
 var currentLevel = 1;
 
-function updateHud() {
-  updateScore();
-  updateLives();
-  updateLevel();
-}
-
-function changeScore(change) {
-  scoreValue += change;
-  if (scoreValue < 0) {
+var hudHandler = {
+  update : function() {
+    this.updateScore();
+    this.updateLives();
+    this.updateLevel();
+  },
+  changeScore : function(change) {
+    scoreValue += change;
+    if (scoreValue < 0) {
+      scoreValue = 0;
+    }
+  },
+  updateLives : function() {
+    livesDisplay.text = "Lives: " + lives;
+    livesDisplay.update();
+  },
+  updateLevel : function() {
+    level.text = "Level: " + currentLevel;
+    level.update();
+  },
+  updateScore : function() {
+    score.text = "Score: " + scoreValue;
+    score.update();
+  },
+  reset : function() {
     scoreValue = 0;
+    lives = defaultLives;
+    currentLevel = 1;
+    centipedeHandler.clear();
+    spiderHandler.clear();
+    wormHandler.clear();
+    mushroomHandler.clear();
   }
-}
-
-function updateLives() {
-  livesDisplay.text = "Lives: " + lives;
-  livesDisplay.update();
-}
-
-function updateLevel() {
-  level.text = "Level: " + currentLevel;
-  level.update();
-}
-
-function updateScore() {
-  score.text = "Score: " + scoreValue;
-  score.update();
-}
-
-function resetHud() {
-  scoreValue = 0;
-  lives = defaultLives;
-  currentLevel = 1;
-  centipedeHandler.clear();
-  spiderHandler.clear();
-  wormHandler.clear();
-  mushroomHandler.clear();
 }
