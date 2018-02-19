@@ -15,7 +15,7 @@ var gameArea = {
     this.timeRemaining = levelTimeLimit;
     // set interval at which function updateGameArea is executed
     // 1000 ms divided by second parameter
-    this.interval = setInterval(updateGameArea, intervalDivisor);
+    this.interval = setInterval(updateGameState, intervalDivisor);
     gameArea.keys = (gameArea.keys || []);
     window.addEventListener('keydown', function (e) {
       gameArea.keys[e.keyCode] = (e.type == "keydown");
