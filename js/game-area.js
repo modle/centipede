@@ -63,7 +63,7 @@ var gameArea = {
   initialize: function() {
     this.canvas.width = knobsAndLevers.canvasWidth;
     this.canvas.height = knobsAndLevers.canvasHeight;
-    this.gridSquareSideLength = Math.floor(this.canvas.width / knobsAndLevers.gridDivisor);
+    this.gridSquareSideLength = knobsAndLevers.gridSquareSideLength;
     this.firstMushroomLayer = this.gridSquareSideLength * 2;
     this.setGridVertices();
     console.log("gameArea initialized");

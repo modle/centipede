@@ -7,12 +7,12 @@ var hudHandler = {
     this.updateLevel();
   },
   updateLives : function() {
-    textHandler.livesDisplay.text = "Lives: " + metrics.lives;
-    textHandler.livesDisplay.update();
+    texts.livesDisplay.text = "Lives: " + metrics.lives;
+    texts.livesDisplay.update();
   },
   updateLevel : function() {
-    textHandler.level.text = "Level: " + metrics.currentLevel;
-    textHandler.level.update();
+    texts.level.text = "Level: " + metrics.currentLevel;
+    texts.level.update();
   },
   updateScore : function() {
     metrics.score.text = "Score: " + metrics.scoreValue;
@@ -20,9 +20,9 @@ var hudHandler = {
   },
   reset : function() {
     metrics.reset();
-    centipedeHandler.clear();
-    spiderHandler.clear();
-    wormHandler.clear();
-    mushroomHandler.clear();
+    centipedes.clear();
+    spiders.clear();
+    worms.clear();
+    mushrooms.clear();
   }
 }

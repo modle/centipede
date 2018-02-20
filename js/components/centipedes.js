@@ -1,5 +1,5 @@
 /*jslint white: true */
-var centipedeHandler = {
+var centipedes = {
   baseSpeed : 0,
   speed : 0,
   interval : 10,
@@ -12,15 +12,6 @@ var centipedeHandler = {
       this.spawn();
     }
     this.update();
-  },
-  update : function() {
-    this.speed = this.baseSpeed + metrics.currentLevel;
-    this.determineDirections();
-    this.updateDirections();
-    this.updateCoordinates();
-    for (i = 0; i < this.centipedes.length; i += 1) {
-      this.centipedes[i].update();
-    }
   },
   spawn : function() {
     if (this.numberSpawned >= this.maxNumber + metrics.currentLevel) {
@@ -60,6 +51,15 @@ var centipedeHandler = {
     this.centipedes.push(centipede);
     this.numberSpawned++;
   },
+  update : function() {
+    this.speed = this.baseSpeed + metrics.currentLevel;
+    this.determineDirections();
+    this.updateDirections();
+    this.updateCoordinates();
+    for (i = 0; i < this.centipedes.length; i += 1) {
+      this.centipedes[i].update();
+    }
+  },
   clear : function() {
     this.centipedes = [];
     this.numberSpawned = 0;
@@ -85,12 +85,12 @@ var centipedeHandler = {
       // only check collisions once centipede has moved a certain distance
       if (this.centipedes[i].distanceMovedY === 0) {
         // check collision with walls
-        if (centipedeHandler.hasCollidedWithWall(this.centipedes[i])) {
+        if (centipedes.hasCollidedWithWall(this.centipedes[i])) {
           this.centipedes[i].distanceMovedX = 0;
           this.centipedes[i].moveVertically = true;
           continue;
         }
-        if (centipedeHandler.hasCollidedWithMushroom(this.centipedes[i])) {
+        if (centipedes.hasCollidedWithMushroom(this.centipedes[i])) {
           this.centipedes[i].moveVertically = true;
           continue;
         }
@@ -113,8 +113,8 @@ var centipedeHandler = {
     return ((centipede.getLeft() < 1 || centipede.getRight() > gameArea.canvas.width - 1) && centipede.distanceMovedX > gameArea.gridSquareSideLength);
   },
   hasCollidedWithMushroom : function(centipede) {
-    for (j = 0; j < mushroomHandler.mushrooms.length; j += 1) {
-      if (centipede.crashWithSidesOnly(mushroomHandler.mushrooms[j]) && Math.abs(centipede.y - mushroomHandler.mushrooms[j].y) < 5 && centipede.distanceMovedX > gameArea.gridSquareSideLength) {
+    for (j = 0; j < mushrooms.mushrooms.length; j += 1) {
+      if (centipede.crashWithSidesOnly(mushrooms.mushrooms[j]) && Math.abs(centipede.y - mushrooms.mushrooms[j].y) < 5 && centipede.distanceMovedX > gameArea.gridSquareSideLength) {
         return true;
       }
     }

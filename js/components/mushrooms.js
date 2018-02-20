@@ -1,25 +1,16 @@
 /*jslint white: true */
-
-/* Mushrooms */
-/***********************************/
-
 var mushroomPointValue = 1;
 var maxMushrooms = 50;
 var coordinateScaleFactor = gameArea.gridSquareSideLength * 0.1;
 var mushroomSide = gameArea.gridSquareSideLength * 0.8;
 
-var mushroomHandler = {
+var mushrooms = {
   mushrooms : [],
   manage : function() {
     if (gameArea.frameNo == 1) {
       this.spawn(maxMushrooms);
     }
     this.update();
-  },
-  update : function() {
-    for (i = 0; i < this.mushrooms.length; i += 1) {
-      this.mushrooms[i].update();
-    }
   },
   spawn : function(amount) {
     while (this.mushrooms.length < amount) {
@@ -43,6 +34,11 @@ var mushroomHandler = {
     mushroom.pointValue = metrics.currentLevel;
     mushroom.hitPoints = 4;
     return mushroom;
+  },
+  update : function() {
+    for (i = 0; i < this.mushrooms.length; i += 1) {
+      this.mushrooms[i].update();
+    }
   },
   clear : function() {
     this.mushrooms = [];

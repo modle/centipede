@@ -15,21 +15,26 @@ function component(args) {
     this.speedX = args.extraArgs.speed.x;
     this.speedY = args.extraArgs.speed.y;
   };
+  if (Array.from(Object.keys(args)).includes('background')) {
+    this.background = args.background;
+  };
   this.update = function() {
+    if (this.background) {
+      this.background.update();
+    }
     ctx = gameArea.context;
     ctx.fillStyle = this.color;
     if (this.type == "text") {
-      ctx.font = args.fontSize + " " + args.fontType;
-      ctx.fillText(this.text, this.x, this.y);
-    } else if (this.type == "laser") {
-      ctx.fillRect(this.x, this.y, this.width, this.height);
+      this.makeText();
     } else if (this.type == "centipede") {
       this.makeACentipede();
-    } else if (this.type == "background") {
-      ctx.fillRect(this.x, this.y, this.width, this.height);
     } else {
-      ctx.fillRect(this.x, this.y, this.width, this.height);
+      this.makeARectangle();
     }
+  };
+  this.makeText = function() {
+    ctx.font = args.fontSize + " " + args.fontType;
+    ctx.fillText(this.text, this.x, this.y);
   };
   this.makeACentipede = function() {
     ctx.beginPath();
@@ -38,7 +43,7 @@ function component(args) {
     ctx.lineTo(vertices['x2'], vertices['y2']);
     ctx.lineTo(vertices['x3'], vertices['y3']);
     ctx.fill();
-  }
+  };
   this.getCentipedeVertices = function() {
     if (this.moveVertically) {
       if (this.directionY > 0) {
@@ -53,7 +58,10 @@ function component(args) {
         return getLeftTriangle(ctx, this);
       }
     }
-  }
+  };
+  this.makeARectangle = function() {
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+  };
   this.newPos = function() {
     this.x += this.speedX;
     this.y += this.speedY;

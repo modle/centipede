@@ -1,5 +1,5 @@
 /*jslint white: true */
-var laserHandler = {
+var lasers = {
   lasers : [],
   manage : function() {
     this.spawn();
