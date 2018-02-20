@@ -19,15 +19,15 @@ function component(args) {
     this.background = args.background;
   };
   this.update = function() {
+    if (this.background) {
+      this.background.update();
+    }
     ctx = gameArea.context;
     ctx.fillStyle = this.color;
     if (this.type == "text") {
       this.makeText();
     } else if (this.type == "centipede") {
       this.makeACentipede();
-    } else if (this.type == "background") {
-      // this.width = ctx.measureText(args.widthSource).width;
-      this.makeARectangle();
     } else {
       this.makeARectangle();
     }

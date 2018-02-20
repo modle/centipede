@@ -22,16 +22,18 @@ var texts = {
     let diedTextParams = this.copyBaseMessageParams();
     diedTextParams.fontSize = "50px";
     diedTextParams.y = gameArea.canvas.height * 0.25;
-    diedTextParams.background = this.copyBaseTextBackgroundParams();
-    diedTextParams.background.height *= 1.5;
-    diedTextParams.background.y = (diedTextParams.y - diedTextParams.background.height) * 1.05;
+    let backgroundParams = this.copyBaseTextBackgroundParams();
+    backgroundParams.height *= 1.5;
+    backgroundParams.y = (diedTextParams.y - backgroundParams.height) * 1.05;
+    diedTextParams.background = new component(backgroundParams);
     return diedTextParams;
   },
   getPausedMessageParams : function() {
     let pausedMessageTextParams = this.copyBaseMessageParams();
     pausedMessageTextParams.y = gameArea.canvas.height * 0.25;
-    pausedMessageTextParams.background = this.copyBaseTextBackgroundParams();
-    pausedMessageTextParams.background.y = (pausedMessageTextParams.y - pausedMessageTextParams.background.height) * 1.05;
+    let backgroundParams = this.copyBaseTextBackgroundParams();
+    backgroundParams.y = (pausedMessageTextParams.y - backgroundParams.height) * 1.05;
+    pausedMessageTextParams.background = new component(backgroundParams);
     return pausedMessageTextParams;
   },
   getGameOverTextParams : function() {
@@ -39,24 +41,18 @@ var texts = {
     gameOverTextParams.fontSize = "100px";
     gameOverTextParams.color = "navy";
     gameOverTextParams.y = gameArea.canvas.height * 0.5;
-    gameOverTextParams.background = this.copyBaseTextBackgroundParams();
-    gameOverTextParams.background.height *= 3;
-    gameOverTextParams.background.y = (gameOverTextParams.y - gameOverTextParams.background.height) * 1.05;
+    let backgroundParams = this.copyBaseTextBackgroundParams();
+    backgroundParams.height *= 3;
+    backgroundParams.y = (gameOverTextParams.y - backgroundParams.height) * 1.05;
+    gameOverTextParams.background = new component(backgroundParams);
     return gameOverTextParams;
   },
   initialize : function() {
     this.livesDisplay = new component(this.getLivesParams());
     this.level = new component(this.getLevelParams());
-
     this.pausedMessage = new component(this.getPausedMessageParams());
-    this.pausedBackground = new component(this.pausedMessage.background);
-
     this.diedText = new component(this.getDiedTextParams());
-    this.diedBackground = new component(this.diedText.background);
-
     this.gameOver = new component(this.getGameOverTextParams());
-    this.gameOverBackground = new component(this.gameOver.background);
-
     console.log("texts initialized");
   }
 }
