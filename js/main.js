@@ -3,6 +3,7 @@
 var paused = true;
 var died = false;
 var levelOver = false;
+var gameOver = false;
 var delayed = 0;
 var delayEndTime = 300;
 
@@ -49,6 +50,16 @@ var gameHandler = {
     texts.diedText.text = "";
     died = false;
   },
+  manageGameOver : function() {
+    if (gameOver) {
+      this.showGameOver();
+    };
+  },
+  showGameOver : function() {
+    texts.gameOver.text = "Game Over";
+    texts.gameOver.update();
+    gameArea.stop();
+  },
   resetSomeThings : function() {
     gameArea.frameNo = 0;
     centipedes.clear();
@@ -65,6 +76,7 @@ var gameHandler = {
 function updateGameState() {
   // this gets executed every interval
   // check game conditions and update messages
+  gameHandler.manageGameOver();
   if (paused) {
     gameHandler.managePause();
     return;

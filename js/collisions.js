@@ -49,19 +49,13 @@ var collisions = {
         if (metrics.lives > 0) {
           return;
         }
-        this.showGameOver();
+        gameOver = true;
       }
     }
   },
   killPlayer : function() {
     died = true;
     metrics.lives -= 1;
-  },
-  // TODO set a gameOver flag, and move this to main
-  showGameOver : function() {
-    gameArea.stop();
-    texts.gameOver.text = "Game Over";
-    texts.gameOver.update();
   },
   withMushrooms : function(gamePiece) {
     for (i = 0; i < mushrooms.mushrooms.length; i += 1) {
