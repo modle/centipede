@@ -38,12 +38,12 @@ var gameHandler = {
     texts.diedText.update();
   },
   managePause : function() {
+    texts.pausedBackground.update();
     texts.pausedMessage.text = "Paused: Spacebar to Continue";
     if (gameArea.frameNo === 0) {
       texts.pausedMessage.text = "Press Spacebar to Start";
     }
     texts.pausedMessage.update();
-    // pausedBackground.update();
   },
   manageDeath : function() {
     this.resetMoreThings();
