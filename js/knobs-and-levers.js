@@ -8,7 +8,7 @@ var knobsAndLevers = {
   gamePieceHeight : 30,
   gamePieceStartX : 0,
   gamePieceStartY : 0,
-  laserSpeed : 20,
+  laserSpeed : 5,
   laserSideLength : 5,
   laserInterval : 10,
   maxLasers : 2,
