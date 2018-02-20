@@ -34,12 +34,6 @@ var texts = {
     pausedMessageTextParams.background.y = (pausedMessageTextParams.y - pausedMessageTextParams.background.height) * 1.05;
     return pausedMessageTextParams;
   },
-  getLevelOverTextParams : function() {
-    let levelOverTextParams = this.copyBaseMessageParams();
-    levelOverTextParams.fontSize = "40px";
-    levelOverTextParams.y = gameArea.canvas.height * 0.4;
-    return levelOverTextParams;
-  },
   getGameOverTextParams : function() {
     let gameOverTextParams = this.copyBaseMessageParams();
     gameOverTextParams.fontSize = "100px";
@@ -57,12 +51,7 @@ var texts = {
     this.diedText = new component(this.getDiedTextParams());
     this.diedBackground = new component(this.diedText.background);
 
-    this.levelOverText = new component(this.getLevelOverTextParams());
-    // this.levelOverText.background.y = (this.levelOverText.y - this.levelOverText.background.height) * 1.05;
-    // this.levelOverBackground = new component(this.levelOverText.background);
-
     this.gameOver = new component(this.getGameOverTextParams());
-    // this.gameOver.background.y = (this.gameOver.y - this.gameOver.background.height) * 1.05;
     // this.gameOverBackground = new component(this.gameOver.background);
 
     console.log("texts initialized");
