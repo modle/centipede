@@ -1,10 +1,8 @@
 /*jslint white: true */
 var wormPointValue = 50;
 var worms = [];
-var wormMinInterval = 100;
-var wormMaxInterval = 100;
-// var wormMinInterval = 2000;
-// var wormMaxInterval = 4000;
+var wormMinInterval = 2000;
+var wormMaxInterval = 4000;
 var wormInterval = getRandom(wormMinInterval, wormMaxInterval);
 
 var worms = {

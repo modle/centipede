@@ -11,7 +11,7 @@ var knobsAndLevers = {
   laserSpeed : 20,
   laserSideLength : 5,
   laserInterval : 10,
-  maxLasers : 5,
+  maxLasers : 2,
   baseTextParams : {
     fontSize : "30px",
     fontType : "Consolas",
