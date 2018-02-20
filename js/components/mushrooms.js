@@ -12,11 +12,6 @@ var mushrooms = {
     }
     this.update();
   },
-  update : function() {
-    for (i = 0; i < this.mushrooms.length; i += 1) {
-      this.mushrooms[i].update();
-    }
-  },
   spawn : function(amount) {
     while (this.mushrooms.length < amount) {
       x = gameArea.xVertices[Math.floor(Math.random() * gameArea.xVertices.length)];
@@ -39,6 +34,11 @@ var mushrooms = {
     mushroom.pointValue = metrics.currentLevel;
     mushroom.hitPoints = 4;
     return mushroom;
+  },
+  update : function() {
+    for (i = 0; i < this.mushrooms.length; i += 1) {
+      this.mushrooms[i].update();
+    }
   },
   clear : function() {
     this.mushrooms = [];

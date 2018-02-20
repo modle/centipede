@@ -21,12 +21,8 @@ function component(args) {
     if (this.type == "text") {
       ctx.font = args.fontSize + " " + args.fontType;
       ctx.fillText(this.text, this.x, this.y);
-    } else if (this.type == "laser") {
-      ctx.fillRect(this.x, this.y, this.width, this.height);
     } else if (this.type == "centipede") {
       this.makeACentipede();
-    } else if (this.type == "background") {
-      ctx.fillRect(this.x, this.y, this.width, this.height);
     } else {
       ctx.fillRect(this.x, this.y, this.width, this.height);
     }

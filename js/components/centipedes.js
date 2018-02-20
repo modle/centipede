@@ -13,15 +13,6 @@ var centipedes = {
     }
     this.update();
   },
-  update : function() {
-    this.speed = this.baseSpeed + metrics.currentLevel;
-    this.determineDirections();
-    this.updateDirections();
-    this.updateCoordinates();
-    for (i = 0; i < this.centipedes.length; i += 1) {
-      this.centipedes[i].update();
-    }
-  },
   spawn : function() {
     if (this.numberSpawned >= this.maxNumber + metrics.currentLevel) {
       return;
@@ -59,6 +50,15 @@ var centipedes = {
   add : function(centipede) {
     this.centipedes.push(centipede);
     this.numberSpawned++;
+  },
+  update : function() {
+    this.speed = this.baseSpeed + metrics.currentLevel;
+    this.determineDirections();
+    this.updateDirections();
+    this.updateCoordinates();
+    for (i = 0; i < this.centipedes.length; i += 1) {
+      this.centipedes[i].update();
+    }
   },
   clear : function() {
     this.centipedes = [];
