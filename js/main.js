@@ -34,6 +34,7 @@ var gameHandler = {
     metrics.currentLevel += 1;
   },
   setDiedText : function() {
+    texts.diedBackground.update();
     texts.diedText.text = "You died.";
     texts.diedText.update();
   },
