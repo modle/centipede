@@ -57,8 +57,10 @@ var collisions = {
     died = true;
     metrics.lives -= 1;
   },
+  // TODO set a gameOver flag, and move this to main
   showGameOver : function() {
     gameArea.stop();
+    texts.gameOverBackground.update();
     texts.gameOver.text = "Game Over";
     texts.gameOver.update();
   },

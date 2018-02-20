@@ -39,6 +39,9 @@ var texts = {
     gameOverTextParams.fontSize = "100px";
     gameOverTextParams.color = "navy";
     gameOverTextParams.y = gameArea.canvas.height * 0.5;
+    gameOverTextParams.background = this.copyBaseTextBackgroundParams();
+    gameOverTextParams.background.height *= 3;
+    gameOverTextParams.background.y = (gameOverTextParams.y - gameOverTextParams.background.height) * 1.05;
     return gameOverTextParams;
   },
   initialize : function() {
@@ -52,7 +55,7 @@ var texts = {
     this.diedBackground = new component(this.diedText.background);
 
     this.gameOver = new component(this.getGameOverTextParams());
-    // this.gameOverBackground = new component(this.gameOver.background);
+    this.gameOverBackground = new component(this.gameOver.background);
 
     console.log("texts initialized");
   }
