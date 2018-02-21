@@ -1,16 +1,11 @@
 /*jslint white: true */
-var spiderPointValue = 20;
-var spiders = [];
-var spiderMaxInterval = 20;
-var spiderMinInterval = 1;
-var spiderInterval = getRandom(spiderMinInterval, spiderMaxInterval);
-
 var spiders = {
   spiders : [],
+  spiderInterval : knobsAndLevers.initialSpiderInterval,
   manage : function() {
     this.clearOutsideCanvas();
-    if (everyinterval(spiderInterval) && this.spiders.length < knobsAndLevers.maxSpiders) {
-      spiderInterval = getRandom(spiderMinInterval, spiderMaxInterval);
+    if (everyinterval(this.spiderInterval) && this.spiders.length < knobsAndLevers.maxSpiders) {
+      this.spiderInterval = getRandom(knobsAndLevers.spiderInterval.min, knobsAndLevers.spiderInterval.max);
       this.spawn();
     }
     this.update();
@@ -26,7 +21,7 @@ var spiders = {
     };
     let spider = new component(spiderArgs);
     spider.directionY = 1;
-    spider.pointValue = spiderPointValue * metrics.currentLevel;
+    spider.pointValue = knobsAndLevers.spiderPointValue * metrics.currentLevel;
     spider.hitPoints = 1;
     this.spiders.push(spider);
   },
@@ -34,7 +29,7 @@ var spiders = {
   // spiders need to move up and down erratically, and occasionally move to the right
     let spiders = this.spiders;
     for (i = 0; i < spiders.length; i += 1) {
-      if (everyinterval(spiderInterval / 20)) {
+      if (everyinterval(this.spiderInterval / 20)) {
         spiders[i].speedX = getRandom(0, 1);
       }
       spiders[i].speedY = getRandom(0, 1) * spiders[i].directionY;

@@ -1,8 +1,4 @@
 /*jslint white: true */
-var mushroomPointValue = 1;
-var coordinateScaleFactor = gameArea.gridSquareSideLength * 0.1;
-var mushroomSide = gameArea.gridSquareSideLength * 0.8;
-
 var mushrooms = {
   mushrooms : [],
   manage : function() {
@@ -15,18 +11,18 @@ var mushrooms = {
     while (this.mushrooms.length < amount) {
       x = gameArea.xVertices[Math.floor(Math.random() * gameArea.xVertices.length)];
       y = gameArea.yVertices[Math.floor(Math.random() * gameArea.yVertices.length)];
-      if (x < gameArea.canvas.width - coordinateScaleFactor) {
+      if (x < gameArea.canvas.width - knobsAndLevers.coordinateScaleFactor) {
         this.mushrooms.push(this.generate(x, y));
       }
     }
   },
   generate : function(x, y) {
     let mushroomArgs = {
-      width: mushroomSide,
-      height : mushroomSide,
+      width: knobsAndLevers.mushroomSide,
+      height : knobsAndLevers.mushroomSide,
       color : "teal",
-      x : x + coordinateScaleFactor,
-      y : y + coordinateScaleFactor,
+      x : x + knobsAndLevers.coordinateScaleFactor,
+      y : y + knobsAndLevers.coordinateScaleFactor,
       extraArgs : {type : "mushroom"}
     };
     mushroom = new component(mushroomArgs);
