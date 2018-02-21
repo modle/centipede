@@ -9,7 +9,7 @@ var spiders = {
   spiders : [],
   manage : function() {
     this.clearOutsideCanvas();
-    if (everyinterval(spiderInterval) && this.spiders.length < 1) {
+    if (everyinterval(spiderInterval) && this.spiders.length < knobsAndLevers.maxSpiders) {
       spiderInterval = getRandom(spiderMinInterval, spiderMaxInterval);
       this.spawn();
     }
