@@ -1,7 +1,7 @@
 /*jslint white: true */
 var metrics = {
   lives : knobsAndLevers.defaultLives,
-  currentLevel : 1,
+  currentLevel : knobsAndLevers.startLevel,
   scoreValue : 0,
   changeScore : function(change) {
     this.scoreValue += change;

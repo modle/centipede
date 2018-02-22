@@ -3,14 +3,15 @@ var spiders = {
   spiders : [],
   spiderInterval : knobsAndLevers.initialSpiderInterval,
   manage : function() {
-    this.clearOutsideCanvas();
-    if (everyinterval(this.spiderInterval) && this.spiders.length < knobsAndLevers.maxSpiders) {
-      this.spiderInterval = getRandom(knobsAndLevers.spiderInterval.min, knobsAndLevers.spiderInterval.max);
-      this.spawn();
-    }
+    this.spawn();
     this.update();
+    this.clearOutsideCanvas();
   },
   spawn : function() {
+    if (!everyinterval(this.spiderInterval) || this.spiders.length >= knobsAndLevers.maxSpiders) {
+      return
+    }
+    this.spiderInterval = getRandom(knobsAndLevers.spiderInterval.min, knobsAndLevers.spiderInterval.max);
     let spiderArgs = {
       width: gameArea.gridSquareSideLength * 0.3,
       height : gameArea.gridSquareSideLength * 0.8,
@@ -45,6 +46,7 @@ var spiders = {
   },
   clearOutsideCanvas : function() {
     let spiders = this.spiders;
+    if (spiders == false) { return; }
     for (i = 0; i < spiders.length; i += 1) {
       if (spiders[i].x > gameArea.canvas.width) {
         spiders.splice(i, 1);

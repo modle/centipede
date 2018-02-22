@@ -77,11 +77,12 @@ var centipedes = {
     this.centipedes.map(centipede => centipede.updated = false);
   },
   moveDownwardInitially : function() {
-    this.centipedes.filter(centipede => !centipede. updated).map(centipede => {
+    this.centipedes.filter(centipede => !centipede.updated).map(centipede => {
       if (centipede.y < gameArea.firstMushroomLayer - 1) {
         centipede.moveVertically = true;
         centipede.updated = true;
       }
+      this.reverseHorizontalAtNextLayer();
     });
   },
   checkYDirectionInPlayerArea : function() {
@@ -100,12 +101,10 @@ var centipedes = {
     this.centipedes.filter(centipede => !centipede.updated).map(centipede => {
       if (centipede.distanceMovedY === 0) {
         if (centipedes.hasCollidedWithWall(centipede)) {
-          console.log("collided with wall");
           centipede.distanceMovedX = 0;
           centipede.moveVertically = true;
         }
         if (centipedes.hasCollidedWithMushroom(centipede)) {
-          console.log("collided with mushroom");
           centipede.moveVertically = true;
         }
         centipede.updated = true;
@@ -126,6 +125,13 @@ var centipedes = {
         && Math.abs(centipede.y - mushrooms.mushrooms[j].y) < 5
         && centipede.distanceMovedX > gameArea.gridSquareSideLength
       ) {
+        this.centipedes.filter(centipede => !centipede. updated).map(centipede => {
+          if (centipede.y < gameArea.firstMushroomLayer - 1) {
+            centipede.moveVertically = true;
+            centipede.updated = true;
+          }
+          this.reverseHorizontalAtNextLayer();
+        });
         return true;
       }
     }

@@ -12,12 +12,13 @@ var knobsAndLevers = {
   laserSideLength : 5,
   laserInterval : 10,
   maxLasers : 2,
+  startLevel : 1,
   maxCentipedes : 10,
   maxSpiders : 1,
   spiderPointValue: 1,
   spiderInterval : {
-    min: 1,
-    max: 20
+    min: 200,
+    max: 500
   },
   maxMushrooms : 50,
   baseTextParams : {
