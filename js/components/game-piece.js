@@ -24,116 +24,83 @@ var gamePieceHandler = {
     this.gamePiece.y = knobsAndLevers.gamePieceStartY;
   },
   move : function() {
+    if (!gameArea.keysDown) {
+      return;
+    }
     let gamePiece = this.gamePiece;
     gamePiece.speedX = 0;
     gamePiece.speedY = 0;
     let gamePieceSpeed = knobsAndLevers.gamePieceSpeed;
-    // stop game piece from going beyond boundaries (bottom 20% of screen only)
-    // move game piece
-    // FIXME: abstract this better
-    // up right
-    if (gameArea.keysDown && gameArea.keysDown[87] && gamePiece.getTop() > gameArea.gamePieceTopLimit && gameArea.keysDown[68] && gamePiece.getRight() < gameArea.canvas.width) {
-      // move it
-      gamePiece.speedX = gamePieceSpeed;
-      gamePiece.speedY = -gamePieceSpeed;
-      gamePiece.newPos();
-      // if it collides, move it back
-      if (collisions.withMushrooms(gamePiece)) {
-        gamePiece.speedX = -gamePieceSpeed;
-        gamePiece.speedY = gamePieceSpeed;
-        gamePiece.newPos();
-      }
+    this.positionFlags = this.getPositionFlags();
+    directionResults = this.evaluateDirections();
+    activeDirections = Array.from(Object.keys(directionResults)).filter(direction => directionResults[direction]);
+    moved = false;
+    if (activeDirections.length > 0) {
+      this.moveTheThing(activeDirections[0]);
       return;
     }
-    // up left
-    if (gameArea.keysDown && gameArea.keysDown[87] && gamePiece.getTop() > gameArea.gamePieceTopLimit && gameArea.keysDown[65] && gamePiece.getLeft() > 0) {
-      // move it
-      gamePiece.speedX = -gamePieceSpeed;
-      gamePiece.speedY = -gamePieceSpeed;
-      gamePiece.newPos();
-      // if it collides, move it back
-      if (collisions.withMushrooms(gamePiece)) {
-        gamePiece.speedX = gamePieceSpeed;
-        gamePiece.speedY = gamePieceSpeed;
-        gamePiece.newPos();
-      }
-      return;
+  },
+  getPositionFlags : function() {
+    return {
+      belowTop : this.gamePiece.getTop() > gameArea.gamePieceTopLimit,
+      insideRight : this.gamePiece.getRight() < gameArea.canvas.width,
+      aboveBottom : this.gamePiece.getBottom() < gameArea.canvas.height,
+      insideLeft : this.gamePiece.getLeft() > 0,
+      upRight : [68, 87],
+      downRight : [68, 83],
+      downLeft : [83, 65],
+      upLeft : [65, 87],
+      up : [87],
+      right : [68],
+      down : [83],
+      left : [65],
     }
-    // down right
-    if (gameArea.keysDown && gameArea.keysDown[83] && gamePiece.getBottom() < gameArea.canvas.height && gameArea.keysDown[68] && gamePiece.getRight() < gameArea.canvas.width) {
-      // move it
-      gamePiece.speedX = gamePieceSpeed;
-      gamePiece.speedY = gamePieceSpeed;
-      gamePiece.newPos();
-      // if it collides, move it back
-      if (collisions.withMushrooms(gamePiece)) {
-        gamePiece.speedX = -gamePieceSpeed;
-        gamePiece.speedY = -gamePieceSpeed;
-        gamePiece.newPos();
+  },
+  keysPressed : function(needles) {
+    haystack = gameArea.keysDown;
+    for (var i = 0; i < needles.length; i++) {
+      if (!haystack[needles[i]]) {
+        return false;
       }
-      return;
     }
-    // down left
-    if (gameArea.keysDown && gameArea.keysDown[83] && gamePiece.getBottom() < gameArea.canvas.height && gameArea.keysDown[65] && gamePiece.getLeft() > 0) {
-      // move it
-      gamePiece.speedX = -gamePieceSpeed;
-      gamePiece.speedY = gamePieceSpeed;
-      gamePiece.newPos();
-      // if it collides, move it back
-      if (collisions.withMushrooms(gamePiece)) {
-        gamePiece.speedX = gamePieceSpeed;
-        gamePiece.speedY = -gamePieceSpeed;
-        gamePiece.newPos();
-      }
-      return;
+    return true;
+  },
+  positionModifiers : {
+    upRight: {x : knobsAndLevers.gamePieceSpeed, y : -knobsAndLevers.gamePieceSpeed},
+    upLeft: {x : -knobsAndLevers.gamePieceSpeed, y : -knobsAndLevers.gamePieceSpeed},
+    downRight: {x : knobsAndLevers.gamePieceSpeed, y : knobsAndLevers.gamePieceSpeed},
+    downLeft: {x : -knobsAndLevers.gamePieceSpeed, y : knobsAndLevers.gamePieceSpeed},
+    right: {x : knobsAndLevers.gamePieceSpeed},
+    down: {y : knobsAndLevers.gamePieceSpeed},
+    left: {x : -knobsAndLevers.gamePieceSpeed},
+    up: {y : -knobsAndLevers.gamePieceSpeed},
+  },
+  updatePosition : function(positionModifiers) {
+    this.gamePiece.speedX = positionModifiers.x ? positionModifiers.x : this.gamePiece.speedX;
+    this.gamePiece.speedY = positionModifiers.y ? positionModifiers.y : this.gamePiece.speedY;
+    this.gamePiece.newPos();
+  },
+  revertPosition : function(positionModifiers) {
+    this.gamePiece.speedX = positionModifiers.x ? -positionModifiers.x : this.gamePiece.speedX;
+    this.gamePiece.speedY = positionModifiers.y ? -positionModifiers.y : this.gamePiece.speedY;
+    this.gamePiece.newPos();
+  },
+  moveTheThing : function(direction) {
+    this.updatePosition(this.positionModifiers[direction]);
+    if (collisions.withMushrooms(this.gamePiece)) {
+      this.revertPosition(this.positionModifiers[direction]);
     }
-    // left
-    if (gameArea.keysDown && gameArea.keysDown[65] && gamePiece.getLeft() > 0) {
-      // move it
-      gamePiece.speedX = -gamePieceSpeed;
-      gamePiece.newPos();
-      // if it collides, move it back
-      if (collisions.withMushrooms(gamePiece)) {
-        gamePiece.speedX = gamePieceSpeed;
-        gamePiece.newPos();
-      }
-      return;
-    }
-    // right
-    if (gameArea.keysDown && gameArea.keysDown[68] && gamePiece.getRight() < gameArea.canvas.width) {
-      // move it
-      gamePiece.speedX = gamePieceSpeed;
-      gamePiece.newPos();
-      // if it collides, move it back
-      if (collisions.withMushrooms(gamePiece)) {
-        gamePiece.speedX = -gamePieceSpeed;
-        gamePiece.newPos();
-      }
-      return;
-    }
-    // up
-    if (gameArea.keysDown && gameArea.keysDown[87] && gamePiece.getTop() > gameArea.gamePieceTopLimit) {
-      // move it
-      gamePiece.speedY = -gamePieceSpeed;
-      gamePiece.newPos();
-      // if it collides, move it back
-      if (collisions.withMushrooms(gamePiece)) {
-        gamePiece.speedY = gamePieceSpeed;
-        gamePiece.newPos();
-      }
-      return;
-    }
-    // down
-    if (gameArea.keysDown && gameArea.keysDown[83] && gamePiece.getBottom() < gameArea.canvas.height) {
-      // move it
-      gamePiece.speedY = gamePieceSpeed;
-      gamePiece.newPos();
-      // if it collides, move it back
-      if (collisions.withMushrooms(gamePiece)) {
-        gamePiece.speedY = -gamePieceSpeed;
-        gamePiece.newPos();
-      }
-      return;
+  },
+  evaluateDirections : function() {
+    return {
+      'upRight' : this.keysPressed(this.positionFlags['upRight']) && this.positionFlags.belowTop && this.positionFlags.insideRight, 
+      'upLeft' : this.keysPressed(this.positionFlags['upLeft']) && this.positionFlags.belowTop && this.positionFlags.insideLeft,
+      'downRight' : this.keysPressed(this.positionFlags['downRight']) && this.positionFlags.aboveBottom && this.positionFlags.insideRight,
+      'downLeft' : this.keysPressed(this.positionFlags['downLeft']) && this.positionFlags.aboveBottom && this.positionFlags.insideLeft,
+      'up' : this.keysPressed(this.positionFlags['up']) && this.positionFlags.belowTop,
+      'down' : this.keysPressed(this.positionFlags['down']) && this.positionFlags.aboveBottom,
+      'right' : this.keysPressed(this.positionFlags['right']) && this.positionFlags.insideRight,
+      'left' : this.keysPressed(this.positionFlags['left']) && this.positionFlags.insideLeft,
     }
   }
 }

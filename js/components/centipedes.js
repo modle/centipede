@@ -1,9 +1,9 @@
 /*jslint white: true */
 var centipedes = {
-  baseSpeed : 0,
+  baseSpeed : knobsAndLevers.centipede.baseSpeed,
   speed : 0,
   interval : 10,
-  maxNumber : knobsAndLevers.maxCentipedes,
+  maxNumber : knobsAndLevers.centipede.maxNumber,
   centipedes : [],
   numberSpawned : 0,
   numberKilled : 0,

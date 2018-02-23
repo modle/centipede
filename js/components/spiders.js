@@ -1,17 +1,17 @@
 /*jslint white: true */
 var spiders = {
   spiders : [],
-  spiderInterval : knobsAndLevers.initialSpiderInterval,
+  interval : knobsAndLevers.spider.initialInterval,
   manage : function() {
     this.spawn();
     this.update();
     this.clearOutsideCanvas();
   },
   spawn : function() {
-    if (!everyinterval(this.spiderInterval) || this.spiders.length >= knobsAndLevers.maxSpiders) {
+    if (!everyinterval(this.interval) || this.spiders.length >= knobsAndLevers.spider.maxNumber) {
       return
     }
-    this.spiderInterval = getRandom(knobsAndLevers.spiderInterval.min, knobsAndLevers.spiderInterval.max);
+    this.spiderInterval = getRandom(knobsAndLevers.spider.interval.min, knobsAndLevers.spider.interval.max);
     let spiderArgs = {
       width: gameArea.gridSquareSideLength * 0.3,
       height : gameArea.gridSquareSideLength * 0.8,
@@ -22,7 +22,7 @@ var spiders = {
     };
     let spider = new component(spiderArgs);
     spider.directionY = 1;
-    spider.pointValue = knobsAndLevers.spiderPointValue * metrics.currentLevel;
+    spider.pointValue = knobsAndLevers.spider.pointValue * metrics.currentLevel;
     spider.hitPoints = 1;
     this.spiders.push(spider);
   },

@@ -9,8 +9,12 @@ var knobsAndLevers = {
     this.mushroomSide = this.gridSquareSideLength * 0.8;
     this.baseTextBackgroundParams.height = this.gridSquareSideLength;
     this.baseTextBackgroundParams.width = this.canvasWidth;
-    this.initialSpiderInterval = getRandom(this.spiderInterval.min, this.spiderInterval.max);
+    this.spider.initialInterval = getRandom(this.spider.interval.min, this.spider.interval.max);
     console.log("knobsAndLevers initialized");
+  },
+  centipede : {
+    baseSpeed : 10,
+    maxNumber : 10,
   },
   canvasWidth : 800,
   canvasHeight : 800,
@@ -25,14 +29,15 @@ var knobsAndLevers = {
   laserSideLength : 5,
   laserInterval : 10,
   maxLasers : 2,
-  startLevel : 1,
-  maxCentipedes : 10,
-  maxSpiders : 1,
-  spiderPointValue: 1,
-  spiderInterval : {
-    min: 200,
-    max: 500
+  spider : {
+    maxNumber : 0,
+    pointValue: 1,
+    interval : {
+      min: 200,
+      max: 500
+    },
   },
+  startLevel : 1,
   maxMushrooms : 50,
   baseTextParams : {
     fontSize : "30px",

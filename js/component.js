@@ -32,6 +32,10 @@ function component(args) {
       this.makeARectangle();
     }
   };
+  this.stop = function() {
+    this.speedX = 0;
+    this.speedY = 0;
+  },
   this.makeText = function() {
     ctx.font = args.fontSize + " " + args.fontType;
     ctx.fillText(this.text, this.x, this.y);
