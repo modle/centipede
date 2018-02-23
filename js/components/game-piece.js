@@ -1,5 +1,17 @@
 /*jslint white: true */
 var gamePieceHandler = {
+  init : function() {
+    let gamePieceArgs = {
+      width: knobsAndLevers.gamePieceWidth,
+      height : knobsAndLevers.gamePieceHeight,
+      color : "red",
+      x : knobsAndLevers.gamePieceStartX,
+      y : knobsAndLevers.gamePieceStartY,
+      extraArgs : {type : "gamePiece", speed : {x : 0, y : 0}}
+    };
+    this.gamePiece = new component(gamePieceArgs);
+    console.log("gamePiece initialized");
+  },
   manage : function() {
     this.move();
     this.update();
@@ -20,7 +32,7 @@ var gamePieceHandler = {
     // move game piece
     // FIXME: abstract this better
     // up right
-    if (gameArea.keys && gameArea.keys[87] && gamePiece.getTop() > gameArea.gamePieceTopLimit && gameArea.keys[68] && gamePiece.getRight() < gameArea.canvas.width) {
+    if (gameArea.keysDown && gameArea.keysDown[87] && gamePiece.getTop() > gameArea.gamePieceTopLimit && gameArea.keysDown[68] && gamePiece.getRight() < gameArea.canvas.width) {
       // move it
       gamePiece.speedX = gamePieceSpeed;
       gamePiece.speedY = -gamePieceSpeed;
@@ -34,7 +46,7 @@ var gamePieceHandler = {
       return;
     }
     // up left
-    if (gameArea.keys && gameArea.keys[87] && gamePiece.getTop() > gameArea.gamePieceTopLimit && gameArea.keys[65] && gamePiece.getLeft() > 0) {
+    if (gameArea.keysDown && gameArea.keysDown[87] && gamePiece.getTop() > gameArea.gamePieceTopLimit && gameArea.keysDown[65] && gamePiece.getLeft() > 0) {
       // move it
       gamePiece.speedX = -gamePieceSpeed;
       gamePiece.speedY = -gamePieceSpeed;
@@ -48,7 +60,7 @@ var gamePieceHandler = {
       return;
     }
     // down right
-    if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < gameArea.canvas.height && gameArea.keys[68] && gamePiece.getRight() < gameArea.canvas.width) {
+    if (gameArea.keysDown && gameArea.keysDown[83] && gamePiece.getBottom() < gameArea.canvas.height && gameArea.keysDown[68] && gamePiece.getRight() < gameArea.canvas.width) {
       // move it
       gamePiece.speedX = gamePieceSpeed;
       gamePiece.speedY = gamePieceSpeed;
@@ -62,7 +74,7 @@ var gamePieceHandler = {
       return;
     }
     // down left
-    if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < gameArea.canvas.height && gameArea.keys[65] && gamePiece.getLeft() > 0) {
+    if (gameArea.keysDown && gameArea.keysDown[83] && gamePiece.getBottom() < gameArea.canvas.height && gameArea.keysDown[65] && gamePiece.getLeft() > 0) {
       // move it
       gamePiece.speedX = -gamePieceSpeed;
       gamePiece.speedY = gamePieceSpeed;
@@ -76,7 +88,7 @@ var gamePieceHandler = {
       return;
     }
     // left
-    if (gameArea.keys && gameArea.keys[65] && gamePiece.getLeft() > 0) {
+    if (gameArea.keysDown && gameArea.keysDown[65] && gamePiece.getLeft() > 0) {
       // move it
       gamePiece.speedX = -gamePieceSpeed;
       gamePiece.newPos();
@@ -88,7 +100,7 @@ var gamePieceHandler = {
       return;
     }
     // right
-    if (gameArea.keys && gameArea.keys[68] && gamePiece.getRight() < gameArea.canvas.width) {
+    if (gameArea.keysDown && gameArea.keysDown[68] && gamePiece.getRight() < gameArea.canvas.width) {
       // move it
       gamePiece.speedX = gamePieceSpeed;
       gamePiece.newPos();
@@ -100,7 +112,7 @@ var gamePieceHandler = {
       return;
     }
     // up
-    if (gameArea.keys && gameArea.keys[87] && gamePiece.getTop() > gameArea.gamePieceTopLimit) {
+    if (gameArea.keysDown && gameArea.keysDown[87] && gamePiece.getTop() > gameArea.gamePieceTopLimit) {
       // move it
       gamePiece.speedY = -gamePieceSpeed;
       gamePiece.newPos();
@@ -112,7 +124,7 @@ var gamePieceHandler = {
       return;
     }
     // down
-    if (gameArea.keys && gameArea.keys[83] && gamePiece.getBottom() < gameArea.canvas.height) {
+    if (gameArea.keysDown && gameArea.keysDown[83] && gamePiece.getBottom() < gameArea.canvas.height) {
       // move it
       gamePiece.speedY = gamePieceSpeed;
       gamePiece.newPos();
@@ -123,19 +135,7 @@ var gamePieceHandler = {
       }
       return;
     }
-  },
-  initialize : function() {
-    let gamePieceArgs = {
-      width: knobsAndLevers.gamePieceWidth,
-      height : knobsAndLevers.gamePieceHeight,
-      color : "red",
-      x : knobsAndLevers.gamePieceStartX,
-      y : knobsAndLevers.gamePieceStartY,
-      extraArgs : {type : "gamePiece", speed : {x : 0, y : 0}}
-    };
-    this.gamePiece = new component(gamePieceArgs);
-    console.log("gamePiece initialized");
   }
 }
 
-gamePieceHandler.initialize();
+gamePieceHandler.init();

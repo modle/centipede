@@ -1,4 +1,17 @@
 var knobsAndLevers = {
+  init : function() {
+    this.gamePieceTopLimit = this.canvasHeight * 0.8;
+    this.gamePieceStartX = (this.canvasWidth - this.gamePieceWidth) * 0.5;
+    this.gamePieceStartY = this.canvasHeight * 0.9;
+    this.baseTextParams.x = this.canvasWidth * 0.25;
+    this.gridSquareSideLength = Math.floor(this.canvasWidth / this.gridDivisor);
+    this.coordinateScaleFactor = this.gridSquareSideLength * 0.1;
+    this.mushroomSide = this.gridSquareSideLength * 0.8;
+    this.baseTextBackgroundParams.height = this.gridSquareSideLength;
+    this.baseTextBackgroundParams.width = this.canvasWidth;
+    this.initialSpiderInterval = getRandom(this.spiderInterval.min, this.spiderInterval.max);
+    console.log("knobsAndLevers initialized");
+  },
   canvasWidth : 800,
   canvasHeight : 800,
   gridDivisor : 25,
@@ -33,20 +46,7 @@ var knobsAndLevers = {
     extraArgs : {type:"background"},
   },
   gameInfoTextHeight : 40,
-  defaultLives : 3,
-  initialize : function() {
-    this.gamePieceTopLimit = this.canvasHeight * 0.8;
-    this.gamePieceStartX = (this.canvasWidth - this.gamePieceWidth) * 0.5;
-    this.gamePieceStartY = this.canvasHeight * 0.9;
-    this.baseTextParams.x = this.canvasWidth * 0.25;
-    this.gridSquareSideLength = Math.floor(this.canvasWidth / this.gridDivisor);
-    this.coordinateScaleFactor = this.gridSquareSideLength * 0.1;
-    this.mushroomSide = this.gridSquareSideLength * 0.8;
-    this.baseTextBackgroundParams.height = this.gridSquareSideLength;
-    this.baseTextBackgroundParams.width = this.canvasWidth;
-    this.initialSpiderInterval = getRandom(this.spiderInterval.min, this.spiderInterval.max);
-    console.log("knobsAndLevers initialized");
-  }
+  defaultLives : 3
 }
 
-knobsAndLevers.initialize();
+knobsAndLevers.init();

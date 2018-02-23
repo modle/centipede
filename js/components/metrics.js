@@ -3,6 +3,13 @@ var metrics = {
   lives : knobsAndLevers.defaultLives,
   currentLevel : knobsAndLevers.startLevel,
   scoreValue : 0,
+  init : function() {
+    var scoreParams = Object.assign({}, knobsAndLevers.baseTextParams);
+    scoreParams.x = gameArea.canvas.width/10;
+    scoreParams.y = knobsAndLevers.gameInfoTextHeight;
+    this.score = new component(scoreParams);
+    console.log("metrics initialized");
+  },
   changeScore : function(change) {
     this.scoreValue += change;
     if (this.scoreValue < 0) {
@@ -43,14 +50,7 @@ var metrics = {
     this.lives = knobsAndLevers.defaultLives;
     this.currentLevel = 1;
     this.scoreValue = 0;
-  },
-  initialize : function() {
-    var scoreParams = Object.assign({}, knobsAndLevers.baseTextParams);
-    scoreParams.x = gameArea.canvas.width/10;
-    scoreParams.y = knobsAndLevers.gameInfoTextHeight;
-    this.score = new component(scoreParams);
-    console.log("metrics initialized");
   }
 }
 
-metrics.initialize();
+metrics.init();

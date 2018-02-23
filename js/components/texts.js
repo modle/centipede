@@ -1,5 +1,13 @@
 /*jslint white: true */
 var texts = {
+  init : function() {
+    this.livesDisplay = new component(this.getLivesParams());
+    this.level = new component(this.getLevelParams());
+    this.pausedMessage = new component(this.getPausedMessageParams());
+    this.diedText = new component(this.getDiedTextParams());
+    this.gameOver = new component(this.getGameOverTextParams());
+    console.log("texts initialized");
+  },
   copyBaseMessageParams : function() {
     return Object.assign({}, knobsAndLevers.baseTextParams);
   },
@@ -46,15 +54,7 @@ var texts = {
     backgroundParams.y = (gameOverTextParams.y - backgroundParams.height) * 1.05;
     gameOverTextParams.background = new component(backgroundParams);
     return gameOverTextParams;
-  },
-  initialize : function() {
-    this.livesDisplay = new component(this.getLivesParams());
-    this.level = new component(this.getLevelParams());
-    this.pausedMessage = new component(this.getPausedMessageParams());
-    this.diedText = new component(this.getDiedTextParams());
-    this.gameOver = new component(this.getGameOverTextParams());
-    console.log("texts initialized");
   }
 }
 
-texts.initialize();
+texts.init();
