@@ -30,8 +30,8 @@ var knobsAndLevers = {
   laserInterval : 10,
   maxLasers : 2,
   spider : {
-    maxNumber : 0,
-    pointValue: 1,
+    maxNumber : 1,
+    pointValue: 25,
     interval : {
       min: 200,
       max: 500
