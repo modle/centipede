@@ -27,4 +27,16 @@ function manageSounds() {
   if (centipedes.centipedes != false) {
     centipedeSound.play();
   }
+  if (spiders.spiders == false) {
+    spiderSound.pause;
+  } else {
+    spiderSound.play();
+  }
+}
+
+function playSounds(sounds) {
+  sounds.forEach(function(sound, index, object) {
+    sound.play();
+    object.splice(index, 1);
+  });
 }

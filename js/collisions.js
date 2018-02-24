@@ -20,10 +20,11 @@ var collisions = {
       for (j = 0; j < targets.length; j += 1) {
         if (lasers.lasers[i].crashWith(targets[j])) {
           targets[j].hitPoints--;
+          if (targets[j].type !== 'mushroom') {
+            playImpactSound();
+          }
           if (targets[j].hitPoints <= 0) {
-            // add floating point
             metrics.addNewFloatingPoint(targets[j].getMiddleX(), targets[j].getMiddleY(), targets[j].pointValue, "gain");
-            // update scoreValue
             metrics.changeScore(targets[j].pointValue);
             // remove target and set laser removal to pending
             if (targets[j].type === 'centipede') {
@@ -65,4 +66,11 @@ var collisions = {
     }
     return false;
   }
+}
+
+impactSounds = [];
+function playImpactSound() {
+  impactSound = new sound("media/sounds/laser-impact.mp3", 0.5);
+  this.impactSounds.push(impactSound);
+  playSounds(impactSounds);
 }

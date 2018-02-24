@@ -1,24 +1,11 @@
 /*jslint white: true */
 var spiders = {
   spiders : [],
-  spiderSounds : [],
   interval : knobsAndLevers.spider.initialInterval,
   manage : function() {
     this.spawn();
     this.update();
     this.clearOutsideCanvas();
-    if (this.spiders.length <= 0) {
-      spiderSound.pause;
-    }
-    if (this.spiders.length != false) {
-      if (this.spiderSounds == false) {
-        spiderSound = new sound("media/sounds/spider.mp3", 0.5);
-        this.spiderSounds.push(spiderSound);
-      }
-    }
-    this.spiderSounds.forEach(function(sound, index, object) {
-      sound.play();
-    });
   },
   spawn : function() {
     if (!everyinterval(this.interval) || this.spiders.length >= knobsAndLevers.spider.maxNumber) {
@@ -56,10 +43,6 @@ var spiders = {
       if (spiders[i].x > gameArea.canvas.width) {
         spiders.splice(i, 1);
       }
-    }
-    if (spiders == false) {
-      this.spiderSounds[0].stop();
-      this.spiderSounds = [];
     }
   },
   clear : function() {

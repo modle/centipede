@@ -39,10 +39,7 @@ var lasers = Object.create(displayObjectPrototype, {
         lasers.push(new component(laserArgs));
       }
       // this should limit the number of laserSounds that exist at once
-      this.laserSounds.forEach(function(sound, index, object) {
-        sound.play();
-        object.splice(index, 1);
-      });
+      playSounds(this.laserSounds);
     },
     writable : false,
     enumerable : true
