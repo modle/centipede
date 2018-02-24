@@ -2,7 +2,7 @@
 var centipedes = {
   baseSpeed : knobsAndLevers.centipede.baseSpeed,
   speed : 0,
-  interval : 10,
+  interval : knobsAndLevers.centipede.interval,
   maxNumber : knobsAndLevers.centipede.maxNumber,
   centipedes : [],
   numberSpawned : 0,
@@ -26,15 +26,7 @@ var centipedes = {
     this.add(centipede);
   },
   construct : function() {
-    let centipedeArgs = {
-      width: gameArea.gridSquareSideLength,
-      height : gameArea.gridSquareSideLength,
-      color : "blue",
-      x : gameArea.canvas.width / 2,
-      y : 0,
-      extraArgs : {type : "centipede"}
-    };
-    centipede = new component(centipedeArgs);
+    centipede = new component(knobsAndLevers.centipede.args);
     centipede.directionX = 1;
     centipede.directionY = 1;
     centipede.distanceMovedX = 0;

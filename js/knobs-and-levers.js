@@ -13,18 +13,33 @@ var knobsAndLevers = {
     this.worm.initialInterval = getRandom(this.worm.interval.min, this.worm.interval.max);
     this.baseTextParams.fontSize = this.gridSquareSideLength + "px";
     this.gameInfoTextHeight = this.gridSquareSideLength * 1.3;
-    this.spider.spiderArgs.width = this.gridSquareSideLength * 0.8;
-    this.spider.spiderArgs.height = this.gridSquareSideLength * 0.3;
-    this.spider.spiderArgs.x = -this.spider.spiderArgs.width * 0.8;
-    this.spider.spiderArgs.y = this.gamePieceTopLimit;
+    this.spider.args.width = this.gridSquareSideLength * 0.8;
+    this.spider.args.height = this.gridSquareSideLength * 0.3;
+    this.spider.args.x = -this.spider.args.width * 0.8;
+    this.spider.args.y = this.gamePieceTopLimit;
+    this.centipede.args.width = this.gridSquareSideLength;
+    this.centipede.args.height = this.gridSquareSideLength;
+    this.centipede.args.x = this.canvasWidth / 2;
+    this.worm.args.width = this.gridSquareSideLength * 1.5;
+    this.worm.args.height = this.gridSquareSideLength;
+    this.worm.args.x = -this.canvasWidth / 10;
+    this.worm.args.y = this.canvasHeight / 10;
+    this.laser.args.width = this.gridSquareSideLength / 10;
+    this.laser.args.height = this.gridSquareSideLength * 0.5;
     console.log("knobsAndLevers initialized");
   },
   centipede : {
     baseSpeed : 10,
     maxNumber : 10,
+    interval : 10,
+    args : {
+      color : "blue",
+      y : 0,
+      extraArgs : {type : "centipede"}
+    },
   },
-  canvasWidth : 400,
-  canvasHeight : 400,
+  canvasWidth : 800,
+  canvasHeight : 800,
   gridDivisor : 25,
   gamePieceTopLimit : 0,
   gamePieceSpeed : 2,
@@ -32,16 +47,25 @@ var knobsAndLevers = {
   gamePieceHeight : 15,
   gamePieceStartX : 0,
   gamePieceStartY : 0,
-  laserSpeed : 5,
-  laserSideLength : 5,
-  laserInterval : 10,
-  maxLasers : 1,
+  laser : {
+    speed : 5,
+    maxNumber : 1,
+    interval : 10,
+    args : {
+      color : "purple",
+      extraArgs : {type : "laser", speed : {x : 0, y : 0}}
+    }
+  },
   worm : {
     maxNumber: 1,
     pointValue : 50,
     interval : {
       min: 3000,
       max: 5000,
+    },
+    args : {
+      color : "orange",
+      extraArgs : {type : "worm", speed : {x : 2, y : 0}}
     },
   },
   spider : {
@@ -51,7 +75,7 @@ var knobsAndLevers = {
       min: 500,
       max: 1500,
     },
-    spiderArgs : {
+    args : {
       color : "fuchsia",
       extraArgs : {type : "spider", speed : {x : 1, y : 1}}
     },

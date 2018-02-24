@@ -29,8 +29,8 @@ function initSounds() {
   wormSound = buildSound("worm", 0.5, "loop");
   wormSound.loop = true;
   playerDiedSound = buildSound("player-died", 0.5);
-  buildManySounds("laser", knobsAndLevers.maxLasers, laserSoundsPool);
-  buildManySounds("laser-impact", knobsAndLevers.maxLasers, impactSoundsPool);
+  buildManySounds("laser", knobsAndLevers.laser.maxNumber, laserSoundsPool);
+  buildManySounds("laser-impact", knobsAndLevers.laser.maxNumber, impactSoundsPool);
 }
 
 function buildSound(filename, volume, loop) {

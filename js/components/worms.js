@@ -14,15 +14,7 @@ var worms = {
     if (this.worms.length >= knobsAndLevers.worm.maxNumber) {
       return
     }
-    let wormArgs = {
-      width: gameArea.gridSquareSideLength * 2,
-      height : gameArea.gridSquareSideLength / 2,
-      color : "orange",
-      x : -gameArea.canvas.width / 10,
-      y : gameArea.canvas.height / 10,
-      extraArgs : {type : "worm", speed : {x : 0.5, y : 0}}
-    };
-    var worm = new component(wormArgs);
+    var worm = new component(knobsAndLevers.worm.args);
     worm.pointValue = knobsAndLevers.worm.pointValue * metrics.currentLevel;
     worm.hitPoints = 1;
     this.worms.push(worm);

@@ -12,7 +12,7 @@ var spiders = {
       return
     }
     this.interval = getRandom(knobsAndLevers.spider.interval.min, knobsAndLevers.spider.interval.max);
-    let spider = new component(knobsAndLevers.spider.spiderArgs);
+    let spider = new component(knobsAndLevers.spider.args);
     spider.directionY = 1;
     spider.pointValue = knobsAndLevers.spider.pointValue * metrics.currentLevel;
     spider.hitPoints = 1;
