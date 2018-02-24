@@ -24,7 +24,7 @@ var metrics = {
       color = "red";
     }
     let pointArgs = {
-      fontSize : "20px",
+      fontSize : (knobsAndLevers.gridSquareSideLength * 0.8) + "px",
       fontType : "Consolas",
       color : color,
       x : x,

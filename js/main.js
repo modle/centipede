@@ -71,11 +71,6 @@ var gameHandler = {
     worms.clear();
     spiders.clear();
     gamePieceHandler.reset();
-  },
-  manageSounds : function() {
-    if (centipedes.centipedes != false) {
-      centipedeSound.play();
-    }
   }
 }
 
@@ -100,7 +95,7 @@ function updateGameState() {
   // clear the canvas
   gameHandler.checkLevelEndConditions();
   gameHandler.startNextFrame();
-  gameHandler.manageSounds();
+  manageSounds();
   hudHandler.update();
   // make things happen
   mushrooms.manage();

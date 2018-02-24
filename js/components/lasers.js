@@ -1,5 +1,10 @@
 /*jslint white: true */
 var lasers = Object.create(displayObjectPrototype, {
+  laserSounds : {
+    value : [],
+    writable : true,
+    enumerable : true
+  },
   lasers : {
     value : [],
     writable : true,
@@ -25,8 +30,19 @@ var lasers = Object.create(displayObjectPrototype, {
         laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laserSpeed;
       }
       if (laserArgs.extraArgs.speed.y !== 0) {
+        // could not follow the create once and toggle on/off pattern, since it would not allow overlapping laser fire sounds
+        // have to create each time a new laser is added
+        if (this.laserSounds.length < 3) {
+          laserSound = new sound("media/sounds/laser.mp3", 0.5);
+          this.laserSounds.push(laserSound);
+        }
         lasers.push(new component(laserArgs));
       }
+      // this should limit the number of laserSounds that exist at once
+      this.laserSounds.forEach(function(sound, index, object) {
+        sound.play();
+        object.splice(index, 1);
+      });
     },
     writable : false,
     enumerable : true

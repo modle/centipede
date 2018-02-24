@@ -10,25 +10,27 @@ var knobsAndLevers = {
     this.baseTextBackgroundParams.height = this.gridSquareSideLength;
     this.baseTextBackgroundParams.width = this.canvasWidth;
     this.spider.initialInterval = getRandom(this.spider.interval.min, this.spider.interval.max);
+    this.baseTextParams.fontSize = this.gridSquareSideLength + "px";
+    this.gameInfoTextHeight = this.gridSquareSideLength * 1.3;
     console.log("knobsAndLevers initialized");
   },
   centipede : {
     baseSpeed : 10,
     maxNumber : 10,
   },
-  canvasWidth : 800,
-  canvasHeight : 800,
+  canvasWidth : 400,
+  canvasHeight : 400,
   gridDivisor : 25,
   gamePieceTopLimit : 0,
   gamePieceSpeed : 2,
-  gamePieceWidth : 30,
-  gamePieceHeight : 30,
+  gamePieceWidth : 15,
+  gamePieceHeight : 15,
   gamePieceStartX : 0,
   gamePieceStartY : 0,
   laserSpeed : 5,
   laserSideLength : 5,
   laserInterval : 10,
-  maxLasers : 2,
+  maxLasers : 1,
   spider : {
     maxNumber : 1,
     pointValue: 25,

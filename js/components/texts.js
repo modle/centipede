@@ -29,6 +29,7 @@ var texts = {
   getDiedTextParams : function() {
     let diedTextParams = this.copyBaseMessageParams();
     diedTextParams.fontSize = "50px";
+    diedTextParams.fontSize = (knobsAndLevers.gridSquareSideLength * 1.5) + "px";
     diedTextParams.y = gameArea.canvas.height * 0.25;
     let backgroundParams = this.copyBaseTextBackgroundParams();
     backgroundParams.height *= 1.5;
@@ -46,7 +47,7 @@ var texts = {
   },
   getGameOverTextParams : function() {
     let gameOverTextParams = this.copyBaseMessageParams();
-    gameOverTextParams.fontSize = "100px";
+    gameOverTextParams.fontSize = (knobsAndLevers.gridSquareSideLength * 3) + "px";
     gameOverTextParams.color = "navy";
     gameOverTextParams.y = gameArea.canvas.height * 0.5;
     let backgroundParams = this.copyBaseTextBackgroundParams();
