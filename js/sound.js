@@ -38,7 +38,8 @@ function buildSound(filename, volume, loop) {
 }
 
 function buildManySounds(type, length, array) {
-  while (array.length <= length * 5) {
+  poolSize = 20;
+  while (array.length <= poolSize) {
     array.push(buildSound(type, 0.5));
   }
 }
