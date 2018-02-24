@@ -28,20 +28,19 @@ var texts = {
   },
   getDiedTextParams : function() {
     let diedTextParams = this.copyBaseMessageParams();
-    diedTextParams.fontSize = "50px";
     diedTextParams.fontSize = (knobsAndLevers.gridSquareSideLength * 1.5) + "px";
-    diedTextParams.y = gameArea.canvas.height * 0.25;
+    diedTextParams.y = gameArea.canvas.height * 0.75;
     let backgroundParams = this.copyBaseTextBackgroundParams();
     backgroundParams.height *= 1.5;
-    backgroundParams.y = (diedTextParams.y - backgroundParams.height) * 1.05;
+    backgroundParams.y = (diedTextParams.y - backgroundParams.height) * 1.01;
     diedTextParams.background = new component(backgroundParams);
     return diedTextParams;
   },
   getPausedMessageParams : function() {
     let pausedMessageTextParams = this.copyBaseMessageParams();
-    pausedMessageTextParams.y = gameArea.canvas.height * 0.25;
+    pausedMessageTextParams.y = gameArea.canvas.height * 0.9;
     let backgroundParams = this.copyBaseTextBackgroundParams();
-    backgroundParams.y = (pausedMessageTextParams.y - backgroundParams.height) * 1.05;
+    backgroundParams.y = (pausedMessageTextParams.y - backgroundParams.height) * 1.01;
     pausedMessageTextParams.background = new component(backgroundParams);
     return pausedMessageTextParams;
   },
