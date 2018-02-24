@@ -13,6 +13,7 @@ var gameHandler = {
       showMobile();
       return;
     }
+    initSounds();
     gameArea.start();
   },
   reset : function() {
@@ -70,6 +71,11 @@ var gameHandler = {
     worms.clear();
     spiders.clear();
     gamePieceHandler.reset();
+  },
+  manageSounds : function() {
+    if (centipedes.centipedes != false) {
+      centipedeSound.play();
+    }
   }
 }
 
@@ -78,6 +84,7 @@ function updateGameState() {
   // check game conditions and update messages
   gameHandler.manageGameOver();
   if (paused) {
+    centipedeSound.stop();
     gameHandler.managePause();
     return;
   }
@@ -93,6 +100,7 @@ function updateGameState() {
   // clear the canvas
   gameHandler.checkLevelEndConditions();
   gameHandler.startNextFrame();
+  gameHandler.manageSounds();
   hudHandler.update();
   // make things happen
   mushrooms.manage();
