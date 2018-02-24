@@ -1,26 +1,31 @@
 /*jslint white: true */
 var spiders = {
   spiders : [],
+  spiderSounds : [],
   interval : knobsAndLevers.spider.initialInterval,
   manage : function() {
     this.spawn();
     this.update();
     this.clearOutsideCanvas();
+    if (this.spiders.length <= 0) {
+      spiderSound.pause;
+    }
+    if (this.spiders.length != false) {
+      if (this.spiderSounds == false) {
+        spiderSound = new sound("media/sounds/spider.mp3", 0.5);
+        this.spiderSounds.push(spiderSound);
+      }
+    }
+    this.spiderSounds.forEach(function(sound, index, object) {
+      sound.play();
+    });
   },
   spawn : function() {
     if (!everyinterval(this.interval) || this.spiders.length >= knobsAndLevers.spider.maxNumber) {
       return
     }
     this.spiderInterval = getRandom(knobsAndLevers.spider.interval.min, knobsAndLevers.spider.interval.max);
-    let spiderArgs = {
-      width: gameArea.gridSquareSideLength * 0.3,
-      height : gameArea.gridSquareSideLength * 0.8,
-      color : "fuchsia",
-      x : -gameArea.canvas.width / 20,
-      y : gameArea.gamePieceTopLimit,
-      extraArgs : {type : "spider", speed : {x : 1, y : 1}}
-    };
-    let spider = new component(spiderArgs);
+    let spider = new component(knobsAndLevers.spider.spiderArgs);
     spider.directionY = 1;
     spider.pointValue = knobsAndLevers.spider.pointValue * metrics.currentLevel;
     spider.hitPoints = 1;
@@ -51,6 +56,10 @@ var spiders = {
       if (spiders[i].x > gameArea.canvas.width) {
         spiders.splice(i, 1);
       }
+    }
+    if (spiders == false) {
+      this.spiderSounds[0].stop();
+      this.spiderSounds = [];
     }
   },
   clear : function() {

@@ -11,7 +11,6 @@ function sound(src, volume) {
   document.body.appendChild(this.sound);
   this.play = function(){
     this.sound.play();
-    // console.log(src);
   }
   this.stop = function(){
     this.sound.pause();
@@ -20,7 +19,8 @@ function sound(src, volume) {
 
 var centipedeSound;
 function initSounds() {
-  centipedeSound = new sound("media/sounds/centipede-move.mp3", 0.5);
+  centipedeSound = new sound("media/sounds/centipede.mp3", 0.5);
+  spiderSound = new sound("media/sounds/spider.mp3", 0.5)
 }
 
 function manageSounds() {

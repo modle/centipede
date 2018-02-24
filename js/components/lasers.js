@@ -15,8 +15,8 @@ var lasers = Object.create(displayObjectPrototype, {
       let lasers = this.lasers;
       let gamePiece = gamePieceHandler.gamePiece;
       let laserArgs = {
-        width: knobsAndLevers.laserSideLength,
-        height : knobsAndLevers.laserSideLength,
+        width: knobsAndLevers.laserSideLength / 3,
+        height : knobsAndLevers.laserSideLength * 2,
         color : "purple",
         x : gamePiece.x + gamePiece.width / 2,
         y : gamePiece.y + gamePiece.height / 2,

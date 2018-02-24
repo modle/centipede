@@ -12,6 +12,10 @@ var knobsAndLevers = {
     this.spider.initialInterval = getRandom(this.spider.interval.min, this.spider.interval.max);
     this.baseTextParams.fontSize = this.gridSquareSideLength + "px";
     this.gameInfoTextHeight = this.gridSquareSideLength * 1.3;
+    this.spider.spiderArgs.width = this.gridSquareSideLength * 0.8;
+    this.spider.spiderArgs.height = this.gridSquareSideLength * 0.3;
+    this.spider.spiderArgs.x = -this.spider.spiderArgs.width * 0.8;
+    this.spider.spiderArgs.y = this.gamePieceTopLimit;
     console.log("knobsAndLevers initialized");
   },
   centipede : {
@@ -37,6 +41,10 @@ var knobsAndLevers = {
     interval : {
       min: 200,
       max: 500
+    },
+    spiderArgs : {
+      color : "fuchsia",
+      extraArgs : {type : "spider", speed : {x : 1, y : 1}}
     },
   },
   startLevel : 1,
