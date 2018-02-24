@@ -74,7 +74,6 @@ var centipedes = {
         centipede.moveVertically = true;
         centipede.updated = true;
       }
-      this.reverseHorizontalAtNextLayer();
     });
   },
   checkYDirectionInPlayerArea : function() {
