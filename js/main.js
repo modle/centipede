@@ -39,6 +39,10 @@ var gameHandler = {
     texts.diedText.text = "You died.";
     texts.diedText.update();
   },
+  playDiedSound : function() {
+    diedSound = new sound("media/sounds/player-died.mp3", 0.5);
+    diedSound.play();
+  },
   managePause : function() {
     texts.pausedMessage.text = "Paused: Spacebar to Continue";
     if (gameArea.frameNo === 0) {
@@ -109,6 +113,7 @@ function updateGameState() {
   metrics.updateFloatingPoints();
   if (died) {
     gameHandler.setDiedText();
+    gameHandler.playDiedSound();
     return;
   }
   if (levelOver) {
