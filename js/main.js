@@ -40,8 +40,7 @@ var gameHandler = {
     texts.diedText.update();
   },
   playDiedSound : function() {
-    diedSound = new sound("media/sounds/player-died.mp3", 0.5);
-    diedSound.play();
+    playerDiedSound.play();
   },
   managePause : function() {
     texts.pausedMessage.text = "Paused: Spacebar to Continue";
@@ -49,6 +48,7 @@ var gameHandler = {
       texts.pausedMessage.text = "Press Spacebar to Start";
     }
     texts.pausedMessage.update();
+    stopAllSounds();
   },
   manageDeath : function() {
     this.resetMoreThings();
@@ -57,6 +57,7 @@ var gameHandler = {
   },
   manageGameOver : function() {
     if (gameOver) {
+      stopAllSounds();
       this.showGameOver();
     };
   },

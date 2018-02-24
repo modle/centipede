@@ -1,7 +1,4 @@
 /*jslint white: true */
-
-/* Collisions */
-/***********************************/
 var floatingPoints = [];
 floatingPointCycleDuration = 50;
 
@@ -21,7 +18,7 @@ var collisions = {
         if (lasers.lasers[i].crashWith(targets[j])) {
           targets[j].hitPoints--;
           if (targets[j].type !== 'mushroom') {
-            playImpactSound();
+            getAvailableImpactSound().play();
           }
           if (targets[j].hitPoints <= 0) {
             metrics.addNewFloatingPoint(targets[j].getMiddleX(), targets[j].getMiddleY(), targets[j].pointValue, "gain");
@@ -66,11 +63,4 @@ var collisions = {
     }
     return false;
   }
-}
-
-impactSounds = [];
-function playImpactSound() {
-  impactSound = new sound("media/sounds/laser-impact.mp3", 0.5);
-  this.impactSounds.push(impactSound);
-  playSounds(impactSounds);
 }

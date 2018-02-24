@@ -1,7 +1,7 @@
 
 playingSounds = []
 
-function sound(src, volume) {
+function sound(src, volume, loop) {
   this.sound = document.createElement("audio");
   this.sound.src = src;
   this.sound.volume = volume;
@@ -18,25 +18,61 @@ function sound(src, volume) {
 }
 
 var centipedeSound;
+var spiderSound;
+var wormSound;
+var playerDiedSound;
+var laserSoundsPool = [];
+var impactSoundsPool = [];
 function initSounds() {
-  centipedeSound = new sound("media/sounds/centipede.mp3", 0.5);
-  spiderSound = new sound("media/sounds/spider.mp3", 0.5)
+  centipedeSound = buildSound("centipede", 0.5);
+  spiderSound = buildSound("spider", 0.3);
+  wormSound = buildSound("worm", 0.5, "loop");
+  wormSound.loop = true;
+  playerDiedSound = buildSound("player-died", 0.5);
+  buildManySounds("laser", knobsAndLevers.maxLasers, laserSoundsPool);
+  buildManySounds("laser-impact", knobsAndLevers.maxLasers, impactSoundsPool);
+}
+
+function buildSound(filename, volume, loop) {
+  return new sound("media/sounds/" + filename + ".mp3", volume, loop);
+}
+
+function buildManySounds(type, length, array) {
+  while (array.length <= length * 5) {
+    array.push(buildSound(type, 0.5));
+  }
 }
 
 function manageSounds() {
   if (centipedes.centipedes != false) {
     centipedeSound.play();
   }
-  if (spiders.spiders == false) {
-    spiderSound.pause;
-  } else {
+  if (spiders.spiders != false) {
     spiderSound.play();
+  }
+  if (worms.worms != false) {
+    wormSound.play();
+  } else {
+    wormSound.stop();
   }
 }
 
-function playSounds(sounds) {
-  sounds.forEach(function(sound, index, object) {
-    sound.play();
-    object.splice(index, 1);
-  });
+function getAvailableLaserSound() {
+  return getAvailableSound(laserSoundsPool);
+}
+
+function getAvailableImpactSound() {
+  return getAvailableSound(impactSoundsPool);
+}
+
+function getAvailableSound(sounds) {
+  sound = sounds.pop();
+  sounds.unshift(sound);
+  return sound;
+}
+
+function stopAllSounds() {
+  centipedeSound.stop();
+  spiderSound.stop();
+  wormSound.stop();
 }

@@ -10,6 +10,7 @@ var knobsAndLevers = {
     this.baseTextBackgroundParams.height = this.gridSquareSideLength;
     this.baseTextBackgroundParams.width = this.canvasWidth;
     this.spider.initialInterval = getRandom(this.spider.interval.min, this.spider.interval.max);
+    this.worm.initialInterval = getRandom(this.worm.interval.min, this.worm.interval.max);
     this.baseTextParams.fontSize = this.gridSquareSideLength + "px";
     this.gameInfoTextHeight = this.gridSquareSideLength * 1.3;
     this.spider.spiderArgs.width = this.gridSquareSideLength * 0.8;
@@ -35,12 +36,20 @@ var knobsAndLevers = {
   laserSideLength : 5,
   laserInterval : 10,
   maxLasers : 1,
+  worm : {
+    maxNumber: 1,
+    pointValue : 50,
+    interval : {
+      min: 3000,
+      max: 5000,
+    },
+  },
   spider : {
     maxNumber : 1,
     pointValue: 25,
     interval : {
-      min: 200,
-      max: 500
+      min: 500,
+      max: 1500,
     },
     spiderArgs : {
       color : "fuchsia",
