@@ -33,7 +33,7 @@ function showMobile() {
   document.write("The use of a keyboard is required.<br><br>");
   document.write("Sorry!<br><br>");
   document.write("To show how bad we feel, here's a gif so you can see what you're missing (that's not rude at all, we promise!)<br><br>");
-  document.write("<img src='media/centipede.gif' style='width: 100%;'></img>");
+  document.write("<img src='media/images/centipede.gif' style='width: 100%;'></img>");
 }
 
 window.addEventListener('keydown', function (e) {
