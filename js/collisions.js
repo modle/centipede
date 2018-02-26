@@ -15,7 +15,7 @@ var collisions = {
   checkLaser : function(targets) {
     lasers.lasers.map((laser, laserIndex) =>
       targets.map((target, targetInex) => {
-        if (laser.crashWith(target)) {
+        if (!laser.remove && laser.crashWith(target)) {
           this.processImpact(target);
           laser.remove = true;
         }
