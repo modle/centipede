@@ -28,17 +28,17 @@ var spiders = {
       spiders[i].speedY = getRandom(0, 1) * spiders[i].directionY;
       spiders[i].newPos();
       spiders[i].update();
-      if (spiders[i].y + spiders[i].height > gameHandler.gameArea.canvas.height) {
+      if (spiders[i].y + spiders[i].height > game.gameArea.canvas.height) {
         spiders[i].directionY = -1;
       }
-      if (spiders[i].y < gameHandler.gameArea.gamePieceTopLimit) {
+      if (spiders[i].y < game.gameArea.gamePieceTopLimit) {
         spiders[i].directionY = 1;
       }
     }
   },
   clearOutsideCanvas : function() {
     if (spiders == false) { return; };
-    this.spiders = this.spiders.filter(spider => spider.x < gameHandler.gameArea.canvas.width);
+    this.spiders = this.spiders.filter(spider => spider.x < game.gameArea.canvas.width);
   },
   clear : function() {
     this.spiders = [];

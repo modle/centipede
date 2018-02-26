@@ -45,7 +45,7 @@ var gamePieceHandler = {
     this.gamePiece.speedY = 0;
   },
   move : function() {
-    if (!gameHandler.keysDown) {
+    if (!game.keysDown) {
       return;
     }
     this.stop();
@@ -58,9 +58,9 @@ var gamePieceHandler = {
   },
   setPositionFlags : function() {
     this.positionFlags = {
-      belowTop : this.gamePiece.getTop() > gameHandler.gameArea.gamePieceTopLimit,
-      insideRight : this.gamePiece.getRight() < gameHandler.gameArea.canvas.width,
-      aboveBottom : this.gamePiece.getBottom() < gameHandler.gameArea.canvas.height,
+      belowTop : this.gamePiece.getTop() > game.gameArea.gamePieceTopLimit,
+      insideRight : this.gamePiece.getRight() < game.gameArea.canvas.width,
+      aboveBottom : this.gamePiece.getBottom() < game.gameArea.canvas.height,
       insideLeft : this.gamePiece.getLeft() > 0,
       upRight : [68, 87],
       downRight : [68, 83],
@@ -86,7 +86,7 @@ var gamePieceHandler = {
     this.activeDirections = Array.from(Object.keys(directionResults)).filter(direction => directionResults[direction]);
   },
   keysPressed : function(needles) {
-    haystack = gameHandler.keysDown;
+    haystack = game.keysDown;
     for (var i = 0; i < needles.length; i++) {
       if (!haystack[needles[i]]) {
         return false;

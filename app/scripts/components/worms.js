@@ -28,7 +28,7 @@ var worms = {
   },
   clearOutsideCanvas : function() {
     if (worms == false) { return; };
-    this.worms = this.worms.filter(worm => worm.x < gameHandler.gameArea.canvas.width);
+    this.worms = this.worms.filter(worm => worm.x < game.gameArea.canvas.width);
   },
   clear : function() {
     this.worms = [];

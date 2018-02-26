@@ -3,14 +3,14 @@
 var intervalDivisor = 5;
 
 function everyinterval(n) {
-  if ((gameHandler.gameArea.frameNo / n) % 1 === 0) {
+  if ((game.gameArea.frameNo / n) % 1 === 0) {
     return true;
   }
   return false;
 }
 
 function getTime() {
-  return levelTimeLimit - Math.ceil(gameHandler.gameArea.frameNo / ( 1000 / intervalDivisor ));
+  return levelTimeLimit - Math.ceil(game.gameArea.frameNo / ( 1000 / intervalDivisor ));
 }
 
 function wait(ms) {
@@ -44,6 +44,6 @@ window.addEventListener('keydown', function (e) {
 
 window.addEventListener('keydown', function (e) {
   if (e.keyCode == 13) {
-    gameHandler.reset();
+    game.reset();
   }
 })

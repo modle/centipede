@@ -8,7 +8,7 @@ var centipedes = {
   numberSpawned : 0,
   numberKilled : 0,
   manage : function() {
-    if (gameHandler.gameArea.frameNo == 1 || everyinterval(this.interval)) {
+    if (game.gameArea.frameNo == 1 || everyinterval(this.interval)) {
       this.spawn();
     }
     this.update();
@@ -70,7 +70,7 @@ var centipedes = {
   },
   moveDownwardInitially : function() {
     this.centipedes.filter(centipede => !centipede.updated).map(centipede => {
-      if (centipede.y < gameHandler.gameArea.firstMushroomLayer - 1) {
+      if (centipede.y < game.gameArea.firstMushroomLayer - 1) {
         centipede.moveVertically = true;
         centipede.updated = true;
       }
@@ -79,10 +79,10 @@ var centipedes = {
   checkYDirectionInPlayerArea : function() {
     this.centipedes.filter(centipede => !centipede.updated).map(centipede => {
       // toggle Y direction if centipede hits bottom or moves back out of the gamePiece area
-      if (centipede.getBottom() > gameHandler.gameArea.canvas.height) {
+      if (centipede.getBottom() > game.gameArea.canvas.height) {
         centipede.reverseDirectionY = true;
       }
-      if (centipede.getTop() < gameHandler.gameArea.gamePieceTopLimit && centipede.distanceMovedFromBottom > 0) {
+      if (centipede.getTop() < game.gameArea.gamePieceTopLimit && centipede.distanceMovedFromBottom > 0) {
         centipede.reverseDirectionY = true;
         centipede.distanceMovedFromBottom = 0;
       }
@@ -104,9 +104,9 @@ var centipedes = {
   },
   hasCollidedWithWall : function(centipede) {
     return (
-      (centipede.getLeft() <= 1 || centipede.getRight() >= gameHandler.gameArea.canvas.width - 1)
+      (centipede.getLeft() <= 1 || centipede.getRight() >= game.gameArea.canvas.width - 1)
       &&
-      centipede.distanceMovedX > gameHandler.gameArea.gridSquareSideLength
+      centipede.distanceMovedX > game.gameArea.gridSquareSideLength
     );
   },
   hasCollidedWithMushroom : function(centipede) {
@@ -114,10 +114,10 @@ var centipedes = {
       if (
         centipede.crashWithSidesOnly(mushrooms.mushrooms[j])
         && Math.abs(centipede.y - mushrooms.mushrooms[j].y) < 5
-        && centipede.distanceMovedX > gameHandler.gameArea.gridSquareSideLength
+        && centipede.distanceMovedX > game.gameArea.gridSquareSideLength
       ) {
         this.centipedes.filter(centipede => !centipede. updated).map(centipede => {
-          if (centipede.y < gameHandler.gameArea.firstMushroomLayer - 1) {
+          if (centipede.y < game.gameArea.firstMushroomLayer - 1) {
             centipede.moveVertically = true;
             centipede.updated = true;
           }
@@ -130,7 +130,7 @@ var centipedes = {
   },
   reverseHorizontalAtNextLayer : function() {
     this.centipedes.filter(centipede => !centipede.updated).map(centipede => {
-      if (centipede.distanceMovedY >= gameHandler.gameArea.gridSquareSideLength) {
+      if (centipede.distanceMovedY >= game.gameArea.gridSquareSideLength) {
         centipede.reverseDirectionX = true;
         centipede.moveVertically = false;
         centipede.distanceMovedY = 0;
@@ -162,7 +162,7 @@ var centipedes = {
       } else {
         toMoveX = this.centipedes[i].directionX;
         newPositionX = this.centipedes[i].x + toMoveX;
-        if (newPositionX + this.centipedes[i].width < gameHandler.gameArea.canvas.width && newPositionX > 0) {
+        if (newPositionX + this.centipedes[i].width < game.gameArea.canvas.width && newPositionX > 0) {
           this.centipedes[i].x = newPositionX;
           this.centipedes[i].distanceMovedX += Math.abs(toMoveX);
         }

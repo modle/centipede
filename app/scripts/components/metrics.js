@@ -5,7 +5,7 @@ var metrics = {
   scoreValue : 0,
   init : function() {
     var scoreParams = Object.assign({}, knobsAndLevers.baseTextParams);
-    scoreParams.x = gameHandler.gameArea.canvas.width/10;
+    scoreParams.x = game.gameArea.canvas.width/10;
     scoreParams.y = knobsAndLevers.gameInfoTextHeight;
     this.score = new component(scoreParams);
     console.log("metrics initialized");

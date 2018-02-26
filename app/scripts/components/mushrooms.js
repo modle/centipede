@@ -2,16 +2,16 @@
 var mushrooms = {
   mushrooms : [],
   manage : function() {
-    if (gameHandler.gameArea.frameNo == 1) {
+    if (game.gameArea.frameNo == 1) {
       this.spawn(knobsAndLevers.maxMushrooms);
     }
     this.update();
   },
   spawn : function(amount) {
     while (this.mushrooms.length < amount) {
-      x = gameHandler.gameArea.xVertices[Math.floor(Math.random() * gameHandler.gameArea.xVertices.length)];
-      y = gameHandler.gameArea.yVertices[Math.floor(Math.random() * gameHandler.gameArea.yVertices.length)];
-      if (x < gameHandler.gameArea.canvas.width - knobsAndLevers.coordinateScaleFactor) {
+      x = game.gameArea.xVertices[Math.floor(Math.random() * game.gameArea.xVertices.length)];
+      y = game.gameArea.yVertices[Math.floor(Math.random() * game.gameArea.yVertices.length)];
+      if (x < game.gameArea.canvas.width - knobsAndLevers.coordinateScaleFactor) {
         this.mushrooms.push(this.generate(x, y));
       }
     }

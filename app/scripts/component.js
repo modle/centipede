@@ -23,7 +23,7 @@ function component(args) {
     if (this.background) {
       this.background.update();
     }
-    ctx = gameHandler.gameArea.context;
+    ctx = game.gameArea.context;
     ctx.fillStyle = this.color;
     if (this.type == "text") {
       this.makeText();

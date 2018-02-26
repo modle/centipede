@@ -7,7 +7,7 @@ var gameOver = false;
 var delayed = 0;
 var delayEndTime = 300;
 
-var gameHandler = {
+var game = {
   gameArea : new GameArea(),
   keysDown : {},
   start : function() {
@@ -83,16 +83,16 @@ var gameHandler = {
   addEventListeners : function() {
     console.log("keysDown is", this.keysDown);
     window.addEventListener('mousedown', function (e) {
-      gameHandler.keysDown['LMB'] = (e.type === "mousedown" && event.which === 1);
+      game.keysDown['LMB'] = (e.type === "mousedown" && event.which === 1);
     });
     window.addEventListener('mouseup', function (e) {
-      gameHandler.keysDown['LMB'] = (e.type === "mousedown" && event.which === 1);
+      game.keysDown['LMB'] = (e.type === "mousedown" && event.which === 1);
     });
     window.addEventListener('keydown', function (e) {
-      gameHandler.keysDown[e.keyCode] = (e.type == "keydown");
+      game.keysDown[e.keyCode] = (e.type == "keydown");
     });
     window.addEventListener('keyup', function (e) {
-      gameHandler.keysDown[e.keyCode] = (e.type == "keydown");
+      game.keysDown[e.keyCode] = (e.type == "keydown");
     });
   },
   init : function() {
@@ -100,15 +100,15 @@ var gameHandler = {
   },
 };
 
-gameHandler.init();
+game.init();
 
 function updateGameState() {
   // this gets executed every interval
   // check game conditions and update messages
-  gameHandler.manageGameOver();
+  game.manageGameOver();
   if (paused) {
     centipedeSound.stop();
-    gameHandler.managePause();
+    game.managePause();
     return;
   }
   if (died && delayed < delayEndTime) {
@@ -116,13 +116,13 @@ function updateGameState() {
     return;
   }
   if (died) {
-    gameHandler.manageDeath();
+    game.manageDeath();
     delayed = 0;
     return;
   }
   // clear the canvas
-  gameHandler.checkLevelEndConditions();
-  gameHandler.startNextFrame();
+  game.checkLevelEndConditions();
+  game.startNextFrame();
   manageSounds();
   hudHandler.update();
   // make things happen
@@ -136,11 +136,11 @@ function updateGameState() {
   collisions.check();
   metrics.updateFloatingPoints();
   if (died) {
-    gameHandler.setDiedText();
-    gameHandler.playDiedSound();
+    game.setDiedText();
+    game.playDiedSound();
     return;
   }
   if (levelOver) {
-    gameHandler.manageLevel();
+    game.manageLevel();
   }
 };
