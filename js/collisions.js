@@ -36,7 +36,7 @@ var collisions = {
   },
   updateTargetAppearance(target) {
     if (target.type == 'mushroom') {
-      target.height *= 0.5;
+      target.height -= knobsAndLevers.mushroomSide * 0.25;
     };
   },
   playImpactSound : function(type) {
