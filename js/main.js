@@ -13,6 +13,7 @@ var gameHandler = {
       showMobile();
       return;
     }
+    initSounds();
     gameArea.start();
   },
   reset : function() {
@@ -38,12 +39,16 @@ var gameHandler = {
     texts.diedText.text = "You died.";
     texts.diedText.update();
   },
+  playDiedSound : function() {
+    playerDiedSound.play();
+  },
   managePause : function() {
     texts.pausedMessage.text = "Paused: Spacebar to Continue";
     if (gameArea.frameNo === 0) {
       texts.pausedMessage.text = "Press Spacebar to Start";
     }
     texts.pausedMessage.update();
+    stopAllSounds();
   },
   manageDeath : function() {
     this.resetMoreThings();
@@ -52,6 +57,7 @@ var gameHandler = {
   },
   manageGameOver : function() {
     if (gameOver) {
+      stopAllSounds();
       this.showGameOver();
     };
   },
@@ -78,6 +84,7 @@ function updateGameState() {
   // check game conditions and update messages
   gameHandler.manageGameOver();
   if (paused) {
+    centipedeSound.stop();
     gameHandler.managePause();
     return;
   }
@@ -93,6 +100,7 @@ function updateGameState() {
   // clear the canvas
   gameHandler.checkLevelEndConditions();
   gameHandler.startNextFrame();
+  manageSounds();
   hudHandler.update();
   // make things happen
   mushrooms.manage();
@@ -106,6 +114,7 @@ function updateGameState() {
   metrics.updateFloatingPoints();
   if (died) {
     gameHandler.setDiedText();
+    gameHandler.playDiedSound();
     return;
   }
   if (levelOver) {

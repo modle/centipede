@@ -7,6 +7,14 @@ var gameArea = {
   xVertices : [],
   yVertices : [],
   gamePieceTopLimit : knobsAndLevers.gamePieceTopLimit,
+  init: function() {
+    this.canvas.width = knobsAndLevers.canvasWidth;
+    this.canvas.height = knobsAndLevers.canvasHeight;
+    this.gridSquareSideLength = knobsAndLevers.gridSquareSideLength;
+    this.firstMushroomLayer = this.gridSquareSideLength * 2;
+    this.setGridVertices();
+    console.log("gameArea initialized");
+  },
   start : function() {
     paused = true;
     this.context = this.canvas.getContext("2d");
@@ -15,21 +23,21 @@ var gameArea = {
     // set interval at which function updateGameArea is executed
     // 1000 ms divided by second parameter
     this.interval = setInterval(updateGameState, intervalDivisor);
-    gameArea.keys = (gameArea.keys || []);
+    this.keysDown = (this.keysDown || []);
     this.addEventListeners();
   },
   addEventListeners : function() {
     window.addEventListener('mousedown', function (e) {
-      gameArea.keys['LMB'] = (e.type === "mousedown" && event.which === 1);
+      gameArea.keysDown['LMB'] = (e.type === "mousedown" && event.which === 1);
     });
     window.addEventListener('mouseup', function (e) {
-      gameArea.keys['LMB'] = (e.type === "mousedown" && event.which === 1);
+      gameArea.keysDown['LMB'] = (e.type === "mousedown" && event.which === 1);
     });
     window.addEventListener('keydown', function (e) {
-      gameArea.keys[e.keyCode] = (e.type == "keydown");
+      gameArea.keysDown[e.keyCode] = (e.type == "keydown");
     });
     window.addEventListener('keyup', function (e) {
-      gameArea.keys[e.keyCode] = (e.type == "keydown");
+      gameArea.keysDown[e.keyCode] = (e.type == "keydown");
     });
   },
   setGridVertices : function() {
@@ -59,17 +67,9 @@ var gameArea = {
   },
   stop : function() {
     clearInterval(this.interval);
-  },
-  initialize: function() {
-    this.canvas.width = knobsAndLevers.canvasWidth;
-    this.canvas.height = knobsAndLevers.canvasHeight;
-    this.gridSquareSideLength = knobsAndLevers.gridSquareSideLength;
-    this.firstMushroomLayer = this.gridSquareSideLength * 2;
-    this.setGridVertices();
-    console.log("gameArea initialized");
   }
 };
 
 // one property of an object can't be used to set another if they are both generated at object create time
 // so we call a setParameters function to update them after the object has been created
-gameArea.initialize();
+gameArea.init();

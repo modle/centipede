@@ -9,14 +9,16 @@ function component(args) {
   this.y = args.y;
   this.width = args.width;
   this.height = args.height;
-  this.type = args.extraArgs.type;
-  this.color = args.color;
-  if (Array.from(Object.keys(args.extraArgs)).includes('speed')) {
-    this.speedX = args.extraArgs.speed.x;
-    this.speedY = args.extraArgs.speed.y;
-  };
   if (Array.from(Object.keys(args)).includes('background')) {
     this.background = args.background;
+  };
+  this.color = args.color;
+  if (Array.from(Object.keys(args)).includes('extraArgs')) {
+    this.type = args.extraArgs.type;
+    if (Array.from(Object.keys(args.extraArgs)).includes('speed')) {
+      this.speedX = args.extraArgs.speed.x;
+      this.speedY = args.extraArgs.speed.y;
+    };
   };
   this.update = function() {
     if (this.background) {
@@ -30,8 +32,12 @@ function component(args) {
       this.makeACentipede();
     } else {
       this.makeARectangle();
-    }
+    };
   };
+  this.stop = function() {
+    this.speedX = 0;
+    this.speedY = 0;
+  },
   this.makeText = function() {
     ctx.font = args.fontSize + " " + args.fontType;
     ctx.fillText(this.text, this.x, this.y);
@@ -50,14 +56,14 @@ function component(args) {
         return getDownTriangle(ctx, this);
       } else if (this.directionY < 0) {
         return getUpTriangle(ctx, this);
-      }
+      };
     } else {
       if (this.directionX > 0) {
         return getRightTriangle(ctx, this);
       } else if (this.directionX < 0) {
         return getLeftTriangle(ctx, this);
-      }
-    }
+      };
+    };
   };
   this.makeARectangle = function() {
     ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -70,7 +76,7 @@ function component(args) {
     var crash = true;
     if (this.getBottom() < otherObject.getTop() || this.getTop() > otherObject.getBottom() || this.getRight() < otherObject.getLeft() || this.getLeft() > otherObject.getRight()) {
       crash = false;
-    }
+    };
     return crash;
   };
   this.crashWithSidesOnly = function(otherObject) {
@@ -78,7 +84,7 @@ function component(args) {
     // delay collision slightly by allowing objects to overlap by 1 pixel
     if (this.getRight() < otherObject.getLeft() + 1 || this.getLeft() > otherObject.getRight() - 1) {
       crash = false;
-    }
+    };
     return crash;
   };
   this.getMiddleX = function() {
