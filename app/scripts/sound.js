@@ -34,7 +34,7 @@ function initSounds() {
 }
 
 function buildSound(filename, volume, loop) {
-  return new sound("media/sounds/" + filename + ".mp3", volume, loop);
+  return new sound("app/static/media/sounds/" + filename + ".mp3", volume, loop);
 }
 
 function buildManySounds(type, length, array) {
