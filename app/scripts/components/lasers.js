@@ -14,13 +14,14 @@ var lasers = Object.create(displayObjectPrototype, {
     value : function() {
       let gamePiece = gamePieceHandler.gamePiece;
       let laserArgs = knobsAndLevers.laser.args;
+      let keysDown = gameHandler.keysDown;
       laserArgs.extraArgs.speed.y = 0;
       laserArgs.x = gamePiece.x + gamePiece.width / 2;
       laserArgs.y = gamePiece.y + gamePiece.height / 2;
-      if (this.lasers.length === knobsAndLevers.laser.maxNumber || !gameArea.keysDown || !everyinterval(knobsAndLevers.laser.interval)) {
+      if (this.lasers.length === knobsAndLevers.laser.maxNumber || !keysDown || !everyinterval(knobsAndLevers.laser.interval)) {
         return;
       }
-      if (gameArea.keysDown[16] || gameArea.keysDown[37] || gameArea.keysDown[38] || gameArea.keysDown[39] || gameArea.keysDown[40] || gameArea.keysDown['LMB']) {
+      if (keysDown[16] || keysDown[37] || keysDown[38] || keysDown[39] || keysDown[40] || keysDown['LMB']) {
         laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed;
       }
       if (laserArgs.extraArgs.speed.y !== 0) {

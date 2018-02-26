@@ -3,29 +3,36 @@ var knobsAndLevers = {
     this.gamePieceTopLimit = this.canvasHeight * 0.8;
     this.gamePieceStartX = (this.canvasWidth - this.gamePieceWidth) * 0.5;
     this.gamePieceStartY = this.canvasHeight * 0.9;
-    this.baseTextParams.x = this.canvasWidth * 0.25;
+
     this.gridSquareSideLength = Math.floor(this.canvasWidth / this.gridDivisor);
     this.coordinateScaleFactor = this.gridSquareSideLength * 0.1;
-    this.mushroomSide = this.gridSquareSideLength * 0.8;
+
+    this.baseTextParams.x = this.canvasWidth * 0.25;
     this.baseTextBackgroundParams.height = this.gridSquareSideLength;
     this.baseTextBackgroundParams.width = this.canvasWidth;
-    this.spider.initialInterval = getRandom(this.spider.interval.min, this.spider.interval.max);
-    this.worm.initialInterval = getRandom(this.worm.interval.min, this.worm.interval.max);
     this.baseTextParams.fontSize = this.gridSquareSideLength + "px";
     this.gameInfoTextHeight = this.gridSquareSideLength * 1.3;
+
+    this.spider.initialInterval = getRandom(this.spider.interval.min, this.spider.interval.max);
     this.spider.args.width = this.gridSquareSideLength * 0.8;
     this.spider.args.height = this.gridSquareSideLength * 0.3;
     this.spider.args.x = -this.spider.args.width * 0.8;
     this.spider.args.y = this.gamePieceTopLimit;
-    this.centipede.args.width = this.gridSquareSideLength;
-    this.centipede.args.height = this.gridSquareSideLength;
-    this.centipede.args.x = this.canvasWidth / 2;
+
+    this.worm.initialInterval = getRandom(this.worm.interval.min, this.worm.interval.max);
     this.worm.args.width = this.gridSquareSideLength * 1.5;
     this.worm.args.height = this.gridSquareSideLength;
     this.worm.args.x = -this.canvasWidth / 10;
     this.worm.args.y = this.canvasHeight / 10;
+
+    this.centipede.args.width = this.gridSquareSideLength;
+    this.centipede.args.height = this.gridSquareSideLength;
+    this.centipede.args.x = this.canvasWidth / 2;
+
     this.laser.args.width = this.gridSquareSideLength / 10;
     this.laser.args.height = this.gridSquareSideLength * 0.5;
+
+    this.mushroomSide = this.gridSquareSideLength * 0.8;
     console.log("knobsAndLevers initialized");
   },
   centipede : {

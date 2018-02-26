@@ -1,7 +1,6 @@
 /*jslint white: true */
 
 function component(args) {
-  this.gamearea = gameArea;
   this.remove = false;
   this.speedX = 0;
   this.speedY = 0;
@@ -24,7 +23,7 @@ function component(args) {
     if (this.background) {
       this.background.update();
     }
-    ctx = gameArea.context;
+    ctx = gameHandler.gameArea.context;
     ctx.fillStyle = this.color;
     if (this.type == "text") {
       this.makeText();

@@ -16,20 +16,20 @@ var texts = {
   },
   getLevelParams : function() {
     let levelParams = this.copyBaseMessageParams();
-    levelParams.x = gameArea.canvas.width * 0.6;
+    levelParams.x = gameHandler.gameArea.canvas.width * 0.6;
     levelParams.y = knobsAndLevers.gameInfoTextHeight;
     return levelParams;
   },
   getLivesParams : function() {
     let livesParams = this.copyBaseMessageParams();
-    livesParams.x = gameArea.canvas.width * 0.4;
+    livesParams.x = gameHandler.gameArea.canvas.width * 0.4;
     livesParams.y = knobsAndLevers.gameInfoTextHeight;
     return livesParams;
   },
   getDiedTextParams : function() {
     let diedTextParams = this.copyBaseMessageParams();
     diedTextParams.fontSize = (knobsAndLevers.gridSquareSideLength * 1.5) + "px";
-    diedTextParams.y = gameArea.canvas.height * 0.75;
+    diedTextParams.y = gameHandler.gameArea.canvas.height * 0.75;
     let backgroundParams = this.copyBaseTextBackgroundParams();
     backgroundParams.height *= 1.5;
     backgroundParams.y = (diedTextParams.y - backgroundParams.height) * 1.01;
@@ -38,7 +38,7 @@ var texts = {
   },
   getPausedMessageParams : function() {
     let pausedMessageTextParams = this.copyBaseMessageParams();
-    pausedMessageTextParams.y = gameArea.canvas.height * 0.9;
+    pausedMessageTextParams.y = gameHandler.gameArea.canvas.height * 0.9;
     let backgroundParams = this.copyBaseTextBackgroundParams();
     backgroundParams.y = (pausedMessageTextParams.y - backgroundParams.height) * 1.01;
     pausedMessageTextParams.background = new component(backgroundParams);
@@ -48,7 +48,7 @@ var texts = {
     let gameOverTextParams = this.copyBaseMessageParams();
     gameOverTextParams.fontSize = (knobsAndLevers.gridSquareSideLength * 3) + "px";
     gameOverTextParams.color = "navy";
-    gameOverTextParams.y = gameArea.canvas.height * 0.5;
+    gameOverTextParams.y = gameHandler.gameArea.canvas.height * 0.5;
     let backgroundParams = this.copyBaseTextBackgroundParams();
     backgroundParams.height *= 3;
     backgroundParams.y = (gameOverTextParams.y - backgroundParams.height) * 1.05;

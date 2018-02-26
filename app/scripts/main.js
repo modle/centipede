@@ -8,27 +8,30 @@ var delayed = 0;
 var delayEndTime = 300;
 
 var gameHandler = {
+  gameArea : new GameArea(),
+  keysDown : {},
   start : function() {
     if (isMobile()) {
       showMobile();
       return;
     }
     initSounds();
-    gameArea.start();
+    paused = true;
+    this.gameArea.start();
   },
   reset : function() {
-    gameArea.stop();
+    this.gameArea.stop();
     hudHandler.reset();
     this.start();
   },
   checkLevelEndConditions : function() {
-    if (centipedes.numberSpawned === centipedes.numberKilled && gameArea.frameNo !== 0) {
+    if (centipedes.numberSpawned === centipedes.numberKilled && this.gameArea.frameNo !== 0) {
       levelOver = true;
     }
   },
   startNextFrame : function() {
-    gameArea.clear();
-    gameArea.frameNo += 1;
+    this.gameArea.clear();
+    this.gameArea.frameNo += 1;
   },
   manageLevel : function() {
     this.resetSomeThings();
@@ -44,7 +47,7 @@ var gameHandler = {
   },
   managePause : function() {
     texts.pausedMessage.text = "Paused: Spacebar to Continue";
-    if (gameArea.frameNo === 0) {
+    if (this.gameArea.frameNo === 0) {
       texts.pausedMessage.text = "Press Spacebar to Start";
     }
     texts.pausedMessage.update();
@@ -64,10 +67,10 @@ var gameHandler = {
   showGameOver : function() {
     texts.gameOver.text = "Game Over";
     texts.gameOver.update();
-    gameArea.stop();
+    this.gameArea.stop();
   },
   resetSomeThings : function() {
-    gameArea.frameNo = 0;
+    this.gameArea.frameNo = 0;
     centipedes.clear();
     lasers.clear();
   },
@@ -76,8 +79,28 @@ var gameHandler = {
     worms.clear();
     spiders.clear();
     gamePieceHandler.reset();
-  }
-}
+  },
+  addEventListeners : function() {
+    console.log("keysDown is", this.keysDown);
+    window.addEventListener('mousedown', function (e) {
+      gameHandler.keysDown['LMB'] = (e.type === "mousedown" && event.which === 1);
+    });
+    window.addEventListener('mouseup', function (e) {
+      gameHandler.keysDown['LMB'] = (e.type === "mousedown" && event.which === 1);
+    });
+    window.addEventListener('keydown', function (e) {
+      gameHandler.keysDown[e.keyCode] = (e.type == "keydown");
+    });
+    window.addEventListener('keyup', function (e) {
+      gameHandler.keysDown[e.keyCode] = (e.type == "keydown");
+    });
+  },
+  init : function() {
+    this.addEventListeners();
+  },
+};
+
+gameHandler.init();
 
 function updateGameState() {
   // this gets executed every interval
@@ -120,4 +143,4 @@ function updateGameState() {
   if (levelOver) {
     gameHandler.manageLevel();
   }
-}
+};

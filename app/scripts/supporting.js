@@ -3,14 +3,14 @@
 var intervalDivisor = 5;
 
 function everyinterval(n) {
-  if ((gameArea.frameNo / n) % 1 === 0) {
+  if ((gameHandler.gameArea.frameNo / n) % 1 === 0) {
     return true;
   }
   return false;
 }
 
 function getTime() {
-  return levelTimeLimit - Math.ceil(gameArea.frameNo / ( 1000 / intervalDivisor ));
+  return levelTimeLimit - Math.ceil(gameHandler.gameArea.frameNo / ( 1000 / intervalDivisor ));
 }
 
 function wait(ms) {
