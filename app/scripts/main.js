@@ -10,6 +10,9 @@ var delayEndTime = 300;
 var game = {
   gameArea : new GameArea(),
   keysDown : {},
+  init : function() {
+    this.addEventListeners();
+  },
   start : function() {
     if (isMobile()) {
       showMobile();
@@ -94,9 +97,6 @@ var game = {
     window.addEventListener('keyup', function (e) {
       game.keysDown[e.keyCode] = (e.type == "keydown");
     });
-  },
-  init : function() {
-    this.addEventListeners();
   },
 };
 
