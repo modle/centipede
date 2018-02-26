@@ -41,12 +41,9 @@ var knobsAndLevers = {
   canvasWidth : 800,
   canvasHeight : 800,
   gridDivisor : 25,
-  gamePieceTopLimit : 0,
   gamePieceSpeed : 2,
   gamePieceWidth : 15,
   gamePieceHeight : 15,
-  gamePieceStartX : 0,
-  gamePieceStartY : 0,
   laser : {
     speed : 5,
     maxNumber : 1,

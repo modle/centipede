@@ -10,7 +10,20 @@ var gamePieceHandler = {
       extraArgs : {type : "gamePiece", speed : {x : 0, y : 0}}
     };
     this.gamePiece = new component(gamePieceArgs);
+    this.calculateStartingArea();
     console.log("gamePiece initialized");
+  },
+  calculateStartingArea : function() {
+    this.gamePieceStartingArea = new component(
+      {
+        x : knobsAndLevers.gamePieceStartX - knobsAndLevers.gamePieceWidth * 5,
+        y : knobsAndLevers.gamePieceTopLimit,
+        width : knobsAndLevers.gamePieceWidth * 10,
+        height : knobsAndLevers.canvasHeight - knobsAndLevers.gamePieceTopLimit,
+        color : "orange",
+        extraArgs : {type : "startingArea"},
+      }
+    );
   },
   manage : function() {
     this.move();
@@ -22,6 +35,10 @@ var gamePieceHandler = {
   reset : function() {
     this.gamePiece.x = knobsAndLevers.gamePieceStartX;
     this.gamePiece.y = knobsAndLevers.gamePieceStartY;
+    this.removeMushroomsFromStartingArea();
+  },
+  removeMushroomsFromStartingArea : function() {
+    mushrooms.mushrooms = mushrooms.mushrooms.filter(mushroom => !mushroom.crashWith(this.gamePieceStartingArea));
   },
   stop : function() {
     this.gamePiece.speedX = 0;
