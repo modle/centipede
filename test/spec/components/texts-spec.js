@@ -1,5 +1,6 @@
 describe('Testing text functions', () => {
-  it('sometest', () => {
-    expect(something).toBeTruthy();
+  let testObj = Object.assign({}, texts);
+  it('texts gets constructed', () => {
+    expect(testObj).toBeTruthy();
   });
 });

@@ -54,7 +54,7 @@ var collisions = {
   },
   checkGamePieceVsEnemy : function(targets) {
     targets.forEach(target => {
-      if (gamePieceHandler.gamePiece.crashWith(target)) {
+      if (gamePiece.gamePiece.crashWith(target)) {
         this.killPlayer();
         if (metrics.lives > 0) {
           return;

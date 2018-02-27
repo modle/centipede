@@ -1,5 +1,6 @@
 describe('Testing metrics functions', () => {
-  it('sometest', () => {
-    expect(something).toBeTruthy();
+  let testObj = Object.assign({}, metrics);
+  it('metrics gets constructed', () => {
+    expect(testObj).toBeTruthy();
   });
 });

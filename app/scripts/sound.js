@@ -1,7 +1,5 @@
 
-playingSounds = []
-
-function sound(src, volume, loop) {
+function Sound(src, volume, loop) {
   this.sound = document.createElement("audio");
   this.sound.src = src;
   this.sound.volume = volume;
@@ -15,65 +13,63 @@ function sound(src, volume, loop) {
   this.stop = function(){
     this.sound.pause();
   }
-}
+};
 
-var centipedeSound;
-var spiderSound;
-var wormSound;
-var playerDiedSound;
-var laserSoundsPool = [];
-var impactSoundsPool = [];
-function initSounds() {
-  centipedeSound = buildSound("centipede", 0.5);
-  spiderSound = buildSound("spider", 0.3);
-  wormSound = buildSound("worm", 0.5, "loop");
-  wormSound.loop = true;
-  playerDiedSound = buildSound("player-died", 0.5);
-  buildManySounds("laser", knobsAndLevers.laser.maxNumber, laserSoundsPool);
-  buildManySounds("laser-impact", knobsAndLevers.laser.maxNumber, impactSoundsPool);
-}
+var sounds = {
+  init : function() {
+    this.centipede = buildSound("centipede", 0.5);
+    this.spider = buildSound("spider", 0.3);
+    this.worm = buildSound("worm", 0.5, "loop");
+    this.worm.loop = true;
+    this.playerDied = buildSound("player-died", 0.5);
+    this.laserPool = buildManySounds("laser", knobsAndLevers.laser.maxNumber);
+    this.impactPool = buildManySounds("laser-impact", knobsAndLevers.laser.maxNumber);
+  }
+};
 
 function buildSound(filename, volume, loop) {
-  return new sound("app/static/media/sounds/" + filename + ".mp3", volume, loop);
+  return new Sound("app/static/media/sounds/" + filename + ".mp3", volume, loop);
 }
 
-function buildManySounds(type, length, array) {
+function buildManySounds(type, length) {
   poolSize = 20;
-  while (array.length <= poolSize) {
-    array.push(buildSound(type, 0.5));
-  }
+  let soundArray = [];
+  while (soundArray.length <= poolSize) {
+    soundArray.push(buildSound(type, 0.5));
+  };
+  return soundArray;
 }
 
 function manageSounds() {
   if (centipedes.centipedes != false) {
-    centipedeSound.play();
+    sounds.centipede.play();
   }
   if (spiders.spiders != false) {
-    spiderSound.play();
+    sounds.spider.play();
   }
   if (worms.worms != false) {
-    wormSound.play();
+    sounds.worm.play();
   } else {
-    wormSound.stop();
+    sounds.worm.stop();
   }
 }
 
 function getAvailableLaserSound() {
-  return getAvailableSound(laserSoundsPool);
+  return getAvailableSound(sounds.laserPool);
 }
 
 function getAvailableImpactSound() {
-  return getAvailableSound(impactSoundsPool);
+  return getAvailableSound(sounds.impactPool);
 }
 
-function getAvailableSound(sounds) {
-  sound = sounds.pop();
-  sounds.unshift(sound);
+function getAvailableSound(availableSounds) {
+  sound = availableSounds.pop();
+  availableSounds.unshift(sound);
   return sound;
 }
 
 function stopAllSounds() {
-  centipedeSound.stop();
-  spiderSound.stop();
-  wormSound.stop();
+  sounds.centipede.stop();
+  sounds.spider.stop();
+  sounds.worm.stop();
 }

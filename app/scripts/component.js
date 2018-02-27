@@ -1,6 +1,6 @@
 /*jslint white: true */
 
-function component(args) {
+function Component(args) {
   this.remove = false;
   this.speedX = 0;
   this.speedY = 0;

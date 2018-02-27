@@ -14,7 +14,7 @@ var worms = {
     if (this.worms.length >= knobsAndLevers.worm.maxNumber) {
       return
     }
-    var worm = new component(knobsAndLevers.worm.args);
+    var worm = new Component(knobsAndLevers.worm.args);
     worm.pointValue = knobsAndLevers.worm.pointValue * metrics.currentLevel;
     worm.hitPoints = 1;
     this.worms.push(worm);

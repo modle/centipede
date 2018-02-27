@@ -1,5 +1,6 @@
 describe('Testing component functions', () => {
-  it('sometest', () => {
-    expect(something).toBeTruthy();
+  let component = new Component({});
+  it('component gets constructed', () => {
+    expect(component).toBeTruthy();
   });
 });

@@ -1,5 +1,6 @@
 describe('Testing hud functions', () => {
-  it('sometest', () => {
-    expect(something).toBeTruthy();
+  let testObj = Object.assign({}, hud);
+  it('hud gets constructed', () => {
+    expect(testObj).toBeTruthy();
   });
 });

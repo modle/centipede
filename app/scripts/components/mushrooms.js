@@ -25,7 +25,7 @@ var mushrooms = {
       y : y + knobsAndLevers.coordinateScaleFactor,
       extraArgs : {type : "mushroom"}
     };
-    mushroom = new component(mushroomArgs);
+    mushroom = new Component(mushroomArgs);
     mushroom.pointValue = metrics.currentLevel;
     mushroom.hitPoints = 4;
     return mushroom;

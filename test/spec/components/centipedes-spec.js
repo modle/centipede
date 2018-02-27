@@ -1,5 +1,6 @@
 describe('Testing centipedes functions', () => {
-  it('sometest', () => {
-    expect(something).toBeTruthy();
+  let testObj = Object.assign({}, centipedes);
+  it('centipedes gets constructed', () => {
+    expect(testObj).toBeTruthy();
   });
 });

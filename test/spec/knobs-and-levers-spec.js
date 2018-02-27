@@ -1,4 +1,3 @@
-
 describe('Testing knobs and levers generation', () => {
   let testObj = Object.assign({}, knobsAndLevers);
   it('gamePieceTopLimit should not be undefined', () => {

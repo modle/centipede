@@ -26,7 +26,7 @@ var centipedes = {
     this.add(centipede);
   },
   construct : function() {
-    centipede = new component(knobsAndLevers.centipede.args);
+    centipede = new Component(knobsAndLevers.centipede.args);
     centipede.directionX = 1;
     centipede.directionY = 1;
     centipede.distanceMovedX = 0;

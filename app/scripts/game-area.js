@@ -2,8 +2,6 @@
 
 function GameArea() {
   this.canvas = document.createElement("canvas"),
-  this.gridSquareSideLength = 0,
-  this.firstMushroomLayer = 0,
   this.xVertices = [],
   this.yVertices = [],
   this.gamePieceTopLimit = knobsAndLevers.gamePieceTopLimit;

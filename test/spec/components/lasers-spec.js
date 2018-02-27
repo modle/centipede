@@ -1,5 +1,6 @@
 describe('Testing lasers functions', () => {
-  it('sometest', () => {
-    expect(something).toBeTruthy();
+  let testObj = Object.assign({}, lasers);
+  it('lasers gets constructed', () => {
+    expect(testObj).toBeTruthy();
   });
 });

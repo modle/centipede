@@ -14,17 +14,17 @@ var game = {
     this.addEventListeners();
   },
   start : function() {
-    if (isMobile()) {
+    if (supporting.isMobile()) {
       showMobile();
       return;
     }
-    initSounds();
+    sounds.init();
     paused = true;
     this.gameArea.start();
   },
   reset : function() {
     this.gameArea.stop();
-    hudHandler.reset();
+    hud.reset();
     this.start();
   },
   checkLevelEndConditions : function() {
@@ -46,7 +46,7 @@ var game = {
     texts.diedText.update();
   },
   playDiedSound : function() {
-    playerDiedSound.play();
+    sounds.playerDied.play();
   },
   managePause : function() {
     texts.pausedMessage.text = "Paused: Spacebar to Continue";
@@ -81,7 +81,7 @@ var game = {
     this.resetSomeThings();
     worms.clear();
     spiders.clear();
-    gamePieceHandler.reset();
+    gamePiece.reset();
   },
   addEventListeners : function() {
     console.log("keysDown is", this.keysDown);
@@ -107,7 +107,7 @@ function updateGameState() {
   // check game conditions and update messages
   game.manageGameOver();
   if (paused) {
-    centipedeSound.stop();
+    sounds.centipede.stop();
     game.managePause();
     return;
   }
@@ -124,14 +124,14 @@ function updateGameState() {
   game.checkLevelEndConditions();
   game.startNextFrame();
   manageSounds();
-  hudHandler.update();
+  hud.update();
   // make things happen
   mushrooms.manage();
   centipedes.manage();
   worms.manage();
   spiders.manage();
   lasers.manage();
-  gamePieceHandler.manage();
+  gamePiece.manage();
   // check game conditions
   collisions.check();
   metrics.updateFloatingPoints();

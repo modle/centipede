@@ -1,5 +1,5 @@
 /*jslint white: true */
-var gamePieceHandler = {
+var gamePiece = {
   init : function() {
     let gamePieceArgs = {
       width: knobsAndLevers.gamePieceWidth,
@@ -9,12 +9,12 @@ var gamePieceHandler = {
       y : knobsAndLevers.gamePieceStartY,
       extraArgs : {type : "gamePiece", speed : {x : 0, y : 0}}
     };
-    this.gamePiece = new component(gamePieceArgs);
+    this.gamePiece = new Component(gamePieceArgs);
     this.calculateStartingArea();
     console.log("gamePiece initialized");
   },
   calculateStartingArea : function() {
-    this.gamePieceStartingArea = new component(
+    this.gamePieceStartingArea = new Component(
       {
         x : knobsAndLevers.gamePieceStartX - knobsAndLevers.gamePieceWidth * 5,
         y : knobsAndLevers.gamePieceTopLimit,
@@ -122,4 +122,4 @@ var gamePieceHandler = {
   },
 }
 
-gamePieceHandler.init();
+gamePiece.init();
