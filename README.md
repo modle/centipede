@@ -2,7 +2,7 @@
 - lasers
 - joy
 
-# [Demo](https://js-centipede.herokuapp.com/index.html)
+# [Demo](http://centipede.matthewodle.com/index.html)
 
 # [Video](https://youtu.be/V_LdZUEypng)
 
