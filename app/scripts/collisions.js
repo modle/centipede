@@ -6,7 +6,7 @@ var collisions = {
   check : function() {
     this.checkLaser(mushrooms.mushrooms);
     this.checkLaser(centipedes.centipedes);
-    this.checkLaser(worms.worms);
+    this.checkLaser(intervalCreatures.worms);
     this.checkLaser(spiders.spiders);
     this.checkGamePieceVsEnemy(centipedes.centipedes);
     this.checkGamePieceVsEnemy(spiders.spiders);
@@ -78,7 +78,7 @@ var collisions = {
   removeDestroyedTargets : function(targets) {
     mushrooms.mushrooms = mushrooms.mushrooms.filter(mushroom => mushroom.hitPoints > 0);
     centipedes.centipedes = centipedes.centipedes.filter(centipede => centipede.hitPoints > 0);
-    worms.worms = worms.worms.filter(worm => worm.hitPoints > 0);
+    intervalCreatures.worms = intervalCreatures.worms.filter(worm => worm.hitPoints > 0);
     spiders.spiders = spiders.spiders.filter(spider => spider.hitPoints > 0);
   },
 }

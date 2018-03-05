@@ -47,7 +47,7 @@ function manageSounds() {
   if (spiders.spiders != false) {
     sounds.spider.play();
   }
-  if (worms.worms != false) {
+  if (intervalCreatures.worms != false) {
     sounds.worm.play();
   } else {
     sounds.worm.stop();

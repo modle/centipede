@@ -1,5 +1,5 @@
 /*jslint white: true */
-var worms = {
+var intervalCreatures = {
   worms : [],
   interval : knobsAndLevers.worm.initialInterval,
   manage : function() {
@@ -27,7 +27,7 @@ var worms = {
     }
   },
   clearOutsideCanvas : function() {
-    if (worms == false) { return; };
+    if (this.worms == false) { return; };
     this.worms = this.worms.filter(worm => worm.x < game.gameArea.canvas.width);
   },
   clear : function() {

@@ -79,7 +79,7 @@ var game = {
   },
   resetMoreThings : function() {
     this.resetSomeThings();
-    worms.clear();
+    intervalCreatures.clear();
     spiders.clear();
     gamePiece.reset();
   },
@@ -128,7 +128,7 @@ function updateGameState() {
   // make things happen
   mushrooms.manage();
   centipedes.manage();
-  worms.manage();
+  intervalCreatures.manage();
   spiders.manage();
   lasers.manage();
   gamePiece.manage();
