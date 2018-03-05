@@ -19,11 +19,17 @@ var knobsAndLevers = {
     this.spider.args.x = -this.spider.args.width * 0.8;
     this.spider.args.y = this.gamePieceTopLimit;
 
-    this.worm.initialInterval = getRandom(this.worm.interval.min, this.worm.interval.max);
-    this.worm.args.width = this.gridSquareSideLength * 1.5;
-    this.worm.args.height = this.gridSquareSideLength;
-    this.worm.args.x = -this.canvasWidth / 10;
-    this.worm.args.y = this.canvasHeight / 10;
+    this.worms.initialInterval = getRandom(this.worms.interval.min, this.worms.interval.max);
+    this.worms.args.width = this.gridSquareSideLength * 1.5;
+    this.worms.args.height = this.gridSquareSideLength;
+    this.worms.args.x = -this.canvasWidth / 10;
+    this.worms.args.y = this.canvasHeight / 10;
+
+    this.flies.initialInterval = getRandom(this.flies.interval.min, this.flies.interval.max);
+    this.flies.args.width = this.gridSquareSideLength;
+    this.flies.args.height = this.gridSquareSideLength * 2;
+    this.flies.args.x = this.canvasWidth / 2;
+    this.flies.args.y = 0;
 
     this.centipede.args.width = this.gridSquareSideLength;
     this.centipede.args.height = this.gridSquareSideLength;
@@ -60,16 +66,28 @@ var knobsAndLevers = {
       extraArgs : {type : "laser", speed : {x : 0, y : 0}}
     }
   },
-  worm : {
+  worms : {
     maxNumber: 1,
     pointValue : 50,
     interval : {
-      min: 3000,
-      max: 5000,
+      min: 50,
+      max: 100,
     },
     args : {
       color : "orange",
       extraArgs : {type : "worm", speed : {x : 2, y : 0}}
+    },
+  },
+  flies : {
+    maxNumber: 1,
+    pointValue : 50,
+    interval : {
+      min: 50,
+      max: 100,
+    },
+    args : {
+      color : "green",
+      extraArgs : {type : "fly", speed : {x : 0, y : 2}}
     },
   },
   spider : {
