@@ -19,6 +19,10 @@ function Component(args) {
       this.speedY = args.extraArgs.speed.y;
     };
   };
+  if (Array.from(Object.keys(args)).includes('constructorFunctions')) {
+    Array.from(Object.keys(args.constructorFunctions))
+      .forEach(theFunction => args.constructorFunctions[theFunction]());
+  };
   this.update = function() {
     if (this.background) {
       this.background.update();

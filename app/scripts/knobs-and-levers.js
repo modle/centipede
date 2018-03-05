@@ -23,13 +23,11 @@ var knobsAndLevers = {
     this.worms.args.width = this.gridSquareSideLength * 1.5;
     this.worms.args.height = this.gridSquareSideLength;
     this.worms.args.x = -this.canvasWidth / 10;
-    this.worms.args.y = this.canvasHeight / 10;
 
     this.flies.initialInterval = getRandom(this.flies.interval.min, this.flies.interval.max);
-    this.flies.args.width = this.gridSquareSideLength;
-    this.flies.args.height = this.gridSquareSideLength * 2;
-    this.flies.args.x = this.canvasWidth / 2;
-    this.flies.args.y = 0;
+    this.flies.args.width = this.gridSquareSideLength * 0.75;
+    this.flies.args.height = this.gridSquareSideLength * 0.75;
+    this.flies.args.y = -this.canvasHeight / 10;
 
     this.centipede.args.width = this.gridSquareSideLength;
     this.centipede.args.height = this.gridSquareSideLength;
@@ -75,7 +73,10 @@ var knobsAndLevers = {
     },
     args : {
       color : "orange",
-      extraArgs : {type : "worm", speed : {x : 2, y : 0}}
+      extraArgs : {type : "worm", speed : {x : 2, y : 0}},
+      constructorFunctions : {
+        getY : function() { knobsAndLevers.worms.args.y = getRandom(0, knobsAndLevers.canvasHeight / 5) },
+      }
     },
   },
   flies : {
@@ -87,7 +88,10 @@ var knobsAndLevers = {
     },
     args : {
       color : "green",
-      extraArgs : {type : "fly", speed : {x : 0, y : 2}}
+      extraArgs : {type : "fly", speed : {x : 0, y : 2}},
+      constructorFunctions : {
+        getX : function() { knobsAndLevers.flies.args.x = getRandom(0, knobsAndLevers.canvasWidth) },
+      }
     },
   },
   spider : {
