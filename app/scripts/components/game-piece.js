@@ -1,5 +1,5 @@
 /*jslint white: true */
-var gamePieceHandler = {
+var gamePiece = {
   init : function() {
     let gamePieceArgs = {
       width: knobsAndLevers.gamePieceWidth,
@@ -9,12 +9,12 @@ var gamePieceHandler = {
       y : knobsAndLevers.gamePieceStartY,
       extraArgs : {type : "gamePiece", speed : {x : 0, y : 0}}
     };
-    this.gamePiece = new component(gamePieceArgs);
+    this.gamePiece = new Component(gamePieceArgs);
     this.calculateStartingArea();
     console.log("gamePiece initialized");
   },
   calculateStartingArea : function() {
-    this.gamePieceStartingArea = new component(
+    this.gamePieceStartingArea = new Component(
       {
         x : knobsAndLevers.gamePieceStartX - knobsAndLevers.gamePieceWidth * 5,
         y : knobsAndLevers.gamePieceTopLimit,
@@ -45,7 +45,7 @@ var gamePieceHandler = {
     this.gamePiece.speedY = 0;
   },
   move : function() {
-    if (!gameArea.keysDown) {
+    if (!game.keysDown) {
       return;
     }
     this.stop();
@@ -58,9 +58,9 @@ var gamePieceHandler = {
   },
   setPositionFlags : function() {
     this.positionFlags = {
-      belowTop : this.gamePiece.getTop() > gameArea.gamePieceTopLimit,
-      insideRight : this.gamePiece.getRight() < gameArea.canvas.width,
-      aboveBottom : this.gamePiece.getBottom() < gameArea.canvas.height,
+      belowTop : this.gamePiece.getTop() > game.gameArea.gamePieceTopLimit,
+      insideRight : this.gamePiece.getRight() < game.gameArea.canvas.width,
+      aboveBottom : this.gamePiece.getBottom() < game.gameArea.canvas.height,
       insideLeft : this.gamePiece.getLeft() > 0,
       upRight : [68, 87],
       downRight : [68, 83],
@@ -86,7 +86,7 @@ var gamePieceHandler = {
     this.activeDirections = Array.from(Object.keys(directionResults)).filter(direction => directionResults[direction]);
   },
   keysPressed : function(needles) {
-    haystack = gameArea.keysDown;
+    haystack = game.keysDown;
     for (var i = 0; i < needles.length; i++) {
       if (!haystack[needles[i]]) {
         return false;
@@ -122,4 +122,4 @@ var gamePieceHandler = {
   },
 }
 
-gamePieceHandler.init();
+gamePiece.init();

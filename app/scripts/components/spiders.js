@@ -12,7 +12,7 @@ var spiders = {
       return
     }
     this.interval = getRandom(knobsAndLevers.spider.interval.min, knobsAndLevers.spider.interval.max);
-    let spider = new component(knobsAndLevers.spider.args);
+    let spider = new Component(knobsAndLevers.spider.args);
     spider.directionY = 1;
     spider.pointValue = knobsAndLevers.spider.pointValue * metrics.currentLevel;
     spider.hitPoints = 1;
@@ -28,17 +28,17 @@ var spiders = {
       spiders[i].speedY = getRandom(0, 1) * spiders[i].directionY;
       spiders[i].newPos();
       spiders[i].update();
-      if (spiders[i].y + spiders[i].height > gameArea.canvas.height) {
+      if (spiders[i].y + spiders[i].height > game.gameArea.canvas.height) {
         spiders[i].directionY = -1;
       }
-      if (spiders[i].y < gameArea.gamePieceTopLimit) {
+      if (spiders[i].y < game.gameArea.gamePieceTopLimit) {
         spiders[i].directionY = 1;
       }
     }
   },
   clearOutsideCanvas : function() {
     if (spiders == false) { return; };
-    this.spiders = this.spiders.filter(spider => spider.x < gameArea.canvas.width);
+    this.spiders = this.spiders.filter(spider => spider.x < game.gameArea.canvas.width);
   },
   clear : function() {
     this.spiders = [];

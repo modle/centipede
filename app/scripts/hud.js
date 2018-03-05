@@ -1,6 +1,6 @@
 /*jslint white: true */
 
-var hudHandler = {
+var hud = {
   update : function() {
     this.updateScore();
     this.updateLives();

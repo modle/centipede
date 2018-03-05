@@ -1,7 +1,6 @@
 /*jslint white: true */
 
-function component(args) {
-  this.gamearea = gameArea;
+function Component(args) {
   this.remove = false;
   this.speedX = 0;
   this.speedY = 0;
@@ -20,11 +19,15 @@ function component(args) {
       this.speedY = args.extraArgs.speed.y;
     };
   };
+  if (Array.from(Object.keys(args)).includes('constructorFunctions')) {
+    Array.from(Object.keys(args.constructorFunctions))
+      .forEach(theFunction => args.constructorFunctions[theFunction]());
+  };
   this.update = function() {
     if (this.background) {
       this.background.update();
     }
-    ctx = gameArea.context;
+    ctx = game.gameArea.context;
     ctx.fillStyle = this.color;
     if (this.type == "text") {
       this.makeText();

@@ -1,10 +1,5 @@
 /*jslint white: true */
 var lasers = Object.create(displayObjectPrototype, {
-  laserSounds : {
-    value : [],
-    writable : true,
-    enumerable : true
-  },
   lasers : {
     value : [],
     writable : true,
@@ -12,20 +7,21 @@ var lasers = Object.create(displayObjectPrototype, {
   },
   spawn : {
     value : function() {
-      let gamePiece = gamePieceHandler.gamePiece;
+      let theGamePiece = gamePiece.gamePiece;
       let laserArgs = knobsAndLevers.laser.args;
+      let keysDown = game.keysDown;
       laserArgs.extraArgs.speed.y = 0;
-      laserArgs.x = gamePiece.x + gamePiece.width / 2;
-      laserArgs.y = gamePiece.y + gamePiece.height / 2;
-      if (this.lasers.length === knobsAndLevers.laser.maxNumber || !gameArea.keysDown || !everyinterval(knobsAndLevers.laser.interval)) {
+      laserArgs.x = theGamePiece.x + theGamePiece.width / 2;
+      laserArgs.y = theGamePiece.y + theGamePiece.height / 2;
+      if (this.lasers.length === knobsAndLevers.laser.maxNumber || !keysDown || !everyinterval(knobsAndLevers.laser.interval)) {
         return;
       }
-      if (gameArea.keysDown[16] || gameArea.keysDown[37] || gameArea.keysDown[38] || gameArea.keysDown[39] || gameArea.keysDown[40] || gameArea.keysDown['LMB']) {
+      if (keysDown[16] || keysDown[37] || keysDown[38] || keysDown[39] || keysDown[40] || keysDown['LMB']) {
         laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed;
       }
       if (laserArgs.extraArgs.speed.y !== 0) {
         getAvailableLaserSound().play();
-        this.lasers.push(new component(laserArgs));
+        this.lasers.push(new Component(laserArgs));
       }
     },
     writable : false,

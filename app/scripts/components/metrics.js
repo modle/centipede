@@ -5,9 +5,9 @@ var metrics = {
   scoreValue : 0,
   init : function() {
     var scoreParams = Object.assign({}, knobsAndLevers.baseTextParams);
-    scoreParams.x = gameArea.canvas.width/10;
+    scoreParams.x = game.gameArea.canvas.width/10;
     scoreParams.y = knobsAndLevers.gameInfoTextHeight;
-    this.score = new component(scoreParams);
+    this.score = new Component(scoreParams);
     console.log("metrics initialized");
   },
   changeScore : function(change) {
@@ -31,7 +31,7 @@ var metrics = {
       y : y,
       extraArgs : {type : "text"}
     };
-    newPoint = new component(pointArgs);
+    newPoint = new Component(pointArgs);
     newPoint.text = symbol + points;
     newPoint.cycleNumber = 0;
     floatingPoints.push(newPoint);

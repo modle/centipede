@@ -7,28 +7,34 @@ var gameOver = false;
 var delayed = 0;
 var delayEndTime = 300;
 
-var gameHandler = {
+var game = {
+  gameArea : new GameArea(),
+  keysDown : {},
+  init : function() {
+    this.addEventListeners();
+  },
   start : function() {
-    if (isMobile()) {
+    if (supporting.isMobile()) {
       showMobile();
       return;
     }
-    initSounds();
-    gameArea.start();
+    sounds.init();
+    paused = true;
+    this.gameArea.start();
   },
   reset : function() {
-    gameArea.stop();
-    hudHandler.reset();
+    this.gameArea.stop();
+    hud.reset();
     this.start();
   },
   checkLevelEndConditions : function() {
-    if (centipedes.numberSpawned === centipedes.numberKilled && gameArea.frameNo !== 0) {
+    if (centipedes.numberSpawned === centipedes.numberKilled && this.gameArea.frameNo !== 0) {
       levelOver = true;
     }
   },
   startNextFrame : function() {
-    gameArea.clear();
-    gameArea.frameNo += 1;
+    this.gameArea.clear();
+    this.gameArea.frameNo += 1;
   },
   manageLevel : function() {
     this.resetSomeThings();
@@ -40,11 +46,11 @@ var gameHandler = {
     texts.diedText.update();
   },
   playDiedSound : function() {
-    playerDiedSound.play();
+    sounds.playerDied.play();
   },
   managePause : function() {
     texts.pausedMessage.text = "Paused: Spacebar to Continue";
-    if (gameArea.frameNo === 0) {
+    if (this.gameArea.frameNo === 0) {
       texts.pausedMessage.text = "Press Spacebar to Start";
     }
     texts.pausedMessage.update();
@@ -64,28 +70,45 @@ var gameHandler = {
   showGameOver : function() {
     texts.gameOver.text = "Game Over";
     texts.gameOver.update();
-    gameArea.stop();
+    this.gameArea.stop();
   },
   resetSomeThings : function() {
-    gameArea.frameNo = 0;
+    this.gameArea.frameNo = 0;
     centipedes.clear();
     lasers.clear();
   },
   resetMoreThings : function() {
     this.resetSomeThings();
-    worms.clear();
+    intervalCreatures.clear();
     spiders.clear();
-    gamePieceHandler.reset();
-  }
-}
+    gamePiece.reset();
+  },
+  addEventListeners : function() {
+    console.log("keysDown is", this.keysDown);
+    window.addEventListener('mousedown', function (e) {
+      game.keysDown['LMB'] = (e.type === "mousedown" && event.which === 1);
+    });
+    window.addEventListener('mouseup', function (e) {
+      game.keysDown['LMB'] = (e.type === "mousedown" && event.which === 1);
+    });
+    window.addEventListener('keydown', function (e) {
+      game.keysDown[e.keyCode] = (e.type == "keydown");
+    });
+    window.addEventListener('keyup', function (e) {
+      game.keysDown[e.keyCode] = (e.type == "keydown");
+    });
+  },
+};
+
+game.init();
 
 function updateGameState() {
   // this gets executed every interval
   // check game conditions and update messages
-  gameHandler.manageGameOver();
+  game.manageGameOver();
   if (paused) {
-    centipedeSound.stop();
-    gameHandler.managePause();
+    sounds.centipede.stop();
+    game.managePause();
     return;
   }
   if (died && delayed < delayEndTime) {
@@ -93,31 +116,31 @@ function updateGameState() {
     return;
   }
   if (died) {
-    gameHandler.manageDeath();
+    game.manageDeath();
     delayed = 0;
     return;
   }
   // clear the canvas
-  gameHandler.checkLevelEndConditions();
-  gameHandler.startNextFrame();
+  game.checkLevelEndConditions();
+  game.startNextFrame();
   manageSounds();
-  hudHandler.update();
+  hud.update();
   // make things happen
   mushrooms.manage();
   centipedes.manage();
-  worms.manage();
+  intervalCreatures.manage();
   spiders.manage();
   lasers.manage();
-  gamePieceHandler.manage();
+  gamePiece.manage();
   // check game conditions
   collisions.check();
   metrics.updateFloatingPoints();
   if (died) {
-    gameHandler.setDiedText();
-    gameHandler.playDiedSound();
+    game.setDiedText();
+    game.playDiedSound();
     return;
   }
   if (levelOver) {
-    gameHandler.manageLevel();
+    game.manageLevel();
   }
-}
+};

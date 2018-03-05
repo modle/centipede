@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+unameOutput="$(uname -o)"
+echo "${unameOutput}"
+
+if [ "${unameOutput}" == "Cygwin" ]; then
+    nohup cygstart spec-runner.html
+elif [ "${unameOutput}" == "GNU/Linux" ]; then
+    nohup xdg-open spec-runner.html
+fi
+rm nohup.out
+
