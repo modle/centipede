@@ -76,9 +76,6 @@ describe('Testing knobs and levers generation', () => {
   it('worms.args.x should not be undefined', () => {
     expect(testObj.worms.args.x).toBeTruthy();
   });
-  it('worms.args.y should not be undefined', () => {
-    expect(testObj.worms.args.y).toBeTruthy();
-  });
 
   it('flies.initialInterval should not be undefined', () => {
     expect(testObj.flies.initialInterval).toBeTruthy();
@@ -88,9 +85,6 @@ describe('Testing knobs and levers generation', () => {
   });
   it('flies.args.height should not be undefined', () => {
     expect(testObj.flies.args.height).toBeTruthy();
-  });
-  it('flies.args.x should not be undefined', () => {
-    expect(testObj.flies.args.x).toBeTruthy();
   });
   it('flies.args.y should not be undefined', () => {
     expect(testObj.flies.args.y).not.toBeUndefined();
