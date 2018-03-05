@@ -19,8 +19,8 @@ var sounds = {
   init : function() {
     this.centipede = buildSound("centipede", 0.5);
     this.spider = buildSound("spider", 0.3);
+    this.fly = buildSound("fly", 0.3);
     this.worm = buildSound("worm", 0.5, "loop");
-    this.worm.loop = true;
     this.playerDied = buildSound("player-died", 0.5);
     this.laserPool = buildManySounds("laser", knobsAndLevers.laser.maxNumber);
     this.impactPool = buildManySounds("laser-impact", knobsAndLevers.laser.maxNumber);
@@ -47,6 +47,14 @@ function manageSounds() {
   if (spiders.spiders != false) {
     sounds.spider.play();
   }
+  if (intervalCreatures.flies != false) {
+    if (!sounds.fly.played) {
+      sounds.fly.play();
+    }
+    sounds.fly.played = true;
+  } else {
+    sounds.fly.played = false;
+  }
   if (intervalCreatures.worms != false) {
     sounds.worm.play();
   } else {
@@ -72,4 +80,5 @@ function stopAllSounds() {
   sounds.centipede.stop();
   sounds.spider.stop();
   sounds.worm.stop();
+  sounds.fly.stop();
 }
