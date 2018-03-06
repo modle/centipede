@@ -45,7 +45,7 @@ var gamePiece = {
     this.gamePiece.speedY = 0;
   },
   move : function() {
-    if (!game.keysDown) {
+    if (!controls.keysDown) {
       return;
     }
     this.stop();
@@ -86,7 +86,7 @@ var gamePiece = {
     this.activeDirections = Array.from(Object.keys(directionResults)).filter(direction => directionResults[direction]);
   },
   keysPressed : function(needles) {
-    haystack = game.keysDown;
+    haystack = controls.keysDown;
     for (var i = 0; i < needles.length; i++) {
       if (!haystack[needles[i]]) {
         return false;

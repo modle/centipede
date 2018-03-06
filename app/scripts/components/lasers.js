@@ -13,13 +13,14 @@ var lasers = Object.create(displayObjectPrototype, {
       laserArgs.extraArgs.speed.y = 0;
       laserArgs.x = theGamePiece.x + theGamePiece.width / 2;
       laserArgs.y = theGamePiece.y + theGamePiece.height / 2;
-      if (this.lasers.length === knobsAndLevers.laser.maxNumber || !keysDown || !everyinterval(knobsAndLevers.laser.interval)) {
+      if (this.lasers.length === knobsAndLevers.laser.maxNumber || !controls.keysDown || !everyinterval(knobsAndLevers.laser.interval)) {
         return;
       }
-      if (keysDown[16] || keysDown[37] || keysDown[38] || keysDown[39] || keysDown[40] || keysDown['LMB']) {
+      if (controls.isFiring()) {
         laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed;
       }
       if (laserArgs.extraArgs.speed.y !== 0) {
+        console.log(laserArgs);
         getAvailableLaserSound().play();
         this.lasers.push(new Component(laserArgs));
       }

@@ -6,6 +6,8 @@ var levelOver = false;
 var gameOver = false;
 var delayed = 0;
 var delayEndTime = 300;
+var controllerEnabled = false;
+var controllerIndex = undefined;
 
 var game = {
   gameArea : new GameArea(),
@@ -83,43 +85,49 @@ var game = {
     spiders.clear();
     gamePiece.reset();
   },
-  addEventListeners : function() {
-    console.log("keysDown is", this.keysDown);
-    window.addEventListener('mousedown', function (e) {
-      game.keysDown['LMB'] = (e.type === "mousedown" && event.which === 1);
-    });
-    window.addEventListener('mouseup', function (e) {
-      game.keysDown['LMB'] = (e.type === "mousedown" && event.which === 1);
-    });
-    window.addEventListener('keydown', function (e) {
-      game.keysDown[e.keyCode] = (e.type == "keydown");
-    });
-    window.addEventListener('keyup', function (e) {
-      game.keysDown[e.keyCode] = (e.type == "keydown");
-    });
+  checkControllerState : function() {
+    controllerEnabled = document.getElementById("controllerToggle").checked;
+    if (!controllerEnabled) {
+      controllerIndex = -1;
+      return
+    };
+    let gamepads = navigator.getGamepads();
+    if (!controllerIndex) {
+      for (let i = 0; i < gamepads.length; i++) {
+        if (!gamepads[i]) {
+          return;
+        };
+        buttons = gamepads[i].buttons;
+        for (let j = 0; j < buttons.length; j++) {
+          if (buttons[j].pressed) {
+            controllerIndex = i;
+            break;
+          };
+        };
+      };
+    };
   },
-};
-
-game.init();
+}
 
 function updateGameState() {
   // this gets executed every interval
   // check game conditions and update messages
   game.manageGameOver();
+  game.checkControllerState();
   if (paused) {
     sounds.centipede.stop();
     game.managePause();
     return;
-  }
+  };
   if (died && delayed < delayEndTime) {
     delayed++;
     return;
-  }
+  };
   if (died) {
     game.manageDeath();
     delayed = 0;
     return;
-  }
+  };
   // clear the canvas
   game.checkLevelEndConditions();
   game.startNextFrame();
@@ -139,7 +147,7 @@ function updateGameState() {
     game.setDiedText();
     game.playDiedSound();
     return;
-  }
+  };
   if (levelOver) {
     game.manageLevel();
   }

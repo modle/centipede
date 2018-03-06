@@ -68,8 +68,8 @@ var knobsAndLevers = {
     maxNumber: 1,
     pointValue : 50,
     interval : {
-      min: 50,
-      max: 100,
+      min: 3000,
+      max: 5000,
     },
     args : {
       color : "orange",
@@ -83,8 +83,8 @@ var knobsAndLevers = {
     maxNumber: 1,
     pointValue : 50,
     interval : {
-      min: 50,
-      max: 100,
+      min: 3000,
+      max: 5000,
     },
     args : {
       color : "green",
