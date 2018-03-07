@@ -1,5 +1,6 @@
 /*jslint white: true */
 var gamePiece = {
+  activeDirection : undefined,
   init : function() {
     let gamePieceArgs = {
       width: knobsAndLevers.gamePieceWidth,
@@ -50,40 +51,30 @@ var gamePiece = {
     }
     this.stop();
     this.setPositionFlags();
-    this.setActiveDirections();
-    if (this.activeDirections.length > 0) {
-      this.moveTheThing(this.activeDirections[0]);
-      return;
-    }
+    this.activeDirection = this.getActiveDirection();
+    if (this.activeDirection) {
+      this.moveTheThing(this.activeDirection);
+    };
   },
   setPositionFlags : function() {
-    this.positionFlags = {
-      belowTop : this.gamePiece.getTop() > game.gameArea.gamePieceTopLimit,
-      insideRight : this.gamePiece.getRight() < game.gameArea.canvas.width,
-      aboveBottom : this.gamePiece.getBottom() < game.gameArea.canvas.height,
-      insideLeft : this.gamePiece.getLeft() > 0,
-      upRight : [68, 87],
-      downRight : [68, 83],
-      downLeft : [83, 65],
-      upLeft : [65, 87],
-      up : [87],
-      right : [68],
-      down : [83],
-      left : [65],
-    }
+    controls.movementCodes.belowTop = this.gamePiece.getTop() > game.gameArea.gamePieceTopLimit;
+    controls.movementCodes.insideRight = this.gamePiece.getRight() < game.gameArea.canvas.width;
+    controls.movementCodes.aboveBottom = this.gamePiece.getBottom() < game.gameArea.canvas.height;
+    controls.movementCodes.insideLeft = this.gamePiece.getLeft() > 0;
   },
-  setActiveDirections : function() {
+  getActiveDirection : function() {
+    movementKeys = controls.movementCodes;
     directionResults = {
-      upRight : this.keysPressed(this.positionFlags['upRight']) && this.positionFlags.belowTop && this.positionFlags.insideRight,
-      upLeft : this.keysPressed(this.positionFlags['upLeft']) && this.positionFlags.belowTop && this.positionFlags.insideLeft,
-      downRight : this.keysPressed(this.positionFlags['downRight']) && this.positionFlags.aboveBottom && this.positionFlags.insideRight,
-      downLeft : this.keysPressed(this.positionFlags['downLeft']) && this.positionFlags.aboveBottom && this.positionFlags.insideLeft,
-      up : this.keysPressed(this.positionFlags['up']) && this.positionFlags.belowTop,
-      down : this.keysPressed(this.positionFlags['down']) && this.positionFlags.aboveBottom,
-      right : this.keysPressed(this.positionFlags['right']) && this.positionFlags.insideRight,
-      left : this.keysPressed(this.positionFlags['left']) && this.positionFlags.insideLeft,
+      upRight : this.keysPressed(movementKeys['upRight']) && movementKeys.belowTop && movementKeys.insideRight,
+      upLeft : this.keysPressed(movementKeys['upLeft']) && movementKeys.belowTop && movementKeys.insideLeft,
+      downRight : this.keysPressed(movementKeys['downRight']) && movementKeys.aboveBottom && movementKeys.insideRight,
+      downLeft : this.keysPressed(movementKeys['downLeft']) && movementKeys.aboveBottom && movementKeys.insideLeft,
+      up : this.keysPressed(movementKeys['up']) && movementKeys.belowTop,
+      down : this.keysPressed(movementKeys['down']) && movementKeys.aboveBottom,
+      right : this.keysPressed(movementKeys['right']) && movementKeys.insideRight,
+      left : this.keysPressed(movementKeys['left']) && movementKeys.insideLeft,
     };
-    this.activeDirections = Array.from(Object.keys(directionResults)).filter(direction => directionResults[direction]);
+    return Array.from(Object.keys(directionResults)).find(direction => directionResults[direction]);
   },
   keysPressed : function(needles) {
     haystack = controls.keysDown;
