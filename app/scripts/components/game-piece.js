@@ -51,9 +51,22 @@ var gamePiece = {
     }
     this.stop();
     this.setPositionFlags();
+    if (controllerEnabled && controllerIndex >= 0) {
+      movementAxes = navigator.getGamepads()[controllerIndex].axes;
+      leftStick = {
+        x : Math.abs(movementAxes[0]) > 0.5 ? knobsAndLevers.gamePieceSpeed * movementAxes[0] : 0,
+        y : Math.abs(movementAxes[1]) > 0.5 ? knobsAndLevers.gamePieceSpeed * movementAxes[1] : 0
+      };
+      if (leftStick.x || leftStick.y) {
+        console.log('moving with left stick', leftStick);
+        this.moveTheThing(leftStick);
+        return;
+      }
+    };
+    console.log('getting active directions');
     this.activeDirection = this.getActiveDirection();
     if (this.activeDirection) {
-      this.moveTheThing(this.activeDirection);
+      this.moveTheThing(this.getPositionModifiers()[this.activeDirection]);
     };
   },
   setPositionFlags : function() {
@@ -85,26 +98,35 @@ var gamePiece = {
     }
     return true;
   },
-  moveTheThing : function(direction) {
-    this.updatePosition(this.positionModifiers[direction]);
+  moveTheThing : function(speed) {
+    this.updatePosition(speed);
     if (collisions.withMushrooms(this.gamePiece)) {
-      this.revertPosition(this.positionModifiers[direction]);
-    }
+      this.revertPosition(speed);
+    };
+    if (this.collidesWithEdges()) {
+      this.revertPosition(speed);
+    };
   },
-  updatePosition : function(positionModifiers) {
-    this.gamePiece.speedX = positionModifiers.x ? positionModifiers.x : this.gamePiece.speedX;
-    this.gamePiece.speedY = positionModifiers.y ? positionModifiers.y : this.gamePiece.speedY;
+  collidesWithEdges : function() {
+    return false;
+  },
+  updatePosition : function(modifier) {
+    this.gamePiece.speedX = modifier.x ? modifier.x : this.gamePiece.speedX;
+    this.gamePiece.speedY = modifier.y ? modifier.y : this.gamePiece.speedY;
     this.gamePiece.newPos();
   },
-  positionModifiers : {
-    upRight: {x : knobsAndLevers.gamePieceSpeed, y : -knobsAndLevers.gamePieceSpeed},
-    upLeft: {x : -knobsAndLevers.gamePieceSpeed, y : -knobsAndLevers.gamePieceSpeed},
-    downRight: {x : knobsAndLevers.gamePieceSpeed, y : knobsAndLevers.gamePieceSpeed},
-    downLeft: {x : -knobsAndLevers.gamePieceSpeed, y : knobsAndLevers.gamePieceSpeed},
-    right: {x : knobsAndLevers.gamePieceSpeed},
-    down: {y : knobsAndLevers.gamePieceSpeed},
-    left: {x : -knobsAndLevers.gamePieceSpeed},
-    up: {y : -knobsAndLevers.gamePieceSpeed},
+  getPositionModifiers : function() {
+    speedModifier = knobsAndLevers.gamePieceSpeed;
+    return {
+      upRight: {x : speedModifier, y : -speedModifier},
+      upLeft: {x : -speedModifier, y : -speedModifier},
+      downRight: {x : speedModifier, y : speedModifier},
+      downLeft: {x : -speedModifier, y : speedModifier},
+      right: {x : speedModifier},
+      down: {y : speedModifier},
+      left: {x : -speedModifier},
+      up: {y : -speedModifier},
+    };
   },
   revertPosition : function(positionModifiers) {
     this.gamePiece.speedX = positionModifiers.x ? -positionModifiers.x : this.gamePiece.speedX;

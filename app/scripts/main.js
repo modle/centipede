@@ -97,9 +97,19 @@ var game = {
         if (!gamepads[i]) {
           return;
         };
-        buttons = gamepads[i].buttons;
+        let buttons = gamepads[i].buttons;
         for (let j = 0; j < buttons.length; j++) {
           if (buttons[j].pressed) {
+            controllerIndex = i;
+            break;
+          };
+        };
+        if (controllerIndex) {
+          break;
+        }
+        let axes = gamepads[i].axes;
+        for (let j = 0; j < axes.length; j++) {
+          if (Math.abs(axes[j]) > 0.5) {
             controllerIndex = i;
             break;
           };

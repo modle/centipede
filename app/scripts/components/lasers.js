@@ -20,7 +20,6 @@ var lasers = Object.create(displayObjectPrototype, {
         laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed;
       }
       if (laserArgs.extraArgs.speed.y !== 0) {
-        console.log(laserArgs);
         getAvailableLaserSound().play();
         this.lasers.push(new Component(laserArgs));
       }

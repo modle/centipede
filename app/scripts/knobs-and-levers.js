@@ -95,7 +95,7 @@ var knobsAndLevers = {
     },
   },
   spider : {
-    maxNumber : 1,
+    maxNumber : 0,
     pointValue: 25,
     interval : {
       min: 1000,
