@@ -35,9 +35,12 @@ var controls = {
     if (controllerEnabled && controllerIndex >= 0) {
       movementAxes = navigator.getGamepads()[controllerIndex].axes;
       leftStickValues = {
-        x : Math.abs(movementAxes[0]) > 0.2 ? movementAxes[0] : 0,
-        y : Math.abs(movementAxes[1]) > 0.2 ? movementAxes[1] : 0
+        x : Math.abs(movementAxes[0]) > 0.15 ? movementAxes[0] : 0,
+        y : Math.abs(movementAxes[1]) > 0.15 ? movementAxes[1] : 0,
+        // x : movementAxes[0],
+        // y : movementAxes[1],
       };
+      // console.log(leftStickValues);
       if (leftStickValues.x || leftStickValues.y) {
         this.activeLeftStick = leftStickValues;
         return;
@@ -77,7 +80,11 @@ var controls = {
       return false;
     };
     compareObj = this.movementWeights[direction];
-    return compareObj.x == Math.ceil(stickValues.x) && compareObj.y == Math.ceil(stickValues.y);
+    return
+      compareObj.x == (stickValues.x >= 0 ? Math.ceil(stickValues.x) : Math.floor(stickValues.x))
+        &&
+      compareObj.y == (stickValues.y >= 0 ? Math.ceil(stickValues.y) : Math.floor(stickValues.y))
+    ;
   },
   getPositionModifiers : function() {
     baseSpeed = knobsAndLevers.gamePieceSpeed;
