@@ -58,12 +58,10 @@ var gamePiece = {
         y : Math.abs(movementAxes[1]) > 0.5 ? knobsAndLevers.gamePieceSpeed * movementAxes[1] : 0
       };
       if (leftStick.x || leftStick.y) {
-        console.log('moving with left stick', leftStick);
         this.moveTheThing(leftStick);
         return;
       }
     };
-    console.log('getting active directions');
     this.activeDirection = this.getActiveDirection();
     if (this.activeDirection) {
       this.moveTheThing(this.getPositionModifiers()[this.activeDirection]);

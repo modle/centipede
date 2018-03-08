@@ -7,7 +7,7 @@ var gameOver = false;
 var delayed = 0;
 var delayEndTime = 300;
 var controllerEnabled = false;
-var controllerIndex = undefined;
+var controllerIndex = -1;
 
 var game = {
   gameArea : new GameArea(),
@@ -92,7 +92,7 @@ var game = {
       return
     };
     let gamepads = navigator.getGamepads();
-    if (!controllerIndex) {
+    if (controllerIndex < 0) {
       for (let i = 0; i < gamepads.length; i++) {
         if (!gamepads[i]) {
           return;
