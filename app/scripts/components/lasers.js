@@ -7,7 +7,7 @@ var lasers = Object.create(displayObjectPrototype, {
   },
   spawn : {
     value : function() {
-      let theGamePiece = gamePiece.gamePiece;
+      let theGamePiece = player.gamePiece;
       let laserArgs = knobsAndLevers.laser.args;
       let keysDown = game.keysDown;
       laserArgs.extraArgs.speed.y = 0;

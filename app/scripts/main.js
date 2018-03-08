@@ -83,7 +83,7 @@ var game = {
     this.resetSomeThings();
     intervalCreatures.clear();
     spiders.clear();
-    gamePiece.reset();
+    player.reset();
   },
   checkControllerState : function() {
     controllerEnabled = document.getElementById("controllerToggle").checked;
@@ -149,7 +149,7 @@ function updateGameState() {
   intervalCreatures.manage();
   spiders.manage();
   lasers.manage();
-  gamePiece.manage();
+  player.manage();
   // check game conditions
   collisions.check();
   metrics.updateFloatingPoints();

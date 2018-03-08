@@ -56,7 +56,7 @@ var collisions = {
   },
   checkGamePieceVsEnemy : function(targets) {
     targets.forEach(target => {
-      if (gamePiece.gamePiece.crashWith(target)) {
+      if (player.gamePiece.crashWith(target)) {
         this.killPlayer();
         if (metrics.lives > 0) {
           return;
@@ -69,9 +69,9 @@ var collisions = {
     died = true;
     metrics.lives -= 1;
   },
-  withMushrooms : function(gamePiece) {
+  withMushrooms : function(obj) {
     for (i = 0; i < mushrooms.mushrooms.length; i += 1) {
-      if (gamePiece.crashWith(mushrooms.mushrooms[i])) {
+      if (obj.crashWith(mushrooms.mushrooms[i])) {
         return true;
       };
     };

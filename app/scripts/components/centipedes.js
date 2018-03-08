@@ -78,7 +78,7 @@ var centipedes = {
   },
   checkYDirectionInPlayerArea : function() {
     this.centipedes.filter(centipede => !centipede.updated).map(centipede => {
-      // toggle Y direction if centipede hits bottom or moves back out of the gamePiece area
+      // toggle Y direction if centipede hits bottom or moves back out of the player area
       if (centipede.getBottom() > game.gameArea.canvas.height) {
         centipede.reverseDirectionY = true;
       }
