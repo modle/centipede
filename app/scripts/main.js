@@ -104,7 +104,7 @@ var game = {
             break;
           };
         };
-        if (controllerIndex) {
+        if (controllerIndex >= 0) {
           break;
         }
         let axes = gamepads[i].axes;

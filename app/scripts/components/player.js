@@ -50,7 +50,7 @@ var player = {
       return;
     }
     this.stop();
-    controls.setPositionFlags();
+    controls.setBoundaries();
     controls.detectControllerMovement();
     this.activeDirection = controls.getActiveDirection();
     if (this.activeDirection) {
