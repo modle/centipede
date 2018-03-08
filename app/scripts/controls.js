@@ -13,7 +13,7 @@ var controls = {
     down : [83],
     left : [65],
   },
-  movementWeights : {
+  movementCoordinates : {
     upRight : {x : 1, y : -1},
     downRight : {x : 1, y : 1},
     downLeft : {x : -1, y : 1},
@@ -23,6 +23,7 @@ var controls = {
     down : {x : 0, y : 1},
     left : {x : -1, y : 0},
   },
+  activeLeftStick : {x : 0, y : 0},
   boundaries : {},
   setBoundaries : function() {
     this.boundaries.belowTop = player.gamePiece.getTop() > game.gameArea.gamePieceTopLimit;
@@ -37,10 +38,7 @@ var controls = {
       leftStickValues = {
         x : Math.abs(movementAxes[0]) > 0.15 ? movementAxes[0] : 0,
         y : Math.abs(movementAxes[1]) > 0.15 ? movementAxes[1] : 0,
-        // x : movementAxes[0],
-        // y : movementAxes[1],
       };
-      // console.log(leftStickValues);
       if (leftStickValues.x || leftStickValues.y) {
         this.activeLeftStick = leftStickValues;
         return;
@@ -79,25 +77,29 @@ var controls = {
     if (!stickValues) {
       return false;
     };
-    compareObj = this.movementWeights[direction];
-    return
+    compareObj = this.movementCoordinates[direction];
+    compareResult =
       compareObj.x == (stickValues.x >= 0 ? Math.ceil(stickValues.x) : Math.floor(stickValues.x))
         &&
       compareObj.y == (stickValues.y >= 0 ? Math.ceil(stickValues.y) : Math.floor(stickValues.y))
     ;
+    return compareResult;
   },
   getPositionModifiers : function() {
     baseSpeed = knobsAndLevers.gamePieceSpeed;
-    modifier = 1;
+    objSpeed = {
+      x : this.activeLeftStick.x ? baseSpeed * Math.abs(this.activeLeftStick.x) : baseSpeed,
+      y : this.activeLeftStick.y ? baseSpeed * Math.abs(this.activeLeftStick.y) : baseSpeed,
+    };
     return {
-      upRight: {x : baseSpeed, y : -baseSpeed},
-      upLeft: {x : -baseSpeed, y : -baseSpeed},
-      downRight: {x : baseSpeed, y : baseSpeed},
-      downLeft: {x : -baseSpeed, y : baseSpeed},
-      right: {x : baseSpeed},
-      down: {y : baseSpeed},
-      left: {x : -baseSpeed},
-      up: {y : -baseSpeed},
+      upRight: {x : objSpeed.x, y : -objSpeed.y},
+      upLeft: {x : -objSpeed.x, y : -objSpeed.y},
+      downRight: {x : objSpeed.x, y : objSpeed.y},
+      downLeft: {x : -objSpeed.x, y : objSpeed.y},
+      right: {x : objSpeed.x},
+      down: {y : objSpeed.y},
+      left: {x : -objSpeed.x},
+      up: {y : -objSpeed.y},
     };
   },
   addEventListeners : function() {

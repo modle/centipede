@@ -54,7 +54,8 @@ var player = {
     controls.detectControllerMovement();
     this.activeDirection = controls.getActiveDirection();
     if (this.activeDirection) {
-      this.moveTheThing(controls.getPositionModifiers()[this.activeDirection]);
+      speedMods = controls.getPositionModifiers()[this.activeDirection];
+      this.moveTheThing(speedMods);
     };
   },
   moveTheThing : function(speed) {
