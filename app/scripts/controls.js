@@ -83,7 +83,22 @@ var controls = {
         &&
       compareObj.y == (stickValues.y >= 0 ? Math.ceil(stickValues.y) : Math.floor(stickValues.y))
     ;
+    if (compareResult) {
+      this.alignLeftStickValuesToBoundaries(direction);
+    };
     return compareResult;
+  },
+  alignLeftStickValuesToBoundaries : function(direction) {
+    let watchDirections = {
+      'up' : ['upRight', 'upLeft'],
+      'down' : ['downRight', 'downLeft'],
+      'left' : ['upLeft', 'downLeft'],
+      'right' : ['upRight', 'downRight'],
+    };
+    this.activeLeftStick.y = watchDirections.up.includes(direction) && !this.boundaries.belowTop ? 0 : this.activeLeftStick.y;
+    this.activeLeftStick.y = watchDirections.down.includes(direction) && !this.boundaries.aboveBottom ? 0 : this.activeLeftStick.y;
+    this.activeLeftStick.x = watchDirections.left.includes(direction) && !this.boundaries.insideLeft ? 0 : this.activeLeftStick.x;
+    this.activeLeftStick.x = watchDirections.right.includes(direction) && !this.boundaries.insideRight ? 0 : this.activeLeftStick.x;
   },
   getPositionModifiers : function() {
     baseSpeed = knobsAndLevers.gamePieceSpeed;
