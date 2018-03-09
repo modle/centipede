@@ -39,6 +39,7 @@ var knobsAndLevers = {
     this.mushroomSide = this.gridSquareSideLength * 0.8;
     console.log("knobsAndLevers initialized");
   },
+  playerCollisionsEnabled : true,
   centipede : {
     baseSpeed : 10,
     maxNumber : 10,
@@ -68,8 +69,8 @@ var knobsAndLevers = {
     maxNumber: 1,
     pointValue : 50,
     interval : {
-      min: 50,
-      max: 100,
+      min: 3000,
+      max: 5000,
     },
     args : {
       color : "orange",
@@ -83,9 +84,10 @@ var knobsAndLevers = {
     maxNumber: 1,
     pointValue : 50,
     interval : {
-      min: 50,
-      max: 100,
+      min: 2000,
+      max: 5000,
     },
+    mushroomCreateInterval : 75,
     args : {
       color : "green",
       extraArgs : {type : "fly", speed : {x : 0, y : 2}},
