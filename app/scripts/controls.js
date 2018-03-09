@@ -130,23 +130,36 @@ var controls = {
       controls.keysDown[e.keyCode] = (e.type == "keydown");
     });
   },
+  checkPauseButton : function() {
+    if (framesToDisallowTogglePause > 0) {
+      framesToDisallowTogglePause--;
+      return;
+    }
+    // TODO extract this into a function and pass the target indices in (pausedButtonIndices or fireButtonIndices)
+    if (controllerEnabled && controllerIndex >= 0) {
+      let buttons = navigator.getGamepads()[controllerIndex].buttons;
+      for (let i = 0; i < buttons.length; i++) {
+        if (buttons[i].pressed && this.pausedButtonIndices.includes(i)) {
+          paused = !paused;
+          framesToDisallowTogglePause = 50;
+          break;
+        };
+      };
+    };
+  },
   isFiring : function() {
     if (controllerEnabled && controllerIndex >= 0) {
-      // console.log(navigator.getGamepads()[controllerIndex].axes)
-      // console.log(navigator.getGamepads()[controllerIndex].buttons)
       let buttons = navigator.getGamepads()[controllerIndex].buttons;
+      // TODO use find here
       for (let i = 0; i < buttons.length; i++) {
         // TODO this will return the first-pressed button
         // what happens when simultaneous presses are needed?
         // might be ideal to add them to the keysDown array
-        // if (buttons[i].pressed) {
-        //   console.log('button was pressed: ', i);
-        // }
         if (buttons[i].pressed && this.fireButtonIndices.includes(i)) {
           return true;
         }
       };
-    }
+    };
     return this.fireKeyCodes.find(key => this.keysDown[key]);
   },
   init : function() {
@@ -156,14 +169,3 @@ var controls = {
 };
 
 controls.init();
-
-window.addEventListener("gamepadconnected", function(e) {
-  console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
-    e.gamepad.index, e.gamepad.id,
-    e.gamepad.buttons.length, e.gamepad.axes.length);
-  console.log(e.gamepad.buttons);
-  // for (let button of e.gamepad.buttons) {
-  //   console.log(button.pressed)
-  //   console.log(button.value)
-  // };
-});

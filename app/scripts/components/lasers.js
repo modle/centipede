@@ -7,18 +7,16 @@ var lasers = Object.create(displayObjectPrototype, {
   },
   spawn : {
     value : function() {
+      if (this.lasers.length === knobsAndLevers.laser.maxNumber || !controls.keysDown || !everyinterval(knobsAndLevers.laser.interval) || !controls.isFiring()) {
+        return;
+      }
       let theGamePiece = player.gamePiece;
       let laserArgs = knobsAndLevers.laser.args;
       let keysDown = game.keysDown;
       laserArgs.extraArgs.speed.y = 0;
       laserArgs.x = theGamePiece.x + theGamePiece.width / 2;
       laserArgs.y = theGamePiece.y + theGamePiece.height / 2;
-      if (this.lasers.length === knobsAndLevers.laser.maxNumber || !controls.keysDown || !everyinterval(knobsAndLevers.laser.interval)) {
-        return;
-      }
-      if (controls.isFiring()) {
-        laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed;
-      }
+      laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed;
       if (laserArgs.extraArgs.speed.y !== 0) {
         getAvailableLaserSound().play();
         this.lasers.push(new Component(laserArgs));
