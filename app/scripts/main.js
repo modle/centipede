@@ -1,6 +1,7 @@
 /*jslint white: true */
 
 var paused = true;
+var framesToDisallowTogglePause = 0;
 var died = false;
 var levelOver = false;
 var gameOver = false;
@@ -124,6 +125,7 @@ function updateGameState() {
   // check game conditions and update messages
   game.manageGameOver();
   game.checkControllerState();
+  controls.checkPauseButton();
   if (paused) {
     sounds.centipede.stop();
     game.managePause();

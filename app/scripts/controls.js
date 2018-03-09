@@ -130,9 +130,26 @@ var controls = {
       controls.keysDown[e.keyCode] = (e.type == "keydown");
     });
   },
+  checkPauseButton : function() {
+    if (framesToDisallowTogglePause > 0) {
+      framesToDisallowTogglePause--;
+      return;
+    }
+    if (controllerEnabled && controllerIndex >= 0) {
+      let buttons = navigator.getGamepads()[controllerIndex].buttons;
+      for (let i = 0; i < buttons.length; i++) {
+        if (buttons[i].pressed && this.pausedButtonIndices.includes(i)) {
+          paused = !paused;
+          framesToDisallowTogglePause = 50;
+          break;
+        };
+      };
+    };
+  },
   isFiring : function() {
     if (controllerEnabled && controllerIndex >= 0) {
       let buttons = navigator.getGamepads()[controllerIndex].buttons;
+      // TODO use find here
       for (let i = 0; i < buttons.length; i++) {
         // TODO this will return the first-pressed button
         // what happens when simultaneous presses are needed?
@@ -141,7 +158,7 @@ var controls = {
           return true;
         }
       };
-    }
+    };
     return this.fireKeyCodes.find(key => this.keysDown[key]);
   },
   init : function() {
