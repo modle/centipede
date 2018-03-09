@@ -42,12 +42,14 @@ function showMobile() {
   document.write("<img src='app/static/media/images/centipede.gif' style='width: 100%;'></img>");
 }
 
+// TODO this is not necessary; the key is already being captured in keysDown
 window.addEventListener('keydown', function (e) {
   if (e.keyCode == 32) {
     paused = !paused;
   }
 })
 
+// TODO this is not necessary; the key is already being captured in keysDown
 window.addEventListener('keydown', function (e) {
   if (e.keyCode == 13) {
     game.reset();

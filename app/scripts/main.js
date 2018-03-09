@@ -118,7 +118,7 @@ var game = {
       };
     };
   },
-}
+};
 
 function updateGameState() {
   // this gets executed every interval
@@ -127,7 +127,6 @@ function updateGameState() {
   game.checkControllerState();
   controls.checkPauseButton();
   if (paused) {
-    sounds.centipede.stop();
     game.managePause();
     return;
   };

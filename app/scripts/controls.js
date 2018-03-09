@@ -135,6 +135,7 @@ var controls = {
       framesToDisallowTogglePause--;
       return;
     }
+    // TODO extract this into a function and pass the target indices in (pausedButtonIndices or fireButtonIndices)
     if (controllerEnabled && controllerIndex >= 0) {
       let buttons = navigator.getGamepads()[controllerIndex].buttons;
       for (let i = 0; i < buttons.length; i++) {
