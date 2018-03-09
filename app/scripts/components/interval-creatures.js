@@ -3,14 +3,32 @@ var intervalCreatures = {
   worms : [],
   flies : [],
   intervals : {
-    worms : knobsAndLevers.worms.initialInterval,
     flies : knobsAndLevers.flies.initialInterval,
+    worms : knobsAndLevers.worms.initialInterval,
   },
   manage : function() {
     Array.from(Object.keys(this.intervals)).forEach(creature => {
-      this.clearOutsideCanvas(creature);
       this.spawnCreatureAtIntervals(creature);
+      if (intervalCreatures[creature] == false) {
+        // return acts like a continue in a forEach
+        return;
+      }
+      this.clearOutsideCanvas(creature);
       this.update(creature);
+      this.dropMushrooms(creature);
+    });
+  },
+  dropMushrooms(creature) {
+    if (creature != 'flies' || !everyinterval(knobsAndLevers[creature].mushroomCreateInterval)) {
+      return;
+    };
+    this.flies.forEach(fly => {
+      if (fly.y > game.gameArea.gamePieceTopLimit) {
+        return;
+      };
+      let mushroom = mushrooms.generate(fly.x, fly.y);
+      mushroom.color = 'purple';
+      mushrooms.mushrooms.push(mushroom);
     });
   },
   spawnCreatureAtIntervals(creature) {
@@ -39,7 +57,7 @@ var intervalCreatures = {
     if (this[creature] == false) { return; };
     let canvas = game.gameArea.canvas;
     this[creature] = this[creature].filter(target => {
-      return target.x < canvas.width && target.y < canvas.height
+      return target.x < canvas.width && target.y < canvas.height;
     });
   },
   clear : function() {

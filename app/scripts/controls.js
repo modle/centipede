@@ -46,7 +46,6 @@ var controls = {
     };
   },
   getActiveDirection : function() {
-    movementKeys = this.movementCodes;
     boundaries = this.boundaries;
     directionResults = {
       upRight : this.checkDirection('upRight') && boundaries.belowTop && boundaries.insideRight,
@@ -61,7 +60,7 @@ var controls = {
     return Array.from(Object.keys(directionResults)).find(direction => directionResults[direction]);
   },
   checkDirection : function(direction) {
-    return this.checkDirectionOfKeysPressed(movementKeys[direction]) || this.checkDirectionOfLeftStick(direction);
+    return this.checkDirectionOfKeysPressed(this.movementCodes[direction]) || this.checkDirectionOfLeftStick(direction);
   },
   checkDirectionOfKeysPressed : function(needles) {
     haystack = controls.keysDown;

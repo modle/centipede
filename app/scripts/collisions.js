@@ -55,6 +55,9 @@ var collisions = {
     }
   },
   checkGamePieceVsEnemy : function(targets) {
+    if (!knobsAndLevers.playerCollisionsEnabled) {
+      return;
+    };
     targets.forEach(target => {
       if (player.gamePiece.crashWith(target)) {
         this.killPlayer();
