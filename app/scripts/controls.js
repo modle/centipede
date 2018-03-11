@@ -41,23 +41,15 @@ var controls = {
       };
       if (leftStickValues.x || leftStickValues.y) {
         this.activeLeftStick = leftStickValues;
-        console.log('values are', this.activeLeftStick);
         return;
-      }
+      };
     };
   },
   getActiveDirection : function() {
-    let boundaries = player.boundaries;
-    directionResults = {
-      upRight : this.checkDirection('upRight') && boundaries.belowTop && boundaries.insideRight,
-      upLeft : this.checkDirection('upLeft') && boundaries.belowTop && boundaries.insideLeft,
-      downRight : this.checkDirection('downRight') && boundaries.aboveBottom && boundaries.insideRight,
-      downLeft : this.checkDirection('downLeft') && boundaries.aboveBottom && boundaries.insideLeft,
-      up : this.checkDirection('up') && boundaries.belowTop,
-      down : this.checkDirection('down') && boundaries.aboveBottom,
-      right : this.checkDirection('right') && boundaries.insideRight,
-      left : this.checkDirection('left') && boundaries.insideLeft,
-    };
+    let eligibleDirections = player.eligibleDirections;
+    directionResults = {};
+    Array.from(Object.keys(this.movementCodes))
+      .forEach(code => directionResults[code] = this.checkDirection(code) && (eligibleDirections ? eligibleDirections[code] : true));
     return Array.from(Object.keys(directionResults)).find(direction => directionResults[direction]);
   },
   checkDirection : function(direction) {
@@ -69,7 +61,7 @@ var controls = {
       if (!haystack[needles[i]]) {
         return false;
       }
-    }
+    };
     return true;
   },
   checkDirectionOfLeftStick : function(direction) {
@@ -83,13 +75,16 @@ var controls = {
         &&
       compareObj.y == (stickValues.y >= 0 ? Math.ceil(stickValues.y) : Math.floor(stickValues.y))
     ;
-    if (compareResult) {
+    if (compareResult && player.boundaries) {
       this.alignLeftStickValuesToBoundaries(direction);
     };
     return compareResult;
   },
   alignLeftStickValuesToBoundaries : function(direction) {
     let boundaries = player.boundaries;
+    if (!player.boundaries) {
+      return;
+    };
     let watchDirections = {
       'up' : ['upRight', 'upLeft'],
       'down' : ['downRight', 'downLeft'],

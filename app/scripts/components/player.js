@@ -3,6 +3,7 @@ var player = {
   activeDirection : undefined,
   boundaries : {},
   died : false,
+  eligibleDirections : {},
   init : function() {
     let gamePieceArgs = {
       width: knobsAndLevers.gamePieceWidth,
@@ -48,11 +49,9 @@ var player = {
     this.gamePiece.speedY = 0;
   },
   move : function() {
-    if (!controls.keysDown) {
-      return;
-    }
     this.stop();
     this.setBoundaries();
+    this.setEligibleDirections();
     controls.detectControllerMovement();
     this.activeDirection = controls.getActiveDirection();
     if (this.activeDirection) {
@@ -88,6 +87,24 @@ var player = {
     this.boundaries.aboveBottom = this.gamePiece.getBottom() < game.gameArea.canvas.height;
     this.boundaries.insideLeft = this.gamePiece.getLeft() > 0;
   },
-}
+  setEligibleDirections : function() {
+    let watchPositions = {
+      'up' : ['belowTop'],
+      'right' : ['insideRight'],
+      'down' : ['aboveBottom'],
+      'left' : ['insideLeft'],
+      'upRight' : ['belowTop', 'insideRight'],
+      'downRight' : ['aboveBottom', 'insideRight'],
+      'downLeft' : ['aboveBottom', 'insideLeft'],
+      'upLeft' : ['belowTop', 'insideLeft'],
+    };
+    Array.from(Object.keys(watchPositions)).forEach(direction => {
+        this.eligibleDirections[direction] = true;
+        watchPositions[direction].forEach(playerPosition =>
+          this.eligibleDirections[direction] = this.boundaries[playerPosition] && this.eligibleDirections[direction]
+        );
+      });
+  },
+};
 
 player.init();
