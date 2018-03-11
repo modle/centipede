@@ -20,6 +20,19 @@ canvas {
 .linkButtonWrapper {
   display: flex;
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 20px;
+  background: white;
+}
+
+@media (min-device-width: 768px) {
+  .linkButtonWrapper {
+    display: flex;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: auto;
+    background: white;
+  }
 }
