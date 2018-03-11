@@ -6,12 +6,13 @@ var dom = {
     otherGames : {text : 'other games.', url : 'http://blog.matthewodle.com/games/'},
   },
   instructions : '<strong>Centipede!</strong><br><strong>WASD</strong> : move<br><strong><strong>' +
-    '<input id="controllerToggle" type="checkbox" checked>Controller Enabled?',
+                    '<input id="controllerToggle" type="checkbox" checked>Controller Enabled?',
   mobileWarning : "Mobile is not supported.<br><br>" +
-    "The use of a keyboard is required.<br><br>" +
-    "Sorry!<br><br>" +
-    "To show how bad we feel, here's a gif so you can see what you're missing (that's not rude at all, we promise!)<br><br>" +
-    "<img src='app/static/media/images/centipede.gif' style='width: 100%;'></img>",
+                    "The use of a keyboard is required.<br><br>" +
+                    "Sorry!<br><br>" +
+                    "To show how bad we feel, here's a gif so you can see what you're missing (that's not rude at all, we promise!)<br><br>" +
+                    "<img src='app/static/media/images/centipede.gif' style='width: 100%;'></img>" +
+                    "<br><br><br><br><br><br><br><br>.",
   init : function() {
     this.addLinks();
     if (supporting.isMobile()) {
