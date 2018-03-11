@@ -13,14 +13,11 @@ var controllerIndex = -1;
 var game = {
   gameArea : new GameArea(),
   keysDown : {},
-  init : function() {
-    this.addEventListeners();
-  },
   start : function() {
     if (supporting.isMobile()) {
-      showMobile();
+      this.gameArea.stop();
       return;
-    }
+    };
     sounds.init();
     paused = true;
     this.gameArea.start();

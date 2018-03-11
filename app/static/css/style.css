@@ -11,3 +11,15 @@ canvas {
   margin: 2em auto;
   width: 800px;
 }
+
+.linkButton {
+  margin: 0 20px;
+  display: inline-flex;
+}
+
+.linkButtonWrapper {
+  display: flex;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+}
