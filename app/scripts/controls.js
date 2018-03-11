@@ -1,5 +1,8 @@
 var controls = {
   keysDown : {},
+  controllerEnabled : false,
+  controllerIndex : -1,
+  framesToDisallowTogglePause : 0,
   fireKeyCodes : [16, 37, 38, 39, 40, 'LMB'],
   fireButtonIndices : [0, 1, 2, 3, 4, 5, 6, 7],
   pausedButtonIndices : [9],
@@ -24,33 +27,27 @@ var controls = {
     left : {x : -1, y : 0},
   },
   activeLeftStick : {x : 0, y : 0},
-  boundaries : {},
   init : function() {
     this.keysDown = (this.keysDown || []);
     this.addEventListeners();
   },
-  setBoundaries : function() {
-    this.boundaries.belowTop = player.gamePiece.getTop() > game.gameArea.gamePieceTopLimit;
-    this.boundaries.insideRight = player.gamePiece.getRight() < game.gameArea.canvas.width;
-    this.boundaries.aboveBottom = player.gamePiece.getBottom() < game.gameArea.canvas.height;
-    this.boundaries.insideLeft = player.gamePiece.getLeft() > 0;
-  },
   detectControllerMovement : function() {
     this.activeLeftStick = {x : 0, y : 0};
-    if (controllerEnabled && controllerIndex >= 0) {
-      movementAxes = navigator.getGamepads()[controllerIndex].axes;
+    if (this.controllerEnabled && this.controllerIndex >= 0) {
+      movementAxes = navigator.getGamepads()[this.controllerIndex].axes;
       leftStickValues = {
         x : Math.abs(movementAxes[0]) > 0.15 ? movementAxes[0] : 0,
         y : Math.abs(movementAxes[1]) > 0.15 ? movementAxes[1] : 0,
       };
       if (leftStickValues.x || leftStickValues.y) {
         this.activeLeftStick = leftStickValues;
+        console.log('values are', this.activeLeftStick);
         return;
       }
     };
   },
   getActiveDirection : function() {
-    boundaries = this.boundaries;
+    let boundaries = player.boundaries;
     directionResults = {
       upRight : this.checkDirection('upRight') && boundaries.belowTop && boundaries.insideRight,
       upLeft : this.checkDirection('upLeft') && boundaries.belowTop && boundaries.insideLeft,
@@ -92,16 +89,17 @@ var controls = {
     return compareResult;
   },
   alignLeftStickValuesToBoundaries : function(direction) {
+    let boundaries = player.boundaries;
     let watchDirections = {
       'up' : ['upRight', 'upLeft'],
       'down' : ['downRight', 'downLeft'],
       'left' : ['upLeft', 'downLeft'],
       'right' : ['upRight', 'downRight'],
     };
-    this.activeLeftStick.y = watchDirections.up.includes(direction) && !this.boundaries.belowTop ? 0 : this.activeLeftStick.y;
-    this.activeLeftStick.y = watchDirections.down.includes(direction) && !this.boundaries.aboveBottom ? 0 : this.activeLeftStick.y;
-    this.activeLeftStick.x = watchDirections.left.includes(direction) && !this.boundaries.insideLeft ? 0 : this.activeLeftStick.x;
-    this.activeLeftStick.x = watchDirections.right.includes(direction) && !this.boundaries.insideRight ? 0 : this.activeLeftStick.x;
+    this.activeLeftStick.y = watchDirections.up.includes(direction) && !boundaries.belowTop ? 0 : this.activeLeftStick.y;
+    this.activeLeftStick.y = watchDirections.down.includes(direction) && !boundaries.aboveBottom ? 0 : this.activeLeftStick.y;
+    this.activeLeftStick.x = watchDirections.left.includes(direction) && !boundaries.insideLeft ? 0 : this.activeLeftStick.x;
+    this.activeLeftStick.x = watchDirections.right.includes(direction) && !boundaries.insideRight ? 0 : this.activeLeftStick.x;
   },
   getPositionModifiers : function() {
     baseSpeed = knobsAndLevers.gamePieceSpeed;
@@ -135,25 +133,25 @@ var controls = {
     });
   },
   checkPauseButton : function() {
-    if (framesToDisallowTogglePause > 0) {
-      framesToDisallowTogglePause--;
+    if (this.framesToDisallowTogglePause > 0) {
+      this.framesToDisallowTogglePause--;
       return;
     }
     // TODO extract this into a function and pass the target indices in (pausedButtonIndices or fireButtonIndices)
-    if (controllerEnabled && controllerIndex >= 0) {
-      let buttons = navigator.getGamepads()[controllerIndex].buttons;
+    if (this.controllerEnabled && this.controllerIndex >= 0) {
+      let buttons = navigator.getGamepads()[this.controllerIndex].buttons;
       for (let i = 0; i < buttons.length; i++) {
         if (buttons[i].pressed && this.pausedButtonIndices.includes(i)) {
-          paused = !paused;
-          framesToDisallowTogglePause = 50;
+          game.paused = !game.paused;
+          this.framesToDisallowTogglePause = 50;
           break;
         };
       };
     };
   },
   isFiring : function() {
-    if (controllerEnabled && controllerIndex >= 0) {
-      let buttons = navigator.getGamepads()[controllerIndex].buttons;
+    if (this.controllerEnabled && this.controllerIndex >= 0) {
+      let buttons = navigator.getGamepads()[this.controllerIndex].buttons;
       // TODO use find here
       for (let i = 0; i < buttons.length; i++) {
         // TODO this will return the first-pressed button
@@ -165,6 +163,38 @@ var controls = {
       };
     };
     return this.fireKeyCodes.find(key => this.keysDown[key]);
+  },
+  checkControllerState : function() {
+    this.controllerEnabled = document.getElementById("controllerToggle").checked;
+    if (!this.controllerEnabled) {
+      this.controllerIndex = -1;
+      return
+    };
+    let gamepads = navigator.getGamepads();
+    if (this.controllerIndex < 0) {
+      for (let i = 0; i < gamepads.length; i++) {
+        if (!gamepads[i]) {
+          return;
+        };
+        let buttons = gamepads[i].buttons;
+        for (let j = 0; j < buttons.length; j++) {
+          if (buttons[j].pressed) {
+            this.controllerIndex = i;
+            break;
+          };
+        };
+        if (this.controllerIndex >= 0) {
+          break;
+        }
+        let axes = gamepads[i].axes;
+        for (let j = 0; j < axes.length; j++) {
+          if (Math.abs(axes[j]) > 0.5) {
+            this.controllerIndex = i;
+            break;
+          };
+        };
+      };
+    };
   },
 };
 

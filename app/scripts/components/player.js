@@ -1,6 +1,8 @@
 /*jslint white: true */
 var player = {
   activeDirection : undefined,
+  boundaries : {},
+  died : false,
   init : function() {
     let gamePieceArgs = {
       width: knobsAndLevers.gamePieceWidth,
@@ -50,7 +52,7 @@ var player = {
       return;
     }
     this.stop();
-    controls.setBoundaries();
+    this.setBoundaries();
     controls.detectControllerMovement();
     this.activeDirection = controls.getActiveDirection();
     if (this.activeDirection) {
@@ -79,6 +81,12 @@ var player = {
     this.gamePiece.speedX = positionModifiers.x ? -positionModifiers.x : this.gamePiece.speedX;
     this.gamePiece.speedY = positionModifiers.y ? -positionModifiers.y : this.gamePiece.speedY;
     this.gamePiece.newPos();
+  },
+  setBoundaries : function() {
+    this.boundaries.belowTop = this.gamePiece.getTop() > game.gameArea.gamePieceTopLimit;
+    this.boundaries.insideRight = this.gamePiece.getRight() < game.gameArea.canvas.width;
+    this.boundaries.aboveBottom = this.gamePiece.getBottom() < game.gameArea.canvas.height;
+    this.boundaries.insideLeft = this.gamePiece.getLeft() > 0;
   },
 }
 
