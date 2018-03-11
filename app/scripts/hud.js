@@ -24,5 +24,5 @@ var hud = {
     spiders.clear();
     worms.clear();
     mushrooms.clear();
-  }
-}
+  },
+};

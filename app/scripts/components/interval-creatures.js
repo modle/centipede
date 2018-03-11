@@ -24,6 +24,7 @@ var intervalCreatures = {
     };
     this.flies.forEach(fly => {
       if (fly.y > game.gameArea.gamePieceTopLimit) {
+        // return acts like a continue in a forEach
         return;
       };
       let mushroom = mushrooms.generate(fly.x, fly.y);

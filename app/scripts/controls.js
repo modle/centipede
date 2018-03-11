@@ -25,6 +25,10 @@ var controls = {
   },
   activeLeftStick : {x : 0, y : 0},
   boundaries : {},
+  init : function() {
+    this.keysDown = (this.keysDown || []);
+    this.addEventListeners();
+  },
   setBoundaries : function() {
     this.boundaries.belowTop = player.gamePiece.getTop() > game.gameArea.gamePieceTopLimit;
     this.boundaries.insideRight = player.gamePiece.getRight() < game.gameArea.canvas.width;
@@ -161,10 +165,6 @@ var controls = {
       };
     };
     return this.fireKeyCodes.find(key => this.keysDown[key]);
-  },
-  init : function() {
-    this.keysDown = (this.keysDown || []);
-    this.addEventListeners();
   },
 };
 
