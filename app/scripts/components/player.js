@@ -52,24 +52,16 @@ var player = {
     this.stop();
     this.setBoundaries();
     this.setEligibleDirections();
-    controls.detectControllerMovement();
-    this.activeDirection = controls.getActiveDirection();
-    if (this.activeDirection) {
-      speedMods = controls.getPositionModifiers()[this.activeDirection];
-      this.moveTheThing(speedMods);
-    };
+    this.moveTheThing(controls.getPositionModifiers(knobsAndLevers.gamePieceSpeed));
   },
   moveTheThing : function(speed) {
+    if (!speed) {
+      return;
+    };
     this.updatePosition(speed);
     if (collisions.withMushrooms(this.gamePiece)) {
       this.revertPosition(speed);
     };
-    if (this.collidesWithEdges()) {
-      this.revertPosition(speed);
-    };
-  },
-  collidesWithEdges : function() {
-    return false;
   },
   updatePosition : function(modifier) {
     this.gamePiece.speedX = modifier.x ? modifier.x : this.gamePiece.speedX;
