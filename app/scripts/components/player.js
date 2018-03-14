@@ -1,6 +1,9 @@
 /*jslint white: true */
 var player = {
   activeDirection : undefined,
+  boundaries : {},
+  died : false,
+  eligibleDirections : {},
   init : function() {
     let gamePieceArgs = {
       width: knobsAndLevers.gamePieceWidth,
@@ -46,29 +49,19 @@ var player = {
     this.gamePiece.speedY = 0;
   },
   move : function() {
-    if (!controls.keysDown) {
-      return;
-    }
     this.stop();
-    controls.setBoundaries();
-    controls.detectControllerMovement();
-    this.activeDirection = controls.getActiveDirection();
-    if (this.activeDirection) {
-      speedMods = controls.getPositionModifiers()[this.activeDirection];
-      this.moveTheThing(speedMods);
-    };
+    this.setBoundaries();
+    this.setEligibleDirections();
+    this.moveTheThing(controls.getPositionModifiers(knobsAndLevers.gamePieceSpeed));
   },
   moveTheThing : function(speed) {
+    if (!speed) {
+      return;
+    };
     this.updatePosition(speed);
     if (collisions.withMushrooms(this.gamePiece)) {
       this.revertPosition(speed);
     };
-    if (this.collidesWithEdges()) {
-      this.revertPosition(speed);
-    };
-  },
-  collidesWithEdges : function() {
-    return false;
   },
   updatePosition : function(modifier) {
     this.gamePiece.speedX = modifier.x ? modifier.x : this.gamePiece.speedX;
@@ -80,6 +73,30 @@ var player = {
     this.gamePiece.speedY = positionModifiers.y ? -positionModifiers.y : this.gamePiece.speedY;
     this.gamePiece.newPos();
   },
-}
+  setBoundaries : function() {
+    this.boundaries.belowTop = this.gamePiece.getTop() > game.gameArea.gamePieceTopLimit;
+    this.boundaries.insideRight = this.gamePiece.getRight() < game.gameArea.canvas.width;
+    this.boundaries.aboveBottom = this.gamePiece.getBottom() < game.gameArea.canvas.height;
+    this.boundaries.insideLeft = this.gamePiece.getLeft() > 0;
+  },
+  setEligibleDirections : function() {
+    let watchPositions = {
+      'up' : ['belowTop'],
+      'right' : ['insideRight'],
+      'down' : ['aboveBottom'],
+      'left' : ['insideLeft'],
+      'upRight' : ['belowTop', 'insideRight'],
+      'downRight' : ['aboveBottom', 'insideRight'],
+      'downLeft' : ['aboveBottom', 'insideLeft'],
+      'upLeft' : ['belowTop', 'insideLeft'],
+    };
+    Array.from(Object.keys(watchPositions)).forEach(direction => {
+        this.eligibleDirections[direction] = true;
+        watchPositions[direction].forEach(playerPosition =>
+          this.eligibleDirections[direction] = this.boundaries[playerPosition] && this.eligibleDirections[direction]
+        );
+      });
+  },
+};
 
 player.init();

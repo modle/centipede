@@ -64,12 +64,12 @@ var collisions = {
         if (metrics.lives > 0) {
           return;
         }
-        gameOver = true;
+        game.gameOver = true;
       }
     });
   },
   killPlayer : function() {
-    died = true;
+    player.died = true;
     metrics.lives -= 1;
   },
   withMushrooms : function(obj) {
