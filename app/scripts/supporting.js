@@ -21,13 +21,6 @@ var supporting = {
 
 // TODO this is not necessary; the key is already being captured in keysDown
 window.addEventListener('keydown', function (e) {
-  if (e.keyCode == 32) {
-    game.paused = !game.paused;
-  }
-})
-
-// TODO this is not necessary; the key is already being captured in keysDown
-window.addEventListener('keydown', function (e) {
   if (e.keyCode == 13) {
     game.reset();
   }
