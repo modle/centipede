@@ -52,7 +52,7 @@ var player = {
     this.stop();
     this.setBoundaries();
     this.setEligibleDirections();
-    this.moveTheThing(controls.getPositionModifiers(knobsAndLevers.gamePieceSpeed));
+    this.moveTheThing(controls.getPositionModifiers(knobsAndLevers.gamePieceSpeed, this.eligibleDirections));
   },
   moveTheThing : function(speed) {
     if (!speed) {

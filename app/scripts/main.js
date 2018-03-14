@@ -4,7 +4,7 @@ function updateGameState() {
   // check game conditions and update messages
   game.manageGameOver();
   controls.checkControllerState();
-  controls.checkPauseButton();
+  controls.handleGamePause();
   if (game.paused) {
     game.managePause();
     return;
