@@ -1,17 +1,18 @@
 var game = {
-  gameArea : new GameArea(),
   paused : true,
   levelOver : false,
   gameOver : false,
   delayed : 0,
   delayEndTime : 300,
   keysDown : {},
+  init : function() {
+    this.gameArea = new GameArea();
+  },
   start : function() {
     if (supporting.isMobile()) {
       this.gameArea.stop();
       return;
     };
-    sounds.init();
     this.paused = true;
     this.gameArea.start();
   },

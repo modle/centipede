@@ -123,6 +123,4 @@ var knobsAndLevers = {
   },
   gameInfoTextHeight : 40,
   defaultLives : 3
-}
-
-knobsAndLevers.init();
+};

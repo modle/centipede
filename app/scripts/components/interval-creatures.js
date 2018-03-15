@@ -2,9 +2,11 @@
 var intervalCreatures = {
   worms : [],
   flies : [],
-  intervals : {
-    flies : knobsAndLevers.flies.initialInterval,
-    worms : knobsAndLevers.worms.initialInterval,
+  init : function() {
+    this.intervals = {
+      flies : knobsAndLevers.flies.initialInterval,
+      worms : knobsAndLevers.worms.initialInterval,
+    };
   },
   manage : function() {
     Array.from(Object.keys(this.intervals)).forEach(creature => {

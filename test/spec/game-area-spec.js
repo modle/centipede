@@ -1,6 +1,7 @@
 describe('Testing game-area functions', () => {
   this.gameArea = new GameArea();
   this.knobsAndLevers = Object.assign({}, knobsAndLevers);
+  // this.main.init();
 
   it('gameArea gets constructed', () => {
     document.createElement("body");
@@ -14,13 +15,14 @@ describe('Testing game-area functions', () => {
     expect(this.gameArea.getYVertices).toHaveBeenCalled();
   });
   it('getXVertices returns a reasonable array of vertices', () => {
-    let xVertices = gameArea.getXVertices();
+    let xVertices = this.gameArea.getXVertices();
+    console.log(xVertices);
     console.log()
     let expectedNumVertices = this.knobsAndLevers.canvasWidth / this.knobsAndLevers.gridSquareSideLength;
     expect(xVertices.length).toBe(expectedNumVertices);
   });
   it('getYVertices returns a reasonable array of vertices', () => {
-    let yVertices = gameArea.getYVertices();
+    let yVertices = this.gameArea.getYVertices();
     console.log()
     let expectedNumVertices = (this.knobsAndLevers.canvasHeight * 0.75 - this.knobsAndLevers.gridSquareSideLength) / this.knobsAndLevers.gridSquareSideLength;
     expect(yVertices.length).toBe(Math.floor(expectedNumVertices));

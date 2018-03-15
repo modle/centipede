@@ -7,6 +7,7 @@ var sounds = {
     this.playerDied = buildSound("player-died", 0.5);
     this.laserPool = buildManySounds("laser", knobsAndLevers.laser.maxNumber);
     this.impactPool = buildManySounds("laser-impact", knobsAndLevers.laser.maxNumber);
+    console.log("sounds initialized");
   }
 };
 

@@ -1,20 +1,17 @@
 /*jslint white: true */
 var centipedes = {
-  baseSpeed : knobsAndLevers.centipede.baseSpeed,
   speed : 0,
-  interval : knobsAndLevers.centipede.interval,
-  maxNumber : knobsAndLevers.centipede.maxNumber,
   centipedes : [],
   numberSpawned : 0,
   numberKilled : 0,
   manage : function() {
-    if (game.gameArea.frameNo == 1 || supporting.everyinterval(game.gameArea.frameNo, this.interval)) {
+    if (game.gameArea.frameNo == 1 || supporting.everyinterval(game.gameArea.frameNo, knobsAndLevers.centipede.interval)) {
       this.spawn();
     }
     this.update();
   },
   spawn : function() {
-    if (this.numberSpawned >= this.maxNumber + metrics.currentLevel) {
+    if (this.numberSpawned >= knobsAndLevers.centipede.maxNumber + metrics.currentLevel) {
       return;
     }
     centipede = this.construct();
@@ -45,7 +42,7 @@ var centipedes = {
     this.numberSpawned++;
   },
   update : function() {
-    this.speed = this.baseSpeed + metrics.currentLevel;
+    this.speed = knobsAndLevers.centipede.baseSpeed + metrics.currentLevel;
     this.determineDirections();
     this.updateDirections();
     this.updateCoordinates();
