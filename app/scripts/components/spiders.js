@@ -8,10 +8,10 @@ var spiders = {
     this.clearOutsideCanvas();
   },
   spawn : function() {
-    if (!everyinterval(this.interval) || this.spiders.length >= knobsAndLevers.spider.maxNumber) {
+    if (!supporting.everyinterval(game.gameArea.frameNo, this.interval) || this.spiders.length >= knobsAndLevers.spider.maxNumber) {
       return
     }
-    this.interval = getRandom(knobsAndLevers.spider.interval.min, knobsAndLevers.spider.interval.max);
+    this.interval = supporting.getRandom(knobsAndLevers.spider.interval.min, knobsAndLevers.spider.interval.max);
     let spider = new Component(knobsAndLevers.spider.args);
     spider.directionY = 1;
     spider.pointValue = knobsAndLevers.spider.pointValue * metrics.currentLevel;
@@ -22,10 +22,10 @@ var spiders = {
   // spiders need to move up and down erratically, and occasionally move to the right
     let spiders = this.spiders;
     for (i = 0; i < spiders.length; i += 1) {
-      if (everyinterval(this.interval / 20)) {
-        spiders[i].speedX = getRandom(0, 1);
+      if (supporting.everyinterval(game.gameArea.frameNo, this.interval / 20)) {
+        spiders[i].speedX = supporting.getRandom(0, 1);
       }
-      spiders[i].speedY = getRandom(0, 1) * spiders[i].directionY;
+      spiders[i].speedY = supporting.getRandom(0, 1) * spiders[i].directionY;
       spiders[i].newPos();
       spiders[i].update();
       if (spiders[i].y + spiders[i].height > game.gameArea.canvas.height) {

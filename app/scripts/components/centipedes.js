@@ -8,7 +8,7 @@ var centipedes = {
   numberSpawned : 0,
   numberKilled : 0,
   manage : function() {
-    if (game.gameArea.frameNo == 1 || everyinterval(this.interval)) {
+    if (game.gameArea.frameNo == 1 || supporting.everyinterval(game.gameArea.frameNo, this.interval)) {
       this.spawn();
     }
     this.update();

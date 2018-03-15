@@ -14,12 +14,12 @@ describe('Testing intervalCreatures functions', () => {
     testObj.manage();
     expect(testObj.update).toHaveBeenCalled();
   });
-  it('manage calls getRandom at appropriate interval', () => {
-    spyOn(window, 'getRandom');
+  it('manage calls supporting.getRandom at appropriate interval', () => {
+    spyOn(window, 'supporting.getRandom');
     game.gameArea.frameNo = 10;
     testObj.intervals['worms'] = 10;
     testObj.manage();
-    expect(getRandom).toHaveBeenCalled();
+    expect(supporting.getRandom).toHaveBeenCalled();
   });
   it('manage calls intervalCreatures.spawn at appropriate interval', () => {
     game.gameArea.frameNo = 10;

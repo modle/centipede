@@ -13,7 +13,7 @@ function GameArea() {
     this.context = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     this.frameNo = 0;
-    this.interval = setInterval(updateGameState, intervalDivisor);
+    this.interval = setInterval(updateGameState, supporting.intervalDivisor);
   };
   this.setGridVertices = function() {
     this.xVertices = this.getXVertices();
