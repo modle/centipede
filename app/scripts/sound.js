@@ -1,20 +1,3 @@
-
-function Sound(src, volume, loop) {
-  this.sound = document.createElement("audio");
-  this.sound.src = src;
-  this.sound.volume = volume;
-  this.sound.setAttribute("preload", "auto");
-  this.sound.setAttribute("controls", "none");
-  this.sound.style.display = "none";
-  document.body.appendChild(this.sound);
-  this.play = function(){
-    this.sound.play();
-  }
-  this.stop = function(){
-    this.sound.pause();
-  }
-};
-
 var sounds = {
   init : function() {
     this.centipede = buildSound("centipede", 0.5);
