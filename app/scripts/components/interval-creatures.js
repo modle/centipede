@@ -11,10 +11,11 @@ var intervalCreatures = {
   manage : function() {
     Array.from(Object.keys(this.intervals)).forEach(creature => {
       this.spawnCreatureAtIntervals(creature);
-      if (intervalCreatures[creature] == false) {
+      if (this[creature] == false) {
         // return acts like a continue in a forEach
         return;
       }
+      console.log('got here just before clearoutside');
       this.clearOutsideCanvas(creature);
       this.update(creature);
       this.dropMushrooms(creature);
@@ -50,7 +51,6 @@ var intervalCreatures = {
     this[creature].push(spawnedCreature);
   },
   update : function(creature) {
-    console.log('got here');
     let updatingCreature = this[creature];
     for (i = 0; i < updatingCreature.length; i += 1) {
       updatingCreature[i].newPos();

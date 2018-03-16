@@ -10,6 +10,8 @@ describe('Testing intervalCreatures functions', () => {
     spyOn(testObj, 'clearOutsideCanvas');
     spyOn(testObj, 'update');
     spyOn(testObj, 'dropMushrooms');
+    testObj.worms = [];
+    testObj.flies = [];
   };
 
   it('intervalCreatures gets constructed', () => {
@@ -23,28 +25,23 @@ describe('Testing intervalCreatures functions', () => {
   });
   it('manage calls intervalCreatures.update', () => {
     mockTestObjManage();
+    console.log('calling manage for intervalCreatures update test')
     testObj.manage();
     expect(testObj.update).toHaveBeenCalled();
   });
   it('spawnCreatureAtIntervals calls getRandom at appropriate interval', () => {
     testObj.init();
     spyOn(testObj, 'spawn');
-    console.log(supporting);
-    console.log(testObj);
     spyOn(supporting, 'getRandom');
     game = {'gameArea' : {'frameNo' : 10}};
-    console.log(game);
     testObj.intervals['worms'] = 10;
     testObj.spawnCreatureAtIntervals('worms');
     expect(supporting.getRandom).toHaveBeenCalled();
   });
-  it('manage calls intervalCreatures.spawn at appropriate interval', () => {
+  it('manage calls intervalCreatures.spawnCreatureAtIntervals', () => {
     mockTestObjManage();
-    game = {'gameArea' : {'frameNo' : 10}};
-    testObj.intervals['worms'] = 10;
-    spyOn(testObj, 'spawn');
     testObj.manage();
-    expect(testObj.spawn).toHaveBeenCalled();
+    expect(testObj.spawnCreatureAtIntervals).toHaveBeenCalled();
   });
   it('spawn once creates one worm', () => {
     testObj.spawn('worms');
@@ -57,9 +54,11 @@ describe('Testing intervalCreatures functions', () => {
     expect(testObj.worms.length === knobsAndLevers.worms.maxNumber).toBeTruthy();
   });
   it('update calls component.newPos', () => {
-    testObj.spawn('worms');
+    // testObj.worms.push(new Component(knobsAndLevers['worms'].args));
+    this.testObj.spawn('worms');
     spyOn(testObj.worms[0], 'newPos');
     testObj.update('worms');
+    console.log()
     expect(testObj.worms[0].newPos).toHaveBeenCalled();
   });
   it('update calls component.update', () => {
