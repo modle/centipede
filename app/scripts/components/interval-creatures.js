@@ -15,7 +15,6 @@ var intervalCreatures = {
         // return acts like a continue in a forEach
         return;
       }
-      console.log('got here just before clearoutside');
       this.clearOutsideCanvas(creature);
       this.update(creature);
       this.dropMushrooms(creature);

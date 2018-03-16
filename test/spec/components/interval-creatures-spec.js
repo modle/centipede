@@ -3,8 +3,10 @@ describe('Testing intervalCreatures functions', () => {
     testObj = Object.assign({}, intervalCreatures);
     supporting = Object.assign({}, supporting);
     knobsAndLevers = Object.assign({}, knobsAndLevers);
+    game = {'gameArea' : {'frameNo' : 10}};
+    game.gameArea.canvas = {height: 800, width: 800};
   });
-  function mockTestObjManage() {
+  function mockTestObj() {
     testObj.init();
     spyOn(testObj, 'spawnCreatureAtIntervals');
     spyOn(testObj, 'clearOutsideCanvas');
@@ -12,20 +14,21 @@ describe('Testing intervalCreatures functions', () => {
     spyOn(testObj, 'dropMushrooms');
     testObj.worms = [];
     testObj.flies = [];
+    testObj.intervals['worms'] = 10;
   };
 
   it('intervalCreatures gets constructed', () => {
     expect(testObj).toBeTruthy();
   });
   it('manage calls intervalCreatures.clearOutsideCanvas', () => {
-    mockTestObjManage();
+    mockTestObj();
     testObj.worms.push('a worm');
     testObj.manage();
     expect(testObj.clearOutsideCanvas).toHaveBeenCalled();
   });
   it('manage calls intervalCreatures.update', () => {
-    mockTestObjManage();
-    console.log('calling manage for intervalCreatures update test')
+    mockTestObj();
+    testObj.worms.push('a worm');
     testObj.manage();
     expect(testObj.update).toHaveBeenCalled();
   });
@@ -33,13 +36,11 @@ describe('Testing intervalCreatures functions', () => {
     testObj.init();
     spyOn(testObj, 'spawn');
     spyOn(supporting, 'getRandom');
-    game = {'gameArea' : {'frameNo' : 10}};
-    testObj.intervals['worms'] = 10;
     testObj.spawnCreatureAtIntervals('worms');
     expect(supporting.getRandom).toHaveBeenCalled();
   });
   it('manage calls intervalCreatures.spawnCreatureAtIntervals', () => {
-    mockTestObjManage();
+    mockTestObj();
     testObj.manage();
     expect(testObj.spawnCreatureAtIntervals).toHaveBeenCalled();
   });
@@ -57,8 +58,8 @@ describe('Testing intervalCreatures functions', () => {
     // testObj.worms.push(new Component(knobsAndLevers['worms'].args));
     this.testObj.spawn('worms');
     spyOn(testObj.worms[0], 'newPos');
+    spyOn(testObj.worms[0], 'update');
     testObj.update('worms');
-    console.log()
     expect(testObj.worms[0].newPos).toHaveBeenCalled();
   });
   it('update calls component.update', () => {
@@ -69,6 +70,7 @@ describe('Testing intervalCreatures functions', () => {
   });
   it('clearOutsideCanvas clears worms with x greater than canvas width', () => {
     testObj.spawn('worms');
+
     testObj.worms[0].x = game.gameArea.canvas.width + 1;
     testObj.clearOutsideCanvas('worms');
     expect(testObj.worms.length === 0).toBeTruthy();
