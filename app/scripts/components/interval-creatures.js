@@ -50,6 +50,7 @@ var intervalCreatures = {
     this[creature].push(spawnedCreature);
   },
   update : function(creature) {
+    console.log('got here');
     let updatingCreature = this[creature];
     for (i = 0; i < updatingCreature.length; i += 1) {
       updatingCreature[i].newPos();

@@ -16,8 +16,6 @@ describe('Testing game-area functions', () => {
   });
   it('getXVertices returns a reasonable array of vertices', () => {
     let xVertices = this.gameArea.getXVertices();
-    console.log(xVertices);
-    console.log()
     let expectedNumVertices = this.knobsAndLevers.canvasWidth / this.knobsAndLevers.gridSquareSideLength;
     expect(xVertices.length).toBe(expectedNumVertices);
   });

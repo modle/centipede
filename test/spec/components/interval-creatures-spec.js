@@ -1,28 +1,46 @@
 describe('Testing intervalCreatures functions', () => {
-  let testObj = Object.assign({}, intervalCreatures);
-  let testKnobsAndLevers = Object.assign({}, knobsAndLevers);
+  beforeEach(function () {
+    testObj = Object.assign({}, intervalCreatures);
+    supporting = Object.assign({}, supporting);
+    knobsAndLevers = Object.assign({}, knobsAndLevers);
+  });
+  function mockTestObjManage() {
+    testObj.init();
+    spyOn(testObj, 'spawnCreatureAtIntervals');
+    spyOn(testObj, 'clearOutsideCanvas');
+    spyOn(testObj, 'update');
+    spyOn(testObj, 'dropMushrooms');
+  };
+
   it('intervalCreatures gets constructed', () => {
     expect(testObj).toBeTruthy();
   });
   it('manage calls intervalCreatures.clearOutsideCanvas', () => {
-    spyOn(testObj, 'clearOutsideCanvas');
+    mockTestObjManage();
+    testObj.worms.push('a worm');
     testObj.manage();
     expect(testObj.clearOutsideCanvas).toHaveBeenCalled();
   });
   it('manage calls intervalCreatures.update', () => {
-    spyOn(testObj, 'update');
+    mockTestObjManage();
     testObj.manage();
     expect(testObj.update).toHaveBeenCalled();
   });
-  it('manage calls supporting.getRandom at appropriate interval', () => {
-    spyOn(window, 'supporting.getRandom');
-    game.gameArea.frameNo = 10;
+  it('spawnCreatureAtIntervals calls getRandom at appropriate interval', () => {
+    testObj.init();
+    spyOn(testObj, 'spawn');
+    console.log(supporting);
+    console.log(testObj);
+    spyOn(supporting, 'getRandom');
+    game = {'gameArea' : {'frameNo' : 10}};
+    console.log(game);
     testObj.intervals['worms'] = 10;
-    testObj.manage();
+    testObj.spawnCreatureAtIntervals('worms');
     expect(supporting.getRandom).toHaveBeenCalled();
   });
   it('manage calls intervalCreatures.spawn at appropriate interval', () => {
-    game.gameArea.frameNo = 10;
+    mockTestObjManage();
+    game = {'gameArea' : {'frameNo' : 10}};
     testObj.intervals['worms'] = 10;
     spyOn(testObj, 'spawn');
     testObj.manage();
@@ -33,10 +51,10 @@ describe('Testing intervalCreatures functions', () => {
     expect(testObj.worms.length === 1).toBeTruthy();
   });
   it('spawn more than max worms does not create more than max worms', () => {
-    for (let i = 0; i < testKnobsAndLevers.worms.maxNumber + 100; i++) {
+    for (let i = 0; i < knobsAndLevers.worms.maxNumber + 100; i++) {
       testObj.spawn('worms');
     };
-    expect(testObj.worms.length === testKnobsAndLevers.worms.maxNumber).toBeTruthy();
+    expect(testObj.worms.length === knobsAndLevers.worms.maxNumber).toBeTruthy();
   });
   it('update calls component.newPos', () => {
     testObj.spawn('worms');
