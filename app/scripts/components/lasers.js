@@ -7,7 +7,7 @@ var lasers = Object.create(displayObjectPrototype, {
   },
   spawn : {
     value : function() {
-      if (this.lasers.length === knobsAndLevers.laser.maxNumber || !controls.keysDown || !everyinterval(knobsAndLevers.laser.interval) || !controls.isFiring()) {
+      if (this.lasers.length === knobsAndLevers.laser.maxNumber || !supporting.everyinterval(game.gameArea.frameNo, knobsAndLevers.laser.interval) || !controls.isFiring()) {
         return;
       }
       let theGamePiece = player.gamePiece;

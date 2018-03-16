@@ -98,5 +98,3 @@ var player = {
       });
   },
 };
-
-player.init();

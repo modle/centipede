@@ -1,0 +1,11 @@
+console.log('init the things, yo');
+knobsAndLevers.init();
+game.init();
+metrics.init();
+player.init();
+spiders.init();
+dom.init();
+sounds.init();
+texts.init();
+intervalCreatures.init();
+console.log("game initialized");

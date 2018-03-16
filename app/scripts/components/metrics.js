@@ -1,9 +1,9 @@
 /*jslint white: true */
 var metrics = {
-  lives : knobsAndLevers.defaultLives,
-  currentLevel : knobsAndLevers.startLevel,
   scoreValue : 0,
   init : function() {
+    this.lives = knobsAndLevers.defaultLives;
+    this.currentLevel = knobsAndLevers.startLevel;
     var scoreParams = Object.assign({}, knobsAndLevers.baseTextParams);
     scoreParams.x = game.gameArea.canvas.width/10;
     scoreParams.y = knobsAndLevers.gameInfoTextHeight;
@@ -52,5 +52,3 @@ var metrics = {
     this.scoreValue = 0;
   }
 }
-
-metrics.init();

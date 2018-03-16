@@ -56,5 +56,3 @@ var texts = {
     return gameOverTextParams;
   }
 }
-
-texts.init();

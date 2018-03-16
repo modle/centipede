@@ -3,34 +3,35 @@
 <head>
   <link rel="stylesheet" type="text/css" media="screen" href="app/static/css/style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
 </head>
 <body onload="game.start()"></body>
 <footer>
-  <script src="app/scripts/components/display-object-prototype.js"></script>
 
-  <script src="app/scripts/supporting.js"></script>
-  <script src="app/scripts/knobs-and-levers.js"></script>
-  <script src="app/scripts/game-area.js"></script>
-  <script src="app/scripts/main.js"></script>
-  <script src="app/scripts/game.js"></script>
-  <script src="app/scripts/dom.js"></script>
-  <script src="app/scripts/sound.js"></script>
-  <script src="app/scripts/component.js"></script>
+  <!-- use rel paths for testing; convert to canvas-libs external source before merging to master -->
+  <script type="text/javascript" src="https://glcdn.githack.com/taciturn-pachyderm/canvas-libs/raw/v0.2.0/app/scripts/controls.js"></script>
+  <script type="text/javascript" src="https://glcdn.githack.com/taciturn-pachyderm/canvas-libs/raw/v0.2.0/app/scripts/sound.js"></script>
+  <script type="text/javascript" src="https://glcdn.githack.com/taciturn-pachyderm/canvas-libs/raw/v0.2.0/app/scripts/supporting.js"></script>
+
   <script src="app/scripts/collisions.js"></script>
-  <script src="app/scripts/hud.js"></script>
-  <!-- <script type="text/javascript" src="https://gl.githack.com/taciturn-pachyderm/canvas-libs/raw/v0.1.0/controls.js"></script> -->
-  <script src="../canvas-libs/controls.js"></script>
-
-  <script src="app/scripts/components/texts.js"></script>
-  <script src="app/scripts/components/metrics.js"></script>
-
+  <script src="app/scripts/component.js"></script>
   <script src="app/scripts/components/centipedes.js"></script>
-  <script src="app/scripts/components/player.js"></script>
-  <script src="app/scripts/components/lasers.js"></script>
+  <script src="app/scripts/components/display-object-prototype.js"></script>
   <script src="app/scripts/components/interval-creatures.js"></script>
-  <script src="app/scripts/components/spiders.js"></script>
+  <script src="app/scripts/components/lasers.js"></script>
+  <script src="app/scripts/components/metrics.js"></script>
   <script src="app/scripts/components/mushrooms.js"></script>
+  <script src="app/scripts/components/player.js"></script>
+  <script src="app/scripts/components/texts.js"></script>
+  <script src="app/scripts/components/spiders.js"></script>
+  <script src="app/scripts/dom.js"></script>
+  <script src="app/scripts/game-area.js"></script>
+  <script src="app/scripts/game.js"></script>
+  <script src="app/scripts/hud.js"></script>
+  <script src="app/scripts/knobs-and-levers.js"></script>
+  <script src="app/scripts/main.js"></script>
+  <script src="app/scripts/sound.js"></script>
 
+  <!-- this needs to be loaded last -->
+  <script src="app/scripts/init.js"></script>
 </footer>
 </html>

@@ -2,14 +2,16 @@
 var intervalCreatures = {
   worms : [],
   flies : [],
-  intervals : {
-    flies : knobsAndLevers.flies.initialInterval,
-    worms : knobsAndLevers.worms.initialInterval,
+  init : function() {
+    this.intervals = {
+      flies : knobsAndLevers.flies.initialInterval,
+      worms : knobsAndLevers.worms.initialInterval,
+    };
   },
   manage : function() {
     Array.from(Object.keys(this.intervals)).forEach(creature => {
       this.spawnCreatureAtIntervals(creature);
-      if (intervalCreatures[creature] == false) {
+      if (this[creature] == false) {
         // return acts like a continue in a forEach
         return;
       }
@@ -19,7 +21,7 @@ var intervalCreatures = {
     });
   },
   dropMushrooms(creature) {
-    if (creature != 'flies' || !everyinterval(knobsAndLevers[creature].mushroomCreateInterval)) {
+    if (creature != 'flies' || !supporting.everyinterval(game.gameArea.frameNo, knobsAndLevers[creature].mushroomCreateInterval)) {
       return;
     };
     this.flies.forEach(fly => {
@@ -33,8 +35,8 @@ var intervalCreatures = {
     });
   },
   spawnCreatureAtIntervals(creature) {
-    if (everyinterval(this.intervals[creature])) {
-      this.intervals[creature] = getRandom(knobsAndLevers[creature].interval.min, knobsAndLevers[creature].interval.max);
+    if (supporting.everyinterval(game.gameArea.frameNo, this.intervals[creature])) {
+      this.intervals[creature] = supporting.getRandom(knobsAndLevers[creature].interval.min, knobsAndLevers[creature].interval.max);
       this.spawn(creature);
     };
   },

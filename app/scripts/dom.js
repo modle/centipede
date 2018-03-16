@@ -18,8 +18,9 @@ var dom = {
     if (supporting.isMobile()) {
       this.addMobileMessage();
       return;
-    }
+    };
     this.addInstructions();
+    console.log("dom initialized");
   },
   addLinks : function() {
     let element = document.createElement('div');
@@ -45,5 +46,3 @@ var dom = {
     document.body.insertBefore(element, document.body.childNodes[0]);
   },
 };
-
-dom.init();
