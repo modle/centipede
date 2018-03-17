@@ -1,8 +1,9 @@
 describe('Testing game-area functions', () => {
-  this.gameArea = new GameArea();
-  this.knobsAndLevers = Object.assign({}, knobsAndLevers);
-  // this.main.init();
-
+  beforeEach(function () {
+    gameArea = new GameArea();
+    knobsAndLevers = Object.assign({}, knobsAndLevers);
+    knobsAndLevers.init();
+  });
   it('gameArea gets constructed', () => {
     document.createElement("body");
     expect(this.gameArea).toBeTruthy();
