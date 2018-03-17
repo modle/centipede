@@ -1,6 +1,9 @@
 describe('Testing game-piece functions', () => {
-  let testObj = Object.assign({}, player);
+  beforeEach(function () {
+    testObj = Object.assign({}, player);
+  });
   it('player gets constructed', () => {
+    console.log('player gets constructed');
     expect(testObj).toBeTruthy();
   });
 });

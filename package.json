@@ -1,0 +1,15 @@
+{
+  "name": "centipede",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "karma": "^2.0.0",
+    "karma-coverage": "^1.1.1"
+  },
+  "devDependencies": {
+    "jasmine-core": "^3.1.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.1",
+    "karma-phantomjs-launcher": "^1.0.4"
+  }
+}

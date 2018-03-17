@@ -1,6 +1,9 @@
 describe('Testing hud functions', () => {
-  let testObj = Object.assign({}, hud);
+  beforeEach(function () {
+    testObj = Object.assign({}, hud);
+  });
   it('hud gets constructed', () => {
+    console.log('hud gets constructed');
     expect(testObj).toBeTruthy();
   });
 });

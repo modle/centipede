@@ -1,6 +1,9 @@
 describe('Testing component functions', () => {
-  let component = new Component({});
+  beforeEach(function () {
+    component = new Component({});
+  });
   it('component gets constructed', () => {
+    console.log('component gets constructed');
     expect(component).toBeTruthy();
   });
 });

@@ -1,6 +1,9 @@
 describe('Testing text functions', () => {
-  let testObj = Object.assign({}, texts);
+  beforeEach(function () {
+    testObj = Object.assign({}, texts);
+  });
   it('texts gets constructed', () => {
+    console.log('texts gets constructed');
     expect(testObj).toBeTruthy();
   });
 });

@@ -1,6 +1,9 @@
 describe('Testing spiders functions', () => {
-  let testObj = Object.assign({}, spiders);
+  beforeEach(function () {
+    testObj = Object.assign({}, spiders);
+  });
   it('spiders gets constructed', () => {
+    console.log('spiders gets constructed');
     expect(testObj).toBeTruthy();
   });
 });

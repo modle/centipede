@@ -1,6 +1,6 @@
 describe('Testing game functions', () => {
   beforeEach(function() {
-    // testObj = Object.assign({}, game);
+    testObj = Object.assign({}, game);
   });
   function removeCanvas() {
     var body = document.getElementsByTagName('body')[0];
@@ -8,11 +8,13 @@ describe('Testing game functions', () => {
     body.removeChild(canvas);
   }
   it('game gets constructed', () => {
-    expect(this.testObj).toBeTruthy();
+    console.log('game gets constructed');
+    expect(testObj).toBeTruthy();
   });
-  xit('setGridVertices calls window.addEventListener', () => {
-    spyOn(this.testObj, 'addEventListener');
-    this.testObj.addEventListeners();
+  it('setGridVertices calls window.addEventListener', () => {
+    console.log('setGridVertices calls window.addEventListener');
+    spyOn(testObj, 'addEventListener');
+    testObj.addEventListeners();
     expect(window.addEventListener).toHaveBeenCalled();
   });
   // FIXME calling this.testObj.start() actually starts the game. Can we prevent that?

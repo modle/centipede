@@ -1,6 +1,9 @@
 describe('Testing centipedes functions', () => {
-  let testObj = Object.assign({}, centipedes);
+  beforeEach(function () {
+    testObj = Object.assign({}, centipedes);
+  });
   it('centipedes gets constructed', () => {
+    console.log('centipedes gets constructed');
     expect(testObj).toBeTruthy();
   });
 });
