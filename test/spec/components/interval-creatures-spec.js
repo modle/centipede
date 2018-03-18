@@ -1,6 +1,5 @@
 describe('Testing intervalCreatures functions', () => {
   beforeEach(function () {
-    testSupporting = Object.assign({}, supporting);
     testObj = Object.assign({}, intervalCreatures);
     testObj.init();
     game.init();
@@ -14,7 +13,6 @@ describe('Testing intervalCreatures functions', () => {
     testObj.flies = [];
     testObj.intervals['worms'] = 10;
   };
-
   it('intervalCreatures gets constructed', () => {
     expect(testObj).toBeTruthy();
   });
@@ -30,12 +28,19 @@ describe('Testing intervalCreatures functions', () => {
     testObj.manage();
     expect(testObj.update).toHaveBeenCalled();
   });
-  xit('spawnCreatureAtIntervals calls getRandom at appropriate interval', () => {
-    testObj.init();
+  it('spawnCreatureAtIntervals calls getRandom at appropriate interval', () => {
     spyOn(testObj, 'spawn');
-    spyOn(testSupporting, 'getRandom');
+    spyOn(supporting, 'getRandom');
+    game.gameArea.frameNo = 10;
     testObj.spawnCreatureAtIntervals('worms');
-    expect(testSupporting.getRandom).toHaveBeenCalled();
+    expect(supporting.getRandom).toHaveBeenCalled();
+  });
+  it('spawnCreatureAtIntervals will not call getRandom at inappropriate interval', () => {
+    spyOn(testObj, 'spawn');
+    spyOn(supporting, 'getRandom');
+    game.gameArea.frameNo = 9;
+    testObj.spawnCreatureAtIntervals('worms');
+    expect(supporting.getRandom).toHaveBeenCalled();
   });
   it('manage calls intervalCreatures.spawnCreatureAtIntervals', () => {
     mockTestObj();
