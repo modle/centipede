@@ -3,7 +3,6 @@ describe('Testing lasers functions', () => {
     testObj = Object.assign({}, lasers);
   });
   it('lasers gets constructed', () => {
-    console.log('lasers gets constructed');
     expect(testObj).toBeTruthy();
   });
 });

@@ -25,6 +25,7 @@ chmod 744 run-jasmine-specs
 # Running Karma coverage tests
 
 ```
+npm install
 chmod 744 run-karma-coverage
 ./run-karma-coverage
 ```

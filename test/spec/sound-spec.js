@@ -5,7 +5,6 @@ describe('Testing sound functions', () => {
     sound = new Sound(path, 1.0, "loop");
   });
   it('sound gets constructed', () => {
-    console.log('sound gets constructed');
     expect(path).toBeTruthy();
   });
 });

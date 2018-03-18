@@ -3,7 +3,6 @@ describe('Testing hud functions', () => {
     testObj = Object.assign({}, hud);
   });
   it('hud gets constructed', () => {
-    console.log('hud gets constructed');
     expect(testObj).toBeTruthy();
   });
 });

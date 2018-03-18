@@ -3,7 +3,6 @@ describe('Testing component functions', () => {
     component = new Component({});
   });
   it('component gets constructed', () => {
-    console.log('component gets constructed');
     expect(component).toBeTruthy();
   });
 });

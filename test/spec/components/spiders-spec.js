@@ -3,7 +3,6 @@ describe('Testing spiders functions', () => {
     testObj = Object.assign({}, spiders);
   });
   it('spiders gets constructed', () => {
-    console.log('spiders gets constructed');
     expect(testObj).toBeTruthy();
   });
 });

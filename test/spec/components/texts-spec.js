@@ -3,7 +3,6 @@ describe('Testing text functions', () => {
     testObj = Object.assign({}, texts);
   });
   it('texts gets constructed', () => {
-    console.log('texts gets constructed');
     expect(testObj).toBeTruthy();
   });
 });
