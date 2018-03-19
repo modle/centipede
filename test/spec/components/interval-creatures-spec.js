@@ -32,15 +32,17 @@ describe('Testing intervalCreatures functions', () => {
     spyOn(testObj, 'spawn');
     spyOn(supporting, 'getRandom');
     game.gameArea.frameNo = 10;
+    testObj.intervals['worms'] = 10;
     testObj.spawnCreatureAtIntervals('worms');
     expect(supporting.getRandom).toHaveBeenCalled();
   });
   it('spawnCreatureAtIntervals will not call getRandom at inappropriate interval', () => {
     spyOn(testObj, 'spawn');
     spyOn(supporting, 'getRandom');
-    game.gameArea.frameNo = 9;
+    game.gameArea.frameNo = 1;
+    testObj.intervals['worms'] = 10;
     testObj.spawnCreatureAtIntervals('worms');
-    expect(supporting.getRandom).toHaveBeenCalled();
+    expect(supporting.getRandom).not.toHaveBeenCalled();
   });
   it('manage calls intervalCreatures.spawnCreatureAtIntervals', () => {
     mockTestObj();
@@ -72,7 +74,6 @@ describe('Testing intervalCreatures functions', () => {
   });
   it('clearOutsideCanvas clears worms with x greater than canvas width', () => {
     testObj.spawn('worms');
-
     testObj.worms[0].x = game.gameArea.canvas.width + 1;
     testObj.clearOutsideCanvas('worms');
     expect(testObj.worms.length === 0).toBeTruthy();

@@ -14,6 +14,6 @@ module.exports = function(config) {
     plugins : ['karma-jasmine', 'karma-phantomjs-launcher', 'karma-coverage', 'karma-chrome-launcher'],
     singleRun: true,
     reporters: ['progress', 'coverage'],
-    preprocessors: { '*.js': ['coverage'] }
+    preprocessors: { 'app/scripts/*.js': ['coverage'], 'app/scripts/components/*.js': ['coverage'] }
   });
 };
