@@ -15,12 +15,12 @@ var collisions = {
     this.removeDestroyedTargets();
   },
   checkLaser : function(targets) {
-    lasers.lasers.map((laser, laserIndex) =>
-      targets.map((target, targetInex) => {
+    lasers.lasers.map(laser =>
+      targets.map(target => {
         if (!laser.remove && laser.crashWith(target)) {
           this.processImpact(target);
           laser.remove = true;
-        }
+        };
       })
     );
     this.removeUsedLasers();
@@ -64,6 +64,7 @@ var collisions = {
         if (metrics.lives > 0) {
           return;
         }
+        // TODO should gameOver check be here or in metrics?
         game.gameOver = true;
       }
     });

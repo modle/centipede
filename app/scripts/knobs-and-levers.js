@@ -112,7 +112,7 @@ var knobsAndLevers = {
   maxMushrooms : 50,
   baseTextParams : {
     fontSize : "30px",
-    fontType : "Consolas",
+    fontType : "Arial",
     color : "black",
     extraArgs : {type:"text"},
   },

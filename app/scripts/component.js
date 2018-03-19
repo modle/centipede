@@ -14,6 +14,8 @@ function Component(args) {
   this.color = args.color;
   if (Array.from(Object.keys(args)).includes('extraArgs')) {
     this.type = args.extraArgs.type;
+    this.fontSize = args.fontSize;
+    this.fontType = args.fontType;
     if (Array.from(Object.keys(args.extraArgs)).includes('speed')) {
       this.speedX = args.extraArgs.speed.x;
       this.speedY = args.extraArgs.speed.y;
@@ -27,33 +29,33 @@ function Component(args) {
     if (this.background) {
       this.background.update();
     }
-    ctx = game.gameArea.context;
+    let ctx = game.gameArea.context;
     ctx.fillStyle = this.color;
     if (this.type == "text") {
-      this.makeText();
+      this.makeText(ctx);
     } else if (this.type == "centipede") {
-      this.makeACentipede();
+      this.makeACentipede(ctx);
     } else {
-      this.makeARectangle();
+      this.makeARectangle(ctx);
     };
   };
   this.stop = function() {
     this.speedX = 0;
     this.speedY = 0;
   },
-  this.makeText = function() {
-    ctx.font = args.fontSize + " " + args.fontType;
+  this.makeText = function(ctx) {
+    ctx.font = this.fontSize + " " + this.fontType;
     ctx.fillText(this.text, this.x, this.y);
   };
-  this.makeACentipede = function() {
+  this.makeACentipede = function(ctx) {
     ctx.beginPath();
-    vertices = this.getCentipedeVertices();
+    vertices = this.getCentipedeVertices(ctx);
     ctx.moveTo(vertices['x1'], vertices['y1']);
     ctx.lineTo(vertices['x2'], vertices['y2']);
     ctx.lineTo(vertices['x3'], vertices['y3']);
     ctx.fill();
   };
-  this.getCentipedeVertices = function() {
+  this.getCentipedeVertices = function(ctx) {
     if (this.moveVertically) {
       if (this.directionY > 0) {
         return getDownTriangle(ctx, this);
@@ -68,7 +70,7 @@ function Component(args) {
       };
     };
   };
-  this.makeARectangle = function() {
+  this.makeARectangle = function(ctx) {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   };
   this.newPos = function() {

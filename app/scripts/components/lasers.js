@@ -12,7 +12,6 @@ var lasers = Object.create(displayObjectPrototype, {
       }
       let theGamePiece = player.gamePiece;
       let laserArgs = knobsAndLevers.laser.args;
-      let keysDown = game.keysDown;
       laserArgs.extraArgs.speed.y = 0;
       laserArgs.x = theGamePiece.x + theGamePiece.width / 2;
       laserArgs.y = theGamePiece.y + theGamePiece.height / 2;

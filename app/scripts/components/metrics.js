@@ -5,7 +5,7 @@ var metrics = {
     this.lives = knobsAndLevers.defaultLives;
     this.currentLevel = knobsAndLevers.startLevel;
     var scoreParams = Object.assign({}, knobsAndLevers.baseTextParams);
-    scoreParams.x = game.gameArea.canvas.width/10;
+    scoreParams.x = game.gameArea.canvas.width / 10;
     scoreParams.y = knobsAndLevers.gameInfoTextHeight;
     this.score = new Component(scoreParams);
     console.log("metrics initialized");
@@ -25,7 +25,7 @@ var metrics = {
     }
     let pointArgs = {
       fontSize : (knobsAndLevers.gridSquareSideLength * 0.8) + "px",
-      fontType : "Consolas",
+      fontType : "Arial",
       color : color,
       x : x,
       y : y,
