@@ -36,7 +36,7 @@ var metrics = {
     newPoint.cycleNumber = 0;
     floatingPoints.push(newPoint);
   },
-  updateFloatingPoints : function() {
+  manage : function() {
     for (i = 0; i < floatingPoints.length; i += 1) {
       floatingPoints[i].cycleNumber += 1;
       floatingPoints[i].y -= 1;

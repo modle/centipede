@@ -1,44 +1,63 @@
 /*jslint white: true */
+// this gets executed every interval
 function updateGameState() {
-  // this gets executed every interval
-  // check game conditions and update messages
-  game.manageGameOver();
+  detectGamePad();
+  if (processTriggers()) {
+    return;
+  };
+  prepTheCanvas();
+  manageGameObjects();
+};
+
+function detectGamePad() {
   controls.checkControllerState();
   controls.handleGamePause();
+};
+
+function processTriggers() {
+  if (player.died) {
+    if (game.delayed === 0) {
+      game.setDiedText();
+      game.playDiedSound();
+      game.delayed++;
+      return true;
+    } else if (game.delayed < game.delayEndTime) {
+      game.delayed++;
+      return true;
+    } else {
+      game.delayed = 0;
+      game.manageDeath();
+      return true;
+    };
+  };
+  if (game.levelIsOver()) {
+    game.manageLevel();
+    return true;
+  };
+  if (game.gameOver) {
+    game.manageGameOver();
+    return true;
+  }
   if (game.paused) {
     game.managePause();
-    return;
+    return true;
   };
-  if (player.died && game.delayed < game.delayEndTime) {
-    game.delayed++;
-    return;
-  };
-  if (player.died) {
-    game.manageDeath();
-    game.delayed = 0;
-    return;
-  };
-  // clear the canvas
-  game.checkLevelEndConditions();
+  return false;
+};
+
+function prepTheCanvas() {
   game.startNextFrame();
   manageSounds();
   hud.update();
-  // make things happen
+};
+
+function manageGameObjects() {
   mushrooms.manage();
   centipedes.manage();
   intervalCreatures.manage();
   spiders.manage();
   lasers.manage();
   player.manage();
-  // check game conditions
   collisions.check();
-  metrics.updateFloatingPoints();
-  if (player.died) {
-    game.setDiedText();
-    game.playDiedSound();
-    return;
-  };
-  if (game.levelOver) {
-    game.manageLevel();
-  }
+  metrics.manage();
 };

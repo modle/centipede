@@ -45,7 +45,7 @@ var lasers = Object.create(displayObjectPrototype, {
     value : function() {
       this.lasers = [];
     },
-    writable : false,
+    writable : true,
     enumerable : true
   }
 });

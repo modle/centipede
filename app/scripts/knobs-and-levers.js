@@ -42,7 +42,7 @@ var knobsAndLevers = {
   playerCollisionsEnabled : true,
   centipede : {
     baseSpeed : 10,
-    maxNumber : 10,
+    maxNumber : 0,
     interval : 10,
     args : {
       color : "blue",
@@ -57,8 +57,8 @@ var knobsAndLevers = {
   gamePieceWidth : 15,
   gamePieceHeight : 15,
   laser : {
-    speed : 5,
-    maxNumber : 1,
+    speed : 20,
+    maxNumber : 50,
     interval : 10,
     args : {
       color : "purple",
@@ -122,5 +122,5 @@ var knobsAndLevers = {
     extraArgs : {type:"background"},
   },
   gameInfoTextHeight : 40,
-  defaultLives : 3
+  defaultLives : 1
 };
