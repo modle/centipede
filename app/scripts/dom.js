@@ -14,15 +14,18 @@ var dom = {
                     "<img src='app/static/media/images/centipede.gif' style='width: 100%;'></img>" +
                     "<br><br><br><br><br><br><br><br>.",
   init : function() {
-    this.addLinks();
+    this.addElement(this.getLinksElement());
     if (supporting.isMobile()) {
-      this.addMobileMessage();
+      this.addElement(this.getMobileMessageElement());
       return;
     };
-    this.addInstructions();
+    this.addElement(this.getInstructionsElement());
     console.log("dom initialized");
   },
-  addLinks : function() {
+  addElement : function(element) {
+    document.body.insertBefore(element, document.body.childNodes[0]);
+  },
+  getLinksElement : function() {
     let element = document.createElement('div');
     element.className = 'linkButtonWrapper';
     Array.from(Object.keys(this.links)).forEach( link => {
@@ -32,17 +35,17 @@ var dom = {
       aLink.innerHTML = this.links[link].text;
       element.appendChild(aLink);
     });
-    document.body.insertBefore(element, document.body.childNodes[0]);
+    return element;
   },
-  addInstructions : function() {
+  getInstructionsElement : function() {
     let element = document.createElement('div');
     element.className = 'instructions';
     element.innerHTML = this.instructions;
-    document.body.insertBefore(element, document.body.childNodes[0]);
+    return element;
   },
-  addMobileMessage : function() {
+  getMobileMessageElement : function() {
     let element = document.createElement('div');
     element.innerHTML = this.mobileWarning;
-    document.body.insertBefore(element, document.body.childNodes[0]);
+    return element;
   },
 };
