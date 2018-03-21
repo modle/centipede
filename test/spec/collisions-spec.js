@@ -1,6 +1,7 @@
 describe('Testing collision functions', () => {
   beforeEach(function () {
     testObj = Object.assign({}, collisions);
+    knobsAndLevers.init();
   });
   function createAnObjectFromLaserArgs() {
     let laserArgs = knobsAndLevers.laser.args;

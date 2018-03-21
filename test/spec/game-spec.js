@@ -2,9 +2,10 @@ describe('Testing game functions', () => {
   beforeEach(function() {
     testObj = Object.assign({}, game);
     testObj.init();
-    knobsAndLevers.init();
+    game.init();
     spyOn(testObj.gameArea, 'start');
     spyOn(testObj.gameArea, 'stop');
+    knobsAndLevers.init();
   });
   it('game gets constructed', () => {
     expect(testObj).toBeTruthy();

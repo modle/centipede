@@ -3,6 +3,9 @@ describe('Testing knobs and levers generation', () => {
     testObj = Object.assign({}, knobsAndLevers);
     testObj.init();
   });
+  afterAll(function () {
+    testObj.init();
+  });
   it('gridSquareSideLength should not be undefined', () => {
     expect(testObj.gridSquareSideLength).toBeTruthy();
   });

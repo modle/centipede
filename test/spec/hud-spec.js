@@ -1,6 +1,9 @@
 describe('Testing hud functions', () => {
   beforeEach(function () {
     testObj = Object.assign({}, hud);
+    knobsAndLevers.init();
+    game.init();
+    // texts.init();
   });
   it('hud gets constructed', () => {
     expect(testObj).toBeTruthy();
@@ -26,6 +29,7 @@ describe('Testing hud functions', () => {
   it('updateLevel updates level', () => {
     metrics.init();
     metrics.currentLevel = 10;
+    texts.init();
     let expected = "Level: " + metrics.currentLevel;
     spyOn(texts.level, 'update');
     testObj.updateLevel();

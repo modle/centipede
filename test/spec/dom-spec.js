@@ -1,6 +1,7 @@
 describe('Testing dom functions', () => {
   beforeEach(function () {
     testObj = Object.assign({}, dom);
+    knobsAndLevers.init();
   });
   it('dom gets constructed', () => {
     expect(testObj).toBeTruthy();

@@ -1,6 +1,7 @@
 describe('Testing component functions', () => {
   beforeEach(function () {
     component = constructComponent({});
+    knobsAndLevers.init();
   });
   function constructComponent(args) {
     return new Component(args);
