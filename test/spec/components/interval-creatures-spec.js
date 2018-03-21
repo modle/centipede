@@ -2,6 +2,8 @@ describe('Testing intervalCreatures functions', () => {
   beforeEach(function () {
     testObj = Object.assign({}, intervalCreatures);
     testObj.init();
+    testObj.worms = [];
+    testObj.flies = [];
     game.init();
   });
   function mockTestObj() {
@@ -9,8 +11,6 @@ describe('Testing intervalCreatures functions', () => {
     spyOn(testObj, 'clearOutsideCanvas');
     spyOn(testObj, 'update');
     spyOn(testObj, 'dropMushrooms');
-    testObj.worms = [];
-    testObj.flies = [];
     testObj.intervals['worms'] = 10;
   };
   it('intervalCreatures gets constructed', () => {
