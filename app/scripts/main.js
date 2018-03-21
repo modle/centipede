@@ -15,6 +15,16 @@ function detectGamePad() {
 };
 
 function processTriggers() {
+  let triggered =
+    checkPlayerDied() ||
+    checkLevelOver() ||
+    checkGameOver() ||
+    checkPause()
+  ;
+  return triggered;
+};
+
+function checkPlayerDied() {
   if (player.died) {
     if (game.delayed === 0) {
       game.setDiedText();
@@ -30,14 +40,26 @@ function processTriggers() {
       return true;
     };
   };
+  return false;
+};
+
+function checkLevelOver() {
   if (game.levelIsOver()) {
     game.manageLevel();
     return true;
   };
+  return false;
+};
+
+function checkGameOver() {
   if (game.gameOver) {
     game.manageGameOver();
     return true;
-  }
+  };
+  return false;
+};
+
+function checkPause() {
   if (game.paused) {
     game.managePause();
     return true;
