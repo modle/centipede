@@ -73,6 +73,16 @@ describe('Testing sound functions', () => {
     manageFlySounds();
 
     expect(sounds.fly.play).toHaveBeenCalled();
+    expect(sounds.fly.played).toBeTruthy();
+  });
+  it('manageFlySounds sets played to false when fly is not present', () => {
+    intervalCreatures.flies = [];
+    spyOn(sounds.fly, 'play');
+
+    manageFlySounds();
+
+    expect(sounds.fly.play).not.toHaveBeenCalled();
+    expect(sounds.fly.played).toBeFalsy();
   });
   it('manageWormSounds calls worm sound play', () => {
     intervalCreatures.worms.push({});
@@ -81,6 +91,16 @@ describe('Testing sound functions', () => {
     manageWormSounds();
 
     expect(sounds.worm.play).toHaveBeenCalled();
+  });
+  it('manageWormSounds calls worm sound stop when no worms', () => {
+    intervalCreatures.worms = [];
+    spyOn(sounds.worm, 'play');
+    spyOn(sounds.worm, 'stop');
+
+    manageWormSounds();
+
+    expect(sounds.worm.play).not.toHaveBeenCalled();
+    expect(sounds.worm.stop).toHaveBeenCalled();
   });
   it('getAvailableLaserSound calls getAvailableSound with laserPool', () => {
     spyOn(window, 'getAvailableSound');
