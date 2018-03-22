@@ -11,119 +11,218 @@ describe('Testing collision functions', () => {
     laserArgs.height = 10;
     return new Component(laserArgs);
   };
-  function createAnObjectWithZeroHitPoints() {
-    let anObject = createAnObjectFromLaserArgs();
-    anObject.hitPoints = 0;
-    return anObject;
-  };
-  function createAnObjectWithOneHitPoint() {
-    let anObject = createAnObjectFromLaserArgs();
-    anObject.hitPoints = 1;
-    return anObject;
-  };
-  it('collisions gets constructed', () => {
-    expect(testObj).toBeTruthy();
-  });
+
   it('check calls checkLaser', () => {
     spyOn(testObj, 'checkLaser');
-    spyOn(testObj, 'checkGamePieceVsEnemy');
+    spyOn(testObj, 'checkGamePieceVsEnemies');
     spyOn(testObj, 'removeDestroyedTargets');
+
     testObj.check();
+
     expect(testObj.checkLaser).toHaveBeenCalled();
-  });
-  it('check calls checkGamePieceVsEnemy', () => {
-    spyOn(testObj, 'checkLaser');
-    spyOn(testObj, 'checkGamePieceVsEnemy');
-    spyOn(testObj, 'removeDestroyedTargets');
-    testObj.check();
-    expect(testObj.checkGamePieceVsEnemy).toHaveBeenCalled();
-  });
-  it('check calls removeDestroyedTargets', () => {
-    spyOn(testObj, 'checkLaser');
-    spyOn(testObj, 'checkGamePieceVsEnemy');
-    spyOn(testObj, 'removeDestroyedTargets');
-    testObj.check();
+    expect(testObj.checkGamePieceVsEnemies).toHaveBeenCalled();
     expect(testObj.removeDestroyedTargets).toHaveBeenCalled();
   });
+
+  it('getLaserTargets combines multiple target Arrays', () => {
+    mushrooms.mushrooms = [];
+    centipedes.centipedes = [];
+    intervalCreatures.worms = [];
+    intervalCreatures.flies = ['anObj'];
+    spiders.spiders = ['anObj'];
+
+    targets = testObj.getLaserTargets();
+
+    expect(targets.length).toEqual(2);
+  });
+
   it('checkLaser sets laser.remove to true on impact', () => {
-    targets = [createAnObjectFromLaserArgs()];
-    lasers.lasers = [createAnObjectFromLaserArgs()];
-    spyOn(lasers.lasers[0], 'crashWith').and.callThrough();
+    targets = [{}];
+    lasers.lasers = [{remove: false, crashWith : function(target){}}];
+    spyOn(lasers.lasers[0], 'crashWith').and.returnValue(true);
     spyOn(testObj, 'processImpact');
     spyOn(testObj, 'removeUsedLasers');
+
     testObj.checkLaser(targets);
+
     expect(lasers.lasers[0].remove).toBeTruthy();
+    expect(lasers.lasers[0].crashWith).toHaveBeenCalled();
     expect(testObj.processImpact).toHaveBeenCalled();
     expect(testObj.removeUsedLasers).toHaveBeenCalled();
-    expect(lasers.lasers[0].crashWith).toHaveBeenCalled();
   });
   it('checkLaser will not processImpact if no usable lasers', () => {
-    targets = [createAnObjectFromLaserArgs()];
-    lasers.lasers = [createAnObjectFromLaserArgs()];
-    lasers.lasers[0].remove = true;
+    targets = [{}];
+    lasers.lasers = [{remove: true, crashWith : function(target){}}];
+    spyOn(lasers.lasers[0], 'crashWith').and.returnValue(true);
     spyOn(testObj, 'processImpact');
     spyOn(testObj, 'removeUsedLasers');
+
     testObj.checkLaser(targets);
+
     expect(testObj.processImpact).not.toHaveBeenCalled();
     expect(testObj.removeUsedLasers).toHaveBeenCalled();
   });
   it('checkLaser will not processImpact if no lasers', () => {
-    targets = [createAnObjectFromLaserArgs()];
+    targets = [{}];
     lasers.lasers = [];
     spyOn(testObj, 'processImpact');
     spyOn(testObj, 'removeUsedLasers');
+
     testObj.checkLaser(targets);
+
     expect(testObj.processImpact).not.toHaveBeenCalled();
     expect(testObj.removeUsedLasers).toHaveBeenCalled();
   });
   it('checkLaser will not processImpact if no targets', () => {
     targets = [];
-    lasers.lasers = [createAnObjectFromLaserArgs()];
+    lasers.lasers = [{}];
     spyOn(testObj, 'processImpact');
     spyOn(testObj, 'removeUsedLasers');
+
     testObj.checkLaser(targets);
+
     expect(testObj.processImpact).not.toHaveBeenCalled();
     expect(testObj.removeUsedLasers).toHaveBeenCalled();
   });
   it('checkLaser will not processImpact if no crashWith', () => {
-    targets = [createAnObjectFromLaserArgs()];
-    lasers.lasers = [createAnObjectFromLaserArgs()];
-    lasers.lasers[0].x = targets[0].x + targets[0].width * 2;
+    targets = [{}];
+    lasers.lasers = [{remove: false, crashWith : function(target){}}];
+    spyOn(lasers.lasers[0], 'crashWith').and.returnValue(false);
     spyOn(testObj, 'processImpact');
     spyOn(testObj, 'removeUsedLasers');
+
     testObj.checkLaser(targets);
+
     expect(testObj.processImpact).not.toHaveBeenCalled();
     expect(testObj.removeUsedLasers).toHaveBeenCalled();
   });
-  it('checkGamePieceVsEnemy does not process if playerCollisions are disabled', () => {
+
+  it('processImpact delegates to impact functions', () => {
+    spyOn(testObj, 'damageTarget');
+    spyOn(testObj, 'playImpactSound');
+    spyOn(testObj, 'updateTargetAppearance');
+
+    testObj.processImpact({type : 'aTarget'});
+
+    expect(testObj.damageTarget).toHaveBeenCalled();
+    expect(testObj.playImpactSound).toHaveBeenCalled();
+    expect(testObj.updateTargetAppearance).toHaveBeenCalled();
+  });
+
+  it('damageTarget reduces hitPoints and processes kill', () => {
+    spyOn(testObj, 'processKill');
+    let target = {hitPoints : 1};
+
+    testObj.damageTarget(target);
+
+    expect(testObj.processKill).toHaveBeenCalled();
+    expect(target.hitPoints).toEqual(0);
+  });
+  it('damageTarget reduces hitPoints but does not process kill', () => {
+    spyOn(testObj, 'processKill');
+    let target = {hitPoints : 2};
+
+    testObj.damageTarget(target);
+
+    expect(testObj.processKill).not.toHaveBeenCalled();
+    expect(target.hitPoints).toEqual(1);
+  });
+
+  it('playImpactSound does not play when target type is mushroom', () => {
+    let type = 'mushroom';
+    spyOn(window, 'getAvailableImpactSound');
+
+    testObj.playImpactSound(type);
+
+    expect(window.getAvailableImpactSound).not.toHaveBeenCalled();
+  });
+  it('playImpactSound plays when target type is not mushroom', () => {
+    let type = 'somethingElse';
+    spyOn(window, 'getAvailableImpactSound').and.returnValue({play : function(){}});
+
+    testObj.playImpactSound(type);
+
+    expect(window.getAvailableImpactSound).toHaveBeenCalled();
+  });
+
+  it('updateTargetAppearance adjusts height of target when target type is mushroom', () => {
+    let baseHeight = knobsAndLevers.mushroomSide;
+    let target1 = {type : 'mushroom', height : baseHeight};
+    let target2 = {type : 'somethingElse', height : baseHeight};
+
+    testObj.updateTargetAppearance(target1);
+    testObj.updateTargetAppearance(target2);
+
+    expect(target1.height).toEqual(0.75 * baseHeight);
+    expect(target2.height).toEqual(baseHeight);
+  });
+
+  it('processKill delegates to metrics functions', () => {
+    spyOn(metrics, 'addNewFloatingPoint');
+    spyOn(metrics, 'changeScore');
+    spyOn(testObj, 'handleCentipedeKill');
+
+    target = {type : 'notACentipede', getMiddleX : function(){}, getMiddleY : function(){}};
+    testObj.processKill(target);
+
+    expect(metrics.addNewFloatingPoint).toHaveBeenCalled();
+    expect(metrics.changeScore).toHaveBeenCalled();
+    expect(testObj.handleCentipedeKill).toHaveBeenCalled();
+  });
+
+  it('handleCentipedeKill creates mushroom and counts kill', () => {
+    target = {type : 'centipede', x : 1, y : 1};
+    centipedes.numberKilled = 0;
+    mushrooms.mushrooms = [];
+
+    testObj.handleCentipedeKill(target);
+
+    expect(centipedes.numberKilled).toEqual(1);
+    expect(mushrooms.mushrooms.length).toEqual(1);
+  });
+
+  it('removeUsedLasers removes used lasers when remove is true', () => {
+    lasers.lasers = [{remove: true}, {remove: false}]
+
+    testObj.removeUsedLasers();
+
+    expect(lasers.lasers.length).toEqual(1);
+  });
+
+  it('getPlayerEnemies combines multiple enemy Arrays', () => {
+    centipedes.centipedes = [];
+    intervalCreatures.flies = ['anObj'];
+    spiders.spiders = ['anObj'];
+
+    targets = testObj.getPlayerEnemies();
+
+    expect(targets.length).toEqual(2);
+  });
+
+  it('checkGamePieceVsEnemies does not process if playerCollisions are disabled', () => {
     knobsAndLevers.playerCollisionsEnabled = false;
     game.gameOver = false;
     player.init();
-    spyOn(player.gamePiece, 'crashWith').and.callThrough();
+    spyOn(player.gamePiece, 'crashWith').and.returnValue(true);
     spyOn(testObj, 'killPlayer');
+    targets = [{remove: true, crashWith : function(target){}}];
 
-    targets = [createAnObjectFromLaserArgs()];
-
-    testObj.checkGamePieceVsEnemy(targets);
+    testObj.checkGamePieceVsEnemies(targets);
 
     expect(testObj.killPlayer).not.toHaveBeenCalled();
     expect(player.gamePiece.crashWith).not.toHaveBeenCalled();
     expect(game.gameOver).toBeFalsy();
   });
-  it('checkGamePieceVsEnemy calls killsPlayer if crashWith', () => {
+  it('checkGamePieceVsEnemies calls killsPlayer if crashWith', () => {
     knobsAndLevers.playerCollisionsEnabled = true;
     game.gameOver = false;
     player.init();
-    spyOn(player.gamePiece, 'crashWith').and.callThrough();
+    spyOn(player.gamePiece, 'crashWith').and.returnValue(true);
     spyOn(testObj, 'killPlayer');
     game.init();
     metrics.init();
-    target = createAnObjectFromLaserArgs();
-    target.x = player.gamePiece.x;
-    target.y = player.gamePiece.y;
-    targets = [target];
-
-    testObj.checkGamePieceVsEnemy(targets);
+    targets = [{remove: true, crashWith : function(target){}}];
+    testObj.checkGamePieceVsEnemies(targets);
 
     expect(testObj.killPlayer).toHaveBeenCalled();
     expect(player.gamePiece.crashWith).toHaveBeenCalled();
@@ -137,49 +236,40 @@ describe('Testing collision functions', () => {
     spyOn(testObj, 'killPlayer');
     game.init();
     metrics.init();
-    targets = [];
 
-    testObj.checkGamePieceVsEnemy(targets);
+    testObj.checkGamePieceVsEnemies([]);
 
     expect(testObj.killPlayer).not.toHaveBeenCalled();
     expect(player.gamePiece.crashWith).not.toHaveBeenCalled();
     expect(game.gameOver).toBeFalsy();
   });
-  it('gameOver is set to true if lives <= 0', () => {
-    knobsAndLevers.playerCollisionsEnabled = true;
+  it('killPlayer kills player and gameOver when one life', () => {
     game.gameOver = false;
-    player.init();
-    spyOn(player.gamePiece, 'crashWith').and.callThrough();
-    spyOn(testObj, 'killPlayer');
-    game.init();
-    metrics.init();
-    metrics.lives = 0;
-    target = createAnObjectFromLaserArgs();
-    target.x = player.gamePiece.x;
-    target.y = player.gamePiece.y;
-    targets = [target];
+    metrics.lives = 1;
 
-    testObj.checkGamePieceVsEnemy(targets);
+    testObj.killPlayer();
 
-    expect(testObj.killPlayer).toHaveBeenCalled();
-    expect(player.gamePiece.crashWith).toHaveBeenCalled();
+    expect(metrics.lives).toEqual(0);
+    expect(player.died).toBeTruthy();
     expect(game.gameOver).toBeTruthy();
   });
-  it('killPlayer kills player', () => {
-    player.init();
-    game.init();
-    metrics.init();
-    let livesBefore = metrics.lives;
-    let livesAfter = livesBefore - 1;
+  it('killPlayer kills player and no game over when more than one life', () => {
+    game.gameOver = false;
+    metrics.lives = 2;
+
     testObj.killPlayer();
-    expect(metrics.lives).toEqual(livesAfter);
+
+    expect(metrics.lives).toEqual(1);
     expect(player.died).toBeTruthy();
+    expect(game.gameOver).toBeFalsy();
   });
   it('withMushrooms collides with mushrooms', () => {
     mushrooms.mushrooms = [createAnObjectFromLaserArgs()];
     let laser = createAnObjectFromLaserArgs();
     spyOn(laser, 'crashWith').and.callThrough();
+
     let result = testObj.withMushrooms(laser);
+
     expect(laser.crashWith).toHaveBeenCalled();
     expect(result).toBeTruthy();
   });
@@ -188,7 +278,9 @@ describe('Testing collision functions', () => {
     let laser = createAnObjectFromLaserArgs();
     spyOn(laser, 'crashWith').and.callThrough();
     laser.x = mushrooms.mushrooms[0].x + mushrooms.mushrooms[0].x * 2;
+
     let result = testObj.withMushrooms(laser);
+
     expect(laser.crashWith).toHaveBeenCalled();
     expect(result).toBeFalsy();
   });
@@ -196,31 +288,18 @@ describe('Testing collision functions', () => {
     mushrooms.mushrooms = [];
     let laser = createAnObjectFromLaserArgs();
     spyOn(laser, 'crashWith').and.callThrough();
+
     let result = testObj.withMushrooms(laser);
+
     expect(laser.crashWith).not.toHaveBeenCalled();
     expect(result).toBeFalsy();
   });
   it('removeDestroyedTargets removes destroyed targets', () => {
-    mushrooms.mushrooms = [createAnObjectWithZeroHitPoints()];
-    centipedes.centipedes = [createAnObjectWithZeroHitPoints()];
-    intervalCreatures.worms = [createAnObjectWithZeroHitPoints()];
-    intervalCreatures.flies = [createAnObjectWithZeroHitPoints()];
-    spiders.spiders = [createAnObjectWithZeroHitPoints()];
-
-    testObj.removeDestroyedTargets();
-
-    expect(mushrooms.mushrooms.length).toEqual(0);
-    expect(centipedes.centipedes.length).toEqual(0);
-    expect(intervalCreatures.worms.length).toEqual(0);
-    expect(intervalCreatures.flies.length).toEqual(0);
-    expect(spiders.spiders.length).toEqual(0);
-  });
-  it('removeDestroyedTargets does not remove intact targets', () => {
-    mushrooms.mushrooms = [createAnObjectWithOneHitPoint()];
-    centipedes.centipedes = [createAnObjectWithOneHitPoint()];
-    intervalCreatures.worms = [createAnObjectWithOneHitPoint()];
-    intervalCreatures.flies = [createAnObjectWithOneHitPoint()];
-    spiders.spiders = [createAnObjectWithOneHitPoint()];
+    mushrooms.mushrooms = [{hitPoints : 0}, {hitPoints : 1}];
+    centipedes.centipedes = [{hitPoints : 0}, {hitPoints : 1}];
+    intervalCreatures.worms = [{hitPoints : 0}, {hitPoints : 1}];
+    intervalCreatures.flies = [{hitPoints : 0}, {hitPoints : 1}];
+    spiders.spiders = [{hitPoints : 0}, {hitPoints : 1}];
 
     testObj.removeDestroyedTargets();
 

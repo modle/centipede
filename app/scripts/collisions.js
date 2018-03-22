@@ -4,15 +4,18 @@ floatingPointCycleDuration = 50;
 
 var collisions = {
   check : function() {
-    this.checkLaser(mushrooms.mushrooms);
-    this.checkLaser(centipedes.centipedes);
-    this.checkLaser(intervalCreatures.worms);
-    this.checkLaser(intervalCreatures.flies);
-    this.checkLaser(spiders.spiders);
-    this.checkGamePieceVsEnemy(centipedes.centipedes);
-    this.checkGamePieceVsEnemy(spiders.spiders);
-    this.checkGamePieceVsEnemy(intervalCreatures.flies);
+    this.checkLaser(this.getLaserTargets());
+    this.checkGamePieceVsEnemies(this.getPlayerEnemies());
     this.removeDestroyedTargets();
+  },
+  getLaserTargets : function() {
+    targets = [];
+    targets.push(...mushrooms.mushrooms);
+    targets.push(...centipedes.centipedes);
+    targets.push(...intervalCreatures.worms);
+    targets.push(...intervalCreatures.flies);
+    targets.push(...spiders.spiders);
+    return targets;
   },
   checkLaser : function(targets) {
     lasers.lasers.map(laser =>
@@ -25,20 +28,15 @@ var collisions = {
     );
     this.removeUsedLasers();
   },
-  removeUsedLasers : function() {
-    lasers.lasers = lasers.lasers.filter(laser => !laser.remove);
-  },
   processImpact : function(target) {
-    target.hitPoints--;
+    this.damageTarget(target);
     this.playImpactSound(target.type);
     this.updateTargetAppearance(target);
+  },
+  damageTarget : function(target) {
+    target.hitPoints--;
     if (target.hitPoints <= 0) {
       this.processKill(target);
-    };
-  },
-  updateTargetAppearance(target) {
-    if (target.type == 'mushroom') {
-      target.height -= knobsAndLevers.mushroomSide * 0.25;
     };
   },
   playImpactSound : function(type) {
@@ -46,32 +44,50 @@ var collisions = {
       getAvailableImpactSound().play();
     };
   },
+  updateTargetAppearance(target) {
+    if (target.type == 'mushroom') {
+      target.height -= knobsAndLevers.mushroomSide * 0.25;
+    };
+  },
   processKill : function(target) {
     metrics.addNewFloatingPoint(target.getMiddleX(), target.getMiddleY(), target.pointValue, "gain");
     metrics.changeScore(target.pointValue);
+    this.handleCentipedeKill(target);
+  },
+  handleCentipedeKill(target) {
     if (target.type === 'centipede') {
       mushrooms.mushrooms.push(mushrooms.generate(target.x, target.y));
       centipedes.numberKilled += 1;
-    }
+    };
   },
-  checkGamePieceVsEnemy : function(targets) {
+  removeUsedLasers : function() {
+    lasers.lasers = lasers.lasers.filter(laser => !laser.remove);
+  },
+  getPlayerEnemies : function() {
+    targets = [];
+    targets.push(...centipedes.centipedes);
+    targets.push(...spiders.spiders);
+    targets.push(...intervalCreatures.flies);
+    return targets;
+  },
+  checkGamePieceVsEnemies : function(targets) {
     if (!knobsAndLevers.playerCollisionsEnabled) {
       return;
     };
     targets.forEach(target => {
       if (player.gamePiece.crashWith(target)) {
         this.killPlayer();
-        if (metrics.lives > 0) {
-          return;
-        }
-        // TODO should gameOver check be here or in metrics?
-        game.gameOver = true;
-      }
+        return;
+      };
     });
   },
   killPlayer : function() {
     player.died = true;
     metrics.lives -= 1;
+    if (metrics.lives <= 0) {
+      game.gameOver = true;
+      return;
+    };
   },
   withMushrooms : function(obj) {
     for (i = 0; i < mushrooms.mushrooms.length; i += 1) {
