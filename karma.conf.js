@@ -6,7 +6,7 @@ module.exports = function(config) {
       '../canvas-libs/app/scripts/*.js',
       'app/scripts/*.js',
       'app/scripts/components/*.js',
-      {pattern: 'app/static/media/sounds/*.mp3', included: false, served: true, watched: false, nocache: true},
+      {pattern: 'app/static/media/sounds/*.mp3', included: false, served: true, watched: false, nocache: false},
       'test/spec/*.js',
       'test/spec/components/*.js'
     ],

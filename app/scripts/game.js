@@ -27,6 +27,9 @@ var game = {
     this.gameArea.clear();
     this.gameArea.frameNo += 1;
   },
+  getFrameNo : function() {
+    return this.gameArea.frameNo;
+  },
   manageLevel : function() {
     this.resetSomeThings();
     this.levelOver = false;

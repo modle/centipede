@@ -2,7 +2,6 @@ describe('Testing game functions', () => {
   beforeEach(function() {
     testObj = Object.assign({}, game);
     testObj.init();
-    game.init();
     spyOn(testObj.gameArea, 'start');
     spyOn(testObj.gameArea, 'stop');
     knobsAndLevers.init();

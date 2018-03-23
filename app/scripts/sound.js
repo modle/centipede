@@ -32,7 +32,6 @@ function manageSounds() {
 
 function manageCentipedeSounds() {
   if (centipedes.centipedes != false) {
-    console.log(sounds.centipede);
     sounds.centipede.play();
   };
 };
