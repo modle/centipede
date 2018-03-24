@@ -241,7 +241,6 @@ describe('Testing spiders functions', () => {
     game.init();
     game.gameArea.canvas.width = testWidth;
     testObj.spiders = [{x : outsideWidth}, {x : insideWidth}];
-    console.log(testObj.spiders);
 
     expect(testObj.spiders.length).toBe(2);
 
