@@ -89,6 +89,7 @@ describe('Testing game functions', () => {
   it('manageDeath manages death', () => {
     spyOn(testObj, 'resetMoreThings');
     texts.init();
+    game.init();
     spyOn(texts.diedText, 'update');
     let expectedText = "";
     testObj.manageDeath();

@@ -47,7 +47,6 @@ describe('Testing mushrooms functions', () => {
   it('update calls update on mushroom objects', () => {
     testObj.mushrooms = [];
     testObj.spawn(5);
-    console.log(testObj.mushrooms);
     testObj.mushrooms.forEach( mushroom =>
       spyOn(mushroom, 'update')
     );

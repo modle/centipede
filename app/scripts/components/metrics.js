@@ -1,6 +1,8 @@
 /*jslint white: true */
 var metrics = {
   scoreValue : 0,
+  floatingPoints : [],
+  floatingPointCycleDuration : 50,
   init : function() {
     this.lives = knobsAndLevers.defaultLives;
     this.currentLevel = knobsAndLevers.startLevel;
@@ -17,32 +19,30 @@ var metrics = {
     }
   },
   addNewFloatingPoint : function(x, y, points, action) {
-    symbol = "+";
-    color = "black";
-    if (action == "lose") {
-      symbol = "-";
-      color = "red";
-    }
-    let pointArgs = {
+    let newPoint = this.getNewPoint(x, y);
+    newPoint.color = action == 'lose' ? 'red' : 'black';
+    newPoint.text = (action == 'lose' ? '-' : '+') + points;
+    newPoint.cycleNumber = 0;
+    this.floatingPoints.push(newPoint);
+  },
+  getNewPoint : function(x, y) {
+    let args = {
       fontSize : (knobsAndLevers.gridSquareSideLength * 0.8) + "px",
       fontType : "Arial",
-      color : color,
+      color : "black",
       x : x,
       y : y,
-      extraArgs : {type : "text"}
+      extraArgs : {type : "text"},
     };
-    newPoint = new Component(pointArgs);
-    newPoint.text = symbol + points;
-    newPoint.cycleNumber = 0;
-    floatingPoints.push(newPoint);
+    return new Component(args);
   },
   manage : function() {
-    for (i = 0; i < floatingPoints.length; i += 1) {
-      floatingPoints[i].cycleNumber += 1;
-      floatingPoints[i].y -= 1;
-      floatingPoints[i].update();
-      if (floatingPoints[i].cycleNumber > floatingPointCycleDuration) {
-        floatingPoints.splice(i, 1);
+    for (i = 0; i < this.floatingPoints.length; i += 1) {
+      this.floatingPoints[i].cycleNumber += 1;
+      this.floatingPoints[i].y -= 1;
+      this.floatingPoints[i].update();
+      if (this.floatingPoints[i].cycleNumber > this.floatingPointCycleDuration) {
+        this.floatingPoints.splice(i, 1);
       }
     }
   },

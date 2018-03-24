@@ -1,7 +1,4 @@
 /*jslint white: true */
-var floatingPoints = [];
-floatingPointCycleDuration = 50;
-
 var collisions = {
   check : function() {
     this.checkLaser(this.getLaserTargets());
