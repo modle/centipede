@@ -42,7 +42,7 @@ var knobsAndLevers = {
   playerCollisionsEnabled : true,
   centipede : {
     baseSpeed : 10,
-    maxNumber : 0,
+    maxNumber : 10,
     args : {
       color : "blue",
       y : 0,
@@ -56,8 +56,8 @@ var knobsAndLevers = {
   gamePieceWidth : 15,
   gamePieceHeight : 15,
   laser : {
-    speed : 20,
-    maxNumber : 20,
+    speed : 5,
+    maxNumber : 1,
     interval : 10,
     args : {
       color : "purple",
@@ -66,10 +66,10 @@ var knobsAndLevers = {
   },
   worms : {
     maxNumber: 1,
-    pointValue : 50,
+    pointValue : 1000,
     interval : {
-      min: 1000,
-      max: 2000,
+      min: 2000,
+      max: 3000,
     },
     args : {
       color : "orange",
@@ -81,10 +81,10 @@ var knobsAndLevers = {
   },
   flies : {
     maxNumber: 1,
-    pointValue : 50,
+    pointValue : 200,
     interval : {
-      min: 1000,
-      max: 2000,
+      min: 2000,
+      max: 3000,
     },
     mushroomCreateInterval : 75,
     args : {
@@ -97,7 +97,7 @@ var knobsAndLevers = {
   },
   spider : {
     maxNumber : 1,
-    pointValue: 200,
+    pointValue: 400,
     interval : {
       min: 500,
       max: 1000,
@@ -121,5 +121,5 @@ var knobsAndLevers = {
     extraArgs : {type:"background"},
   },
   gameInfoTextHeight : 40,
-  defaultLives : 1
+  defaultLives : 3
 };

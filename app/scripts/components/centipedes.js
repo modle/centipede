@@ -35,7 +35,7 @@ var centipedes = {
     centipede.reverseDirectionX = false;
     centipede.reverseDirectionY = false;
     centipede.moveVertically = true;
-    centipede.pointValue = 5 + metrics.currentLevel;
+    centipede.pointValue = 50 * metrics.currentLevel;
     centipede.hitPoints = 1;
     centipede.updated = false;
     return centipede;
