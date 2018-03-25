@@ -28,7 +28,7 @@ describe('Testing centipedes functions', () => {
     let expected = false;
     game.init();
     game.gameArea.frameNo = 2;
-    testObj.numberSpawned = 10;
+    testObj.numberSpawned = knobsAndLevers.centipede.maxNumber + metrics.currentLevel;
 
     let actual = testObj.eligibleToSpawn();
 
@@ -61,7 +61,7 @@ describe('Testing centipedes functions', () => {
     metrics.init();
 
     let segment = testObj.construct();
-    let expectedPointValue = 5 + metrics.currentLevel;
+    let expectedPointValue = 50 * metrics.currentLevel;
 
     expect(segment.reverseDirectionY).toBe(false);
     expect(segment.pointValue).toBe(expectedPointValue);
