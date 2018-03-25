@@ -14,61 +14,59 @@ function Component(args) {
   this.color = args.color;
   if (Array.from(Object.keys(args)).includes('extraArgs')) {
     this.type = args.extraArgs.type;
+    this.fontSize = args.fontSize;
+    this.fontType = args.fontType;
     if (Array.from(Object.keys(args.extraArgs)).includes('speed')) {
       this.speedX = args.extraArgs.speed.x;
       this.speedY = args.extraArgs.speed.y;
     };
   };
-  if (Array.from(Object.keys(args)).includes('constructorFunctions')) {
-    Array.from(Object.keys(args.constructorFunctions))
-      .forEach(theFunction => args.constructorFunctions[theFunction]());
-  };
   this.update = function() {
     if (this.background) {
       this.background.update();
     }
-    ctx = game.gameArea.context;
+    let ctx = game.gameArea.context;
     ctx.fillStyle = this.color;
     if (this.type == "text") {
-      this.makeText();
+      this.makeText(ctx);
     } else if (this.type == "centipede") {
-      this.makeACentipede();
+      this.makeACentipede(ctx);
     } else {
-      this.makeARectangle();
+      this.makeARectangle(ctx);
     };
   };
   this.stop = function() {
     this.speedX = 0;
     this.speedY = 0;
   },
-  this.makeText = function() {
-    ctx.font = args.fontSize + " " + args.fontType;
+  this.makeText = function(ctx) {
+    ctx.font = this.fontSize + " " + this.fontType;
     ctx.fillText(this.text, this.x, this.y);
   };
-  this.makeACentipede = function() {
+  this.makeACentipede = function(ctx) {
     ctx.beginPath();
-    vertices = this.getCentipedeVertices();
+    let vertices = this.getCentipedeVertices(ctx);
     ctx.moveTo(vertices['x1'], vertices['y1']);
     ctx.lineTo(vertices['x2'], vertices['y2']);
     ctx.lineTo(vertices['x3'], vertices['y3']);
     ctx.fill();
   };
-  this.getCentipedeVertices = function() {
+  this.getCentipedeVertices = function(ctx) {
     if (this.moveVertically) {
       if (this.directionY > 0) {
         return getDownTriangle(ctx, this);
-      } else if (this.directionY < 0) {
+      } else {
         return getUpTriangle(ctx, this);
       };
     } else {
       if (this.directionX > 0) {
         return getRightTriangle(ctx, this);
-      } else if (this.directionX < 0) {
+      } else {
         return getLeftTriangle(ctx, this);
       };
     };
   };
-  this.makeARectangle = function() {
+  this.makeARectangle = function(ctx) {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   };
   this.newPos = function() {
@@ -76,14 +74,14 @@ function Component(args) {
     this.y += this.speedY;
   };
   this.crashWith = function(otherObject) {
-    var crash = true;
+    let crash = true;
     if (this.getBottom() < otherObject.getTop() || this.getTop() > otherObject.getBottom() || this.getRight() < otherObject.getLeft() || this.getLeft() > otherObject.getRight()) {
       crash = false;
     };
     return crash;
   };
   this.crashWithSidesOnly = function(otherObject) {
-    var crash = true;
+    let crash = true;
     // delay collision slightly by allowing objects to overlap by 1 pixel
     if (this.getRight() < otherObject.getLeft() + 1 || this.getLeft() > otherObject.getRight() - 1) {
       crash = false;

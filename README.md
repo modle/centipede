@@ -18,6 +18,14 @@ chmod 744 run
 # Running Jasmine test suite
 
 ```
-chmod 744 run-tests
-./run-tests
+chmod 744 run-jasmine-specs
+./run-jasmine-specs
+```
+
+# Running Karma coverage tests
+
+```
+npm install
+chmod 744 run-karma-coverage
+./run-karma-coverage
 ```

@@ -7,23 +7,47 @@ var lasers = Object.create(displayObjectPrototype, {
   },
   spawn : {
     value : function() {
-      if (this.lasers.length === knobsAndLevers.laser.maxNumber || !supporting.everyinterval(game.gameArea.frameNo, knobsAndLevers.laser.interval) || !controls.isFiring()) {
+      if (!this.eligibleToSpawn()) {
         return;
-      }
-      let theGamePiece = player.gamePiece;
-      let laserArgs = knobsAndLevers.laser.args;
-      let keysDown = game.keysDown;
-      laserArgs.extraArgs.speed.y = 0;
-      laserArgs.x = theGamePiece.x + theGamePiece.width / 2;
-      laserArgs.y = theGamePiece.y + theGamePiece.height / 2;
-      laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed;
-      if (laserArgs.extraArgs.speed.y !== 0) {
-        getAvailableLaserSound().play();
-        this.lasers.push(new Component(laserArgs));
-      }
+      };
+      this.generate();
+      playAvailableLaserSound();
     },
     writable : false,
     enumerable : true
+  },
+  eligibleToSpawn : {
+    value : function() {
+      let eligible = this.lasers.length < knobsAndLevers.laser.maxNumber
+        && supporting.everyinterval(
+          game.gameArea.frameNo, knobsAndLevers.laser.interval
+        )
+        && controls.isFiring();
+      return eligible;
+    },
+    writable : false,
+    enumerable : true
+  },
+  generate : {
+    value : function() {
+      this.lasers.push(this.build());
+    },
+    writable : true,
+    enumerable : true,
+  },
+  build : {
+    value : function() {
+      let laserArgs = knobsAndLevers.laser.args;
+      laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed;
+      if (player.gamePiece == undefined) {
+        throw('player.gamePiece is undefined');
+      };
+      laserArgs.x = player.gamePiece.x + player.gamePiece.width / 2;
+      laserArgs.y = player.gamePiece.y;
+      return new Component(laserArgs);
+    },
+    writable : true,
+    enumerable : true,
   },
   update : {
     value : function() {
@@ -46,7 +70,7 @@ var lasers = Object.create(displayObjectPrototype, {
     value : function() {
       this.lasers = [];
     },
-    writable : false,
+    writable : true,
     enumerable : true
   }
 });

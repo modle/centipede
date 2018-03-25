@@ -22,7 +22,8 @@ var hud = {
     metrics.reset();
     centipedes.clear();
     spiders.clear();
-    worms.clear();
+    intervalCreatures.clear();
+    intervalCreatures.clear();
     mushrooms.clear();
   },
 };

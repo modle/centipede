@@ -1,6 +1,5 @@
 var game = {
   paused : true,
-  levelOver : false,
   gameOver : false,
   delayed : 0,
   delayEndTime : 300,
@@ -21,14 +20,15 @@ var game = {
     hud.reset();
     this.start();
   },
-  checkLevelEndConditions : function() {
-    if (centipedes.numberSpawned === centipedes.numberKilled && this.gameArea.frameNo !== 0) {
-      this.levelOver = true;
-    }
+  levelIsOver : function() {
+    return centipedes.numberSpawned === centipedes.numberKilled && this.gameArea.frameNo !== 0;
   },
   startNextFrame : function() {
     this.gameArea.clear();
     this.gameArea.frameNo += 1;
+  },
+  getFrameNo : function() {
+    return this.gameArea.frameNo;
   },
   manageLevel : function() {
     this.resetSomeThings();
@@ -43,10 +43,7 @@ var game = {
     sounds.playerDied.play();
   },
   managePause : function() {
-    texts.pausedMessage.text = "Paused: Spacebar to Continue";
-    if (this.gameArea.frameNo === 0) {
-      texts.pausedMessage.text = "Press Spacebar to Start";
-    }
+    texts.pausedMessage.text = "Paused";
     texts.pausedMessage.update();
     stopAllSounds();
   },

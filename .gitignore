@@ -1,3 +1,5 @@
 jslint-output
 jshint-output
 *.mp4
+node_modules/
+coverage/

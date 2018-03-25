@@ -9,20 +9,30 @@ var mushrooms = {
   },
   spawn : function(amount) {
     while (this.mushrooms.length < amount) {
-      x = game.gameArea.xVertices[Math.floor(Math.random() * game.gameArea.xVertices.length)];
-      y = game.gameArea.yVertices[Math.floor(Math.random() * game.gameArea.yVertices.length)];
-      if (x < game.gameArea.canvas.width - knobsAndLevers.coordinateScaleFactor) {
-        this.mushrooms.push(this.generate(x, y));
-      };
+      this.add(this.getCoordinates());
     };
   },
-  generate : function(x, y) {
+  add : function(coordinates) {
+    if (coordinates.x == undefined || coordinates.y == undefined) {
+      throw('coordinate error:', coordinates);
+    };
+    if (coordinates.x < game.gameArea.canvas.width - knobsAndLevers.coordinateScaleFactor) {
+      this.mushrooms.push(this.generate(coordinates));
+    };
+  },
+  getCoordinates : function() {
+    let coordinates = {x : 0, y : 0};
+    coordinates.x = game.gameArea.xVertices[Math.floor(Math.random() * game.gameArea.xVertices.length)];
+    coordinates.y = game.gameArea.yVertices[Math.floor(Math.random() * game.gameArea.yVertices.length)];
+    return coordinates;
+  },
+  generate : function(coordinates) {
     let mushroomArgs = {
       width: knobsAndLevers.mushroomSide,
       height : knobsAndLevers.mushroomSide,
       color : "teal",
-      x : x + knobsAndLevers.coordinateScaleFactor,
-      y : y + knobsAndLevers.coordinateScaleFactor,
+      x : coordinates.x + knobsAndLevers.coordinateScaleFactor,
+      y : coordinates.y + knobsAndLevers.coordinateScaleFactor,
       extraArgs : {type : "mushroom"}
     };
     mushroom = new Component(mushroomArgs);

@@ -43,7 +43,6 @@ var knobsAndLevers = {
   centipede : {
     baseSpeed : 10,
     maxNumber : 10,
-    interval : 10,
     args : {
       color : "blue",
       y : 0,
@@ -67,41 +66,41 @@ var knobsAndLevers = {
   },
   worms : {
     maxNumber: 1,
-    pointValue : 50,
+    pointValue : 1000,
     interval : {
-      min: 3000,
-      max: 5000,
+      min: 2000,
+      max: 3000,
     },
     args : {
       color : "orange",
       extraArgs : {type : "worm", speed : {x : 2, y : 0}},
       constructorFunctions : {
-        getY : function() { knobsAndLevers.worms.args.y = supporting.getRandom(0, knobsAndLevers.canvasHeight / 5) },
+        setY : function() { knobsAndLevers.worms.args.y = supporting.getRandom(0, knobsAndLevers.canvasHeight / 5) },
       }
     },
   },
   flies : {
     maxNumber: 1,
-    pointValue : 50,
+    pointValue : 200,
     interval : {
       min: 2000,
-      max: 5000,
+      max: 3000,
     },
     mushroomCreateInterval : 75,
     args : {
       color : "green",
       extraArgs : {type : "fly", speed : {x : 0, y : 2}},
       constructorFunctions : {
-        getX : function() { knobsAndLevers.flies.args.x = supporting.getRandom(0, knobsAndLevers.canvasWidth) },
+        setX : function() { knobsAndLevers.flies.args.x = supporting.getRandom(0, knobsAndLevers.canvasWidth) },
       }
     },
   },
   spider : {
     maxNumber : 1,
-    pointValue: 25,
+    pointValue: 400,
     interval : {
-      min: 1000,
-      max: 2000,
+      min: 500,
+      max: 1000,
     },
     args : {
       color : "fuchsia",
@@ -112,7 +111,7 @@ var knobsAndLevers = {
   maxMushrooms : 50,
   baseTextParams : {
     fontSize : "30px",
-    fontType : "Consolas",
+    fontType : "Arial",
     color : "black",
     extraArgs : {type:"text"},
   },
