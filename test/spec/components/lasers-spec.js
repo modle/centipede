@@ -42,6 +42,7 @@ describe('Testing lasers functions', () => {
   });
 
   it('eligibleToSpawn returns true if lasers is not at max', () => {
+    game.init();
     testObj.lasers = [];
     spyOn(supporting, 'everyinterval').and.returnValue(true);
     spyOn(controls, 'isFiring').and.returnValue(true);
@@ -66,10 +67,10 @@ describe('Testing lasers functions', () => {
   });
 
   it('build laser builds a laser', () => {
+    knobsAndLevers.init();
     player.init();
 
     let laser = testObj.build();
-    console.log(player.gamePiece.width);
     expect(laser.speedY).toBe(-knobsAndLevers.laser.speed);
     expect(laser.x).toBe(player.gamePiece.x + player.gamePiece.width / 2);
     expect(laser.y).toBe(player.gamePiece.y);

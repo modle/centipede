@@ -1,6 +1,7 @@
 describe('Testing mushrooms functions', () => {
   beforeEach(function () {
     testObj = Object.assign({}, mushrooms);
+    knobsAndLevers.init();
     game.init();
   });
   it('manage calls spawn and update on frame 1', () => {

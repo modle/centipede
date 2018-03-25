@@ -93,8 +93,6 @@ describe('Testing component functions', () => {
     game.init();
     let context = game.gameArea.canvas.getContext("2d");
     testComponent.makeText(context);
-    console.log(context.font);
-    console.log(testComponent);
     expect(context.font).toEqual('10px Arial');
   });
   xit('makeACentipede makes a centipede', () => {

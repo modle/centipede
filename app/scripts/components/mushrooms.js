@@ -14,7 +14,6 @@ var mushrooms = {
   },
   add : function(coordinates) {
     if (coordinates.x == undefined || coordinates.y == undefined) {
-      console.log(coordinates);
       throw('coordinate error:', coordinates);
     };
     if (coordinates.x < game.gameArea.canvas.width - knobsAndLevers.coordinateScaleFactor) {
