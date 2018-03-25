@@ -15,13 +15,15 @@ var intervalCreatures = {
         // return acts like a continue in a forEach
         return;
       }
-      this.clearOutsideCanvas(creature);
+      this.clearOutsideCanvas(this[creature]);
       this.update(creature);
-      this.dropMushrooms(creature);
+      if (creature == 'flies') {
+        this.dropMushrooms();
+      };
     });
   },
-  dropMushrooms(creature) {
-    if (creature != 'flies' || !supporting.everyinterval(game.gameArea.frameNo, knobsAndLevers[creature].mushroomCreateInterval)) {
+  dropMushrooms : function() {
+    if (!this.eligibleToDrop()) {
       return;
     };
     this.flies.forEach(fly => {
@@ -29,10 +31,16 @@ var intervalCreatures = {
         // return acts like a continue in a forEach
         return;
       };
-      let mushroom = mushrooms.generate(fly.x, fly.y);
+      let mushroom = mushrooms.generate({x : fly.x, y : fly.y});
       mushroom.color = 'purple';
       mushrooms.mushrooms.push(mushroom);
     });
+  },
+  eligibleToDrop : function() {
+    return supporting.everyinterval(
+        game.gameArea.frameNo,
+        knobsAndLevers.flies.mushroomCreateInterval
+      );
   },
   spawnCreatureAtIntervals(creature) {
     if (supporting.everyinterval(game.gameArea.frameNo, this.intervals[creature])) {
@@ -45,6 +53,7 @@ var intervalCreatures = {
       return
     };
     var spawnedCreature = new Component(knobsAndLevers[creature].args);
+    console.log('spawnedCreature is', spawnedCreature);
     spawnedCreature.pointValue = knobsAndLevers[creature].pointValue * metrics.currentLevel;
     spawnedCreature.hitPoints = 1;
     this[creature].push(spawnedCreature);
@@ -56,12 +65,13 @@ var intervalCreatures = {
       updatingCreature[i].update();
     };
   },
-  clearOutsideCanvas : function(creature) {
-    if (this[creature] == false) { return; };
-    let canvas = game.gameArea.canvas;
-    this[creature] = this[creature].filter(target => {
-      return target.x < canvas.width && target.y < canvas.height;
+  clearOutsideCanvas : function(creatures) {
+    if (creatures == false) { return; };
+    let filteredCreatures = creatures.filter(target => {
+      target.x < game.gameArea.canvas.width
+        && target.y < game.gameArea.canvas.height;
     });
+    return filteredCreatures;
   },
   clear : function() {
     this.worms = [];

@@ -74,6 +74,7 @@ function prepTheCanvas() {
 };
 
 function manageGameObjects() {
+  // console.log(intervalCreatures.flies);
   mushrooms.manage();
   centipedes.manage();
   intervalCreatures.manage();

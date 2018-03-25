@@ -20,8 +20,8 @@ function GameArea() {
     this.yVertices = this.getYVertices();
   };
   this.getXVertices = function() {
-    x = 0;
-    vertices = [];
+    let x = 0;
+    let vertices = [];
     while (x < this.canvas.width) {
       vertices.push(Math.ceil(x));
       x += this.gridSquareSideLength;
@@ -29,8 +29,8 @@ function GameArea() {
     return vertices;
   };
   this.getYVertices = function() {
-    y = this.firstMushroomLayer;
-    vertices = [];
+    let y = this.firstMushroomLayer;
+    let vertices = [];
     while (y < this.canvas.height * 0.75) {
       vertices.push(Math.ceil(y));
       y += this.gridSquareSideLength;

@@ -1,9 +1,9 @@
 describe('Testing mushrooms functions', () => {
   beforeEach(function () {
     testObj = Object.assign({}, mushrooms);
+    game.init();
   });
   it('manage calls spawn and update on frame 1', () => {
-    game.init();
     game.gameArea.frameNo = 1;
     spyOn(testObj, 'spawn');
     spyOn(testObj, 'update');
@@ -14,7 +14,6 @@ describe('Testing mushrooms functions', () => {
     expect(testObj.update).toHaveBeenCalled();
   });
   it('manage calls update every frame', () => {
-    game.init();
     game.gameArea.frameNo = 0;
     spyOn(testObj, 'spawn');
     spyOn(testObj, 'update');
@@ -26,7 +25,6 @@ describe('Testing mushrooms functions', () => {
   });
   it('spawn creates the exected number of mushrooms', () => {
     testObj.mushrooms = [];
-    game.init();
     game.gameArea.setGridVertices();
     spyOn(testObj, 'generate').and.returnValue({});
     let expected = 10;
@@ -36,7 +34,6 @@ describe('Testing mushrooms functions', () => {
     expect(testObj.mushrooms.length).toBe(expected);
   });
   it('add pushes mushroom to mushrooms if valid', () => {
-    game.init();
     spyOn(testObj, 'generate');
     let coordinates = {x : game.gameArea.canvas.width * 2, y : 0};
 

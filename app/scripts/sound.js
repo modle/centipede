@@ -61,6 +61,10 @@ function manageWormSounds() {
   };
 };
 
+function playAvailableLaserSound() {
+  getAvailableLaserSound().play();
+}
+
 function getAvailableLaserSound() {
   return getAvailableSound(sounds.laserPool);
 }

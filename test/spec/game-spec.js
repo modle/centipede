@@ -5,6 +5,7 @@ describe('Testing game functions', () => {
     spyOn(testObj.gameArea, 'start');
     spyOn(testObj.gameArea, 'stop');
     knobsAndLevers.init();
+    game.init();
   });
   it('game gets constructed', () => {
     expect(testObj).toBeTruthy();
@@ -89,7 +90,6 @@ describe('Testing game functions', () => {
   it('manageDeath manages death', () => {
     spyOn(testObj, 'resetMoreThings');
     texts.init();
-    game.init();
     spyOn(texts.diedText, 'update');
     let expectedText = "";
     testObj.manageDeath();

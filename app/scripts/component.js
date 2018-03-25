@@ -22,6 +22,8 @@ function Component(args) {
     };
   };
   if (Array.from(Object.keys(args)).includes('constructorFunctions')) {
+    // args.constructorFunctions['setX']();
+    // console.log(supporting.getRandom(0, 800));
     Array.from(Object.keys(args.constructorFunctions))
       .forEach(theFunction => args.constructorFunctions[theFunction]());
   };

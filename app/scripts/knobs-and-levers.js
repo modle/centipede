@@ -57,8 +57,8 @@ var knobsAndLevers = {
   gamePieceWidth : 15,
   gamePieceHeight : 15,
   laser : {
-    speed : 20,
-    maxNumber : 50,
+    speed : 5,
+    maxNumber : 1,
     interval : 10,
     args : {
       color : "purple",
@@ -69,14 +69,14 @@ var knobsAndLevers = {
     maxNumber: 1,
     pointValue : 50,
     interval : {
-      min: 3000,
-      max: 5000,
+      min: 1,
+      max: 1,
     },
     args : {
       color : "orange",
       extraArgs : {type : "worm", speed : {x : 2, y : 0}},
       constructorFunctions : {
-        getY : function() { knobsAndLevers.worms.args.y = supporting.getRandom(0, knobsAndLevers.canvasHeight / 5) },
+        setY : function() { knobsAndLevers.worms.args.y = supporting.getRandom(0, knobsAndLevers.canvasHeight / 5) },
       }
     },
   },
@@ -84,15 +84,15 @@ var knobsAndLevers = {
     maxNumber: 1,
     pointValue : 50,
     interval : {
-      min: 2000,
-      max: 5000,
+      min: 1,
+      max: 1,
     },
     mushroomCreateInterval : 75,
     args : {
       color : "green",
       extraArgs : {type : "fly", speed : {x : 0, y : 2}},
       constructorFunctions : {
-        getX : function() { knobsAndLevers.flies.args.x = supporting.getRandom(0, knobsAndLevers.canvasWidth) },
+        setX : function() { knobsAndLevers.flies.args.x = supporting.getRandom(0, knobsAndLevers.canvasWidth) },
       }
     },
   },
@@ -100,8 +100,8 @@ var knobsAndLevers = {
     maxNumber : 1,
     pointValue: 25,
     interval : {
-      min: 1000,
-      max: 2000,
+      min: 1,
+      max: 1,
     },
     args : {
       color : "fuchsia",
