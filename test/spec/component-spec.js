@@ -54,6 +54,15 @@ describe('Testing component functions', () => {
     component.update();
     expect(component.makeText).toHaveBeenCalled();
   });
+  it('background update gets called if background is present', () => {
+    let component = constructComponent({background : {update : function(){}}});
+    spyOn(component.background, 'update');
+    game.init();
+    game.gameArea.context = game.gameArea.canvas.getContext("2d");
+    spyOn(component, 'makeARectangle');
+    component.update();
+    expect(component.background.update).toHaveBeenCalled();
+  });
   it('makeACentipede gets called on update when component type is centipede', () => {
     let component = constructComponent({});
     component.type = 'centipede';
@@ -71,6 +80,63 @@ describe('Testing component functions', () => {
     component.update();
     expect(component.makeARectangle).toHaveBeenCalled();
   });
+
+  function setUpTriangleBuildTest(moveVertically, direction) {
+    let component = constructComponent({});
+    component.moveVertically = moveVertically;
+    component.directionX = direction.x;
+    component.directionY = direction.y;
+    spyOn(window, 'getDownTriangle');
+    spyOn(window, 'getUpTriangle');
+    spyOn(window, 'getRightTriangle');
+    spyOn(window, 'getLeftTriangle');
+    return component;
+  }
+  it('getCentipedeVertices calls getDownTriangle when centipede is moving downward', () => {
+    let component = setUpTriangleBuildTest(true, {x : 0, y : 1});
+    let context = game.gameArea.canvas.getContext("2d");
+
+    component.getCentipedeVertices(context);
+
+    expect(window.getDownTriangle).toHaveBeenCalled();
+    expect(window.getUpTriangle).not.toHaveBeenCalled();
+    expect(window.getRightTriangle).not.toHaveBeenCalled();
+    expect(window.getLeftTriangle).not.toHaveBeenCalled();
+  });
+  it('getCentipedeVertices calls getUpTriangle when centipede is moving upward', () => {
+    let component = setUpTriangleBuildTest(true, {x : 0, y : -1});
+    let context = game.gameArea.canvas.getContext("2d");
+
+    component.getCentipedeVertices(context);
+
+    expect(window.getDownTriangle).not.toHaveBeenCalled();
+    expect(window.getUpTriangle).toHaveBeenCalled();
+    expect(window.getRightTriangle).not.toHaveBeenCalled();
+    expect(window.getLeftTriangle).not.toHaveBeenCalled();
+  });
+  it('getCentipedeVertices calls getRightTriangle when centipede is moving to the right', () => {
+    let component = setUpTriangleBuildTest(false, {x : 1, y : 0});
+    let context = game.gameArea.canvas.getContext("2d");
+
+    component.getCentipedeVertices(context);
+
+    expect(window.getDownTriangle).not.toHaveBeenCalled();
+    expect(window.getUpTriangle).not.toHaveBeenCalled();
+    expect(window.getRightTriangle).toHaveBeenCalled();
+    expect(window.getLeftTriangle).not.toHaveBeenCalled();
+  });
+  it('getCentipedeVertices calls getLeftTriangle when centipede is moving to the left', () => {
+    let component = setUpTriangleBuildTest(false, {x : -1, y : 0});
+    let context = game.gameArea.canvas.getContext("2d");
+
+    component.getCentipedeVertices(context);
+
+    expect(window.getDownTriangle).not.toHaveBeenCalled();
+    expect(window.getUpTriangle).not.toHaveBeenCalled();
+    expect(window.getRightTriangle).not.toHaveBeenCalled();
+    expect(window.getLeftTriangle).toHaveBeenCalled();
+  });
+
   it('speedX,speedY is set to 0,0 when stop is called', () => {
     let component = constructComponent({});
     component.speedX = 1;
@@ -95,38 +161,82 @@ describe('Testing component functions', () => {
     testComponent.makeText(context);
     expect(context.font).toEqual('10px Arial');
   });
-  xit('makeACentipede makes a centipede', () => {
+  it('makeACentipede makes a centipede', () => {
+    let testComponent = constructComponent(
+      {
+        x : 0,
+        y : 0,
+        fontSize : 30,
+        fontType : 'Arial',
+        color : "black",
+        extraArgs : {type:"text"},
+      }
+    );
+    let vertices = {x1 : 430, y1 : 63, x2 : 398, y2 : 79, x3 : 430};
+    spyOn(testComponent, 'getCentipedeVertices').and.returnValue(vertices);
+    game.init();
+    let ctx = game.gameArea.canvas.getContext("2d");
+    spyOn(ctx, 'moveTo');
+    spyOn(ctx, 'lineTo');
+    spyOn(ctx, 'fill');
 
+    testComponent.makeACentipede(ctx);
+
+    expect(ctx.moveTo).toHaveBeenCalled();
+    expect(ctx.lineTo).toHaveBeenCalledTimes(2);
+    expect(ctx.fill).toHaveBeenCalled();
   });
-  xit('getCentipedeVertices makes returns upTriangle', () => {
+  it('newPos updates the position appropriately', () => {
+    let component = createTestComponent({});
+    let defaultPos = {x : 0, y : 0};
+    let testSpeed = 1;
+    component.speedX = testSpeed;
+    component.speedY = testSpeed;
+    component.x = defaultPos.x;
+    component.y = defaultPos.y;
 
+    component.newPos();
+
+    expect(component.x).toBe(defaultPos.x + testSpeed);
+    expect(component.y).toBe(defaultPos.y + testSpeed);
   });
-  xit('getCentipedeVertices makes returns downTriangle', () => {
+  it('crashWith crashes', () => {
+    let component = createTestComponent({});
+    let somethingElse = {
+      getTop : function() {return component.y},
+      getRight : function() {return component.x + component.width},
+      getLeft : function() {return component.x},
+      getBottom : function() {return component.y + component.height},
+    };
+    let expected = true;
 
+    let result = component.crashWith(somethingElse);
+
+    expect(result).toBe(expected);
   });
-  xit('getCentipedeVertices makes returns leftTriangle', () => {
+  it('crashWithSidesOnly crashes', () => {
+    let component = createTestComponent({});
+    let somethingElse = {
+      getRight : function() {return component.x + component.width},
+      getLeft : function() {return component.x},
+    };
+    let expected = true;
 
+    let result = component.crashWithSidesOnly(somethingElse);
+
+    expect(result).toBe(expected);
   });
-  xit('getCentipedeVertices makes returns rightTriangle', () => {
+  it('crashWithSidesOnly does not crash', () => {
+    let component = createTestComponent({});
+    let somethingElse = {
+      getRight : function() {return component.x - 1},
+      getLeft : function() {return component.x - component.width},
+    };
+    let expected = false;
 
-  });
-  xit('makeARectangle calls fillRect', () => {
+    let result = component.crashWithSidesOnly(somethingElse);
 
-  });
-  xit('newPos updates the position appropriately', () => {
-
-  });
-  xit('crashWith crashes', () => {
-
-  });
-  xit('crashWith does not crash', () => {
-
-  });
-  xit('crashWithSidesOnly crashes with sides', () => {
-
-  });
-  xit('crashWithSidesOnly does not crash with top/bottom', () => {
-
+    expect(result).toBe(expected);
   });
   it('getMiddleX returns horizontal center of component', () => {
     let component = createTestComponent();

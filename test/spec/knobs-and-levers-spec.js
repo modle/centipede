@@ -34,4 +34,9 @@ describe('Testing knobs and levers generation', () => {
     expect(testObj.laser.args.width).toBeTruthy();
     expect(testObj.laser.args.height).toBeTruthy();
   });
+  it('flies.args.constructorFunctions.setX should set knobsAndLevers.flies.args.x', () => {
+    knobsAndLevers.init();
+    knobsAndLevers.flies.args.constructorFunctions.setX();
+    expect(knobsAndLevers.flies.args.x).toBeDefined();
+  });
 });

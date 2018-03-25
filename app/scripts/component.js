@@ -45,7 +45,7 @@ function Component(args) {
   };
   this.makeACentipede = function(ctx) {
     ctx.beginPath();
-    vertices = this.getCentipedeVertices(ctx);
+    let vertices = this.getCentipedeVertices(ctx);
     ctx.moveTo(vertices['x1'], vertices['y1']);
     ctx.lineTo(vertices['x2'], vertices['y2']);
     ctx.lineTo(vertices['x3'], vertices['y3']);
@@ -55,13 +55,13 @@ function Component(args) {
     if (this.moveVertically) {
       if (this.directionY > 0) {
         return getDownTriangle(ctx, this);
-      } else if (this.directionY < 0) {
+      } else {
         return getUpTriangle(ctx, this);
       };
     } else {
       if (this.directionX > 0) {
         return getRightTriangle(ctx, this);
-      } else if (this.directionX < 0) {
+      } else {
         return getLeftTriangle(ctx, this);
       };
     };
@@ -74,14 +74,14 @@ function Component(args) {
     this.y += this.speedY;
   };
   this.crashWith = function(otherObject) {
-    var crash = true;
+    let crash = true;
     if (this.getBottom() < otherObject.getTop() || this.getTop() > otherObject.getBottom() || this.getRight() < otherObject.getLeft() || this.getLeft() > otherObject.getRight()) {
       crash = false;
     };
     return crash;
   };
   this.crashWithSidesOnly = function(otherObject) {
-    var crash = true;
+    let crash = true;
     // delay collision slightly by allowing objects to overlap by 1 pixel
     if (this.getRight() < otherObject.getLeft() + 1 || this.getLeft() > otherObject.getRight() - 1) {
       crash = false;

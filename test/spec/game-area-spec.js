@@ -22,4 +22,19 @@ describe('Testing game-area functions', () => {
     let expectedNumVertices = (knobsAndLevers.canvasHeight * 0.75 - knobsAndLevers.gridSquareSideLength) / knobsAndLevers.gridSquareSideLength;
     expect(gameArea.getYVertices().length).toBe(Math.floor(expectedNumVertices));
   });
+  it('clear calls context.clearRect', () => {
+    gameArea.context = gameArea.canvas.getContext("2d");
+    spyOn(gameArea.context, 'clearRect');
+
+    gameArea.clear();
+
+    expect(gameArea.context.clearRect).toHaveBeenCalled();
+  });
+  it('stop clears interval', () => {
+    spyOn(window, 'clearInterval');
+
+    gameArea.stop();
+
+    expect(window.clearInterval).toHaveBeenCalled();
+  });
 });
