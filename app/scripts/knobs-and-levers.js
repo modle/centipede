@@ -69,8 +69,8 @@ var knobsAndLevers = {
     maxNumber: 1,
     pointValue : 50,
     interval : {
-      min: 1,
-      max: 1,
+      min: 1000,
+      max: 2000,
     },
     args : {
       color : "orange",
@@ -84,8 +84,8 @@ var knobsAndLevers = {
     maxNumber: 1,
     pointValue : 50,
     interval : {
-      min: 1,
-      max: 1,
+      min: 1000,
+      max: 2000,
     },
     mushroomCreateInterval : 75,
     args : {
@@ -97,8 +97,8 @@ var knobsAndLevers = {
     },
   },
   spider : {
-    maxNumber : 1,
-    pointValue: 25,
+    maxNumber : 500,
+    pointValue: 1000,
     interval : {
       min: 1,
       max: 1,

@@ -53,7 +53,7 @@ var collisions = {
   },
   handleCentipedeKill(target) {
     if (target.type === 'centipede') {
-      mushrooms.mushrooms.push(mushrooms.generate(target.x, target.y));
+      mushrooms.mushrooms.push(mushrooms.generate({x : target.x, y : target.y}));
       centipedes.numberKilled += 1;
     };
   },

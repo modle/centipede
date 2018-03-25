@@ -14,8 +14,8 @@ var intervalCreatures = {
       if (this[creature] == false) {
         // return acts like a continue in a forEach
         return;
-      }
-      this.clearOutsideCanvas(this[creature]);
+      };
+      this[creature] = this.clearOutsideCanvas(creature);
       this.update(creature);
       if (creature == 'flies') {
         this.dropMushrooms();
@@ -52,8 +52,12 @@ var intervalCreatures = {
     if (this[creature].length >= knobsAndLevers[creature].maxNumber) {
       return
     };
-    var spawnedCreature = new Component(knobsAndLevers[creature].args);
-    console.log('spawnedCreature is', spawnedCreature);
+    let args = knobsAndLevers[creature].args;
+    if (Array.from(Object.keys(args)).includes('constructorFunctions')) {
+      Array.from(Object.keys(args.constructorFunctions))
+        .forEach(theFunction => args.constructorFunctions[theFunction]());
+    };
+    let spawnedCreature = new Component(knobsAndLevers[creature].args);
     spawnedCreature.pointValue = knobsAndLevers[creature].pointValue * metrics.currentLevel;
     spawnedCreature.hitPoints = 1;
     this[creature].push(spawnedCreature);
@@ -65,16 +69,15 @@ var intervalCreatures = {
       updatingCreature[i].update();
     };
   },
-  clearOutsideCanvas : function(creatures) {
-    if (creatures == false) { return; };
-    let filteredCreatures = creatures.filter(target => {
-      target.x < game.gameArea.canvas.width
-        && target.y < game.gameArea.canvas.height;
+  clearOutsideCanvas : function(creature) {
+    if (this[creature] == false) { return; };
+    return this[creature].filter(target => {
+      return target.x < game.gameArea.canvas.width
+        && target.y < game.gameArea.canvas.height
     });
-    return filteredCreatures;
   },
   clear : function() {
     this.worms = [];
     this.flies = [];
   },
-}
+};

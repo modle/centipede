@@ -69,7 +69,7 @@ describe('Testing lasers functions', () => {
     player.init();
 
     let laser = testObj.build();
-
+    console.log(player.gamePiece.width);
     expect(laser.speedY).toBe(-knobsAndLevers.laser.speed);
     expect(laser.x).toBe(player.gamePiece.x + player.gamePiece.width / 2);
     expect(laser.y).toBe(player.gamePiece.y);

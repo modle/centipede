@@ -18,12 +18,12 @@ var lasers = Object.create(displayObjectPrototype, {
   },
   eligibleToSpawn : {
     value : function() {
-      return
-        this.lasers.length < knobsAndLevers.laser.maxNumber
+      let eligible = this.lasers.length < knobsAndLevers.laser.maxNumber
         && supporting.everyinterval(
           game.gameArea.frameNo, knobsAndLevers.laser.interval
         )
         && controls.isFiring();
+      return eligible;
     },
     writable : false,
     enumerable : true

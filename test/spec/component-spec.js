@@ -45,17 +45,6 @@ describe('Testing component functions', () => {
     expect(component.speedX).toEqual(1);
     expect(component.speedY).toEqual(1);
   });
-  it('function is executed if contained in constructorFuctions', () => {
-    let aTestObj = {};
-    aTestObj.aFunction = function() {
-      console.log('a function call');
-    }
-    spyOn(aTestObj, 'aFunction');
-    let component = constructComponent(
-      { constructorFunctions : [aTestObj.aFunction] }
-    );
-    expect(aTestObj.aFunction).toHaveBeenCalled();
-  });
   it('makeText gets called on update when component type is text', () => {
     let component = constructComponent({});
     component.type = 'text';

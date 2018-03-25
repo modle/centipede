@@ -134,7 +134,7 @@ describe('Testing intervalCreatures functions', () => {
     testObj.worms[0].y = game.gameArea.canvas.height + 1;
     expect(testObj.worms.length).toBe(1);
 
-    testObj.worms = testObj.clearOutsideCanvas(testObj.worms);
+    testObj.worms = testObj.clearOutsideCanvas('worms');
 
     expect(testObj.worms.length).toBe(0);
   });
@@ -142,7 +142,7 @@ describe('Testing intervalCreatures functions', () => {
     testObj.flies = [{}];
     testObj.flies[0].y = game.gameArea.canvas.height + 1;
 
-    testObj.flies = testObj.clearOutsideCanvas(testObj.flies);
+    testObj.flies = testObj.clearOutsideCanvas('flies');
 
     expect(testObj.flies.length).toBe(0);
   });
@@ -153,7 +153,7 @@ describe('Testing intervalCreatures functions', () => {
     testObj.flies[0].y = game.gameArea.canvas.height * 2;
     testObj.flies[0].x = game.gameArea.canvas.width * 2;
 
-    testObj.clearOutsideCanvas(testObj.flies);
+    testObj.clearOutsideCanvas('flies');
 
     expect(testObj.flies.length).toBe(1);
   });
@@ -161,7 +161,7 @@ describe('Testing intervalCreatures functions', () => {
     testObj.flies = [];
     expect(testObj.flies.length).toBe(0);
 
-    testObj.clearOutsideCanvas(testObj.flies);
+    testObj.clearOutsideCanvas('flies');
 
     expect(testObj.flies.length).toBe(0);
   });
