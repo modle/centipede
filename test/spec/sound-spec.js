@@ -51,28 +51,54 @@ describe('Testing sound functions', () => {
     expect(soundArray.length).toEqual(expected);
   });
   it('manageCentipedeSounds calls centipede sound play', () => {
-    centipedes.centipedes.push({});
+    centipedes.centipedes = [{}];
     spyOn(sounds.centipede, 'play');
 
     manageCentipedeSounds();
 
     expect(sounds.centipede.play).toHaveBeenCalled();
   });
+  it('manageCentipedeSounds does nothing if no centipedes', () => {
+    centipedes.centipedes = [];
+    spyOn(sounds.centipede, 'play');
+
+    manageCentipedeSounds();
+
+    expect(sounds.centipede.play).not.toHaveBeenCalled();
+  });
   it('manageSpiderSounds calls spider sound play', () => {
-    spiders.spiders.push({});
+    spiders.spiders = [{}];
     spyOn(sounds.spider, 'play');
 
     manageSpiderSounds();
 
     expect(sounds.spider.play).toHaveBeenCalled();
   });
+  it('manageSpiderSounds calls spider sound play', () => {
+    spiders.spiders = [];
+    spyOn(sounds.spider, 'play');
+
+    manageSpiderSounds();
+
+    expect(sounds.spider.play).not.toHaveBeenCalled();
+  });
   it('manageFlySounds calls fly sound play', () => {
-    intervalCreatures.flies.push({});
+    intervalCreatures.flies = [{}];
     spyOn(sounds.fly, 'play');
 
     manageFlySounds();
 
     expect(sounds.fly.play).toHaveBeenCalled();
+    expect(sounds.fly.played).toBeTruthy();
+  });
+  it('manageFlySounds does not call fly sound play if played is true', () => {
+    intervalCreatures.flies = [{}];
+    spyOn(sounds.fly, 'play');
+    sounds.fly.played = true;
+
+    manageFlySounds();
+
+    expect(sounds.fly.play).not.toHaveBeenCalled();
     expect(sounds.fly.played).toBeTruthy();
   });
   it('manageFlySounds sets played to false when fly is not present', () => {
@@ -101,6 +127,16 @@ describe('Testing sound functions', () => {
 
     expect(sounds.worm.play).not.toHaveBeenCalled();
     expect(sounds.worm.stop).toHaveBeenCalled();
+  });
+  it('playAvailableLaserSound calls getAvailableSound with laserPool', () => {
+    let testSound = new Sound("app/static/media/sounds/centipede.mp3", 0.5);
+    spyOn(testSound, 'play');
+    spyOn(window, 'getAvailableLaserSound').and.returnValue(testSound);
+
+    playAvailableLaserSound();
+
+    expect(window.getAvailableLaserSound).toHaveBeenCalled();
+    expect(testSound.play).toHaveBeenCalled();
   });
   it('getAvailableLaserSound calls getAvailableSound with laserPool', () => {
     spyOn(window, 'getAvailableSound');
