@@ -4,6 +4,16 @@ var player = {
   boundaries : {},
   died : false,
   eligibleDirections : {},
+  watchPositions : {
+    'up' : ['belowTop'],
+    'right' : ['insideRight'],
+    'down' : ['aboveBottom'],
+    'left' : ['insideLeft'],
+    'upRight' : ['belowTop', 'insideRight'],
+    'downRight' : ['aboveBottom', 'insideRight'],
+    'downLeft' : ['aboveBottom', 'insideLeft'],
+    'upLeft' : ['belowTop', 'insideLeft'],
+  },
   init : function() {
     let gamePieceArgs = {
       width: knobsAndLevers.gamePieceWidth,
@@ -41,18 +51,38 @@ var player = {
     this.gamePiece.y = knobsAndLevers.gamePieceStartY;
     this.removeMushroomsFromStartingArea();
   },
+  // TODO move this to mushrooms.js
   removeMushroomsFromStartingArea : function() {
     mushrooms.mushrooms = mushrooms.mushrooms.filter(mushroom => !mushroom.crashWith(this.gamePieceStartingArea));
+  },
+  move : function() {
+    this.stop();
+    this.setBoundaries();
+    this.determineEligibleDirections();
+    this.moveTheThing(controls.getPositionModifiers(knobsAndLevers.gamePieceSpeed, this.eligibleDirections));
   },
   stop : function() {
     this.gamePiece.speedX = 0;
     this.gamePiece.speedY = 0;
   },
-  move : function() {
-    this.stop();
-    this.setBoundaries();
-    this.setEligibleDirections();
-    this.moveTheThing(controls.getPositionModifiers(knobsAndLevers.gamePieceSpeed, this.eligibleDirections));
+  setBoundaries : function() {
+    this.boundaries.belowTop = this.gamePiece.getTop() > game.gameArea.gamePieceTopLimit;
+    this.boundaries.insideRight = this.gamePiece.getRight() < game.gameArea.canvas.width;
+    this.boundaries.aboveBottom = this.gamePiece.getBottom() < game.gameArea.canvas.height;
+    this.boundaries.insideLeft = this.gamePiece.getLeft() > 0;
+  },
+  determineEligibleDirections : function() {
+    this.setEligibleDirectionsToDefault();
+    Array.from(Object.keys(this.watchPositions)).forEach(direction => {
+      this.watchPositions[direction].forEach(playerPosition =>
+        this.eligibleDirections[direction] = this.boundaries[playerPosition] && this.eligibleDirections[direction]
+      );
+    });
+  },
+  setEligibleDirectionsToDefault : function() {
+    Array.from(Object.keys(this.watchPositions)).forEach(direction => {
+      this.eligibleDirections[direction] = true;
+    });
   },
   moveTheThing : function(speed) {
     if (!speed) {
@@ -68,33 +98,9 @@ var player = {
     this.gamePiece.speedY = modifier.y ? modifier.y : this.gamePiece.speedY;
     this.gamePiece.newPos();
   },
-  revertPosition : function(positionModifiers) {
-    this.gamePiece.speedX = positionModifiers.x ? -positionModifiers.x : this.gamePiece.speedX;
-    this.gamePiece.speedY = positionModifiers.y ? -positionModifiers.y : this.gamePiece.speedY;
+  revertPosition : function(modifier) {
+    this.gamePiece.speedX = -1 * (modifier.x ? modifier.x : this.gamePiece.speedX);
+    this.gamePiece.speedY = -1 * (modifier.y ? modifier.y : this.gamePiece.speedY);
     this.gamePiece.newPos();
-  },
-  setBoundaries : function() {
-    this.boundaries.belowTop = this.gamePiece.getTop() > game.gameArea.gamePieceTopLimit;
-    this.boundaries.insideRight = this.gamePiece.getRight() < game.gameArea.canvas.width;
-    this.boundaries.aboveBottom = this.gamePiece.getBottom() < game.gameArea.canvas.height;
-    this.boundaries.insideLeft = this.gamePiece.getLeft() > 0;
-  },
-  setEligibleDirections : function() {
-    let watchPositions = {
-      'up' : ['belowTop'],
-      'right' : ['insideRight'],
-      'down' : ['aboveBottom'],
-      'left' : ['insideLeft'],
-      'upRight' : ['belowTop', 'insideRight'],
-      'downRight' : ['aboveBottom', 'insideRight'],
-      'downLeft' : ['aboveBottom', 'insideLeft'],
-      'upLeft' : ['belowTop', 'insideLeft'],
-    };
-    Array.from(Object.keys(watchPositions)).forEach(direction => {
-        this.eligibleDirections[direction] = true;
-        watchPositions[direction].forEach(playerPosition =>
-          this.eligibleDirections[direction] = this.boundaries[playerPosition] && this.eligibleDirections[direction]
-        );
-      });
   },
 };
