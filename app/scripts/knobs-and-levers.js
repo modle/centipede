@@ -43,7 +43,6 @@ var knobsAndLevers = {
   centipede : {
     baseSpeed : 10,
     maxNumber : 0,
-    interval : 10,
     args : {
       color : "blue",
       y : 0,
@@ -57,8 +56,8 @@ var knobsAndLevers = {
   gamePieceWidth : 15,
   gamePieceHeight : 15,
   laser : {
-    speed : 5,
-    maxNumber : 1,
+    speed : 20,
+    maxNumber : 20,
     interval : 10,
     args : {
       color : "purple",
@@ -97,11 +96,11 @@ var knobsAndLevers = {
     },
   },
   spider : {
-    maxNumber : 500,
-    pointValue: 1000,
+    maxNumber : 1,
+    pointValue: 200,
     interval : {
-      min: 1,
-      max: 1,
+      min: 500,
+      max: 1000,
     },
     args : {
       color : "fuchsia",

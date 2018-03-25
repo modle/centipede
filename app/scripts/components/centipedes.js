@@ -1,25 +1,28 @@
 /*jslint white: true */
 var centipedes = {
-  speed : 0,
+  // TODO rename this to segments?
   centipedes : [],
   numberSpawned : 0,
   numberKilled : 0,
   manage : function() {
-    if (game.gameArea.frameNo == 1 || supporting.everyinterval(game.gameArea.frameNo, knobsAndLevers.centipede.interval)) {
+    if (this.eligibleToSpawn()) {
       this.spawn();
     }
     this.update();
   },
+  eligibleToSpawn : function() {
+    let eligible =
+      game.gameArea.frameNo == 1
+        || this.numberSpawned < knobsAndLevers.centipede.maxNumber + metrics.currentLevel;
+    return eligible;
+  },
   spawn : function() {
-    if (this.numberSpawned >= knobsAndLevers.centipede.maxNumber + metrics.currentLevel) {
-      return;
-    }
     centipede = this.construct();
     for (i = 0; i < this.centipedes.length; i += 1) {
       if (this.centipedes[i].crashWith(centipede)) {
         return;
-      }
-    }
+      };
+    };
     this.add(centipede);
   },
   construct : function() {
@@ -42,13 +45,12 @@ var centipedes = {
     this.numberSpawned++;
   },
   update : function() {
-    this.speed = knobsAndLevers.centipede.baseSpeed + metrics.currentLevel;
     this.determineDirections();
     this.updateDirections();
     this.updateCoordinates();
     for (i = 0; i < this.centipedes.length; i += 1) {
       this.centipedes[i].update();
-    }
+    };
   },
   clear : function() {
     this.centipedes = [];
@@ -70,41 +72,38 @@ var centipedes = {
       if (centipede.y < game.gameArea.firstMushroomLayer - 1) {
         centipede.moveVertically = true;
         centipede.updated = true;
-      }
+      };
     });
   },
   checkYDirectionInPlayerArea : function() {
     this.centipedes.filter(centipede => !centipede.updated).map(centipede => {
-      // toggle Y direction if centipede hits bottom or moves back out of the player area
       if (centipede.getBottom() > game.gameArea.canvas.height) {
         centipede.reverseDirectionY = true;
-      }
-      if (centipede.getTop() < game.gameArea.gamePieceTopLimit && centipede.distanceMovedFromBottom > 0) {
+      } else if (centipede.getTop() < game.gameArea.gamePieceTopLimit && centipede.distanceMovedFromBottom > 0) {
         centipede.reverseDirectionY = true;
         centipede.distanceMovedFromBottom = 0;
-      }
+      };
     });
   },
   checkHorizonalCollisions : function() {
     this.centipedes.filter(centipede => !centipede.updated).map(centipede => {
       if (centipede.distanceMovedY === 0) {
-        if (centipedes.hasCollidedWithWall(centipede)) {
+        if (this.hasCollidedWithWall(centipede)) {
           centipede.distanceMovedX = 0;
           centipede.moveVertically = true;
-        }
-        if (centipedes.hasCollidedWithMushroom(centipede)) {
+        } else if (this.hasCollidedWithMushroom(centipede)) {
           centipede.moveVertically = true;
-        }
+        };
         centipede.updated = true;
       }
     });
   },
   hasCollidedWithWall : function(centipede) {
-    return (
-      (centipede.getLeft() <= 1 || centipede.getRight() >= game.gameArea.canvas.width - 1)
-      &&
-      centipede.distanceMovedX > game.gameArea.gridSquareSideLength
-    );
+    let isOutside = centipede.getLeft() <= 1
+          || centipede.getRight() >= game.gameArea.canvas.width - 1;
+    let hasMovedEnoughHorizontally = centipede.distanceMovedX > game.gameArea.gridSquareSideLength;
+    let hasCollided = isOutside && hasMovedEnoughHorizontally;
+    return hasCollided;
   },
   hasCollidedWithMushroom : function(centipede) {
     for (j = 0; j < mushrooms.mushrooms.length; j += 1) {
@@ -113,16 +112,16 @@ var centipedes = {
         && Math.abs(centipede.y - mushrooms.mushrooms[j].y) < 5
         && centipede.distanceMovedX > game.gameArea.gridSquareSideLength
       ) {
-        this.centipedes.filter(centipede => !centipede. updated).map(centipede => {
+        this.centipedes.filter(centipede => !centipede.updated).map(centipede => {
           if (centipede.y < game.gameArea.firstMushroomLayer - 1) {
             centipede.moveVertically = true;
             centipede.updated = true;
-          }
+          };
           this.reverseHorizontalAtNextLayer();
         });
         return true;
-      }
-    }
+      };
+    };
     return false;
   },
   reverseHorizontalAtNextLayer : function() {
@@ -132,7 +131,7 @@ var centipedes = {
         centipede.moveVertically = false;
         centipede.distanceMovedY = 0;
         centipede.updated = true;
-      }
+      };
     });
   },
   updateDirections : function() {
@@ -141,12 +140,12 @@ var centipedes = {
         this.centipedes[i].directionY *= -1;
         this.centipedes[i].distanceMovedY = 0;
         this.centipedes[i].reverseDirectionY = false;
-      }
+      };
       if (this.centipedes[i].reverseDirectionX) {
         this.centipedes[i].directionX *= -1;
         this.centipedes[i].reverseDirectionX = false;
-      }
-    }
+      };
+    };
   },
   updateCoordinates : function() {
     for (i = 0; i < this.centipedes.length; i += 1) {
@@ -162,8 +161,8 @@ var centipedes = {
         if (newPositionX + this.centipedes[i].width < game.gameArea.canvas.width && newPositionX > 0) {
           this.centipedes[i].x = newPositionX;
           this.centipedes[i].distanceMovedX += Math.abs(toMoveX);
-        }
-      }
-    }
-  }
-}
+        };
+      };
+    };
+  },
+};

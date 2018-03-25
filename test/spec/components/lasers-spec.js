@@ -30,7 +30,10 @@ describe('Testing lasers functions', () => {
   });
 
   it('eligibleToSpawn returns false if lasers is at max', () => {
-    testObj.lasers = [{}];
+    testObj.lasers = [];
+    while (testObj.lasers.length < knobsAndLevers.laser.maxNumber) {
+      testObj.lasers.push({});
+    };
     spyOn(supporting, 'everyinterval').and.returnValue(true);
     spyOn(controls, 'isFiring').and.returnValue(true);
 
