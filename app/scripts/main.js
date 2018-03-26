@@ -1,24 +1,23 @@
 /*jslint white: true */
 var showMenu = true;
 var basePath = "app/static/media/images/";
+var menuOrder = ['play', 'instructions'];
+
 var menu = {
   play : {
     image : new Image(),
-    selected : false,
     file : "play.png",
     position : {x : 350, y : 450},
     dimensions : {width : 96, height : 40}
   },
   instructions : {
     image : new Image(),
-    selected : true,
     file : "instructions.png",
     position : {x : 268, y : 490},
     dimensions : {width : 260, height : 40}
   },
   ship : {
     image : new Image(),
-    selected : false,
     file : "ship.png",
   },
 };
@@ -39,11 +38,36 @@ function updateGameState() {
 
 function drawMenu() {
   prepTheCanvas();
+  setMenuOrder();
+  setImageFiles();
+  drawMenuImages();
+};
+
+function setMenuOrder() {
+  if (supporting.everyinterval(game.gameArea.frameNo, 30)) {
+    let keysPushed = controls.getMenuKeyPush();
+    let direction = "";
+    keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.up.includes(parseInt(key)) ? "up" : direction);
+    keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.down.includes(parseInt(key)) ? "down" : direction);
+    if (direction == "up") {
+      menuOrder.push(menuOrder.shift());
+    } else if (direction == "down") {
+      menuOrder.unshift(menuOrder.pop());
+    };
+  };
+};
+
+function setImageFiles() {
+  if (game.gameArea.frameNo !== 1) {
+    return;
+  };
   Array.from(Object.keys(menu)).forEach(entry =>
     menu[entry].image.src = basePath + menu[entry].file
   );
-  let selected = Array.from(Object.keys(menu)).find(entry => menu[entry].selected);
-  game.gameArea.context.drawImage(menu.ship.image, menu[selected].position.x - 40, menu[selected].position.y);
+};
+
+function drawMenuImages() {
+  game.gameArea.context.drawImage(menu.ship.image, menu[menuOrder[0]].position.x - 40, menu[menuOrder[0]].position.y);
   game.gameArea.context.drawImage(menu.play.image, menu.play.position.x, menu.play.position.y);
   game.gameArea.context.drawImage(menu.instructions.image, menu.instructions.position.x, menu.instructions.position.y);
 };
