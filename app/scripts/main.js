@@ -1,12 +1,51 @@
 /*jslint white: true */
+var showMenu = true;
+var basePath = "app/static/media/images/";
+var menu = {
+  play : {
+    image : new Image(),
+    selected : false,
+    file : "play.png",
+    position : {x : 350, y : 450},
+    dimensions : {width : 96, height : 40}
+  },
+  instructions : {
+    image : new Image(),
+    selected : true,
+    file : "instructions.png",
+    position : {x : 268, y : 490},
+    dimensions : {width : 260, height : 40}
+  },
+  ship : {
+    image : new Image(),
+    selected : false,
+    file : "ship.png",
+  },
+};
+
 // this gets executed every interval
 function updateGameState() {
   detectGamePad();
+  if (showMenu) {
+    drawMenu();
+    return;
+  }
+  prepTheCanvas();
   if (processTriggers()) {
     return;
   };
-  prepTheCanvas();
   manageGameObjects();
+};
+
+function drawMenu() {
+  prepTheCanvas();
+  Array.from(Object.keys(menu)).forEach(entry =>
+    menu[entry].image.src = basePath + menu[entry].file
+  );
+  let selected = Array.from(Object.keys(menu)).find(entry => menu[entry].selected);
+  game.gameArea.context.drawImage(menu.ship.image, menu[selected].position.x - 40, menu[selected].position.y);
+  game.gameArea.context.drawImage(menu.play.image, menu.play.position.x, menu.play.position.y);
+  game.gameArea.context.drawImage(menu.instructions.image, menu.instructions.position.x, menu.instructions.position.y);
 };
 
 function detectGamePad() {
@@ -15,12 +54,12 @@ function detectGamePad() {
 };
 
 function processTriggers() {
-  let triggered =
-    checkPlayerDied() ||
-    checkLevelOver() ||
-    checkGameOver() ||
-    checkPause()
-  ;
+  let triggered = (
+    checkPlayerDied()
+    || checkLevelOver()
+    || checkGameOver()
+    || checkPause()
+  );
   return triggered;
 };
 
@@ -70,7 +109,9 @@ function checkPause() {
 function prepTheCanvas() {
   game.startNextFrame();
   manageSounds();
-  hud.update();
+  if (!showMenu) {
+    hud.update();
+  };
 };
 
 function manageGameObjects() {
