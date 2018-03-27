@@ -2,21 +2,56 @@
 var showMenu = true;
 var showInstructions = false;
 var basePath = "app/static/media/images/";
-var menuOrder = ['play', 'instructions'];
-var instructionsOrder = ['back'];
+var currentSelection = {name : '', action : function(){}};
+var timeSinceSelection = 100;
+var timeSinceMenuMove = 100;
 
 var menuImages = {
-  play : {
-    image : new Image(),
-    file : "play.png",
-    position : {x : 350, y : 450},
-    dimensions : {width : 96, height : 40}
+  order : ['play', 'instructions'],
+  entries : {
+    play : {
+      image : new Image(),
+      file : "play.png",
+      position : {x : 350, y : 450},
+      dimensions : {width : 96, height : 40},
+      action : function() {
+        prepTheCanvas();
+        game.paused = false;
+        showMenu = false;
+        timeSinceSelection = 0;
+      },
+    },
+    instructions : {
+      image : new Image(),
+      file : "instructions.png",
+      position : {x : 268, y : 490},
+      dimensions : {width : 260, height : 40},
+      action : function() {
+        prepTheCanvas();
+        showMenu = false;
+        showInstructions = true;
+        timeSinceSelection = 0;
+      },
+    },
   },
-  instructions : {
-    image : new Image(),
-    file : "instructions.png",
-    position : {x : 268, y : 490},
-    dimensions : {width : 260, height : 40}
+};
+
+var instructionsImages = {
+  order : ['back'],
+  entries : {
+    back : {
+      image : new Image(),
+      file : "back.png",
+      position : {x : 350, y : 490},
+      dimensions : {width : 96, height : 40},
+      action : function() {
+        currentSelection.name = menuImages.order[0];
+        prepTheCanvas();
+        showMenu = true;
+        showInstructions = false;
+        timeSinceSelection = 0;
+      },
+    },
   },
 };
 
@@ -33,24 +68,16 @@ var pointerImages = {
   },
 };
 
-var instructionsImages = {
-  back : {
-    image : new Image(),
-    file : "back.png",
-    position : {x : 268, y : 490},
-    dimensions : {width : 260, height : 40}
-  },
-};
-
 // this gets executed every interval
 function updateGameState() {
   detectGamePad();
+  setImages();
   if (showMenu) {
-    drawMenu();
+    drawMenu(menuImages);
     return;
   };
   if (showInstructions) {
-    drawInstructions();
+    drawMenu(instructionsImages);
     return;
   };
   if (processTriggers()) {
@@ -65,41 +92,43 @@ function detectGamePad() {
   controls.handleGamePause();
 };
 
-function drawMenu() {
-  prepTheCanvas();
-  setMenuOrder(menuOrder);
+function setImages() {
+  if (game.gameArea.frameNo !== 1) {
+    return;
+  };
   setImageFiles(pointerImages);
-  setImageFiles(menuImages);
-  drawImages(menuImages, menuOrder);
+  setImageFiles(menuImages.entries);
+  setImageFiles(instructionsImages.entries);
+};
+
+function drawMenu(images) {
+  prepTheCanvas();
+  setMenuOrder(images.order);
+  drawImages(images.entries, images.order);
   checkForSelection();
 };
 
-function drawInstructions() {
-  console.log('drawing the instructions');
-  prepTheCanvas();
-  setMenuOrder(instructionsOrder);
-  setImageFiles(instructionsImages);
-  drawImages(instructionsImages, instructionsOrder);
-};
-
 function setMenuOrder(order) {
-  if (supporting.everyinterval(game.gameArea.frameNo, 30)) {
+  timeSinceMenuMove += 1;
+  if (timeSinceMenuMove > 30) {
     let keysPushed = controls.getMenuKeyPush();
     let direction = "";
     keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.up.includes(parseInt(key)) ? "up" : direction);
     keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.down.includes(parseInt(key)) ? "down" : direction);
     if (direction == "up") {
-      order.push(order.shift());
+      currentSelection.name = order.shift();
+      order.push(currentSelection.name);
     } else if (direction == "down") {
-      order.unshift(order.pop());
+      currentSelection.name = order.pop();
+      order.unshift(currentSelection.name);
+    } else {
+      currentSelection.name = order[0];
     };
+    timeSinceMenuMove = 0;
   };
 };
 
 function setImageFiles(images) {
-  if (game.gameArea.frameNo !== 1) {
-    return;
-  };
   Array.from(Object.keys(images)).forEach(entry =>
     images[entry].image.src = basePath + images[entry].file
   );
@@ -107,6 +136,9 @@ function setImageFiles(images) {
 
 function drawImages(images, order) {
   Array.from(Object.keys(images)).forEach(entry => {
+    if (currentSelection.name == entry) {
+      currentSelection.action = images[entry].action;
+    };
     game.gameArea.context.drawImage(images[entry].image, images[entry].position.x, images[entry].position.y)
   });
   Array.from(Object.keys(pointerImages)).forEach(entry => {
@@ -116,17 +148,9 @@ function drawImages(images, order) {
 };
 
 function checkForSelection() {
-  if (controls.keysDown[controls.enterKeyCode]) {
-    let selection = menuOrder[0];
-    if (selection == 'play') {
-      prepTheCanvas();
-      game.paused = false;
-      showMenu = false;
-    } else if (selection == 'instructions') {
-      prepTheCanvas();
-      showMenu = false;
-      showInstructions = true;
-    };
+  timeSinceSelection += 1;
+  if (timeSinceSelection > 60 && controls.keysDown[controls.enterKeyCode]) {
+    currentSelection.action();
   };
 };
 
@@ -186,9 +210,10 @@ function checkPause() {
 function prepTheCanvas() {
   game.startNextFrame();
   manageSounds();
-  if (!showMenu) {
-    hud.update();
+  if (showMenu || showInstructions) {
+    return;
   };
+  hud.update();
 };
 
 function manageGameObjects() {
