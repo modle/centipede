@@ -1,8 +1,7 @@
 describe('Testing text functions', () => {
   it('updateGameState calls delegate functions', () => {
-    showMenu = false;
     spyOn(window, 'detectGamePad');
-    spyOn(window, 'drawMenu');
+    spyOn(window, 'processMenus').and.returnValue(false);
     spyOn(window, 'processTriggers').and.returnValue(false);
     spyOn(window, 'prepTheCanvas');
     spyOn(window, 'manageGameObjects');
@@ -10,15 +9,14 @@ describe('Testing text functions', () => {
     updateGameState();
 
     expect(window.detectGamePad).toHaveBeenCalled();
-    expect(window.drawMenu).not.toHaveBeenCalled();
+    expect(window.processMenus).toHaveBeenCalled();
     expect(window.processTriggers).toHaveBeenCalled();
     expect(window.prepTheCanvas).toHaveBeenCalled();
     expect(window.manageGameObjects).toHaveBeenCalled();
   });
   it('updateGameState returns after process triggers if true', () => {
-    showMenu = false;
     spyOn(window, 'detectGamePad');
-    spyOn(window, 'drawMenu');
+    spyOn(window, 'processMenus').and.returnValue(false);
     spyOn(window, 'processTriggers').and.returnValue(true);
     spyOn(window, 'prepTheCanvas');
     spyOn(window, 'manageGameObjects');
@@ -26,23 +24,22 @@ describe('Testing text functions', () => {
     updateGameState();
 
     expect(window.detectGamePad).toHaveBeenCalled();
-    expect(window.drawMenu).not.toHaveBeenCalled();
+    expect(window.processMenus).toHaveBeenCalled();
     expect(window.processTriggers).toHaveBeenCalled();
     expect(window.prepTheCanvas).not.toHaveBeenCalled();
     expect(window.manageGameObjects).not.toHaveBeenCalled();
   });
   it('updateGameState returns after drawMenu', () => {
-    showMenu = true;
     spyOn(window, 'detectGamePad');
-    spyOn(window, 'drawMenu');
-    spyOn(window, 'processTriggers');
+    spyOn(window, 'processMenus').and.returnValue(true);
+    spyOn(window, 'processTriggers').and.returnValue(true);
     spyOn(window, 'prepTheCanvas');
     spyOn(window, 'manageGameObjects');
 
     updateGameState();
 
     expect(window.detectGamePad).toHaveBeenCalled();
-    expect(window.drawMenu).toHaveBeenCalled();
+    expect(window.processMenus).toHaveBeenCalled();
     expect(window.processTriggers).not.toHaveBeenCalled();
     expect(window.prepTheCanvas).not.toHaveBeenCalled();
     expect(window.manageGameObjects).not.toHaveBeenCalled();
@@ -58,14 +55,29 @@ describe('Testing text functions', () => {
     expect(controls.handleGamePause).toHaveBeenCalled();
   });
 
-  it('processTriggers delegates to trigger checks', () => {
-    spyOn(window, 'checkPlayerDied');
-    spyOn(window, 'checkLevelOver');
-    spyOn(window, 'checkGameOver');
-    spyOn(window, 'checkPause');
+  it('processTriggers delegates to trigger checks and returns on true', () => {
+    spyOn(window, 'checkPlayerDied').and.returnValue(false);
+    spyOn(window, 'checkLevelOver').and.returnValue(true);
+    spyOn(window, 'checkGameOver').and.returnValue(false);
+    spyOn(window, 'checkPause').and.returnValue(false);
 
-    processTriggers();
+    let result = processTriggers();
 
+    expect(result).toBeTruthy();
+    expect(window.checkPlayerDied).toHaveBeenCalled();
+    expect(window.checkLevelOver).toHaveBeenCalled();
+    expect(window.checkGameOver).not.toHaveBeenCalled();
+    expect(window.checkPause).not.toHaveBeenCalled();
+  });
+  it('processTriggers delegates to all trigger checks and returns false when all are false', () => {
+    spyOn(window, 'checkPlayerDied').and.returnValue(false);
+    spyOn(window, 'checkLevelOver').and.returnValue(false);
+    spyOn(window, 'checkGameOver').and.returnValue(false);
+    spyOn(window, 'checkPause').and.returnValue(false);
+
+    let result = processTriggers();
+
+    expect(result).toBeFalsy();
     expect(window.checkPlayerDied).toHaveBeenCalled();
     expect(window.checkLevelOver).toHaveBeenCalled();
     expect(window.checkGameOver).toHaveBeenCalled();

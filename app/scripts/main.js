@@ -2,13 +2,7 @@
 // this gets executed every interval
 function updateGameState() {
   detectGamePad();
-  setImages();
-  if (showMenu) {
-    drawMenu(menuImages);
-    return;
-  };
-  if (showInstructions) {
-    drawMenu(instructionsImages);
+  if (processMenus()) {
     return;
   };
   if (processTriggers()) {

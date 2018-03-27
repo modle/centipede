@@ -42,13 +42,26 @@ describe('Testing text functions', () => {
     expect(menuImages.entries.instructions.image.src).toBeTruthy();
   });
 
-  it('drawImages calls drawImage', () => {
+  it('drawImages delegates to selection, text, and marker draw functions', () => {
+    spyOn(window, 'drawEntries');
+    spyOn(window, 'drawSelectionMarker');
+    spyOn(window, 'drawTexts');
+
+    drawImages(menuImages);
+
+    expect(window.drawEntries).toHaveBeenCalled();
+    expect(window.drawSelectionMarker).toHaveBeenCalled();
+    expect(window.drawTexts).toHaveBeenCalled();
+  });
+
+  it('drawSelectionMarker calls drawImage', () => {
     game.init();
     game.gameArea.context = game.gameArea.canvas.getContext("2d");
     spyOn(game.gameArea.context, 'drawImage');
 
-    drawImages(menuImages.entries, menuImages.order);
+    drawImages(menuImages);
 
     expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(4);
   });
+
 });

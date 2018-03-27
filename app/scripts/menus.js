@@ -1,7 +1,12 @@
 var showMenu = true;
 var showInstructions = false;
 var basePath = "app/static/media/images/";
-var currentSelection = {name : '', action : function(){}};
+var currentSelection = {
+  name : '',
+  entry : {
+    position : {x : 0, y : 0},
+    dimensions : {width : 0, height : 0},
+  }};
 var timeSinceSelection = 100;
 var timeSinceMenuMove = 100;
 
@@ -108,6 +113,19 @@ var pointerImages = {
   },
 };
 
+function processMenus() {
+  setImages();
+  if (showMenu) {
+    drawMenu(menuImages);
+    return true;
+  };
+  if (showInstructions) {
+    drawMenu(instructionsImages);
+    return true;
+  };
+  return false;
+};
+
 function setImages() {
   if (game.gameArea.frameNo !== 1) {
     return;
@@ -151,12 +169,35 @@ function setMenuOrder(order) {
 };
 
 function drawImages(images) {
-  Array.from(Object.keys(images.entries)).forEach(entry => {
+  drawEntries(images.entries);
+  drawSelectionMarker(pointerImages.entries);
+  drawTexts(images);
+};
+
+function drawEntries(entries) {
+  Array.from(Object.keys(entries)).forEach(entry => {
     if (currentSelection.name == entry) {
-      currentSelection.action = images.entries[entry].action;
+      currentSelection.entry = entries[entry];
     };
-    game.gameArea.context.drawImage(images.entries[entry].image, images.entries[entry].position.x, images.entries[entry].position.y)
+    game.gameArea.context.drawImage(entries[entry].image, entries[entry].position.x, entries[entry].position.y)
   });
+};
+
+function drawSelectionMarker(entries) {
+  Array.from(Object.keys(entries)).forEach(entry => {
+    let offset =
+      entries[entry].offset
+        ? entries[entry].offset
+        : currentSelection.entry.dimensions.width;
+    game.gameArea.context.drawImage(
+      entries[entry].image,
+      currentSelection.entry.position.x + offset,
+      currentSelection.entry.position.y
+    );
+  });
+}
+
+function drawTexts(images) {
   if (images['text']) {
     images.text.entries.forEach(text => {
       text.component.x = text.position.x;
@@ -168,15 +209,11 @@ function drawImages(images) {
       text.component.update();
     });
   };
-  Array.from(Object.keys(pointerImages.entries)).forEach(entry => {
-    let offset = pointerImages.entries[entry].offset ? pointerImages.entries[entry].offset : images.entries[images.order[0]].dimensions.width;
-    game.gameArea.context.drawImage(pointerImages.entries[entry].image, images.entries[images.order[0]].position.x + offset, images.entries[images.order[0]].position.y);
-  });
 };
 
 function checkForSelection() {
   timeSinceSelection += 1;
   if (timeSinceSelection > 60 && controls.keyBoardFlowControlButtonPressed()) {
-    currentSelection.action();
+    currentSelection.entry.action();
   };
 };
