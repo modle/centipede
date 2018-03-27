@@ -33,6 +33,17 @@ var menuImages = {
       },
     },
   },
+  text : {
+    entries : [
+      {
+        name : 'winning',
+        text : 'CENTIPEDE! (warblegarble)',
+        component : new Component(knobsAndLevers.baseTextParams),
+        position : {x : 115, y : 100},
+        fontSize : '50px',
+      },
+    ],
+  },
 };
 
 var instructionsImages = {
@@ -51,6 +62,34 @@ var instructionsImages = {
         timeSinceSelection = 0;
       },
     },
+  },
+  text : {
+    entries : [
+      {
+        name : 'winning',
+        text : 'Kill the centipede to advance to the next level',
+        component : new Component(knobsAndLevers.baseTextParams),
+        position : {x : 100, y : 100},
+      },
+      {
+        name : 'losing',
+        text : 'Avoid all bugs to stay alive',
+        component : new Component(knobsAndLevers.baseTextParams),
+        position : {x : 215, y : 150},
+      },
+      {
+        name : 'move',
+        text : 'WASD : move',
+        component : new Component(knobsAndLevers.baseTextParams),
+        position : {x : 300, y : 200},
+      },
+      {
+        name : 'shoot',
+        text : 'arrow keys or shift : shoot',
+        component : new Component(knobsAndLevers.baseTextParams),
+        position : {x : 225, y : 250},
+      },
+    ],
   },
 };
 
@@ -87,7 +126,7 @@ function setImageFiles(images) {
 function drawMenu(images) {
   prepTheCanvas();
   setMenuOrder(images.order);
-  drawImages(images.entries, images.order);
+  drawImages(images);
   checkForSelection();
 };
 
@@ -111,16 +150,27 @@ function setMenuOrder(order) {
   };
 };
 
-function drawImages(images, order) {
-  Array.from(Object.keys(images)).forEach(entry => {
+function drawImages(images) {
+  Array.from(Object.keys(images.entries)).forEach(entry => {
     if (currentSelection.name == entry) {
-      currentSelection.action = images[entry].action;
+      currentSelection.action = images.entries[entry].action;
     };
-    game.gameArea.context.drawImage(images[entry].image, images[entry].position.x, images[entry].position.y)
+    game.gameArea.context.drawImage(images.entries[entry].image, images.entries[entry].position.x, images.entries[entry].position.y)
   });
+  if (images['text']) {
+    images.text.entries.forEach(text => {
+      text.component.x = text.position.x;
+      text.component.y = text.position.y;
+      text.component.text = text.text;
+      if (text.fontSize) {
+        text.component.fontSize = text.fontSize;
+      };
+      text.component.update();
+    });
+  };
   Array.from(Object.keys(pointerImages.entries)).forEach(entry => {
-    let offset = pointerImages.entries[entry].offset ? pointerImages.entries[entry].offset : images[order[0]].dimensions.width;
-    game.gameArea.context.drawImage(pointerImages.entries[entry].image, images[order[0]].position.x + offset, images[order[0]].position.y);
+    let offset = pointerImages.entries[entry].offset ? pointerImages.entries[entry].offset : images.entries[images.order[0]].dimensions.width;
+    game.gameArea.context.drawImage(pointerImages.entries[entry].image, images.entries[images.order[0]].position.x + offset, images.entries[images.order[0]].position.y);
   });
 };
 

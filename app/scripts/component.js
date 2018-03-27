@@ -24,7 +24,7 @@ function Component(args) {
   this.update = function() {
     if (this.background) {
       this.background.update();
-    }
+    };
     let ctx = game.gameArea.context;
     ctx.fillStyle = this.color;
     if (this.type == "text") {
@@ -106,48 +106,48 @@ function Component(args) {
   this.getRight = function() {
     return this.x + this.width;
   };
-}
+};
 
 function getUpTriangle(ctx, myObject) {
   vertices = {};
   vertices['x1'] = myObject.x;
   vertices['y1'] = myObject.y + myObject.height;
-  vertices['x2'] = myObject.x + myObject.width/2;
+  vertices['x2'] = myObject.x + myObject.width / 2;
   vertices['y2'] = myObject.y;
   vertices['x3'] = myObject.x + myObject.width;
   vertices['y3'] = myObject.y + myObject.height;
   return vertices;
-}
+};
 
 function getDownTriangle(ctx, myObject) {
   vertices = {};
   vertices['x1'] = myObject.x;
   vertices['y1'] = myObject.y;
-  vertices['x2'] = myObject.x + myObject.width/2;
+  vertices['x2'] = myObject.x + myObject.width / 2;
   vertices['y2'] = myObject.y + myObject.height;
   vertices['x3'] = myObject.x + myObject.width;
   vertices['y3'] = myObject.y;
   return vertices;
-}
+};
 
 function getRightTriangle(ctx, myObject) {
   vertices = {};
   vertices['x1'] = myObject.x;
   vertices['y1'] = myObject.y;
   vertices['x2'] = myObject.x + myObject.width;
-  vertices['y2'] = myObject.y + myObject.height/2;
+  vertices['y2'] = myObject.y + myObject.height / 2;
   vertices['x3'] = myObject.x;
   vertices['y3'] = myObject.y + myObject.height;
   return vertices;
-}
+};
 
 function getLeftTriangle(ctx, myObject) {
   vertices = {};
   vertices['x1'] = myObject.x + myObject.width;
   vertices['y1'] = myObject.y;
   vertices['x2'] = myObject.x;
-  vertices['y2'] = myObject.y + myObject.height/2;
+  vertices['y2'] = myObject.y + myObject.height / 2;
   vertices['x3'] = myObject.x + myObject.width;
   vertices['y3'] = myObject.y + myObject.height;
   return vertices;
-}
+};
