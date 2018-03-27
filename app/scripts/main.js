@@ -67,7 +67,7 @@ function detectGamePad() {
 
 function drawMenu() {
   prepTheCanvas();
-  setMenuOrder();
+  setMenuOrder(menuOrder);
   setImageFiles(pointerImages);
   setImageFiles(menuImages);
   drawImages(menuImages, menuOrder);
@@ -77,21 +77,21 @@ function drawMenu() {
 function drawInstructions() {
   console.log('drawing the instructions');
   prepTheCanvas();
-  setInstructionsOrder();
+  setMenuOrder(instructionsOrder);
   setImageFiles(instructionsImages);
   drawImages(instructionsImages, instructionsOrder);
 };
 
-function setMenuOrder() {
+function setMenuOrder(order) {
   if (supporting.everyinterval(game.gameArea.frameNo, 30)) {
     let keysPushed = controls.getMenuKeyPush();
     let direction = "";
     keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.up.includes(parseInt(key)) ? "up" : direction);
     keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.down.includes(parseInt(key)) ? "down" : direction);
     if (direction == "up") {
-      menuOrder.push(menuOrder.shift());
+      order.push(order.shift());
     } else if (direction == "down") {
-      menuOrder.unshift(menuOrder.pop());
+      order.unshift(order.pop());
     };
   };
 };
