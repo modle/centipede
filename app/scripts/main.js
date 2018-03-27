@@ -56,15 +56,17 @@ var instructionsImages = {
 };
 
 var pointerImages = {
-  before : {
-    image : new Image(),
-    file : "ship.png",
-    offset : -35,
-  },
-  after : {
-    image : new Image(),
-    file : "ship.png",
-    offset : 0,
+  entries : {
+    before : {
+      image : new Image(),
+      file : "ship.png",
+      offset : -35,
+    },
+    after : {
+      image : new Image(),
+      file : "ship.png",
+      offset : 0,
+    },
   },
 };
 
@@ -96,9 +98,15 @@ function setImages() {
   if (game.gameArea.frameNo !== 1) {
     return;
   };
-  setImageFiles(pointerImages);
+  setImageFiles(pointerImages.entries);
   setImageFiles(menuImages.entries);
   setImageFiles(instructionsImages.entries);
+};
+
+function setImageFiles(images) {
+  Array.from(Object.keys(images)).forEach(entry =>
+    images[entry].image.src = basePath + images[entry].file
+  );
 };
 
 function drawMenu(images) {
@@ -128,12 +136,6 @@ function setMenuOrder(order) {
   };
 };
 
-function setImageFiles(images) {
-  Array.from(Object.keys(images)).forEach(entry =>
-    images[entry].image.src = basePath + images[entry].file
-  );
-};
-
 function drawImages(images, order) {
   Array.from(Object.keys(images)).forEach(entry => {
     if (currentSelection.name == entry) {
@@ -141,9 +143,9 @@ function drawImages(images, order) {
     };
     game.gameArea.context.drawImage(images[entry].image, images[entry].position.x, images[entry].position.y)
   });
-  Array.from(Object.keys(pointerImages)).forEach(entry => {
-    let offset = pointerImages[entry].offset ? pointerImages[entry].offset : images[order[0]].dimensions.width;
-    game.gameArea.context.drawImage(pointerImages[entry].image, images[order[0]].position.x + offset, images[order[0]].position.y);
+  Array.from(Object.keys(pointerImages.entries)).forEach(entry => {
+    let offset = pointerImages.entries[entry].offset ? pointerImages.entries[entry].offset : images[order[0]].dimensions.width;
+    game.gameArea.context.drawImage(pointerImages.entries[entry].image, images[order[0]].position.x + offset, images[order[0]].position.y);
   });
 };
 

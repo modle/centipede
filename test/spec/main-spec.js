@@ -61,47 +61,54 @@ describe('Testing text functions', () => {
   it('drawMenu delegates to menu functions', () => {
     spyOn(window, 'prepTheCanvas');
     spyOn(window, 'setMenuOrder');
-    spyOn(window, 'setImageFiles');
-    spyOn(window, 'drawMenuImages');
+    spyOn(window, 'drawImages');
+    spyOn(window, 'checkForSelection');
 
-    drawMenu();
+    drawMenu(menuImages.entries);
 
     expect(window.prepTheCanvas).toHaveBeenCalled();
     expect(window.setMenuOrder).toHaveBeenCalled();
-    expect(window.setImageFiles).toHaveBeenCalled();
-    expect(window.drawMenuImages).toHaveBeenCalled();
+    expect(window.drawImages).toHaveBeenCalled();
+    expect(window.checkForSelection).toHaveBeenCalled();
+  });
+
+  it('setImages calls setImageFiles if first frame', () => {
+    game.init();
+    game.gameArea.frameNo = 1;
+    spyOn(window, 'setImageFiles');
+
+    setImages();
+
+    expect(window.setImageFiles).toHaveBeenCalledTimes(3);
+  });
+  it('setImages returns without calling setImageFiles if not first frame', () => {
+    game.init();
+    game.gameArea.frameNo = 2;
+    spyOn(window, 'setImageFiles');
+
+    setImages();
+
+    expect(window.setImageFiles).not.toHaveBeenCalledTimes(3);
   });
 
   it('setImageFiles returns if not first frame', () => {
-    game.init();
-    game.gameArea.frameNo = 2;
+    menuImages.entries.play.image.src = '';
+    menuImages.entries.instructions.image.src = '';
 
-    setImageFiles();
+    setImageFiles(menuImages.entries);
 
-    expect(menu.play.image.src).toBeFalsy();
-    expect(menu.instructions.image.src).toBeFalsy();
-    expect(menu.ship.image.src).toBeFalsy();
+    expect(menuImages.entries.play.image.src).toBeTruthy();
+    expect(menuImages.entries.instructions.image.src).toBeTruthy();
   });
 
-  it('setImageFiles sets the src value of each menu entry', () => {
-    game.init();
-    game.gameArea.frameNo = 1;
-
-    setImageFiles();
-
-    expect(menu.play.image.src).toBeTruthy();
-    expect(menu.instructions.image.src).toBeTruthy();
-    expect(menu.ship.image.src).toBeTruthy();
-  });
-
-  it('drawMenuImages calls drawImage', () => {
+  it('drawImages calls drawImage', () => {
     game.init();
     game.gameArea.context = game.gameArea.canvas.getContext("2d");
     spyOn(game.gameArea.context, 'drawImage');
 
-    drawMenuImages();
+    drawImages(menuImages.entries, menuImages.order);
 
-    expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(3);
+    expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(4);
   });
 
   it('processTriggers delegates to trigger checks', () => {
