@@ -1,16 +1,41 @@
 describe('Testing text functions', () => {
-  it('drawMenu delegates to menu functions', () => {
-    spyOn(window, 'prepTheCanvas');
-    spyOn(window, 'setMenuOrder');
-    spyOn(window, 'drawImages');
-    spyOn(window, 'checkForSelection');
 
-    drawMenu(menuImages.entries);
+  it('processMenus calls drawMenu with menuImages if showMenu is true', () => {
+    spyOn(window, 'setImages');
+    spyOn(window, 'drawMenu');
+    showMenu = true;
 
-    expect(window.prepTheCanvas).toHaveBeenCalled();
-    expect(window.setMenuOrder).toHaveBeenCalled();
-    expect(window.drawImages).toHaveBeenCalled();
-    expect(window.checkForSelection).toHaveBeenCalled();
+    result = processMenus();
+
+    expect(result).toBe(true);
+    expect(window.setImages).toHaveBeenCalled();
+    expect(window.drawMenu).toHaveBeenCalledTimes(1);
+    expect(window.drawMenu).toHaveBeenCalledWith(menuImages);
+  });
+  it('processMenus calls drawMenu with instructionsImages if showInstructions is true', () => {
+    spyOn(window, 'setImages');
+    spyOn(window, 'drawMenu');
+    showMenu = false;
+    showInstructions = true;
+
+    result = processMenus();
+
+    expect(result).toBe(true);
+    expect(window.setImages).toHaveBeenCalled();
+    expect(window.drawMenu).toHaveBeenCalledTimes(1);
+    expect(window.drawMenu).toHaveBeenCalledWith(instructionsImages);
+  });
+  it('processMenus calls returns false if showInstructions and showMenu are false', () => {
+    spyOn(window, 'setImages');
+    spyOn(window, 'drawMenu');
+    showMenu = false;
+    showInstructions = false;
+
+    result = processMenus();
+
+    expect(result).toBe(false);
+    expect(window.setImages).toHaveBeenCalled();
+    expect(window.drawMenu).not.toHaveBeenCalled();
   });
 
   it('setImages calls setImageFiles if first frame', () => {
@@ -31,7 +56,6 @@ describe('Testing text functions', () => {
 
     expect(window.setImageFiles).not.toHaveBeenCalledTimes(3);
   });
-
   it('setImageFiles returns if not first frame', () => {
     menuImages.entries.play.image.src = '';
     menuImages.entries.instructions.image.src = '';
@@ -40,6 +64,20 @@ describe('Testing text functions', () => {
 
     expect(menuImages.entries.play.image.src).toBeTruthy();
     expect(menuImages.entries.instructions.image.src).toBeTruthy();
+  });
+
+  it('drawMenu delegates to menu functions', () => {
+    spyOn(window, 'prepTheCanvas');
+    spyOn(window, 'setMenuOrder');
+    spyOn(window, 'drawImages');
+    spyOn(window, 'checkForSelection');
+
+    drawMenu(menuImages.entries);
+
+    expect(window.prepTheCanvas).toHaveBeenCalled();
+    expect(window.setMenuOrder).toHaveBeenCalled();
+    expect(window.drawImages).toHaveBeenCalled();
+    expect(window.checkForSelection).toHaveBeenCalled();
   });
 
   it('drawImages delegates to selection, text, and marker draw functions', () => {
@@ -54,14 +92,101 @@ describe('Testing text functions', () => {
     expect(window.drawTexts).toHaveBeenCalled();
   });
 
+  it('drawEntries calls drawImage for each entry', () => {
+    game.init();
+    game.gameArea.context = game.gameArea.canvas.getContext("2d");
+    spyOn(game.gameArea.context, 'drawImage');
+
+    drawEntries(menuImages.entries);
+
+    expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(2);
+  });
+  it('drawEntries sets currentSelection entry when entry name matches', () => {
+    game.init();
+    game.gameArea.context = game.gameArea.canvas.getContext("2d");
+    spyOn(game.gameArea.context, 'drawImage');
+
+    currentSelection.name = 'play';
+    drawEntries(menuImages.entries);
+
+    expect(currentSelection.entry.file).toBe(menuImages.entries[currentSelection.name].file);
+  });
+
   it('drawSelectionMarker calls drawImage', () => {
     game.init();
     game.gameArea.context = game.gameArea.canvas.getContext("2d");
     spyOn(game.gameArea.context, 'drawImage');
 
-    drawImages(menuImages);
+    drawSelectionMarker(pointerImages.entries);
 
-    expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(4);
+    expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(2);
   });
 
+  it('drawTexts calls text.component.update when text components are present', () => {
+    testImages = {text : menuImages.text};
+    spyOn(testImages.text.entries[0].component, 'update');
+
+    drawTexts(testImages);
+
+    expect(testImages.text.entries[0].component.update).toHaveBeenCalledTimes(1);
+
+  });
+  it('drawTexts does not set fontSize if not on overridden on text object', () => {
+    testImages = {
+      text : {
+        entries : [
+          {
+            name : 'winning',
+            text : 'CENTIPEDE! (warblegarble)',
+            component : new Component(knobsAndLevers.baseTextParams),
+            position : {x : 115, y : 100},
+          },
+        ],
+      }
+    };
+    spyOn(testImages.text.entries[0].component, 'update');
+
+    drawTexts(testImages);
+
+    expect(testImages.text.entries[0].component.fontSize)
+      .toBe(knobsAndLevers.baseTextParams.fontSize);
+    expect(testImages.text.entries[0].component.update).toHaveBeenCalledTimes(1);
+  });
+  it('drawTexts does nothing if no texts are present', () => {
+    testImages = {};
+
+    // does this really even need a test?
+    // there's nothing to check, but else branch needs covered
+    drawTexts(testImages);
+
+    expect(true).toBe(true);
+  });
+
+  it('checkForSelection calls currentSelectionEntry action when enough time has passed', () => {
+    let startTime = 61;
+    timeSinceSelection = startTime;
+    currentSelection.entry = menuImages.entries.play;
+    spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(true);
+    spyOn(currentSelection.entry, 'action');
+
+    checkForSelection();
+
+    expect(timeSinceSelection).toBe(startTime + 1);
+    expect(controls.keyBoardFlowControlButtonPressed).toHaveBeenCalled();
+    expect(currentSelection.entry.action).toHaveBeenCalled();
+  });
+
+  it('checkForSelection calls currentSelectionEntry action when enough time has passed', () => {
+    startTime = 30;
+    timeSinceSelection = startTime;
+    currentSelection.entry = menuImages.entries.play;
+    spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(true);
+    spyOn(currentSelection.entry, 'action');
+
+    checkForSelection();
+
+    expect(timeSinceSelection).toBe(startTime + 1);
+    expect(controls.keyBoardFlowControlButtonPressed).not.toHaveBeenCalled();
+    expect(currentSelection.entry.action).not.toHaveBeenCalled();
+  });
 });
