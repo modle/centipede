@@ -28,12 +28,17 @@ function updateGameState() {
   if (showMenu) {
     drawMenu();
     return;
-  }
-  prepTheCanvas();
+  };
   if (processTriggers()) {
     return;
   };
+  prepTheCanvas();
   manageGameObjects();
+};
+
+function detectGamePad() {
+  controls.checkControllerState();
+  controls.handleGamePause();
 };
 
 function drawMenu() {
@@ -70,11 +75,6 @@ function drawMenuImages() {
   game.gameArea.context.drawImage(menu.ship.image, menu[menuOrder[0]].position.x - 40, menu[menuOrder[0]].position.y);
   game.gameArea.context.drawImage(menu.play.image, menu.play.position.x, menu.play.position.y);
   game.gameArea.context.drawImage(menu.instructions.image, menu.instructions.position.x, menu.instructions.position.y);
-};
-
-function detectGamePad() {
-  controls.checkControllerState();
-  controls.handleGamePause();
 };
 
 function processTriggers() {
