@@ -1,9 +1,11 @@
 /*jslint white: true */
 var showMenu = true;
+var showInstructions = false;
 var basePath = "app/static/media/images/";
 var menuOrder = ['play', 'instructions'];
+var instructionsOrder = ['back'];
 
-var menu = {
+var menuImages = {
   play : {
     image : new Image(),
     file : "play.png",
@@ -16,9 +18,27 @@ var menu = {
     position : {x : 268, y : 490},
     dimensions : {width : 260, height : 40}
   },
-  ship : {
+};
+
+var pointerImages = {
+  before : {
     image : new Image(),
     file : "ship.png",
+    offset : -35,
+  },
+  after : {
+    image : new Image(),
+    file : "ship.png",
+    offset : 0,
+  },
+};
+
+var instructionsImages = {
+  back : {
+    image : new Image(),
+    file : "back.png",
+    position : {x : 268, y : 490},
+    dimensions : {width : 260, height : 40}
   },
 };
 
@@ -27,6 +47,10 @@ function updateGameState() {
   detectGamePad();
   if (showMenu) {
     drawMenu();
+    return;
+  };
+  if (showInstructions) {
+    drawInstructions();
     return;
   };
   if (processTriggers()) {
@@ -44,8 +68,18 @@ function detectGamePad() {
 function drawMenu() {
   prepTheCanvas();
   setMenuOrder();
-  setImageFiles();
-  drawMenuImages();
+  setImageFiles(pointerImages);
+  setImageFiles(menuImages);
+  drawImages(menuImages, menuOrder);
+  checkForSelection();
+};
+
+function drawInstructions() {
+  console.log('drawing the instructions');
+  prepTheCanvas();
+  setInstructionsOrder();
+  setImageFiles(instructionsImages);
+  drawImages(instructionsImages, instructionsOrder);
 };
 
 function setMenuOrder() {
@@ -62,19 +96,38 @@ function setMenuOrder() {
   };
 };
 
-function setImageFiles() {
+function setImageFiles(images) {
   if (game.gameArea.frameNo !== 1) {
     return;
   };
-  Array.from(Object.keys(menu)).forEach(entry =>
-    menu[entry].image.src = basePath + menu[entry].file
+  Array.from(Object.keys(images)).forEach(entry =>
+    images[entry].image.src = basePath + images[entry].file
   );
 };
 
-function drawMenuImages() {
-  game.gameArea.context.drawImage(menu.ship.image, menu[menuOrder[0]].position.x - 40, menu[menuOrder[0]].position.y);
-  game.gameArea.context.drawImage(menu.play.image, menu.play.position.x, menu.play.position.y);
-  game.gameArea.context.drawImage(menu.instructions.image, menu.instructions.position.x, menu.instructions.position.y);
+function drawImages(images, order) {
+  Array.from(Object.keys(images)).forEach(entry => {
+    game.gameArea.context.drawImage(images[entry].image, images[entry].position.x, images[entry].position.y)
+  });
+  Array.from(Object.keys(pointerImages)).forEach(entry => {
+    let offset = pointerImages[entry].offset ? pointerImages[entry].offset : images[order[0]].dimensions.width;
+    game.gameArea.context.drawImage(pointerImages[entry].image, images[order[0]].position.x + offset, images[order[0]].position.y);
+  });
+};
+
+function checkForSelection() {
+  if (controls.keysDown[controls.enterKeyCode]) {
+    let selection = menuOrder[0];
+    if (selection == 'play') {
+      prepTheCanvas();
+      game.paused = false;
+      showMenu = false;
+    } else if (selection == 'instructions') {
+      prepTheCanvas();
+      showMenu = false;
+      showInstructions = true;
+    };
+  };
 };
 
 function processTriggers() {
