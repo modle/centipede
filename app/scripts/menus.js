@@ -126,7 +126,7 @@ function drawImages(images, order) {
 
 function checkForSelection() {
   timeSinceSelection += 1;
-  if (timeSinceSelection > 60 && controls.keysDown[controls.enterKeyCode]) {
+  if (timeSinceSelection > 60 && controls.keyBoardFlowControlButtonPressed()) {
     currentSelection.action();
   };
 };
