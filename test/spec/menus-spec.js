@@ -3,33 +3,33 @@ describe('Testing text functions', () => {
   it('processMenus calls drawMenu with menuImages if showMenu is true', () => {
     spyOn(menus, 'setImages');
     spyOn(menus, 'drawMenu');
-    showMenu = true;
+    menus.showMenu = true;
 
     result = menus.processMenus();
 
     expect(result).toBe(true);
     expect(menus.setImages).toHaveBeenCalled();
     expect(menus.drawMenu).toHaveBeenCalledTimes(1);
-    expect(menus.drawMenu).toHaveBeenCalledWith(menuImages);
+    expect(menus.drawMenu).toHaveBeenCalledWith(menus.menuImages);
   });
   it('processMenus calls drawMenu with instructionsImages if showInstructions is true', () => {
     spyOn(menus, 'setImages');
     spyOn(menus, 'drawMenu');
-    showMenu = false;
-    showInstructions = true;
+    menus.showMenu = false;
+    menus.showInstructions = true;
 
     result = menus.processMenus();
 
     expect(result).toBe(true);
     expect(menus.setImages).toHaveBeenCalled();
     expect(menus.drawMenu).toHaveBeenCalledTimes(1);
-    expect(menus.drawMenu).toHaveBeenCalledWith(instructionsImages);
+    expect(menus.drawMenu).toHaveBeenCalledWith(menus.instructionsImages);
   });
   it('processMenus calls returns false if showInstructions and showMenu are false', () => {
     spyOn(menus, 'setImages');
     spyOn(menus, 'drawMenu');
-    showMenu = false;
-    showInstructions = false;
+    menus.showMenu = false;
+    menus.showInstructions = false;
 
     result = menus.processMenus();
 
@@ -57,13 +57,13 @@ describe('Testing text functions', () => {
     expect(menus.setImageFiles).not.toHaveBeenCalledTimes(3);
   });
   it('setImageFiles returns if not first frame', () => {
-    menuImages.entries.play.image.src = '';
-    menuImages.entries.instructions.image.src = '';
+    menus.menuImages.entries.play.image.src = '';
+    menus.menuImages.entries.instructions.image.src = '';
 
-    menus.setImageFiles(menuImages.entries);
+    menus.setImageFiles(menus.menuImages.entries);
 
-    expect(menuImages.entries.play.image.src).toBeTruthy();
-    expect(menuImages.entries.instructions.image.src).toBeTruthy();
+    expect(menus.menuImages.entries.play.image.src).toBeTruthy();
+    expect(menus.menuImages.entries.instructions.image.src).toBeTruthy();
   });
 
   it('drawMenu delegates to menu functions', () => {
@@ -72,7 +72,7 @@ describe('Testing text functions', () => {
     spyOn(menus, 'drawImages');
     spyOn(menus, 'checkForSelection');
 
-    menus.drawMenu(menuImages.entries);
+    menus.drawMenu(menus.menuImages.entries);
 
     expect(main.prepTheCanvas).toHaveBeenCalled();
     expect(menus.setMenuOrder).toHaveBeenCalled();
@@ -82,22 +82,22 @@ describe('Testing text functions', () => {
 
   it('setMenuOrder calls shiftMenuListOrder if enough time has passed since last move', () => {
     let startTime = 30;
-    timeSinceMenuMove = startTime;
+    menus.timeSinceMenuMove = startTime;
     spyOn(menus, 'shiftMenuListOrder');
 
     menus.setMenuOrder([]);
 
-    expect(timeSinceMenuMove).toBe(0);
+    expect(menus.timeSinceMenuMove).toBe(0);
   });
 
   it('setMenuOrder does not call shiftMenuListOrder if not enough time has passed since last move', () => {
     let startTime = 1;
-    timeSinceMenuMove = startTime;
+    menus.timeSinceMenuMove = startTime;
     spyOn(menus, 'shiftMenuListOrder');
 
     menus.setMenuOrder([]);
 
-    expect(timeSinceMenuMove).toBe(startTime + 1);
+    expect(menus.timeSinceMenuMove).toBe(startTime + 1);
   });
 
   it('shiftMenuListOrder shifts array order up and currentSelection.name matches the first entry', () => {
@@ -109,11 +109,11 @@ describe('Testing text functions', () => {
     menus.shiftMenuListOrder(actual);
 
     expect(actual).toEqual(expected);
-    expect(currentSelection.name).toBe('third');
+    expect(menus.currentSelection.name).toBe('third');
   });
 
   it('shiftMenuListOrder shifts array order down and currentSelection.name matches the first entry', () => {
-    currentSelection = {name : ''};
+    menus.currentSelection = {name : ''};
     spyOn(menus, 'getDirection').and.returnValue('down');
     let actual = ['first', 'second', 'third'];
     let expected = ['second', 'third', 'first'];
@@ -121,11 +121,11 @@ describe('Testing text functions', () => {
     menus.shiftMenuListOrder(actual);
 
     expect(actual).toEqual(expected);
-    expect(currentSelection.name).toBe('second');
+    expect(menus.currentSelection.name).toBe('second');
   });
 
   it('shiftMenuListOrder sets currentshifts array order down', () => {
-    currentSelection = {name : ''};
+    menus.currentSelection = {name : ''};
     spyOn(menus, 'getDirection').and.returnValue("");
     let actual = ['first', 'second', 'third'];
     let expected = ['first', 'second', 'third'];
@@ -133,7 +133,7 @@ describe('Testing text functions', () => {
     menus.shiftMenuListOrder(actual);
 
     expect(actual).toEqual(expected);
-    expect(currentSelection.name).toBe('first');
+    expect(menus.currentSelection.name).toBe('first');
   });
 
   it('getDirection returns menu movement direction', () => {
@@ -181,7 +181,7 @@ describe('Testing text functions', () => {
     spyOn(menus, 'drawSelectionMarker');
     spyOn(menus, 'drawTexts');
 
-    menus.drawImages(menuImages);
+    menus.drawImages(menus.menuImages);
 
     expect(menus.drawEntries).toHaveBeenCalled();
     expect(menus.drawSelectionMarker).toHaveBeenCalled();
@@ -193,7 +193,7 @@ describe('Testing text functions', () => {
     game.gameArea.context = game.gameArea.canvas.getContext("2d");
     spyOn(game.gameArea.context, 'drawImage');
 
-    menus.drawEntries(menuImages.entries);
+    menus.drawEntries(menus.menuImages.entries);
 
     expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(3);
   });
@@ -202,10 +202,10 @@ describe('Testing text functions', () => {
     game.gameArea.context = game.gameArea.canvas.getContext("2d");
     spyOn(game.gameArea.context, 'drawImage');
 
-    currentSelection.name = 'play';
-    menus.drawEntries(menuImages.entries);
+    menus.currentSelection.name = 'play';
+    menus.drawEntries(menus.menuImages.entries);
 
-    expect(currentSelection.entry.file).toBe(menuImages.entries[currentSelection.name].file);
+    expect(menus.currentSelection.entry.file).toBe(menus.menuImages.entries[menus.currentSelection.name].file);
   });
 
   it('drawSelectionMarker calls drawImage', () => {
@@ -213,13 +213,13 @@ describe('Testing text functions', () => {
     game.gameArea.context = game.gameArea.canvas.getContext("2d");
     spyOn(game.gameArea.context, 'drawImage');
 
-    menus.drawSelectionMarker(pointerImages.entries);
+    menus.drawSelectionMarker(menus.pointerImages.entries);
 
     expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(2);
   });
 
   it('drawTexts calls text.component.update when text components are present', () => {
-    testImages = {text : menuImages.text};
+    testImages = {text : menus.menuImages.text};
     spyOn(testImages.text.entries[0].component, 'update');
 
     menus.drawTexts(testImages);
@@ -259,29 +259,29 @@ describe('Testing text functions', () => {
 
   it('checkForSelection calls currentSelectionEntry action when enough time has passed', () => {
     let startTime = 61;
-    timeSinceSelection = startTime;
-    currentSelection.entry = menuImages.entries.play;
+    menus.timeSinceSelection = startTime;
+    menus.currentSelection.entry = menus.menuImages.entries.play;
     spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(true);
-    spyOn(currentSelection.entry, 'action');
+    spyOn(menus.currentSelection.entry, 'action');
 
     menus.checkForSelection();
 
-    expect(timeSinceSelection).toBe(startTime + 1);
+    expect(menus.timeSinceSelection).toBe(startTime + 1);
     expect(controls.keyBoardFlowControlButtonPressed).toHaveBeenCalled();
-    expect(currentSelection.entry.action).toHaveBeenCalled();
+    expect(menus.currentSelection.entry.action).toHaveBeenCalled();
   });
 
   it('checkForSelection calls currentSelectionEntry action when enough time has passed', () => {
     startTime = 30;
-    timeSinceSelection = startTime;
-    currentSelection.entry = menuImages.entries.play;
+    menus.timeSinceSelection = startTime;
+    menus.currentSelection.entry = menus.menuImages.entries.play;
     spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(true);
-    spyOn(currentSelection.entry, 'action');
+    spyOn(menus.currentSelection.entry, 'action');
 
     menus.checkForSelection();
 
-    expect(timeSinceSelection).toBe(startTime + 1);
+    expect(menus.timeSinceSelection).toBe(startTime + 1);
     expect(controls.keyBoardFlowControlButtonPressed).not.toHaveBeenCalled();
-    expect(currentSelection.entry.action).not.toHaveBeenCalled();
+    expect(menus.currentSelection.entry.action).not.toHaveBeenCalled();
   });
 });

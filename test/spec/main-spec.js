@@ -187,8 +187,8 @@ describe('Testing text functions', () => {
     expect(game.managePause).toHaveBeenCalled();
   });
   it('prepTheCanvas calls delegate functions', () => {
-    showMenu = false;
-    showInstructions = false;
+    menus.showMenu = false;
+    menus.showInstructions = false;
 
     spyOn(game, 'startNextFrame');
     spyOn(window, 'manageSounds');
@@ -201,7 +201,7 @@ describe('Testing text functions', () => {
     expect(hud.update).toHaveBeenCalled();
   });
   it('prepTheCanvas does not call hud if showMenu is true', () => {
-    showMenu = true;
+    menus.showMenu = true;
     spyOn(game, 'startNextFrame');
     spyOn(window, 'manageSounds');
     spyOn(hud, 'update');
