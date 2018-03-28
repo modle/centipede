@@ -1,94 +1,94 @@
 describe('Testing text functions', () => {
   it('updateGameState calls delegate functions', () => {
-    spyOn(window, 'detectGamePad');
+    spyOn(main, 'detectGamePad');
     spyOn(window, 'processMenus').and.returnValue(false);
-    spyOn(window, 'processTriggers').and.returnValue(false);
-    spyOn(window, 'prepTheCanvas');
-    spyOn(window, 'manageGameObjects');
+    spyOn(main, 'processTriggers').and.returnValue(false);
+    spyOn(main, 'prepTheCanvas');
+    spyOn(main, 'manageGameObjects');
 
-    updateGameState();
+    main.updateGameState();
 
-    expect(window.detectGamePad).toHaveBeenCalled();
+    expect(main.detectGamePad).toHaveBeenCalled();
     expect(window.processMenus).toHaveBeenCalled();
-    expect(window.processTriggers).toHaveBeenCalled();
-    expect(window.prepTheCanvas).toHaveBeenCalled();
-    expect(window.manageGameObjects).toHaveBeenCalled();
+    expect(main.processTriggers).toHaveBeenCalled();
+    expect(main.prepTheCanvas).toHaveBeenCalled();
+    expect(main.manageGameObjects).toHaveBeenCalled();
   });
   it('updateGameState returns after process triggers if true', () => {
-    spyOn(window, 'detectGamePad');
+    spyOn(main, 'detectGamePad');
     spyOn(window, 'processMenus').and.returnValue(false);
-    spyOn(window, 'processTriggers').and.returnValue(true);
-    spyOn(window, 'prepTheCanvas');
-    spyOn(window, 'manageGameObjects');
+    spyOn(main, 'processTriggers').and.returnValue(true);
+    spyOn(main, 'prepTheCanvas');
+    spyOn(main, 'manageGameObjects');
 
-    updateGameState();
+    main.updateGameState();
 
-    expect(window.detectGamePad).toHaveBeenCalled();
+    expect(main.detectGamePad).toHaveBeenCalled();
     expect(window.processMenus).toHaveBeenCalled();
-    expect(window.processTriggers).toHaveBeenCalled();
-    expect(window.prepTheCanvas).not.toHaveBeenCalled();
-    expect(window.manageGameObjects).not.toHaveBeenCalled();
+    expect(main.processTriggers).toHaveBeenCalled();
+    expect(main.prepTheCanvas).not.toHaveBeenCalled();
+    expect(main.manageGameObjects).not.toHaveBeenCalled();
   });
   it('updateGameState returns after drawMenu', () => {
-    spyOn(window, 'detectGamePad');
+    spyOn(main, 'detectGamePad');
     spyOn(window, 'processMenus').and.returnValue(true);
-    spyOn(window, 'processTriggers').and.returnValue(true);
-    spyOn(window, 'prepTheCanvas');
-    spyOn(window, 'manageGameObjects');
+    spyOn(main, 'processTriggers').and.returnValue(true);
+    spyOn(main, 'prepTheCanvas');
+    spyOn(main, 'manageGameObjects');
 
-    updateGameState();
+    main.updateGameState();
 
-    expect(window.detectGamePad).toHaveBeenCalled();
+    expect(main.detectGamePad).toHaveBeenCalled();
     expect(window.processMenus).toHaveBeenCalled();
-    expect(window.processTriggers).not.toHaveBeenCalled();
-    expect(window.prepTheCanvas).not.toHaveBeenCalled();
-    expect(window.manageGameObjects).not.toHaveBeenCalled();
+    expect(main.processTriggers).not.toHaveBeenCalled();
+    expect(main.prepTheCanvas).not.toHaveBeenCalled();
+    expect(main.manageGameObjects).not.toHaveBeenCalled();
   });
 
   it('detectGamePad delegates to check controller state and handle game pause', () => {
     spyOn(controls, 'checkControllerState');
     spyOn(controls, 'handleGamePause');
 
-    detectGamePad();
+    main.detectGamePad();
 
     expect(controls.checkControllerState).toHaveBeenCalled();
     expect(controls.handleGamePause).toHaveBeenCalled();
   });
 
   it('processTriggers delegates to trigger checks and returns on true', () => {
-    spyOn(window, 'checkPlayerDied').and.returnValue(false);
-    spyOn(window, 'checkLevelOver').and.returnValue(true);
-    spyOn(window, 'checkGameOver').and.returnValue(false);
-    spyOn(window, 'checkPause').and.returnValue(false);
+    spyOn(main, 'checkPlayerDied').and.returnValue(false);
+    spyOn(main, 'checkLevelOver').and.returnValue(true);
+    spyOn(main, 'checkGameOver').and.returnValue(false);
+    spyOn(main, 'checkPause').and.returnValue(false);
 
-    let result = processTriggers();
+    let result = main.processTriggers();
 
     expect(result).toBeTruthy();
-    expect(window.checkPlayerDied).toHaveBeenCalled();
-    expect(window.checkLevelOver).toHaveBeenCalled();
-    expect(window.checkGameOver).not.toHaveBeenCalled();
-    expect(window.checkPause).not.toHaveBeenCalled();
+    expect(main.checkPlayerDied).toHaveBeenCalled();
+    expect(main.checkLevelOver).toHaveBeenCalled();
+    expect(main.checkGameOver).not.toHaveBeenCalled();
+    expect(main.checkPause).not.toHaveBeenCalled();
   });
   it('processTriggers delegates to all trigger checks and returns false when all are false', () => {
-    spyOn(window, 'checkPlayerDied').and.returnValue(false);
-    spyOn(window, 'checkLevelOver').and.returnValue(false);
-    spyOn(window, 'checkGameOver').and.returnValue(false);
-    spyOn(window, 'checkPause').and.returnValue(false);
+    spyOn(main, 'checkPlayerDied').and.returnValue(false);
+    spyOn(main, 'checkLevelOver').and.returnValue(false);
+    spyOn(main, 'checkGameOver').and.returnValue(false);
+    spyOn(main, 'checkPause').and.returnValue(false);
 
-    let result = processTriggers();
+    let result = main.processTriggers();
 
     expect(result).toBeFalsy();
-    expect(window.checkPlayerDied).toHaveBeenCalled();
-    expect(window.checkLevelOver).toHaveBeenCalled();
-    expect(window.checkGameOver).toHaveBeenCalled();
-    expect(window.checkPause).toHaveBeenCalled();
+    expect(main.checkPlayerDied).toHaveBeenCalled();
+    expect(main.checkLevelOver).toHaveBeenCalled();
+    expect(main.checkGameOver).toHaveBeenCalled();
+    expect(main.checkPause).toHaveBeenCalled();
   });
 
   it('checkPlayerDied returns false if player is not dead', () => {
     let expected = false;
     player.died = expected;
 
-    let actual = checkPlayerDied();
+    let actual = main.checkPlayerDied();
 
     expect(actual).toEqual(expected);
   });
@@ -99,7 +99,7 @@ describe('Testing text functions', () => {
     spyOn(game, 'setDiedText');
     spyOn(game, 'playDiedSound');
 
-    let actual = checkPlayerDied();
+    let actual = main.checkPlayerDied();
 
     expect(actual).toEqual(expected);
     expect(game.setDiedText).toHaveBeenCalled();
@@ -112,7 +112,7 @@ describe('Testing text functions', () => {
     game.delayed = 1;
     game.delayEndTime = 10;
 
-    let actual = checkPlayerDied();
+    let actual = main.checkPlayerDied();
 
     expect(actual).toEqual(expected);
     expect(game.delayed).toEqual(2);
@@ -124,7 +124,7 @@ describe('Testing text functions', () => {
     game.delayEndTime = 10;
     spyOn(game, 'manageDeath');
 
-    let actual = checkPlayerDied();
+    let actual = main.checkPlayerDied();
 
     expect(actual).toEqual(expected);
     expect(game.delayed).toEqual(0);
@@ -134,7 +134,7 @@ describe('Testing text functions', () => {
     spyOn(game, 'levelIsOver').and.returnValue(expected);
     spyOn(game, 'manageLevel');
 
-    let actual = checkLevelOver();
+    let actual = main.checkLevelOver();
 
     expect(actual).toEqual(expected);
     expect(game.levelIsOver).toHaveBeenCalled();
@@ -144,7 +144,7 @@ describe('Testing text functions', () => {
     spyOn(game, 'levelIsOver').and.returnValue(expected);
     spyOn(game, 'manageLevel');
 
-    let actual = checkLevelOver();
+    let actual = main.checkLevelOver();
 
     expect(actual).toEqual(expected);
     expect(game.levelIsOver).toHaveBeenCalled();
@@ -154,7 +154,7 @@ describe('Testing text functions', () => {
     let expected = false;
     game.gameOver = expected;
 
-    let actual = checkGameOver();
+    let actual = main.checkGameOver();
 
     expect(actual).toEqual(expected);
   });
@@ -163,7 +163,7 @@ describe('Testing text functions', () => {
     game.gameOver = expected;
     spyOn(game, 'manageGameOver');
 
-    let actual = checkGameOver();
+    let actual = main.checkGameOver();
 
     expect(actual).toEqual(expected);
     expect(game.manageGameOver).toHaveBeenCalled();
@@ -172,7 +172,7 @@ describe('Testing text functions', () => {
     let expected = false;
     game.paused = expected;
 
-    let actual = checkPause();
+    let actual = main.checkPause();
 
     expect(actual).toEqual(expected);
   });
@@ -181,7 +181,7 @@ describe('Testing text functions', () => {
     game.paused = expected;
     spyOn(game, 'managePause');
 
-    let actual = checkPause();
+    let actual = main.checkPause();
 
     expect(actual).toEqual(expected);
     expect(game.managePause).toHaveBeenCalled();
@@ -194,7 +194,7 @@ describe('Testing text functions', () => {
     spyOn(window, 'manageSounds');
     spyOn(hud, 'update');
 
-    prepTheCanvas();
+    main.prepTheCanvas();
 
     expect(game.startNextFrame).toHaveBeenCalled();
     expect(window.manageSounds).toHaveBeenCalled();
@@ -206,7 +206,7 @@ describe('Testing text functions', () => {
     spyOn(window, 'manageSounds');
     spyOn(hud, 'update');
 
-    prepTheCanvas();
+    main.prepTheCanvas();
 
     expect(game.startNextFrame).toHaveBeenCalled();
     expect(window.manageSounds).toHaveBeenCalled();
@@ -222,7 +222,7 @@ describe('Testing text functions', () => {
     spyOn(collisions, 'check');
     spyOn(metrics, 'manage');
 
-    manageGameObjects();
+    main.manageGameObjects();
 
     expect(mushrooms.manage).toHaveBeenCalled();
     expect(centipedes.manage).toHaveBeenCalled();

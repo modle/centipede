@@ -67,14 +67,14 @@ describe('Testing text functions', () => {
   });
 
   it('drawMenu delegates to menu functions', () => {
-    spyOn(window, 'prepTheCanvas');
+    spyOn(main, 'prepTheCanvas');
     spyOn(window, 'setMenuOrder');
     spyOn(window, 'drawImages');
     spyOn(window, 'checkForSelection');
 
     drawMenu(menuImages.entries);
 
-    expect(window.prepTheCanvas).toHaveBeenCalled();
+    expect(main.prepTheCanvas).toHaveBeenCalled();
     expect(window.setMenuOrder).toHaveBeenCalled();
     expect(window.drawImages).toHaveBeenCalled();
     expect(window.checkForSelection).toHaveBeenCalled();

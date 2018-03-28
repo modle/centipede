@@ -21,7 +21,7 @@ var menuImages = {
       position : {x : 350, y : 450},
       dimensions : {width : 96, height : 40},
       action : function() {
-        prepTheCanvas();
+        main.prepTheCanvas();
         game.paused = false;
         showMenu = false;
         timeSinceSelection = 0;
@@ -33,7 +33,7 @@ var menuImages = {
       position : {x : 268, y : 490},
       dimensions : {width : 260, height : 40},
       action : function() {
-        prepTheCanvas();
+        main.prepTheCanvas();
         showMenu = false;
         showSettings = false;
         showInstructions = true;
@@ -46,7 +46,7 @@ var menuImages = {
       position : {x : 305, y : 530},
       dimensions : {width : 182, height : 40},
       action : function() {
-        prepTheCanvas();
+        main.prepTheCanvas();
         showMenu = false;
         showSettings = true;
         showInstructions = false;
@@ -77,7 +77,7 @@ var instructionsImages = {
       dimensions : {width : 96, height : 40},
       action : function() {
         currentSelection.name = menuImages.order[0];
-        prepTheCanvas();
+        main.prepTheCanvas();
         showMenu = true;
         showInstructions = false;
         timeSinceSelection = 0;
@@ -170,7 +170,7 @@ function setImageFiles(images) {
 };
 
 function drawMenu(images) {
-  prepTheCanvas();
+  main.prepTheCanvas();
   setMenuOrder(images.order);
   drawImages(images);
   checkForSelection();

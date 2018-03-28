@@ -1,91 +1,88 @@
 /*jslint white: true */
 // this gets executed every interval
 function updateGameState() {
-  detectGamePad();
-  if (processMenus()) {
-    return;
-  };
-  if (processTriggers()) {
-    return;
-  };
-  prepTheCanvas();
-  manageGameObjects();
 };
 
-function detectGamePad() {
-  controls.checkControllerState();
-  controls.handleGamePause();
-};
-
-function processTriggers() {
-  let triggered = (
-    checkPlayerDied()
-    || checkLevelOver()
-    || checkGameOver()
-    || checkPause()
-  );
-  return triggered;
-};
-
-function checkPlayerDied() {
-  if (player.died) {
-    if (game.delayed === 0) {
-      game.setDiedText();
-      game.playDiedSound();
-      game.delayed++;
-      return true;
-    } else if (game.delayed < game.delayEndTime) {
-      game.delayed++;
-      return true;
-    } else {
-      game.delayed = 0;
-      game.manageDeath();
+var main = {
+  updateGameState : function() {
+    main.detectGamePad();
+    if (processMenus()) {
+      return;
+    };
+    if (main.processTriggers()) {
+      return;
+    };
+    main.prepTheCanvas();
+    main.manageGameObjects();
+  },
+  detectGamePad : function() {
+    controls.checkControllerState();
+    controls.handleGamePause();
+  },
+  processTriggers : function() {
+    let triggered = (
+      this.checkPlayerDied()
+      || this.checkLevelOver()
+      || this.checkGameOver()
+      || this.checkPause()
+    );
+    return triggered;
+  },
+  checkPlayerDied : function() {
+    if (player.died) {
+      if (game.delayed === 0) {
+        game.setDiedText();
+        game.playDiedSound();
+        game.delayed++;
+        return true;
+      } else if (game.delayed < game.delayEndTime) {
+        game.delayed++;
+        return true;
+      } else {
+        game.delayed = 0;
+        game.manageDeath();
+        return true;
+      };
+    };
+    return false;
+  },
+  checkLevelOver : function() {
+    if (game.levelIsOver()) {
+      game.manageLevel();
       return true;
     };
-  };
-  return false;
-};
-
-function checkLevelOver() {
-  if (game.levelIsOver()) {
-    game.manageLevel();
-    return true;
-  };
-  return false;
-};
-
-function checkGameOver() {
-  if (game.gameOver) {
-    game.manageGameOver();
-    return true;
-  };
-  return false;
-};
-
-function checkPause() {
-  if (game.paused) {
-    game.managePause();
-    return true;
-  };
-  return false;
-};
-
-function prepTheCanvas() {
-  game.startNextFrame();
-  manageSounds();
-  if (showMenu || showInstructions) {
-    return;
-  };
-  hud.update();
-};
-
-function manageGameObjects() {
-  mushrooms.manage();
-  centipedes.manage();
-  intervalCreatures.manage();
-  spiders.manage();
-  lasers.manage();
-  player.manage();
-  collisions.check();
-  metrics.manage();
+    return false;
+  },
+  checkGameOver : function() {
+    if (game.gameOver) {
+      game.manageGameOver();
+      return true;
+    };
+    return false;
+  },
+  checkPause : function() {
+    if (game.paused) {
+      game.managePause();
+      return true;
+    };
+    return false;
+  },
+  prepTheCanvas : function() {
+    game.startNextFrame();
+    manageSounds();
+    if (showMenu || showInstructions) {
+      return;
+    };
+    hud.update();
+  },
+  manageGameObjects : function() {
+    mushrooms.manage();
+    centipedes.manage();
+    intervalCreatures.manage();
+    spiders.manage();
+    lasers.manage();
+    player.manage();
+    collisions.check();
+    metrics.manage();
+  },
 };
