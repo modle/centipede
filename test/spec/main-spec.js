@@ -1,7 +1,7 @@
 describe('Testing text functions', () => {
   it('updateGameState calls delegate functions', () => {
     spyOn(main, 'detectGamePad');
-    spyOn(window, 'processMenus').and.returnValue(false);
+    spyOn(menus, 'processMenus').and.returnValue(false);
     spyOn(main, 'processTriggers').and.returnValue(false);
     spyOn(main, 'prepTheCanvas');
     spyOn(main, 'manageGameObjects');
@@ -9,14 +9,14 @@ describe('Testing text functions', () => {
     main.updateGameState();
 
     expect(main.detectGamePad).toHaveBeenCalled();
-    expect(window.processMenus).toHaveBeenCalled();
+    expect(menus.processMenus).toHaveBeenCalled();
     expect(main.processTriggers).toHaveBeenCalled();
     expect(main.prepTheCanvas).toHaveBeenCalled();
     expect(main.manageGameObjects).toHaveBeenCalled();
   });
   it('updateGameState returns after process triggers if true', () => {
     spyOn(main, 'detectGamePad');
-    spyOn(window, 'processMenus').and.returnValue(false);
+    spyOn(menus, 'processMenus').and.returnValue(false);
     spyOn(main, 'processTriggers').and.returnValue(true);
     spyOn(main, 'prepTheCanvas');
     spyOn(main, 'manageGameObjects');
@@ -24,14 +24,14 @@ describe('Testing text functions', () => {
     main.updateGameState();
 
     expect(main.detectGamePad).toHaveBeenCalled();
-    expect(window.processMenus).toHaveBeenCalled();
+    expect(menus.processMenus).toHaveBeenCalled();
     expect(main.processTriggers).toHaveBeenCalled();
     expect(main.prepTheCanvas).not.toHaveBeenCalled();
     expect(main.manageGameObjects).not.toHaveBeenCalled();
   });
   it('updateGameState returns after drawMenu', () => {
     spyOn(main, 'detectGamePad');
-    spyOn(window, 'processMenus').and.returnValue(true);
+    spyOn(menus, 'processMenus').and.returnValue(true);
     spyOn(main, 'processTriggers').and.returnValue(true);
     spyOn(main, 'prepTheCanvas');
     spyOn(main, 'manageGameObjects');
@@ -39,7 +39,7 @@ describe('Testing text functions', () => {
     main.updateGameState();
 
     expect(main.detectGamePad).toHaveBeenCalled();
-    expect(window.processMenus).toHaveBeenCalled();
+    expect(menus.processMenus).toHaveBeenCalled();
     expect(main.processTriggers).not.toHaveBeenCalled();
     expect(main.prepTheCanvas).not.toHaveBeenCalled();
     expect(main.manageGameObjects).not.toHaveBeenCalled();

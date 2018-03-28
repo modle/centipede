@@ -139,115 +139,103 @@ var menus = {
     showInstructions = false;
     showSettings = false;
   },
-}
-
-function processMenus() {
-  setImages();
-  if (showMenu) {
-    drawMenu(menuImages);
-    return true;
-  };
-  if (showInstructions) {
-    drawMenu(instructionsImages);
-    return true;
-  };
-  return false;
-};
-
-function setImages() {
-  if (game.gameArea.frameNo !== 1) {
-    return;
-  };
-  setImageFiles(pointerImages.entries);
-  setImageFiles(menuImages.entries);
-  setImageFiles(instructionsImages.entries);
-};
-
-function setImageFiles(images) {
-  Array.from(Object.keys(images)).forEach(entry =>
-    images[entry].image.src = basePath + images[entry].file
-  );
-};
-
-function drawMenu(images) {
-  main.prepTheCanvas();
-  setMenuOrder(images.order);
-  drawImages(images);
-  checkForSelection();
-};
-
-function setMenuOrder(order) {
-  timeSinceMenuMove += 1;
-  if (timeSinceMenuMove > 30) {
-    shiftMenuListOrder(order);
-    timeSinceMenuMove = 0;
-  };
-};
-
-function shiftMenuListOrder(order) {
-  let direction = getDirection();
-  if (direction == "up") {
-    order.unshift(order.pop());
-  } else if (direction == "down") {
-    order.push(order.shift());
-  };
-  currentSelection.name = order[0];
-};
-
-function getDirection() {
-  let direction = "";
-  let keysPushed = controls.getMenuKeyPush();
-  keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.up.includes(parseInt(key)) ? "up" : direction);
-  keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.down.includes(parseInt(key)) ? "down" : direction);
-  return direction;
-}
-
-function drawImages(images) {
-  drawEntries(images.entries);
-  drawSelectionMarker(pointerImages.entries);
-  drawTexts(images);
-};
-
-function drawEntries(entries) {
-  Array.from(Object.keys(entries)).forEach(entry => {
-    if (currentSelection.name == entry) {
-      currentSelection.entry = entries[entry];
+  processMenus : function() {
+    this.setImages();
+    if (showMenu) {
+      this.drawMenu(menuImages);
+      return true;
     };
-    game.gameArea.context.drawImage(entries[entry].image, entries[entry].position.x, entries[entry].position.y)
-  });
-};
-
-function drawSelectionMarker(entries) {
-  Array.from(Object.keys(entries)).forEach(entry => {
-    let offset =
-      entries[entry].offset
-        ? entries[entry].offset
-        : currentSelection.entry.dimensions.width;
-    game.gameArea.context.drawImage(
-      entries[entry].image,
-      currentSelection.entry.position.x + offset,
-      currentSelection.entry.position.y
+    if (showInstructions) {
+      this.drawMenu(instructionsImages);
+      return true;
+    };
+    return false;
+  },
+  setImages : function() {
+    if (game.gameArea.frameNo !== 1) {
+      return;
+    };
+    this.setImageFiles(pointerImages.entries);
+    this.setImageFiles(menuImages.entries);
+    this.setImageFiles(instructionsImages.entries);
+  },
+  setImageFiles : function(images) {
+    Array.from(Object.keys(images)).forEach(entry =>
+      images[entry].image.src = basePath + images[entry].file
     );
-  });
-}
-
-function drawTexts(images) {
-  if (images['text']) {
-    images.text.entries.forEach(text => {
-      text.component.x = text.position.x;
-      text.component.y = text.position.y;
-      text.component.text = text.text;
-      if (text.fontSize) {
-        text.component.fontSize = text.fontSize;
+  },
+  drawMenu : function(images) {
+    main.prepTheCanvas();
+    this.setMenuOrder(images.order);
+    this.drawImages(images);
+    this.checkForSelection();
+  },
+  setMenuOrder : function(order) {
+    timeSinceMenuMove += 1;
+    if (timeSinceMenuMove > 30) {
+      this.shiftMenuListOrder(order);
+      timeSinceMenuMove = 0;
+    };
+  },
+  shiftMenuListOrder : function(order) {
+    let direction = this.getDirection();
+    if (direction == "up") {
+      order.unshift(order.pop());
+    } else if (direction == "down") {
+      order.push(order.shift());
+    };
+    currentSelection.name = order[0];
+  },
+  getDirection : function() {
+    let direction = "";
+    let keysPushed = controls.getMenuKeyPush();
+    keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.up.includes(parseInt(key)) ? "up" : direction);
+    keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.down.includes(parseInt(key)) ? "down" : direction);
+    return direction;
+  },
+  drawImages : function(images) {
+    this.drawEntries(images.entries);
+    this.drawSelectionMarker(pointerImages.entries);
+    this.drawTexts(images);
+  },
+  drawEntries : function(entries) {
+    Array.from(Object.keys(entries)).forEach(entry => {
+      if (currentSelection.name == entry) {
+        currentSelection.entry = entries[entry];
       };
-      text.component.update();
+      game.gameArea.context.drawImage(entries[entry].image, entries[entry].position.x, entries[entry].position.y)
     });
-  };
-};
-
-function checkForSelection() {
-  timeSinceSelection += 1;
-  if (timeSinceSelection > 60 && controls.keyBoardFlowControlButtonPressed()) {
-    currentSelection.entry.action();
-  };
+  },
+  drawSelectionMarker : function(entries) {
+    Array.from(Object.keys(entries)).forEach(entry => {
+      let offset =
+        entries[entry].offset
+          ? entries[entry].offset
+          : currentSelection.entry.dimensions.width;
+      game.gameArea.context.drawImage(
+        entries[entry].image,
+        currentSelection.entry.position.x + offset,
+        currentSelection.entry.position.y
+      );
+    });
+  },
+  drawTexts : function(images) {
+    if (images['text']) {
+      images.text.entries.forEach(text => {
+        text.component.x = text.position.x;
+        text.component.y = text.position.y;
+        text.component.text = text.text;
+        if (text.fontSize) {
+          text.component.fontSize = text.fontSize;
+        };
+        text.component.update();
+      });
+    };
+  },
+  checkForSelection : function() {
+    timeSinceSelection += 1;
+    if (timeSinceSelection > 60 && controls.keyBoardFlowControlButtonPressed()) {
+      currentSelection.entry.action();
+    };
+  },
 };

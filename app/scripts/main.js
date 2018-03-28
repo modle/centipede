@@ -1,12 +1,9 @@
 /*jslint white: true */
-// this gets executed every interval
-function updateGameState() {
-};
-
 var main = {
   updateGameState : function() {
+    // this gets executed every interval
     main.detectGamePad();
-    if (processMenus()) {
+    if (menus.processMenus()) {
       return;
     };
     if (main.processTriggers()) {
