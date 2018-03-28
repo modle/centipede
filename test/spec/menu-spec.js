@@ -80,6 +80,102 @@ describe('Testing text functions', () => {
     expect(window.checkForSelection).toHaveBeenCalled();
   });
 
+  it('setMenuOrder calls shiftMenuListOrder if enough time has passed since last move', () => {
+    let startTime = 30;
+    timeSinceMenuMove = startTime;
+    spyOn(window, 'shiftMenuListOrder');
+
+    setMenuOrder([]);
+
+    expect(timeSinceMenuMove).toBe(0);
+  });
+
+  it('setMenuOrder does not calls shiftMenuListOrder if not enough time has passed since last move', () => {
+    let startTime = 1;
+    timeSinceMenuMove = startTime;
+    spyOn(window, 'shiftMenuListOrder');
+
+    setMenuOrder([]);
+
+    expect(timeSinceMenuMove).toBe(startTime + 1);
+  });
+
+  it('shiftMenuListOrder shifts array order up and currentSelection.name matches the first entry', () => {
+    currentSelection = {name : ''};
+    spyOn(window, 'getDirection').and.returnValue('up');
+    let actual = ['first', 'second', 'third'];
+    let expected = ['third', 'first', 'second'];
+
+    shiftMenuListOrder(actual);
+
+    expect(actual).toEqual(expected);
+    expect(currentSelection.name).toBe('third');
+  });
+
+  it('shiftMenuListOrder shifts array order down and currentSelection.name matches the first entry', () => {
+    currentSelection = {name : ''};
+    spyOn(window, 'getDirection').and.returnValue('down');
+    let actual = ['first', 'second', 'third'];
+    let expected = ['second', 'third', 'first'];
+
+    shiftMenuListOrder(actual);
+
+    expect(actual).toEqual(expected);
+    expect(currentSelection.name).toBe('second');
+  });
+
+  it('shiftMenuListOrder sets currentshifts array order down', () => {
+    currentSelection = {name : ''};
+    spyOn(window, 'getDirection').and.returnValue("");
+    let actual = ['first', 'second', 'third'];
+    let expected = ['first', 'second', 'third'];
+
+    shiftMenuListOrder(actual);
+
+    expect(actual).toEqual(expected);
+    expect(currentSelection.name).toBe('first');
+  });
+
+  it('getDirection returns menu movement direction', () => {
+    let dummyUpKeyValue = 0;
+    let dummyDownKeyValue = 1;
+    controls.menuKeys.up = [dummyUpKeyValue];
+    controls.menuKeys.down = [dummyDownKeyValue];
+    spyOn(controls, 'getMenuKeyPush').and.returnValue([dummyUpKeyValue]);
+    let expected = 'up';
+
+    let actual = getDirection();
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('getDirection returns menu movement direction', () => {
+    let dummyUpKeyValue = 0;
+    let dummyDownKeyValue = 1;
+    controls.menuKeys.up = [dummyUpKeyValue];
+    controls.menuKeys.down = [dummyDownKeyValue];
+    spyOn(controls, 'getMenuKeyPush').and.returnValue([dummyDownKeyValue]);
+    let expected = 'down';
+
+    let actual = getDirection();
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('getDirection returns menu movement direction', () => {
+    let dummyUpKeyValue = 0;
+    let dummyDownKeyValue = 1;
+    let someOtherValue = 999;
+    controls.menuKeys.up = [dummyUpKeyValue];
+    controls.menuKeys.down = [dummyDownKeyValue];
+    spyOn(controls, 'getMenuKeyPush').and.returnValue([someOtherValue]);
+    let expected = '';
+
+    let actual = getDirection();
+
+    expect(actual).toEqual(expected);
+  });
+
   it('drawImages delegates to selection, text, and marker draw functions', () => {
     spyOn(window, 'drawEntries');
     spyOn(window, 'drawSelectionMarker');
@@ -99,7 +195,7 @@ describe('Testing text functions', () => {
 
     drawEntries(menuImages.entries);
 
-    expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(2);
+    expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(3);
   });
   it('drawEntries sets currentSelection entry when entry name matches', () => {
     game.init();
@@ -129,7 +225,6 @@ describe('Testing text functions', () => {
     drawTexts(testImages);
 
     expect(testImages.text.entries[0].component.update).toHaveBeenCalledTimes(1);
-
   });
   it('drawTexts does not set fontSize if not on overridden on text object', () => {
     testImages = {

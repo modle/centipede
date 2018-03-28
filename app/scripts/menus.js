@@ -6,12 +6,13 @@ var currentSelection = {
   entry : {
     position : {x : 0, y : 0},
     dimensions : {width : 0, height : 0},
-  }};
+  }
+};
 var timeSinceSelection = 100;
 var timeSinceMenuMove = 100;
 
 var menuImages = {
-  order : ['play', 'instructions'],
+  order : ['play', 'instructions', 'settings'],
   entries : {
     play : {
       image : new Image(),
@@ -33,7 +34,21 @@ var menuImages = {
       action : function() {
         prepTheCanvas();
         showMenu = false;
+        showSettings = false;
         showInstructions = true;
+        timeSinceSelection = 0;
+      },
+    },
+    settings : {
+      image : new Image(),
+      file : "settings.png",
+      position : {x : 305, y : 530},
+      dimensions : {width : 182, height : 40},
+      action : function() {
+        prepTheCanvas();
+        showMenu = false;
+        showSettings = true;
+        showInstructions = false;
         timeSinceSelection = 0;
       },
     },
@@ -151,22 +166,28 @@ function drawMenu(images) {
 function setMenuOrder(order) {
   timeSinceMenuMove += 1;
   if (timeSinceMenuMove > 30) {
-    let keysPushed = controls.getMenuKeyPush();
-    let direction = "";
-    keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.up.includes(parseInt(key)) ? "up" : direction);
-    keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.down.includes(parseInt(key)) ? "down" : direction);
-    if (direction == "up") {
-      currentSelection.name = order.shift();
-      order.push(currentSelection.name);
-    } else if (direction == "down") {
-      currentSelection.name = order.pop();
-      order.unshift(currentSelection.name);
-    } else {
-      currentSelection.name = order[0];
-    };
+    shiftMenuListOrder(order);
     timeSinceMenuMove = 0;
   };
 };
+
+function shiftMenuListOrder(order) {
+  let direction = getDirection();
+  if (direction == "up") {
+    order.unshift(order.pop());
+  } else if (direction == "down") {
+    order.push(order.shift());
+  };
+  currentSelection.name = order[0];
+};
+
+function getDirection() {
+  let direction = "";
+  let keysPushed = controls.getMenuKeyPush();
+  keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.up.includes(parseInt(key)) ? "up" : direction);
+  keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.down.includes(parseInt(key)) ? "down" : direction);
+  return direction;
+}
 
 function drawImages(images) {
   drawEntries(images.entries);

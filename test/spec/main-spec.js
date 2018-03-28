@@ -188,6 +188,8 @@ describe('Testing text functions', () => {
   });
   it('prepTheCanvas calls delegate functions', () => {
     showMenu = false;
+    showInstructions = false;
+
     spyOn(game, 'startNextFrame');
     spyOn(window, 'manageSounds');
     spyOn(hud, 'update');
