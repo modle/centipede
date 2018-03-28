@@ -1,5 +1,6 @@
 var showMenu = true;
 var showInstructions = false;
+var showSettings = false;
 var basePath = "app/static/media/images/";
 var currentSelection = {
   name : '',
@@ -127,6 +128,18 @@ var pointerImages = {
     },
   },
 };
+
+var menus = {
+  init : function() {
+    this.reset();
+  },
+  reset : function() {
+    game.gameOver = false;
+    showMenu = true;
+    showInstructions = false;
+    showSettings = false;
+  },
+}
 
 function processMenus() {
   setImages();

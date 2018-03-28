@@ -90,7 +90,7 @@ describe('Testing text functions', () => {
     expect(timeSinceMenuMove).toBe(0);
   });
 
-  it('setMenuOrder does not calls shiftMenuListOrder if not enough time has passed since last move', () => {
+  it('setMenuOrder does not call shiftMenuListOrder if not enough time has passed since last move', () => {
     let startTime = 1;
     timeSinceMenuMove = startTime;
     spyOn(window, 'shiftMenuListOrder');

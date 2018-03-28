@@ -40,6 +40,8 @@ var knobsAndLevers = {
     console.log("knobsAndLevers initialized");
   },
   playerCollisionsEnabled : true,
+  defaultLives : 1,
+  gameOverDelay : 600,
   centipede : {
     baseSpeed : 10,
     maxNumber : 10,
@@ -121,5 +123,4 @@ var knobsAndLevers = {
     extraArgs : {type:"background"},
   },
   gameInfoTextHeight : 40,
-  defaultLives : 3
 };

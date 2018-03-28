@@ -38,8 +38,8 @@ describe('Testing hud functions', () => {
   });
   it('updateScore updates score', () => {
     metrics.init();
-    metrics.scoreValue = 10;
-    let expected = "Score: " + metrics.scoreValue;
+    metrics.score.value = 10;
+    let expected = "Score: " + metrics.score.value;
     spyOn(metrics.score, 'update');
     testObj.updateScore();
     expect(metrics.score.text).toEqual(expected);

@@ -1,6 +1,7 @@
 var game = {
   paused : true,
   gameOver : false,
+  timeSinceGameOver : 0,
   delayed : 0,
   delayEndTime : 300,
   keysDown : {},
@@ -54,14 +55,17 @@ var game = {
   },
   manageGameOver : function() {
     if (this.gameOver) {
+      this.timeSinceGameOver += 1;
       stopAllSounds();
       this.showGameOver();
+      if (this.timeSinceGameOver > knobsAndLevers.gameOverDelay) {
+        this.resetTheWholeTamale();
+      };
     };
   },
   showGameOver : function() {
     texts.gameOver.text = "Game Over";
     texts.gameOver.update();
-    this.gameArea.stop();
   },
   resetSomeThings : function() {
     this.gameArea.frameNo = 0;
@@ -73,5 +77,10 @@ var game = {
     intervalCreatures.clear();
     spiders.clear();
     player.reset();
+  },
+  resetTheWholeTamale : function() {
+    this.gameOver = false;
+    this.timeSinceGameOver = 0;
+    init.afterGameOver();
   },
 };
