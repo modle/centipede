@@ -46,7 +46,7 @@ var game = {
   managePause : function() {
     texts.pausedMessage.text = "Paused";
     texts.pausedMessage.update();
-    stopAllSounds();
+    sounds.stopAllSounds();
   },
   manageDeath : function() {
     this.resetMoreThings();
@@ -56,7 +56,7 @@ var game = {
   manageGameOver : function() {
     if (this.gameOver) {
       this.timeSinceGameOver += 1;
-      stopAllSounds();
+      sounds.stopAllSounds();
       this.showGameOver();
       if (this.timeSinceGameOver > knobsAndLevers.gameOverDelay) {
         this.resetTheWholeTamale();

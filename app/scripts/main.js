@@ -66,7 +66,7 @@ var main = {
   },
   prepTheCanvas : function() {
     game.startNextFrame();
-    manageSounds();
+    sounds.manageSounds();
     if (menus.showMenu || menus.showInstructions) {
       return;
     };

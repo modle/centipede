@@ -98,13 +98,13 @@ describe('Testing game functions', () => {
     texts.init();
     spyOn(texts.pausedMessage, 'update');
     let expectedText = "Paused";
-    spyOn(window, 'stopAllSounds');
+    spyOn(sounds, 'stopAllSounds');
 
     testObj.managePause();
 
     expect(texts.pausedMessage.text).toBe(expectedText);
     expect(texts.pausedMessage.update).toHaveBeenCalled();
-    expect(window.stopAllSounds).toHaveBeenCalled();
+    expect(sounds.stopAllSounds).toHaveBeenCalled();
   });
   it('manageDeath manages death', () => {
     spyOn(testObj, 'resetMoreThings');
@@ -120,22 +120,22 @@ describe('Testing game functions', () => {
   });
   it('manageGameOver calls gameOver functions when game is over', () => {
     testObj.gameOver = true;
-    spyOn(window, 'stopAllSounds');
+    spyOn(sounds, 'stopAllSounds');
     spyOn(testObj, 'showGameOver');
 
     testObj.manageGameOver();
 
-    expect(window.stopAllSounds).toHaveBeenCalled();
+    expect(sounds.stopAllSounds).toHaveBeenCalled();
     expect(testObj.showGameOver).toHaveBeenCalled();
   });
   it('manageGameOver does nothing if game is not over', () => {
     testObj.gameOver = false;
-    spyOn(window, 'stopAllSounds');
+    spyOn(sounds, 'stopAllSounds');
     spyOn(testObj, 'showGameOver');
 
     testObj.manageGameOver();
 
-    expect(window.stopAllSounds).not.toHaveBeenCalled();
+    expect(sounds.stopAllSounds).not.toHaveBeenCalled();
     expect(testObj.showGameOver).not.toHaveBeenCalled();
   });
   it('showGameOver stops gameArea and manages gameOver text', () => {

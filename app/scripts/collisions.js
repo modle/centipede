@@ -38,7 +38,7 @@ var collisions = {
   },
   playImpactSound : function(type) {
     if (type !== 'mushroom') {
-      getAvailableImpactSound().play();
+      sounds.getAvailableImpactSound().play();
     };
   },
   updateTargetAppearance(target) {

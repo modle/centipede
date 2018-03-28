@@ -11,7 +11,7 @@ var lasers = Object.create(displayObjectPrototype, {
         return;
       };
       this.generate();
-      playAvailableLaserSound();
+      sounds.playAvailableLaserSound();
     },
     writable : false,
     enumerable : true

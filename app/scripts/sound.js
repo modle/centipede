@@ -1,87 +1,75 @@
 var sounds = {
   init : function() {
-    this.centipede = buildSound("centipede", 0.5);
-    this.spider = buildSound("spider", 0.3);
-    this.fly = buildSound("fly", 0.3);
-    this.worm = buildSound("worm", 0.5, "loop");
-    this.playerDied = buildSound("player-died", 0.5);
-    this.laserPool = buildManySounds("laser", 20);
-    this.impactPool = buildManySounds("laser-impact", knobsAndLevers.laser.maxNumber);
+    this.centipede = this.buildSound("centipede", 0.5);
+    this.spider = this.buildSound("spider", 0.3);
+    this.fly = this.buildSound("fly", 0.3);
+    this.worm = this.buildSound("worm", 0.5, "loop");
+    this.playerDied = this.buildSound("player-died", 0.5);
+    this.laserPool = this.buildManySounds("laser", 20);
+    this.impactPool = this.buildManySounds("laser-impact", knobsAndLevers.laser.maxNumber);
     console.log("sounds initialized");
-  }
-};
-
-function buildSound(filename, volume, loop) {
-  return new Sound("app/static/media/sounds/" + filename + ".mp3", volume, loop);
-}
-
-function buildManySounds(type, poolSize) {
-  let soundArray = [];
-  while (soundArray.length < poolSize) {
-    soundArray.push(buildSound(type, 0.5));
-  };
-  return soundArray;
-};
-
-function manageSounds() {
-  manageCentipedeSounds();
-  manageSpiderSounds();
-  manageFlySounds();
-  manageWormSounds();
-}
-
-function manageCentipedeSounds() {
-  if (centipedes.centipedes != false) {
-    sounds.centipede.play();
-  };
-};
-
-function manageSpiderSounds() {
-  if (spiders.spiders != false) {
-    sounds.spider.play();
-  };
-};
-
-function manageFlySounds() {
-  if (intervalCreatures.flies != false) {
-    if (!sounds.fly.played) {
-      sounds.fly.play();
+  },
+  buildSound : function(filename, volume, loop) {
+    return new Sound("app/static/media/sounds/" + filename + ".mp3", volume, loop);
+  },
+  buildManySounds : function(type, poolSize) {
+    let soundArray = [];
+    while (soundArray.length < poolSize) {
+      soundArray.push(this.buildSound(type, 0.5));
     };
-    sounds.fly.played = true;
-  } else {
-    sounds.fly.played = false;
-  };
+    return soundArray;
+  },
+  manageSounds : function() {
+    this.manageCentipedeSounds();
+    this.manageSpiderSounds();
+    this.manageFlySounds();
+    this.manageWormSounds();
+  },
+  manageCentipedeSounds : function() {
+    if (centipedes.centipedes != false) {
+      this.centipede.play();
+    };
+  },
+  manageSpiderSounds : function() {
+    if (spiders.spiders != false) {
+      this.spider.play();
+    };
+  },
+  manageFlySounds : function() {
+    if (intervalCreatures.flies != false) {
+      if (!this.fly.played) {
+        this.fly.play();
+      };
+      this.fly.played = true;
+    } else {
+      this.fly.played = false;
+    };
+  },
+  manageWormSounds : function() {
+    if (intervalCreatures.worms != false) {
+      this.worm.play();
+    } else {
+      this.worm.stop();
+    };
+  },
+  playAvailableLaserSound : function() {
+    this.getAvailableLaserSound().play();
+  },
+  getAvailableLaserSound : function() {
+    return this.getAvailableSound(sounds.laserPool);
+  },
+  getAvailableImpactSound : function() {
+    return this.getAvailableSound(sounds.impactPool);
+  },
+  getAvailableSound : function(availableSounds) {
+    let sound = availableSounds.pop();
+    availableSounds.unshift(sound);
+    return sound;
+  },
+  stopAllSounds : function() {
+    this.centipede.stop();
+    this.spider.stop();
+    this.worm.stop();
+    this.fly.stop();
+  },
 };
-
-function manageWormSounds() {
-  if (intervalCreatures.worms != false) {
-    sounds.worm.play();
-  } else {
-    sounds.worm.stop();
-  };
-};
-
-function playAvailableLaserSound() {
-  getAvailableLaserSound().play();
-}
-
-function getAvailableLaserSound() {
-  return getAvailableSound(sounds.laserPool);
-}
-
-function getAvailableImpactSound() {
-  return getAvailableSound(sounds.impactPool);
-}
-
-function getAvailableSound(availableSounds) {
-  sound = availableSounds.pop();
-  availableSounds.unshift(sound);
-  return sound;
-}
-
-function stopAllSounds() {
-  sounds.centipede.stop();
-  sounds.spider.stop();
-  sounds.worm.stop();
-  sounds.fly.stop();
-}

@@ -191,25 +191,25 @@ describe('Testing text functions', () => {
     menus.showInstructions = false;
 
     spyOn(game, 'startNextFrame');
-    spyOn(window, 'manageSounds');
+    spyOn(sounds, 'manageSounds');
     spyOn(hud, 'update');
 
     main.prepTheCanvas();
 
     expect(game.startNextFrame).toHaveBeenCalled();
-    expect(window.manageSounds).toHaveBeenCalled();
+    expect(sounds.manageSounds).toHaveBeenCalled();
     expect(hud.update).toHaveBeenCalled();
   });
   it('prepTheCanvas does not call hud if showMenu is true', () => {
     menus.showMenu = true;
     spyOn(game, 'startNextFrame');
-    spyOn(window, 'manageSounds');
+    spyOn(sounds, 'manageSounds');
     spyOn(hud, 'update');
 
     main.prepTheCanvas();
 
     expect(game.startNextFrame).toHaveBeenCalled();
-    expect(window.manageSounds).toHaveBeenCalled();
+    expect(sounds.manageSounds).toHaveBeenCalled();
     expect(hud.update).not.toHaveBeenCalled();
   });
   it('manageGameObjects calls delegate functions', () => {

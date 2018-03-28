@@ -9,24 +9,24 @@ describe('Testing lasers functions', () => {
   it('spawn returns if lasers are not eligible to spawn', () => {
     spyOn(testObj, 'eligibleToSpawn').and.returnValue(false);
     spyOn(testObj, 'generate');
-    spyOn(window, 'playAvailableLaserSound');
+    spyOn(sounds, 'playAvailableLaserSound');
 
     testObj.spawn();
 
     expect(testObj.eligibleToSpawn).toHaveBeenCalled();
     expect(testObj.generate).not.toHaveBeenCalled();
-    expect(window.playAvailableLaserSound).not.toHaveBeenCalled();
+    expect(sounds.playAvailableLaserSound).not.toHaveBeenCalled();
   });
   it('spawn calls generate and laser sound play if eligible to spawn', () => {
     spyOn(testObj, 'eligibleToSpawn').and.returnValue(true);
     spyOn(testObj, 'generate');
-    spyOn(window, 'playAvailableLaserSound');
+    spyOn(sounds, 'playAvailableLaserSound');
 
     testObj.spawn();
 
     expect(testObj.eligibleToSpawn).toHaveBeenCalled();
     expect(testObj.generate).toHaveBeenCalled();
-    expect(window.playAvailableLaserSound).toHaveBeenCalled();
+    expect(sounds.playAvailableLaserSound).toHaveBeenCalled();
   });
 
   it('eligibleToSpawn returns false if lasers is at max', () => {

@@ -2,11 +2,12 @@
 describe('Testing sound functions', () => {
   beforeEach(function () {
     testObj = Object.assign({}, sounds);
+    testObj.init();
     sounds.init();
   });
   it('init delegates sound building', () => {
-    spyOn(window, 'buildSound').and.callThrough();
-    spyOn(window, 'buildManySounds').and.callThrough();
+    spyOn(testObj, 'buildSound').and.callThrough();
+    spyOn(testObj, 'buildManySounds').and.callThrough();
 
     testObj.init();
 
@@ -15,15 +16,15 @@ describe('Testing sound functions', () => {
     expect(testObj.fly).toBeTruthy();
     expect(testObj.worm).toBeTruthy();
     expect(testObj.playerDied).toBeTruthy();
-    expect(testObj.laserPool.length).toBeGreaterThan(0);
-    expect(testObj.impactPool.length).toBeGreaterThan(0);
-    expect(window.buildSound).toHaveBeenCalled();
-    expect(window.buildManySounds).toHaveBeenCalled();
+    expect(sounds.laserPool.length).toBeGreaterThan(0);
+    expect(sounds.impactPool.length).toBeGreaterThan(0);
+    expect(testObj.buildSound).toHaveBeenCalled();
+    expect(testObj.buildManySounds).toHaveBeenCalled();
   });
   it('buildSound builds a sound', () => {
     let expected = new Sound("app/static/media/sounds/centipede.mp3", 0.5);
 
-    let actual = buildSound('centipede', 0.5);
+    let actual = testObj.buildSound('centipede', 0.5);
 
     expect(actual.sound.currentSrc).toEqual(expected.sound.currentSrc);
     expect(actual.sound.volume).toEqual(expected.sound.volume);
@@ -31,132 +32,132 @@ describe('Testing sound functions', () => {
     expect(actual.sound.loop).toEqual(expected.sound.loop);
   });
   it('manageSounds delegates to sound manage functions', () => {
-    spyOn(window, 'manageCentipedeSounds');
-    spyOn(window, 'manageSpiderSounds');
-    spyOn(window, 'manageFlySounds');
-    spyOn(window, 'manageWormSounds');
+    spyOn(testObj, 'manageCentipedeSounds');
+    spyOn(testObj, 'manageSpiderSounds');
+    spyOn(testObj, 'manageFlySounds');
+    spyOn(testObj, 'manageWormSounds');
 
-    manageSounds();
+    testObj.manageSounds();
 
-    expect(window.manageCentipedeSounds).toHaveBeenCalled();
-    expect(window.manageSpiderSounds).toHaveBeenCalled();
-    expect(window.manageFlySounds).toHaveBeenCalled();
-    expect(window.manageWormSounds).toHaveBeenCalled();
+    expect(testObj.manageCentipedeSounds).toHaveBeenCalled();
+    expect(testObj.manageSpiderSounds).toHaveBeenCalled();
+    expect(testObj.manageFlySounds).toHaveBeenCalled();
+    expect(testObj.manageWormSounds).toHaveBeenCalled();
   });
   it('buildManySounds builds expected number of sounds', () => {
     let expected = 11;
 
-    let soundArray = buildManySounds('centipede', expected);
+    let soundArray = testObj.buildManySounds('centipede', expected);
 
     expect(soundArray.length).toEqual(expected);
   });
   it('manageCentipedeSounds calls centipede sound play', () => {
     centipedes.centipedes = [{}];
-    spyOn(sounds.centipede, 'play');
+    spyOn(testObj.centipede, 'play');
 
-    manageCentipedeSounds();
+    testObj.manageCentipedeSounds();
 
-    expect(sounds.centipede.play).toHaveBeenCalled();
+    expect(testObj.centipede.play).toHaveBeenCalled();
   });
   it('manageCentipedeSounds does nothing if no centipedes', () => {
     centipedes.centipedes = [];
-    spyOn(sounds.centipede, 'play');
+    spyOn(testObj.centipede, 'play');
 
-    manageCentipedeSounds();
+    testObj.manageCentipedeSounds();
 
-    expect(sounds.centipede.play).not.toHaveBeenCalled();
+    expect(testObj.centipede.play).not.toHaveBeenCalled();
   });
   it('manageSpiderSounds calls spider sound play', () => {
     spiders.spiders = [{}];
-    spyOn(sounds.spider, 'play');
+    spyOn(testObj.spider, 'play');
 
-    manageSpiderSounds();
+    testObj.manageSpiderSounds();
 
-    expect(sounds.spider.play).toHaveBeenCalled();
+    expect(testObj.spider.play).toHaveBeenCalled();
   });
   it('manageSpiderSounds calls spider sound play', () => {
     spiders.spiders = [];
-    spyOn(sounds.spider, 'play');
+    spyOn(testObj.spider, 'play');
 
-    manageSpiderSounds();
+    testObj.manageSpiderSounds();
 
-    expect(sounds.spider.play).not.toHaveBeenCalled();
+    expect(testObj.spider.play).not.toHaveBeenCalled();
   });
   it('manageFlySounds calls fly sound play', () => {
     intervalCreatures.flies = [{}];
-    spyOn(sounds.fly, 'play');
+    spyOn(testObj.fly, 'play');
 
-    manageFlySounds();
+    testObj.manageFlySounds();
 
-    expect(sounds.fly.play).toHaveBeenCalled();
-    expect(sounds.fly.played).toBeTruthy();
+    expect(testObj.fly.play).toHaveBeenCalled();
+    expect(testObj.fly.played).toBeTruthy();
   });
   it('manageFlySounds does not call fly sound play if played is true', () => {
     intervalCreatures.flies = [{}];
-    spyOn(sounds.fly, 'play');
-    sounds.fly.played = true;
+    spyOn(testObj.fly, 'play');
+    testObj.fly.played = true;
 
-    manageFlySounds();
+    testObj.manageFlySounds();
 
-    expect(sounds.fly.play).not.toHaveBeenCalled();
-    expect(sounds.fly.played).toBeTruthy();
+    expect(testObj.fly.play).not.toHaveBeenCalled();
+    expect(testObj.fly.played).toBeTruthy();
   });
   it('manageFlySounds sets played to false when fly is not present', () => {
     intervalCreatures.flies = [];
-    spyOn(sounds.fly, 'play');
+    spyOn(testObj.fly, 'play');
 
-    manageFlySounds();
+    testObj.manageFlySounds();
 
-    expect(sounds.fly.play).not.toHaveBeenCalled();
-    expect(sounds.fly.played).toBeFalsy();
+    expect(testObj.fly.play).not.toHaveBeenCalled();
+    expect(testObj.fly.played).toBeFalsy();
   });
   it('manageWormSounds calls worm sound play', () => {
     intervalCreatures.worms.push({});
-    spyOn(sounds.worm, 'play');
+    spyOn(testObj.worm, 'play');
 
-    manageWormSounds();
+    testObj.manageWormSounds();
 
-    expect(sounds.worm.play).toHaveBeenCalled();
+    expect(testObj.worm.play).toHaveBeenCalled();
   });
   it('manageWormSounds calls worm sound stop when no worms', () => {
     intervalCreatures.worms = [];
-    spyOn(sounds.worm, 'play');
-    spyOn(sounds.worm, 'stop');
+    spyOn(testObj.worm, 'play');
+    spyOn(testObj.worm, 'stop');
 
-    manageWormSounds();
+    testObj.manageWormSounds();
 
-    expect(sounds.worm.play).not.toHaveBeenCalled();
-    expect(sounds.worm.stop).toHaveBeenCalled();
+    expect(testObj.worm.play).not.toHaveBeenCalled();
+    expect(testObj.worm.stop).toHaveBeenCalled();
   });
   it('playAvailableLaserSound calls getAvailableSound with laserPool', () => {
     let testSound = new Sound("app/static/media/sounds/centipede.mp3", 0.5);
     spyOn(testSound, 'play');
-    spyOn(window, 'getAvailableLaserSound').and.returnValue(testSound);
+    spyOn(testObj, 'getAvailableLaserSound').and.returnValue(testSound);
 
-    playAvailableLaserSound();
+    testObj.playAvailableLaserSound();
 
-    expect(window.getAvailableLaserSound).toHaveBeenCalled();
+    expect(testObj.getAvailableLaserSound).toHaveBeenCalled();
     expect(testSound.play).toHaveBeenCalled();
   });
   it('getAvailableLaserSound calls getAvailableSound with laserPool', () => {
-    spyOn(window, 'getAvailableSound');
+    spyOn(sounds, 'getAvailableSound');
 
-    getAvailableLaserSound();
+    sounds.getAvailableLaserSound();
 
-    expect(window.getAvailableSound).toHaveBeenCalledWith(sounds.laserPool);
+    expect(sounds.getAvailableSound).toHaveBeenCalledWith(sounds.laserPool);
   });
   it('getAvailableImpactSound calls getAvailableSound with impactPool', () => {
-    spyOn(window, 'getAvailableSound');
+    spyOn(sounds, 'getAvailableSound');
 
-    getAvailableImpactSound();
+    sounds.getAvailableImpactSound();
 
-    expect(window.getAvailableSound).toHaveBeenCalledWith(sounds.impactPool);
+    expect(sounds.getAvailableSound).toHaveBeenCalledWith(sounds.impactPool);
   });
   it('getAvailableSound pops and unshifts a sound, and returns it', () => {
     let testArray = ['first', 'second', 'third'];
     let expected = ['third', 'first', 'second'];
 
-    poppedElement = getAvailableSound(testArray);
+    let poppedElement = sounds.getAvailableSound(testArray);
 
     expect(testArray[0]).toEqual(expected[0]);
     expect(testArray[1]).toEqual(expected[1]);
@@ -165,16 +166,16 @@ describe('Testing sound functions', () => {
     expect(poppedElement).toEqual('third');
   });
   it('stopAllSounds calls target stop functions', () => {
-    spyOn(sounds.centipede, 'stop');
-    spyOn(sounds.spider, 'stop');
-    spyOn(sounds.worm, 'stop');
-    spyOn(sounds.fly, 'stop');
+    spyOn(testObj.centipede, 'stop');
+    spyOn(testObj.spider, 'stop');
+    spyOn(testObj.worm, 'stop');
+    spyOn(testObj.fly, 'stop');
 
-    stopAllSounds();
+    testObj.stopAllSounds();
 
-    expect(sounds.centipede.stop).toHaveBeenCalled();
-    expect(sounds.spider.stop).toHaveBeenCalled();
-    expect(sounds.worm.stop).toHaveBeenCalled();
-    expect(sounds.fly.stop).toHaveBeenCalled();
+    expect(testObj.centipede.stop).toHaveBeenCalled();
+    expect(testObj.spider.stop).toHaveBeenCalled();
+    expect(testObj.worm.stop).toHaveBeenCalled();
+    expect(testObj.fly.stop).toHaveBeenCalled();
   });
 });
