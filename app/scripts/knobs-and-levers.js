@@ -109,7 +109,7 @@ var knobsAndLevers = {
       extraArgs : {type : "spider", speed : {x : 1, y : 1}}
     },
   },
-  startLevel : 1,
+  startLevel : 0,
   maxMushrooms : 50,
   baseTextParams : {
     fontSize : "30px",

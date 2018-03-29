@@ -1,6 +1,6 @@
 describe('Testing text functions', () => {
 
-  it('processMenus calls drawMenu with menuImages if showMenu is true', () => {
+  it('processMenus calls drawMenu with mainImages if showMenu is true', () => {
     spyOn(menus, 'setImages');
     spyOn(menus, 'drawMenu');
     menus.showMenu = true;
@@ -10,13 +10,13 @@ describe('Testing text functions', () => {
     expect(result).toBe(true);
     expect(menus.setImages).toHaveBeenCalled();
     expect(menus.drawMenu).toHaveBeenCalledTimes(1);
-    expect(menus.drawMenu).toHaveBeenCalledWith(menus.menuImages);
+    expect(menus.drawMenu).toHaveBeenCalledWith(menus.mainImages);
   });
-  it('processMenus calls drawMenu with instructionsImages if showInstructions is true', () => {
+  it('processMenus calls drawMenu with instructionsImages if show.instructions is true', () => {
     spyOn(menus, 'setImages');
     spyOn(menus, 'drawMenu');
     menus.showMenu = false;
-    menus.showInstructions = true;
+    menus.show.instructions = true;
 
     result = menus.processMenus();
 
@@ -25,11 +25,11 @@ describe('Testing text functions', () => {
     expect(menus.drawMenu).toHaveBeenCalledTimes(1);
     expect(menus.drawMenu).toHaveBeenCalledWith(menus.instructionsImages);
   });
-  it('processMenus calls returns false if showInstructions and showMenu are false', () => {
+  it('processMenus calls returns false if show.instructions and showMenu are false', () => {
     spyOn(menus, 'setImages');
     spyOn(menus, 'drawMenu');
     menus.showMenu = false;
-    menus.showInstructions = false;
+    menus.show.instructions = false;
 
     result = menus.processMenus();
 
@@ -57,13 +57,13 @@ describe('Testing text functions', () => {
     expect(menus.setImageFiles).not.toHaveBeenCalledTimes(3);
   });
   it('setImageFiles returns if not first frame', () => {
-    menus.menuImages.entries.play.image.src = '';
-    menus.menuImages.entries.instructions.image.src = '';
+    menus.mainImages.entries.play.image.src = '';
+    menus.mainImages.entries.instructions.image.src = '';
 
-    menus.setImageFiles(menus.menuImages.entries);
+    menus.setImageFiles(menus.mainImages.entries);
 
-    expect(menus.menuImages.entries.play.image.src).toBeTruthy();
-    expect(menus.menuImages.entries.instructions.image.src).toBeTruthy();
+    expect(menus.mainImages.entries.play.image.src).toBeTruthy();
+    expect(menus.mainImages.entries.instructions.image.src).toBeTruthy();
   });
 
   it('drawMenu delegates to menu functions', () => {
@@ -72,7 +72,7 @@ describe('Testing text functions', () => {
     spyOn(menus, 'drawImages');
     spyOn(menus, 'checkForSelection');
 
-    menus.drawMenu(menus.menuImages.entries);
+    menus.drawMenu(menus.mainImages.entries);
 
     expect(main.prepTheCanvas).toHaveBeenCalled();
     expect(menus.setMenuOrder).toHaveBeenCalled();
@@ -181,7 +181,7 @@ describe('Testing text functions', () => {
     spyOn(menus, 'drawSelectionMarker');
     spyOn(menus, 'drawTexts');
 
-    menus.drawImages(menus.menuImages);
+    menus.drawImages(menus.mainImages);
 
     expect(menus.drawEntries).toHaveBeenCalled();
     expect(menus.drawSelectionMarker).toHaveBeenCalled();
@@ -193,7 +193,7 @@ describe('Testing text functions', () => {
     game.gameArea.context = game.gameArea.canvas.getContext("2d");
     spyOn(game.gameArea.context, 'drawImage');
 
-    menus.drawEntries(menus.menuImages.entries);
+    menus.drawEntries(menus.mainImages.entries);
 
     expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(3);
   });
@@ -203,9 +203,9 @@ describe('Testing text functions', () => {
     spyOn(game.gameArea.context, 'drawImage');
 
     menus.currentSelection.name = 'play';
-    menus.drawEntries(menus.menuImages.entries);
+    menus.drawEntries(menus.mainImages.entries);
 
-    expect(menus.currentSelection.entry.file).toBe(menus.menuImages.entries[menus.currentSelection.name].file);
+    expect(menus.currentSelection.entry.file).toBe(menus.mainImages.entries[menus.currentSelection.name].file);
   });
 
   it('drawSelectionMarker calls drawImage', () => {
@@ -219,7 +219,7 @@ describe('Testing text functions', () => {
   });
 
   it('drawTexts calls text.component.update when text components are present', () => {
-    testImages = {text : menus.menuImages.text};
+    testImages = {text : menus.mainImages.text};
     spyOn(testImages.text.entries[0].component, 'update');
 
     menus.drawTexts(testImages);
@@ -260,7 +260,7 @@ describe('Testing text functions', () => {
   it('checkForSelection calls currentSelectionEntry action when enough time has passed', () => {
     let startTime = 61;
     menus.timeSinceSelection = startTime;
-    menus.currentSelection.entry = menus.menuImages.entries.play;
+    menus.currentSelection.entry = menus.mainImages.entries.play;
     spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(true);
     spyOn(menus.currentSelection.entry, 'action');
 
@@ -274,7 +274,7 @@ describe('Testing text functions', () => {
   it('checkForSelection calls currentSelectionEntry action when enough time has passed', () => {
     startTime = 30;
     menus.timeSinceSelection = startTime;
-    menus.currentSelection.entry = menus.menuImages.entries.play;
+    menus.currentSelection.entry = menus.mainImages.entries.play;
     spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(true);
     spyOn(menus.currentSelection.entry, 'action');
 

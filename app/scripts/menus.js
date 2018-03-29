@@ -1,10 +1,15 @@
 var menus = {
-  showMenu : true,
-  showInstructions : false,
-  showSettings : false,
+  show : {
+    main : true,
+    instructions : false,
+    settings : false,
+    playerSelect : false,
+  },
   mediaPath : "app/static/media/images/",
   timeSinceSelection : 100,
   timeSinceMenuMove : 100,
+  minTimeToSelect : 90,
+  minTimeToMove : 30,
   currentSelection : {
     name : '',
     entry : {
@@ -12,117 +17,178 @@ var menus = {
       dimensions : {width : 0, height : 0},
     }
   },
-  menuImages : {
-    order : ['play', 'instructions', 'settings'],
-    entries : {
-      play : {
-        image : new Image(),
-        file : "play.png",
-        position : {x : 350, y : 450},
-        dimensions : {width : 96, height : 40},
-        action : function() {
-          main.prepTheCanvas();
-          game.paused = false;
-          menus.showMenu = false;
-          menus.timeSinceSelection = 0;
+  screens : {
+    main : {
+      order : ['play', 'instructions', 'settings'],
+      entries : {
+        play : {
+          image : new Image(),
+          file : "play.png",
+          position : {x : 350, y : 450},
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.show.playerSelect = true;
+          },
+        },
+        instructions : {
+          image : new Image(),
+          file : "instructions.png",
+          position : {x : 268, y : 490},
+          dimensions : {width : 260, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.show.instructions = true;
+          },
+        },
+        settings : {
+          image : new Image(),
+          file : "settings.png",
+          position : {x : 305, y : 530},
+          dimensions : {width : 182, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.show.settings = true;
+          },
         },
       },
-      instructions : {
-        image : new Image(),
-        file : "instructions.png",
-        position : {x : 268, y : 490},
-        dimensions : {width : 260, height : 40},
-        action : function() {
-          main.prepTheCanvas();
-          menus.showMenu = false;
-          menus.showSettings = false;
-          menus.showInstructions = true;
-          menus.timeSinceSelection = 0;
-        },
-      },
-      settings : {
-        image : new Image(),
-        file : "settings.png",
-        position : {x : 305, y : 530},
-        dimensions : {width : 182, height : 40},
-        action : function() {
-          main.prepTheCanvas();
-          menus.showMenu = false;
-          menus.showSettings = true;
-          menus.showInstructions = false;
-          menus.timeSinceSelection = 0;
-        },
-      },
-    },
-    text : {
-      entries : [
-        {
-          name : 'winning',
-          text : 'CENTIPEDE! (warblegarble)',
-          component : new Component(knobsAndLevers.baseTextParams),
-          position : {x : 115, y : 100},
-          fontSize : '50px',
-        },
-      ],
-    },
-  },
-  instructionsImages : {
-    order : ['back'],
-    entries : {
-      back : {
-        image : new Image(),
-        file : "back.png",
-        position : {x : 350, y : 490},
-        dimensions : {width : 96, height : 40},
-        action : function() {
-          menus.currentSelection.name = menus.menuImages.order[0];
-          main.prepTheCanvas();
-          menus.showMenu = true;
-          menus.showInstructions = false;
-          menus.timeSinceSelection = 0;
-        },
+      text : {
+        entries : [
+          {
+            name : 'title',
+            text : 'CENTIPEDE! (warblegarble)',
+            component : new Component(knobsAndLevers.baseTextParams),
+            position : {x : 115, y : 100},
+            fontSize : '50px',
+          },
+        ],
       },
     },
-    text : {
-      entries : [
-        {
-          name : 'winning',
-          text : 'Kill the centipede to advance to the next level',
-          component : new Component(knobsAndLevers.baseTextParams),
-          position : {x : 100, y : 100},
+    playerSelect : {
+      order : ['selectOnePlayer', 'back'],
+      entries : {
+        selectOnePlayer : {
+          image : new Image(),
+          file : "logo.png",
+          position : {x : 350, y : 450},
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            menus.disableMenus();
+            game.paused = false;
+          },
         },
-        {
-          name : 'losing',
-          text : 'Avoid all bugs to stay alive',
-          component : new Component(knobsAndLevers.baseTextParams),
-          position : {x : 215, y : 150},
+        back : {
+          image : new Image(),
+          file : "back.png",
+          position : {x : 350, y : 490},
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.show.main = true;
+          },
         },
-        {
-          name : 'move',
-          text : 'WASD : move',
-          component : new Component(knobsAndLevers.baseTextParams),
-          position : {x : 300, y : 200},
-        },
-        {
-          name : 'shoot',
-          text : 'arrow keys or shift : shoot',
-          component : new Component(knobsAndLevers.baseTextParams),
-          position : {x : 225, y : 250},
-        },
-      ],
-    },
-  },
-  pointerImages : {
-    entries : {
-      before : {
-        image : new Image(),
-        file : "ship.png",
-        offset : -35,
       },
-      after : {
-        image : new Image(),
-        file : "ship.png",
-        offset : 0,
+      text : {
+        entries : [
+          {
+            name : 'playerSelect',
+            text : 'Choose number of players',
+            component : new Component(knobsAndLevers.baseTextParams),
+            position : {x : 115, y : 100},
+          },
+        ],
+      },
+    },
+    settings : {
+      order : ['doTheThing', 'back'],
+      entries : {
+        doTheThing : {
+          image : new Image(),
+          file : "credits.png",
+          position : {x : 350, y : 450},
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            console.log('doTheThing clicked');
+          },
+        },
+        back : {
+          image : new Image(),
+          file : "back.png",
+          position : {x : 350, y : 490},
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.show.main = true;
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            name : 'settings',
+            text : 'Settings Are Thither',
+            component : new Component(knobsAndLevers.baseTextParams),
+            position : {x : 115, y : 100},
+            fontSize : '50px',
+          },
+        ],
+      },
+    },
+    instructions : {
+      order : ['back'],
+      entries : {
+        back : {
+          image : new Image(),
+          file : "back.png",
+          position : {x : 350, y : 490},
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.show.main = true;
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            name : 'winning',
+            text : 'Kill the centipede to advance to the next level',
+            component : new Component(knobsAndLevers.baseTextParams),
+            position : {x : 100, y : 100},
+          },
+          {
+            name : 'losing',
+            text : 'Avoid all bugs to stay alive',
+            component : new Component(knobsAndLevers.baseTextParams),
+            position : {x : 215, y : 150},
+          },
+          {
+            name : 'move',
+            text : 'WASD : move',
+            component : new Component(knobsAndLevers.baseTextParams),
+            position : {x : 300, y : 200},
+          },
+          {
+            name : 'shoot',
+            text : 'arrow keys or shift : shoot',
+            component : new Component(knobsAndLevers.baseTextParams),
+            position : {x : 225, y : 250},
+          },
+        ],
+      },
+    },
+    pointers : {
+      entries : {
+        before : {
+          image : new Image(),
+          file : "ship.png",
+          offset : -35,
+        },
+        after : {
+          image : new Image(),
+          file : "ship.png",
+          offset : 0,
+        },
       },
     },
   },
@@ -131,29 +197,43 @@ var menus = {
   },
   reset : function() {
     game.gameOver = false;
-    this.showMenu = true;
-    this.showInstructions = false;
-    this.showSettings = false;
+    this.disableMenus();
+    this.show.main = true;
+  },
+  disableMenus : function() {
+    if (game.gameArea.frameNo > 0) {
+      main.prepTheCanvas();
+    };
+    this.timeSinceSelection = 0;
+    this.show.main = false;
+    this.show.playerSelect = false;
+    this.show.settings = false;
+    this.show.instructions = false;
   },
   processMenus : function() {
-    this.setImages();
-    if (this.showMenu) {
-      this.drawMenu(menus.menuImages);
+    if (game.gameArea.frameNo == 1) {
+      this.setImages();
+    };
+    if (this.show.main) {
+      this.drawMenu(menus.screens.main);
       return true;
     };
-    if (this.showInstructions) {
-      this.drawMenu(menus.instructionsImages);
+    if (this.show.instructions) {
+      this.drawMenu(menus.screens.instructions);
+      return true;
+    };
+    if (this.show.settings) {
+      this.drawMenu(menus.screens.settings);
+      return true;
+    };
+    if (this.show.playerSelect) {
+      this.drawMenu(menus.screens.playerSelect);
       return true;
     };
     return false;
   },
   setImages : function() {
-    if (game.gameArea.frameNo !== 1) {
-      return;
-    };
-    this.setImageFiles(menus.pointerImages.entries);
-    this.setImageFiles(menus.menuImages.entries);
-    this.setImageFiles(menus.instructionsImages.entries);
+    Array.from(Object.keys(menus.screens)).forEach(screen => this.setImageFiles(menus.screens[screen].entries));
   },
   setImageFiles : function(images) {
     Array.from(Object.keys(images)).forEach(entry =>
@@ -168,7 +248,7 @@ var menus = {
   },
   setMenuOrder : function(order) {
     this.timeSinceMenuMove += 1;
-    if (this.timeSinceMenuMove > 30) {
+    if (this.timeSinceMenuMove > this.minTimeToMove) {
       this.shiftMenuListOrder(order);
       this.timeSinceMenuMove = 0;
     };
@@ -191,7 +271,7 @@ var menus = {
   },
   drawImages : function(images) {
     this.drawEntries(images.entries);
-    this.drawSelectionMarker(menus.pointerImages.entries);
+    this.drawSelectionMarker(menus.screens.pointers.entries);
     this.drawTexts(images);
   },
   drawEntries : function(entries) {
@@ -230,7 +310,7 @@ var menus = {
   },
   checkForSelection : function() {
     this.timeSinceSelection += 1;
-    if (this.timeSinceSelection > 60 && controls.keyBoardFlowControlButtonPressed()) {
+    if (this.timeSinceSelection > this.minTimeToSelect && controls.keyBoardFlowControlButtonPressed()) {
       this.currentSelection.entry.action();
     };
   },
