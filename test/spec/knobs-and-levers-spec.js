@@ -1,4 +1,11 @@
-describe('Testing knobs and levers generation', () => {
+describe('KNOBS AND LEVERS SPEC: ', () => {
+  let spec = 'KNOBS AND LEVERS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, knobsAndLevers);
   });

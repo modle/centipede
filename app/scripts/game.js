@@ -13,6 +13,7 @@ var game = {
       this.gameArea.stop();
       return;
     };
+    menus.reset();
     this.paused = true;
     this.gameArea.start();
   },
@@ -82,5 +83,6 @@ var game = {
     this.gameOver = false;
     this.timeSinceGameOver = 0;
     init.afterGameOver();
+    menus.reset();
   },
 };

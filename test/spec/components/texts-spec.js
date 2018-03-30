@@ -1,4 +1,11 @@
-describe('Testing text functions', () => {
+describe('TEXTS SPEC: ', () => {
+  let spec = 'TEXTS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, texts);
     testParams = knobsAndLevers.baseTextParams;

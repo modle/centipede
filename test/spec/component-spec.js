@@ -1,4 +1,11 @@
-describe('Testing component functions', () => {
+describe('COMPONENT SPEC: ', () => {
+  let spec = 'COMPONENT';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     component = constructComponent({});
     knobsAndLevers.init();

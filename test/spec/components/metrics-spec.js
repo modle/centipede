@@ -1,6 +1,14 @@
-describe('Testing metrics functions', () => {
+describe('METRICS SPEC: ', () => {
+  let spec = 'METRICS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, metrics);
+    testObj.init();
   });
   it('changeScore changes the score when initialValue is non-negative', () => {
     let changeAmount = 5;

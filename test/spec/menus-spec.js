@@ -1,35 +1,56 @@
-describe('Testing text functions', () => {
-
-  it('processMenus calls drawMenu with mainImages if showMenu is true', () => {
-    spyOn(menus, 'setImages');
-    spyOn(menus, 'drawMenu');
-    menus.showMenu = true;
-
-    result = menus.processMenus();
-
-    expect(result).toBe(true);
-    expect(menus.setImages).toHaveBeenCalled();
-    expect(menus.drawMenu).toHaveBeenCalledTimes(1);
-    expect(menus.drawMenu).toHaveBeenCalledWith(menus.mainImages);
+describe('MENUS SPEC: ', () => {
+  let spec = 'MENUS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
   });
-  it('processMenus calls drawMenu with instructionsImages if show.instructions is true', () => {
-    spyOn(menus, 'setImages');
-    spyOn(menus, 'drawMenu');
-    menus.showMenu = false;
-    menus.show.instructions = true;
-
-    result = menus.processMenus();
-
-    expect(result).toBe(true);
-    expect(menus.setImages).toHaveBeenCalled();
-    expect(menus.drawMenu).toHaveBeenCalledTimes(1);
-    expect(menus.drawMenu).toHaveBeenCalledWith(menus.instructionsImages);
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
   });
-  it('processMenus calls returns false if show.instructions and showMenu are false', () => {
-    spyOn(menus, 'setImages');
-    spyOn(menus, 'drawMenu');
-    menus.showMenu = false;
+  beforeEach(function () {
+    menus.init();
+  });
+  function resetShowFlags() {
+    menus.show.main = false;
+    menus.show.playerSelect = false;
+    menus.show.settings = false;
     menus.show.instructions = false;
+  }
+  it('processMenus calls drawMenu with screens.main if show.main is true', () => {
+    spyOn(menus, 'setImages');
+    spyOn(menus, 'drawMenu');
+    resetShowFlags();
+    menus.show.main = true;
+    game.init();
+    game.gameArea.frameNo = 1;
+
+    result = menus.processMenus();
+
+    expect(result).toBe(true);
+    expect(menus.setImages).toHaveBeenCalled();
+    expect(menus.drawMenu).toHaveBeenCalledTimes(1);
+    expect(menus.drawMenu).toHaveBeenCalledWith(menus.screens.main);
+  });
+  it('processMenus calls drawMenu with screens.instructions if show.instructions is true', () => {
+    spyOn(menus, 'setImages');
+    spyOn(menus, 'drawMenu');
+    resetShowFlags();
+    menus.show.instructions = true;
+    game.init();
+    game.gameArea.frameNo = 1;
+
+    result = menus.processMenus();
+
+    expect(result).toBe(true);
+    expect(menus.setImages).toHaveBeenCalled();
+    expect(menus.drawMenu).toHaveBeenCalledTimes(1);
+    expect(menus.drawMenu).toHaveBeenCalledWith(menus.screens.instructions);
+  });
+  it('processMenus calls returns false if all show flags are false', () => {
+    spyOn(menus, 'setImages');
+    spyOn(menus, 'drawMenu');
+    resetShowFlags();
+    game.init();
+    game.gameArea.frameNo = 1;
 
     result = menus.processMenus();
 
@@ -45,7 +66,7 @@ describe('Testing text functions', () => {
 
     menus.setImages();
 
-    expect(menus.setImageFiles).toHaveBeenCalledTimes(3);
+    expect(menus.setImageFiles).toHaveBeenCalledTimes(5);
   });
   it('setImages returns without calling setImageFiles if not first frame', () => {
     game.init();
@@ -57,13 +78,15 @@ describe('Testing text functions', () => {
     expect(menus.setImageFiles).not.toHaveBeenCalledTimes(3);
   });
   it('setImageFiles returns if not first frame', () => {
-    menus.mainImages.entries.play.image.src = '';
-    menus.mainImages.entries.instructions.image.src = '';
+    let play = menus.screens.main.entries.play;
+    let instructions = menus.screens.main.entries.instructions;
+    play.image.src = '';
+    instructions.image.src = '';
 
-    menus.setImageFiles(menus.mainImages.entries);
+    menus.setImageFiles(menus.screens.main.entries);
 
-    expect(menus.mainImages.entries.play.image.src).toBeTruthy();
-    expect(menus.mainImages.entries.instructions.image.src).toBeTruthy();
+    expect(play.image.src).toBeTruthy();
+    expect(instructions.image.src).toBeTruthy();
   });
 
   it('drawMenu delegates to menu functions', () => {
@@ -72,7 +95,7 @@ describe('Testing text functions', () => {
     spyOn(menus, 'drawImages');
     spyOn(menus, 'checkForSelection');
 
-    menus.drawMenu(menus.mainImages.entries);
+    menus.drawMenu(menus.screens.main.entries);
 
     expect(main.prepTheCanvas).toHaveBeenCalled();
     expect(menus.setMenuOrder).toHaveBeenCalled();
@@ -181,7 +204,7 @@ describe('Testing text functions', () => {
     spyOn(menus, 'drawSelectionMarker');
     spyOn(menus, 'drawTexts');
 
-    menus.drawImages(menus.mainImages);
+    menus.drawImages(menus.screens.main);
 
     expect(menus.drawEntries).toHaveBeenCalled();
     expect(menus.drawSelectionMarker).toHaveBeenCalled();
@@ -193,7 +216,7 @@ describe('Testing text functions', () => {
     game.gameArea.context = game.gameArea.canvas.getContext("2d");
     spyOn(game.gameArea.context, 'drawImage');
 
-    menus.drawEntries(menus.mainImages.entries);
+    menus.drawEntries(menus.screens.main.entries);
 
     expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(3);
   });
@@ -203,43 +226,49 @@ describe('Testing text functions', () => {
     spyOn(game.gameArea.context, 'drawImage');
 
     menus.currentSelection.name = 'play';
-    menus.drawEntries(menus.mainImages.entries);
+    menus.drawEntries(menus.screens.main.entries);
 
-    expect(menus.currentSelection.entry.file).toBe(menus.mainImages.entries[menus.currentSelection.name].file);
+    expect(menus.currentSelection.entry.file).toBe(menus.screens.main.entries[menus.currentSelection.name].file);
   });
 
   it('drawSelectionMarker calls drawImage', () => {
     game.init();
     game.gameArea.context = game.gameArea.canvas.getContext("2d");
     spyOn(game.gameArea.context, 'drawImage');
+    menus.currentSelection.name = 'play';
+    menus.currentSelection.entry = menus.screens.main.entries.play;
 
-    menus.drawSelectionMarker(menus.pointerImages.entries);
+    menus.drawSelectionMarker(menus.screens.pointers.entries);
 
     expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(2);
   });
 
   it('drawTexts calls text.component.update when text components are present', () => {
-    testImages = {text : menus.mainImages.text};
-    spyOn(testImages.text.entries[0].component, 'update');
+    testImages = {text : Object.assign({}, menus.screens.main.text)};
+    let testComponent = new Component(knobsAndLevers.baseTextParams);
+    spyOn(testComponent, 'update');
+    spyOn(menus, 'buildDefaultComponent').and.returnValue(testComponent);
 
     menus.drawTexts(testImages);
 
     expect(testImages.text.entries[0].component.update).toHaveBeenCalledTimes(1);
   });
   it('drawTexts does not set fontSize if not on overridden on text object', () => {
-    testImages = {
+    let testComponent = new Component(knobsAndLevers.baseTextParams);
+    spyOn(testComponent, 'update');
+    let testImages = {
       text : {
         entries : [
           {
             name : 'winning',
             text : 'CENTIPEDE! (warblegarble)',
-            component : new Component(knobsAndLevers.baseTextParams),
+            component : testComponent,
             position : {x : 115, y : 100},
           },
         ],
       }
     };
-    spyOn(testImages.text.entries[0].component, 'update');
+    spyOn(menus, 'buildDefaultComponent').and.returnValue(testComponent);
 
     menus.drawTexts(testImages);
 
@@ -258,9 +287,10 @@ describe('Testing text functions', () => {
   });
 
   it('checkForSelection calls currentSelectionEntry action when enough time has passed', () => {
-    let startTime = 61;
+    let startTime = 30;
     menus.timeSinceSelection = startTime;
-    menus.currentSelection.entry = menus.mainImages.entries.play;
+    menus.minTimeToSelect = 30;
+    menus.currentSelection.entry = menus.screens.main.entries.play;
     spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(true);
     spyOn(menus.currentSelection.entry, 'action');
 
@@ -271,10 +301,11 @@ describe('Testing text functions', () => {
     expect(menus.currentSelection.entry.action).toHaveBeenCalled();
   });
 
-  it('checkForSelection calls currentSelectionEntry action when enough time has passed', () => {
-    startTime = 30;
+  it('checkForSelection does not call currentSelectionEntry action when not enough time has passed', () => {
+    startTime = 0;
     menus.timeSinceSelection = startTime;
-    menus.currentSelection.entry = menus.mainImages.entries.play;
+    menus.minTimeToSelect = 30;
+    menus.currentSelection.entry = menus.screens.main.entries.play;
     spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(true);
     spyOn(menus.currentSelection.entry, 'action');
 

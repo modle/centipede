@@ -1,4 +1,11 @@
-describe('Testing centipede-controls functions', () => {
+describe('CENTIPEDE CONTROLS SPEC: ', () => {
+  let spec = 'CENTIPEDE CONTROLS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   it('getMenuKeyPush returns only currently-pushed keys', () => {
     controls.keysDown = {"38" : true, "50" : true, "40" : false,};
 

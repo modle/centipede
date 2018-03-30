@@ -1,4 +1,11 @@
-describe('Testing text functions', () => {
+describe('MAIN SPEC: ', () => {
+  let spec = 'MAIN';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   it('updateGameState calls delegate functions', () => {
     spyOn(main, 'detectGamePad');
     spyOn(menus, 'processMenus').and.returnValue(false);
@@ -187,9 +194,9 @@ describe('Testing text functions', () => {
     expect(game.managePause).toHaveBeenCalled();
   });
   it('prepTheCanvas calls delegate functions', () => {
+    menus.init();
     menus.showMenu = false;
     menus.show.instructions = false;
-
     spyOn(game, 'startNextFrame');
     spyOn(sounds, 'manageSounds');
     spyOn(hud, 'update');

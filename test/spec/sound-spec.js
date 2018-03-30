@@ -1,23 +1,21 @@
-
-describe('Testing sound functions', () => {
+describe('SOUND SPEC: ', () => {
+  let spec = 'SOUND';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, sounds);
     testObj.init();
-    sounds.init();
   });
   it('init delegates sound building', () => {
-    spyOn(testObj, 'buildSound').and.callThrough();
-    spyOn(testObj, 'buildManySounds').and.callThrough();
+    spyOn(testObj, 'buildSound');
+    spyOn(testObj, 'buildManySounds');
 
     testObj.init();
 
-    expect(testObj.centipede).toBeTruthy();
-    expect(testObj.spider).toBeTruthy();
-    expect(testObj.fly).toBeTruthy();
-    expect(testObj.worm).toBeTruthy();
-    expect(testObj.playerDied).toBeTruthy();
-    expect(sounds.laserPool.length).toBeGreaterThan(0);
-    expect(sounds.impactPool.length).toBeGreaterThan(0);
     expect(testObj.buildSound).toHaveBeenCalled();
     expect(testObj.buildManySounds).toHaveBeenCalled();
   });

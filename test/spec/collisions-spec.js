@@ -1,4 +1,11 @@
-describe('Testing collision functions', () => {
+describe('COLLISIONS SPEC: ', () => {
+  let spec = 'COLLISIONS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, collisions);
     knobsAndLevers.init();

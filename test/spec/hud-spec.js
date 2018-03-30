@@ -1,9 +1,15 @@
-describe('Testing hud functions', () => {
+describe('HUD SPEC: ', () => {
+  let spec = 'HUD';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, hud);
     knobsAndLevers.init();
     game.init();
-    // texts.init();
   });
   it('hud gets constructed', () => {
     expect(testObj).toBeTruthy();

@@ -1,5 +1,13 @@
-describe('Testing game functions', () => {
+describe('GAME SPEC: ', () => {
+  let spec = 'GAME';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function() {
+    menus.init();
     testObj = Object.assign({}, game);
     testObj.init();
     spyOn(testObj.gameArea, 'start');

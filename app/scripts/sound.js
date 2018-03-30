@@ -1,4 +1,5 @@
 var sounds = {
+  path : 'app/static/media/sounds/',
   init : function() {
     this.centipede = this.buildSound("centipede", 0.5);
     this.spider = this.buildSound("spider", 0.3);
@@ -10,7 +11,7 @@ var sounds = {
     console.log("sounds initialized");
   },
   buildSound : function(filename, volume, loop) {
-    return new Sound("app/static/media/sounds/" + filename + ".mp3", volume, loop);
+    return new Sound(this.path + filename + ".mp3", volume, loop);
   },
   buildManySounds : function(type, poolSize) {
     let soundArray = [];
