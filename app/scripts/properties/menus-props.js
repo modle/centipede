@@ -1,3 +1,9 @@
+var menusPropsDefaults = {
+  positions : {
+    x : 268,
+    y : 450,
+    yDivider : 40,
+  }};
 var menusProps = {
   show : {
     main : true,
@@ -24,7 +30,10 @@ var menusProps = {
         play : {
           image : new Image(),
           file : "play.png",
-          position : {x : 350, y : 450},
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+          },
           dimensions : {width : 96, height : 40},
           action : function() {
             menus.disableMenus();
@@ -34,7 +43,10 @@ var menusProps = {
         instructions : {
           image : new Image(),
           file : "instructions.png",
-          position : {x : 268, y : 490},
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
+          },
           dimensions : {width : 260, height : 40},
           action : function() {
             menus.disableMenus();
@@ -44,7 +56,10 @@ var menusProps = {
         settings : {
           image : new Image(),
           file : "settings.png",
-          position : {x : 305, y : 530},
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
+          },
           dimensions : {width : 182, height : 40},
           action : function() {
             menus.disableMenus();
@@ -58,20 +73,36 @@ var menusProps = {
             name : 'title',
             text : 'CENTIPEDE! (warblegarble)',
             component : {},
-            position : {x : 115, y : 100},
+            position : {x : 115, y : 200},
             fontSize : '50px',
           },
         ],
       },
     },
     playerSelect : {
-      order : ['selectOnePlayer', 'back'],
+      order : ['onePlayer', 'twoPlayer', 'back'],
       entries : {
-        selectOnePlayer : {
+        onePlayer : {
           image : new Image(),
-          file : "logo.png",
-          position : {x : 350, y : 450},
-          dimensions : {width : 96, height : 40},
+          file : "1player.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+          },
+          dimensions : {width : 176, height : 40},
+          action : function() {
+            menus.disableMenus();
+            game.paused = false;
+          },
+        },
+        twoPlayer : {
+          image : new Image(),
+          file : "2players.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
+          },
+          dimensions : {width : 200, height : 40},
           action : function() {
             menus.disableMenus();
             game.paused = false;
@@ -80,7 +111,10 @@ var menusProps = {
         back : {
           image : new Image(),
           file : "back.png",
-          position : {x : 350, y : 490},
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
+          },
           dimensions : {width : 96, height : 40},
           action : function() {
             menus.disableMenus();
@@ -94,7 +128,7 @@ var menusProps = {
             name : 'playerSelect',
             text : 'Choose number of players',
             component : {},
-            position : {x : 115, y : 100},
+            position : {x : 115, y : 200},
           },
         ],
       },
@@ -104,9 +138,12 @@ var menusProps = {
       entries : {
         doTheThing : {
           image : new Image(),
-          file : "credits.png",
-          position : {x : 350, y : 450},
-          dimensions : {width : 96, height : 40},
+          file : "thing.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+          },
+          dimensions : {width : 110, height : 40},
           action : function() {
             console.log('doTheThing clicked');
           },
@@ -114,7 +151,10 @@ var menusProps = {
         back : {
           image : new Image(),
           file : "back.png",
-          position : {x : 350, y : 490},
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
+          },
           dimensions : {width : 96, height : 40},
           action : function() {
             menus.disableMenus();
@@ -128,7 +168,7 @@ var menusProps = {
             name : 'settings',
             text : 'Settings Are Thither',
             component : {},
-            position : {x : 115, y : 100},
+            position : {x : 115, y : 200},
             fontSize : '50px',
           },
         ],
@@ -140,7 +180,10 @@ var menusProps = {
         back : {
           image : new Image(),
           file : "back.png",
-          position : {x : 350, y : 490},
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+          },
           dimensions : {width : 96, height : 40},
           action : function() {
             menus.disableMenus();
