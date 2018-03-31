@@ -9,6 +9,7 @@ describe('COMPONENT SPEC: ', () => {
   beforeEach(function () {
     component = constructComponent({});
     knobsAndLevers.init();
+    game.init();
   });
   function constructComponent(args) {
     return new Component(args);

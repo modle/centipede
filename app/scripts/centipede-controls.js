@@ -1,5 +1,3 @@
-var centipedeControls = controls;
-
 controls.menuKeys = {up : controls.movementCodes.up.slice(), down : controls.movementCodes.down.slice()};
 controls.menuKeys.up.push(38);
 controls.menuKeys.down.push(40);
