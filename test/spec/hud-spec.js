@@ -51,17 +51,4 @@ describe('HUD SPEC: ', () => {
     expect(metrics.score.text).toEqual(expected);
     expect(metrics.score.update).toHaveBeenCalled();
   });
-  it('reset resets things', () => {
-    spyOn(metrics, 'reset');
-    spyOn(centipedes, 'clear');
-    spyOn(spiders, 'clear');
-    spyOn(intervalCreatures, 'clear');
-    spyOn(mushrooms, 'clear');
-    testObj.reset();
-    expect(metrics.reset).toHaveBeenCalled();
-    expect(centipedes.clear).toHaveBeenCalled();
-    expect(spiders.clear).toHaveBeenCalled();
-    expect(intervalCreatures.clear).toHaveBeenCalled();
-    expect(mushrooms.clear).toHaveBeenCalled();
-  });
 });

@@ -54,7 +54,7 @@ var game = {
       this.timeSinceGameOver += 1;
       sounds.stopAllSounds();
       this.showGameOver();
-      if (this.timeSinceGameOver > knobsAndLevers.gameOverDelay) {
+      if (this.timeSinceGameOver > knobsAndLevers.game.gameOverDelay) {
         this.resetTheWholeTamale();
       };
     };

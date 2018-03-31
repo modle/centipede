@@ -1,5 +1,4 @@
 /*jslint white: true */
-
 var hud = {
   update : function() {
     this.updateScore();

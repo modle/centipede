@@ -37,15 +37,6 @@ describe('GAME SPEC: ', () => {
 
     expect(testObj.gameArea.stop).toHaveBeenCalled();
   });
-  it('reset calls gameArea.stop, hud.reset, and game.start', () => {
-    spyOn(hud, 'reset');
-    spyOn(testObj, 'start');
-
-    testObj.reset();
-
-    expect(testObj.gameArea.stop).toHaveBeenCalled();
-    expect(testObj.start).toHaveBeenCalled();
-  });
   it('isLevelOver returns true when level end conditions are met', () => {
     centipedes.numberSpawned = 10;
     centipedes.numberKilled = 10;

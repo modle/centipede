@@ -3,11 +3,11 @@ var metrics = {
   floatingPoints : [],
   floatingPointCycleDuration : 50,
   init : function() {
-    this.lives = knobsAndLevers.defaultLives;
-    this.currentLevel = knobsAndLevers.startLevel;
-    var scoreParams = Object.assign({}, knobsAndLevers.baseTextParams);
+    this.lives = knobsAndLevers.game.defaultLives;
+    this.currentLevel = knobsAndLevers.game.startLevel;
+    var scoreParams = Object.assign({}, knobsAndLevers.text.baseParams);
     scoreParams.x = game.gameArea.canvas.width / 10;
-    scoreParams.y = knobsAndLevers.gameInfoTextHeight;
+    scoreParams.y = knobsAndLevers.text.gameInfoHeight;
     this.score = new Component(scoreParams);
     this.score.value = 0;
     console.log("metrics initialized");
@@ -47,7 +47,7 @@ var metrics = {
     }
   },
   reset : function() {
-    this.lives = knobsAndLevers.defaultLives;
+    this.lives = knobsAndLevers.game.defaultLives;
     this.currentLevel = 1;
     this.score.value = 0;
   }

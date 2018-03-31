@@ -5,8 +5,8 @@ function GameArea() {
   this.xVertices = [],
   this.yVertices = [],
   this.gamePieceTopLimit = knobsAndLevers.gamePieceTopLimit;
-  this.canvas.width = knobsAndLevers.canvasWidth;
-  this.canvas.height = knobsAndLevers.canvasHeight;
+  this.canvas.width = knobsAndLevers.canvas.width;
+  this.canvas.height = knobsAndLevers.canvas.height;
   this.gridSquareSideLength = knobsAndLevers.gridSquareSideLength;
   this.firstMushroomLayer = knobsAndLevers.gridSquareSideLength * 2;
   this.start = function() {

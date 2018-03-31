@@ -22,11 +22,11 @@ describe('GAME AREA SPEC: ', () => {
     expect(gameArea.getYVertices).toHaveBeenCalled();
   });
   it('getXVertices returns a reasonable array of vertices', () => {
-    let expectedNumVertices = knobsAndLevers.canvasWidth / knobsAndLevers.gridSquareSideLength;
+    let expectedNumVertices = knobsAndLevers.canvas.width / knobsAndLevers.gridSquareSideLength;
     expect(gameArea.getXVertices().length).toBe(expectedNumVertices);
   });
   it('getYVertices returns a reasonable array of vertices', () => {
-    let expectedNumVertices = (knobsAndLevers.canvasHeight * 0.75 - knobsAndLevers.gridSquareSideLength) / knobsAndLevers.gridSquareSideLength;
+    let expectedNumVertices = (knobsAndLevers.canvas.height * 0.75 - knobsAndLevers.gridSquareSideLength) / knobsAndLevers.gridSquareSideLength;
     expect(gameArea.getYVertices().length).toBe(Math.floor(expectedNumVertices));
   });
   it('clear calls context.clearRect', () => {

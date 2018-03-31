@@ -68,7 +68,7 @@ var collisions = {
     return targets;
   },
   checkGamePieceVsEnemies : function(targets) {
-    if (!knobsAndLevers.playerCollisionsEnabled) {
+    if (!knobsAndLevers.game.playerCollisionsEnabled) {
       return;
     };
     targets.forEach(target => {

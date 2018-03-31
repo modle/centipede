@@ -207,7 +207,7 @@ describe('COLLISIONS SPEC: ', () => {
   });
 
   it('checkGamePieceVsEnemies does not process if playerCollisions are disabled', () => {
-    knobsAndLevers.playerCollisionsEnabled = false;
+    knobsAndLevers.game.playerCollisionsEnabled = false;
     game.gameOver = false;
     player.init();
     spyOn(player.gamePiece, 'crashWith').and.returnValue(true);
@@ -221,7 +221,7 @@ describe('COLLISIONS SPEC: ', () => {
     expect(game.gameOver).toBeFalsy();
   });
   it('checkGamePieceVsEnemies calls killsPlayer if crashWith', () => {
-    knobsAndLevers.playerCollisionsEnabled = true;
+    knobsAndLevers.game.playerCollisionsEnabled = true;
     game.gameOver = false;
     player.init();
     spyOn(player.gamePiece, 'crashWith').and.returnValue(true);
@@ -236,7 +236,7 @@ describe('COLLISIONS SPEC: ', () => {
     expect(game.gameOver).toBeFalsy();
   });
   it('checkGamePieceVsEnemy handles 0 length target list', () => {
-    knobsAndLevers.playerCollisionsEnabled = true;
+    knobsAndLevers.game.playerCollisionsEnabled = true;
     game.gameOver = false;
     player.init();
     spyOn(player.gamePiece, 'crashWith').and.callThrough();

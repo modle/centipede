@@ -118,7 +118,7 @@ menus = {
     };
   },
   buildDefaultComponent : function() {
-    return new Component(knobsAndLevers.baseTextParams);
+    return new Component(knobsAndLevers.text.baseParams);
   },
   checkForSelection : function() {
     this.timeSinceSelection += 1;

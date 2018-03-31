@@ -9,21 +9,21 @@ var texts = {
     console.log("texts initialized");
   },
   copyBaseMessageParams : function() {
-    return Object.assign({}, knobsAndLevers.baseTextParams);
+    return Object.assign({}, knobsAndLevers.text.baseParams);
   },
   copyBaseTextBackgroundParams : function() {
-    return Object.assign({}, knobsAndLevers.baseTextBackgroundParams);
+    return Object.assign({}, knobsAndLevers.text.baseBackgroundParams);
   },
   getLevelParams : function() {
     let levelParams = this.copyBaseMessageParams();
     levelParams.x = game.gameArea.canvas.width * 0.6;
-    levelParams.y = knobsAndLevers.gameInfoTextHeight;
+    levelParams.y = knobsAndLevers.text.gameInfoHeight;
     return levelParams;
   },
   getLivesParams : function() {
     let livesParams = this.copyBaseMessageParams();
     livesParams.x = game.gameArea.canvas.width * 0.4;
-    livesParams.y = knobsAndLevers.gameInfoTextHeight;
+    livesParams.y = knobsAndLevers.text.gameInfoHeight;
     return livesParams;
   },
   getDiedTextParams : function() {

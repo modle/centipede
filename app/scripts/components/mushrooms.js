@@ -3,7 +3,7 @@ var mushrooms = {
   mushrooms : [],
   manage : function() {
     if (game.gameArea.frameNo == 1) {
-      this.spawn(knobsAndLevers.maxMushrooms);
+      this.spawn(knobsAndLevers.game.maxMushrooms);
     };
     this.update();
   },

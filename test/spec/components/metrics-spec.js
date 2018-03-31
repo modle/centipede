@@ -92,7 +92,7 @@ describe('METRICS SPEC: ', () => {
 
     testObj.reset();
 
-    expect(testObj.lives).toBe(knobsAndLevers.defaultLives);
+    expect(testObj.lives).toBe(knobsAndLevers.game.defaultLives);
     expect(testObj.currentLevel).toBe(1);
     expect(testObj.score.value).toBe(0);
   });
