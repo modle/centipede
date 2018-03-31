@@ -17,11 +17,6 @@ var game = {
     this.paused = true;
     this.gameArea.start();
   },
-  reset : function() {
-    this.gameArea.stop();
-    hud.reset();
-    this.start();
-  },
   levelIsOver : function() {
     return centipedes.numberSpawned === centipedes.numberKilled && this.gameArea.frameNo !== 0;
   },

@@ -70,8 +70,8 @@ var knobsAndLevers = {
     maxNumber: 1,
     pointValue : 1000,
     interval : {
-      min: 2000,
-      max: 3000,
+      min: 3000,
+      max: 5000,
     },
     args : {
       color : "orange",
@@ -99,10 +99,10 @@ var knobsAndLevers = {
   },
   spider : {
     maxNumber : 1,
-    pointValue: 400,
+    pointValue: 200,
     interval : {
-      min: 500,
-      max: 1000,
+      min: 1000,
+      max: 1250,
     },
     args : {
       color : "fuchsia",

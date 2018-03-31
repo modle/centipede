@@ -18,12 +18,4 @@ var hud = {
     metrics.score.text = "Score: " + metrics.score.value;
     metrics.score.update();
   },
-  reset : function() {
-    metrics.reset();
-    centipedes.clear();
-    spiders.clear();
-    intervalCreatures.clear();
-    intervalCreatures.clear();
-    mushrooms.clear();
-  },
 };
