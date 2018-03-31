@@ -67,7 +67,7 @@ var main = {
   prepTheCanvas : function() {
     game.startNextFrame();
     sounds.manageSounds();
-    if (menus.showMenu || menus.show.instructions) {
+    if (Array.from(Object.keys(menus.show)).find(key => menus.show[key])) {
       return;
     };
     hud.update();
