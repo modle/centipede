@@ -1,9 +1,15 @@
-describe('Testing hud functions', () => {
+describe('HUD SPEC: ', () => {
+  let spec = 'HUD';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, hud);
     knobsAndLevers.init();
     game.init();
-    // texts.init();
   });
   it('hud gets constructed', () => {
     expect(testObj).toBeTruthy();
@@ -38,8 +44,8 @@ describe('Testing hud functions', () => {
   });
   it('updateScore updates score', () => {
     metrics.init();
-    metrics.scoreValue = 10;
-    let expected = "Score: " + metrics.scoreValue;
+    metrics.score.value = 10;
+    let expected = "Score: " + metrics.score.value;
     spyOn(metrics.score, 'update');
     testObj.updateScore();
     expect(metrics.score.text).toEqual(expected);

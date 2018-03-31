@@ -1,4 +1,11 @@
-describe('Testing display-object-protoype functions', () => {
+describe('DISPLAY OBJECT PROTOTYPE SPEC: ', () => {
+  let spec = 'DISPLAY OBJECT PROTOTYPE';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, displayObjectPrototype);
   });

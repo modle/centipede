@@ -15,7 +15,7 @@ var hud = {
     texts.level.update();
   },
   updateScore : function() {
-    metrics.score.text = "Score: " + metrics.scoreValue;
+    metrics.score.text = "Score: " + metrics.score.value;
     metrics.score.update();
   },
   reset : function() {

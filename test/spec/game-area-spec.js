@@ -1,4 +1,11 @@
-describe('Testing game-area functions', () => {
+describe('GAME AREA SPEC: ', () => {
+  let spec = 'GAME AREA';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     knobsAndLevers.init();
     gameArea = new GameArea();

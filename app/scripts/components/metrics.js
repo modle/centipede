@@ -1,6 +1,5 @@
 /*jslint white: true */
 var metrics = {
-  scoreValue : 0,
   floatingPoints : [],
   floatingPointCycleDuration : 50,
   init : function() {
@@ -10,12 +9,13 @@ var metrics = {
     scoreParams.x = game.gameArea.canvas.width / 10;
     scoreParams.y = knobsAndLevers.gameInfoTextHeight;
     this.score = new Component(scoreParams);
+    this.score.value = 0;
     console.log("metrics initialized");
   },
   changeScore : function(change) {
-    this.scoreValue += change;
-    if (this.scoreValue < 0) {
-      this.scoreValue = 0;
+    this.score.value += change;
+    if (this.score.value < 0) {
+      this.score.value = 0;
     }
   },
   addNewFloatingPoint : function(x, y, points, action) {
@@ -49,6 +49,6 @@ var metrics = {
   reset : function() {
     this.lives = knobsAndLevers.defaultLives;
     this.currentLevel = 1;
-    this.scoreValue = 0;
+    this.score.value = 0;
   }
 }

@@ -1,4 +1,11 @@
-describe('Testing mushrooms functions', () => {
+describe('MUSHROOMS SPEC: ', () => {
+  let spec = 'MUSHROOMS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, mushrooms);
     knobsAndLevers.init();

@@ -1,4 +1,11 @@
-describe('Testing game-piece functions', () => {
+describe('PLAYER SPEC: ', () => {
+  let spec = 'PLAYER';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, player);
   });

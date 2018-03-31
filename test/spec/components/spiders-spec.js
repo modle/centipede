@@ -1,4 +1,11 @@
-describe('Testing spiders functions', () => {
+describe('SPIDERS SPEC: ', () => {
+  let spec = 'SPIDERS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, spiders);
   });

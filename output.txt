@@ -1,0 +1,25 @@
+/home/matt/projects/javascript/centipede/app/static/media/sounds
+[32m30 03 2018 10:05:28.413:INFO [karma]: [39mKarma v2.0.0 server started at http://0.0.0.0:9876/
+[32m30 03 2018 10:05:28.415:INFO [launcher]: [39mLaunching browser Chrome with unlimited concurrency
+[32m30 03 2018 10:05:28.419:INFO [launcher]: [39mStarting browser Chrome
+[32m30 03 2018 10:05:28.813:INFO [Chrome 55.0.2883 (Linux 0.0.0)]: [39mConnected on socket zTK8e1_ejkHBp7ZZAAAA with id 85703240
+[31mChrome 55.0.2883 (Linux 0.0.0) ERROR[39m
+  {
+    "message": "Uncaught ReferenceError: describe is not defined\nat test/spec/centipede-controls-spec.js:1:1\n\nReferenceError: describe is not defined\n    at test/spec/centipede-controls-spec.js:1:1",
+    "str": "Uncaught ReferenceError: describe is not defined\nat test/spec/centipede-controls-spec.js:1:1\n\nReferenceError: describe is not defined\n    at test/spec/centipede-controls-spec.js:1:1"
+  }
+
+
+[31mChrome 55.0.2883 (Linux 0.0.0) ERROR[39m
+  {
+    "message": "Uncaught ReferenceError: describe is not defined\nat test/spec/collisions-spec.js:1:1\n\nReferenceError: describe is not defined\n    at test/spec/collisions-spec.js:1:1",
+    "str": "Uncaught ReferenceError: describe is not defined\nat test/spec/collisions-spec.js:1:1\n\nReferenceError: describe is not defined\n    at test/spec/collisions-spec.js:1:1"
+  }
+
+
+[31mChrome 55.0.2883 (Linux 0.0.0) ERROR[39m
+  {
+    "message": "Uncaught ReferenceError: describe is not defined\nat test/spec/component-spec.js:1:1\n\nReferenceError: describe is not defined\n    at test/spec/component-spec.js:1:1",
+    "str": "Uncaught ReferenceError: describe is not defined\nat test/spec/component-spec.js:1:1\n\nReferenceError: describe is not defined\n    at test/spec/component-spec.js:1:1"
+  }
+
