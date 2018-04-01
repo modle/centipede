@@ -7,7 +7,7 @@ describe('MAIN SPEC: ', () => {
     console.log(spec + ' SPEC complete');
   });
   it('updateGameState calls delegate functions', () => {
-    spyOn(main, 'detectGamePad');
+    spyOn(main, 'detectGamepad');
     spyOn(menus, 'processMenus').and.returnValue(false);
     spyOn(main, 'processTriggers').and.returnValue(false);
     spyOn(main, 'prepTheCanvas');
@@ -15,14 +15,14 @@ describe('MAIN SPEC: ', () => {
 
     main.updateGameState();
 
-    expect(main.detectGamePad).toHaveBeenCalled();
+    expect(main.detectGamepad).toHaveBeenCalled();
     expect(menus.processMenus).toHaveBeenCalled();
     expect(main.processTriggers).toHaveBeenCalled();
     expect(main.prepTheCanvas).toHaveBeenCalled();
     expect(main.manageGameObjects).toHaveBeenCalled();
   });
   it('updateGameState returns after process triggers if true', () => {
-    spyOn(main, 'detectGamePad');
+    spyOn(main, 'detectGamepad');
     spyOn(menus, 'processMenus').and.returnValue(false);
     spyOn(main, 'processTriggers').and.returnValue(true);
     spyOn(main, 'prepTheCanvas');
@@ -30,14 +30,14 @@ describe('MAIN SPEC: ', () => {
 
     main.updateGameState();
 
-    expect(main.detectGamePad).toHaveBeenCalled();
+    expect(main.detectGamepad).toHaveBeenCalled();
     expect(menus.processMenus).toHaveBeenCalled();
     expect(main.processTriggers).toHaveBeenCalled();
     expect(main.prepTheCanvas).not.toHaveBeenCalled();
     expect(main.manageGameObjects).not.toHaveBeenCalled();
   });
   it('updateGameState returns after drawMenu', () => {
-    spyOn(main, 'detectGamePad');
+    spyOn(main, 'detectGamepad');
     spyOn(menus, 'processMenus').and.returnValue(true);
     spyOn(main, 'processTriggers').and.returnValue(true);
     spyOn(main, 'prepTheCanvas');
@@ -45,22 +45,22 @@ describe('MAIN SPEC: ', () => {
 
     main.updateGameState();
 
-    expect(main.detectGamePad).toHaveBeenCalled();
+    expect(main.detectGamepad).toHaveBeenCalled();
     expect(menus.processMenus).toHaveBeenCalled();
     expect(main.processTriggers).not.toHaveBeenCalled();
     expect(main.prepTheCanvas).not.toHaveBeenCalled();
     expect(main.manageGameObjects).not.toHaveBeenCalled();
   });
 
-  it('detectGamePad delegates to check controller state and handle game pause', () => {
-    spyOn(controls, 'checkControllerState');
-    spyOn(controls, 'captureControllerAxes');
+  it('detectGamepad delegates to check controller state and handle game pause', () => {
+    spyOn(controls, 'checkGamepadState');
+    spyOn(controls, 'captureGamepadAxes');
 
     controls.controllerIndex = 0;
-    main.detectGamePad();
+    main.detectGamepad();
 
-    expect(controls.checkControllerState).toHaveBeenCalled();
-    expect(controls.captureControllerAxes).toHaveBeenCalled();
+    expect(controls.checkGamepadState).toHaveBeenCalled();
+    expect(controls.captureGamepadAxes).toHaveBeenCalled();
   });
 
   it('processTriggers delegates to trigger checks and returns on true', () => {

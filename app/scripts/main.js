@@ -2,7 +2,7 @@
 var main = {
   updateGameState : function() {
     // this gets executed every interval
-    main.detectGamePad();
+    main.detectGamepad();
     if (menus.processMenus()) {
       return;
     };
@@ -13,12 +13,12 @@ var main = {
     main.prepTheCanvas();
     main.manageGameObjects();
   },
-  detectGamePad : function() {
-    controls.checkControllerState();
+  detectGamepad : function() {
+    controls.checkGamepadState();
     if (controls.controllerIndex < 0) {
       return;
     };
-    controls.captureControllerAxes();
+    controls.captureGamepadAxes();
   },
   processTriggers : function() {
     let triggered = (
