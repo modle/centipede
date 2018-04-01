@@ -6,6 +6,7 @@ var main = {
     if (menus.processMenus()) {
       return;
     };
+    controls.handleGamePause();
     if (main.processTriggers()) {
       return;
     };
@@ -14,7 +15,10 @@ var main = {
   },
   detectGamePad : function() {
     controls.checkControllerState();
-    controls.handleGamePause();
+    if (controls.controllerIndex < 0) {
+      return;
+    };
+    controls.captureControllerAxes();
   },
   processTriggers : function() {
     let triggered = (
@@ -67,7 +71,7 @@ var main = {
   prepTheCanvas : function() {
     game.startNextFrame();
     sounds.manageSounds();
-    if (Array.from(Object.keys(menus.show)).find(key => menus.show[key])) {
+    if (menus.areActive()) {
       return;
     };
     hud.update();

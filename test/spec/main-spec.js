@@ -54,12 +54,13 @@ describe('MAIN SPEC: ', () => {
 
   it('detectGamePad delegates to check controller state and handle game pause', () => {
     spyOn(controls, 'checkControllerState');
-    spyOn(controls, 'handleGamePause');
+    spyOn(controls, 'captureControllerAxes');
 
+    controls.controllerIndex = 0;
     main.detectGamePad();
 
     expect(controls.checkControllerState).toHaveBeenCalled();
-    expect(controls.handleGamePause).toHaveBeenCalled();
+    expect(controls.captureControllerAxes).toHaveBeenCalled();
   });
 
   it('processTriggers delegates to trigger checks and returns on true', () => {
@@ -194,17 +195,16 @@ describe('MAIN SPEC: ', () => {
     expect(game.managePause).toHaveBeenCalled();
   });
   it('prepTheCanvas calls delegate functions', () => {
-    menus.init();
-    menus.showMenu = false;
-    menus.show.instructions = false;
     spyOn(game, 'startNextFrame');
     spyOn(sounds, 'manageSounds');
+    spyOn(menus, 'areActive').and.returnValue(false);
     spyOn(hud, 'update');
 
     main.prepTheCanvas();
 
     expect(game.startNextFrame).toHaveBeenCalled();
     expect(sounds.manageSounds).toHaveBeenCalled();
+    expect(menus.areActive).toHaveBeenCalled();
     expect(hud.update).toHaveBeenCalled();
   });
   it('prepTheCanvas does not call hud if showMenu is true', () => {

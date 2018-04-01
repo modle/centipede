@@ -2,6 +2,9 @@ menus = {
   init : function() {
     Object.assign(this, menusProps);
   },
+  areActive : function() {
+    return Array.from(Object.keys(menus.show)).find(key => menus.show[key]);
+  },
   reset : function() {
     game.gameOver = false;
     this.init();
@@ -62,20 +65,14 @@ menus = {
     };
   },
   shiftMenuListOrder : function(order) {
-    let direction = this.getDirection();
+    let direction = controls.getDirection();
+    // console.log(direction);
     if (direction == "up") {
       order.unshift(order.pop());
     } else if (direction == "down") {
       order.push(order.shift());
     };
     this.currentSelection.name = order[0];
-  },
-  getDirection : function() {
-    let direction = "";
-    let keysPushed = controls.getMenuKeyPush();
-    keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.up.includes(parseInt(key)) ? "up" : direction);
-    keysPushed.forEach(key => direction = direction == "" && controls.menuKeys.down.includes(parseInt(key)) ? "down" : direction);
-    return direction;
   },
   drawImages : function(images) {
     this.drawEntries(images.entries);
@@ -84,6 +81,9 @@ menus = {
   },
   drawEntries : function(entries) {
     Array.from(Object.keys(entries)).forEach(entry => {
+      if (!entries[entry].enabled) {
+        return;
+      };
       if (this.currentSelection.name == entry) {
         this.currentSelection.entry = entries[entry];
       };
@@ -122,7 +122,11 @@ menus = {
   },
   checkForSelection : function() {
     this.timeSinceSelection += 1;
-    if (this.timeSinceSelection > this.minTimeToSelect && controls.keyBoardFlowControlButtonPressed()) {
+    if (
+      this.timeSinceSelection > this.minTimeToSelect
+        &&
+      (controls.keyBoardFlowControlButtonPressed() || controls.isFiring())
+    ) {
       this.currentSelection.entry.action();
     };
   },

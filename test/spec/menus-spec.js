@@ -125,7 +125,7 @@ describe('MENUS SPEC: ', () => {
 
   it('shiftMenuListOrder shifts array order up and currentSelection.name matches the first entry', () => {
     currentSelection = {name : ''};
-    spyOn(menus, 'getDirection').and.returnValue('up');
+    spyOn(controls, 'getDirection').and.returnValue('up');
     let actual = ['first', 'second', 'third'];
     let expected = ['third', 'first', 'second'];
 
@@ -137,7 +137,7 @@ describe('MENUS SPEC: ', () => {
 
   it('shiftMenuListOrder shifts array order down and currentSelection.name matches the first entry', () => {
     menus.currentSelection = {name : ''};
-    spyOn(menus, 'getDirection').and.returnValue('down');
+    spyOn(controls, 'getDirection').and.returnValue('down');
     let actual = ['first', 'second', 'third'];
     let expected = ['second', 'third', 'first'];
 
@@ -149,7 +149,7 @@ describe('MENUS SPEC: ', () => {
 
   it('shiftMenuListOrder sets currentshifts array order down', () => {
     menus.currentSelection = {name : ''};
-    spyOn(menus, 'getDirection').and.returnValue("");
+    spyOn(controls, 'getDirection').and.returnValue("");
     let actual = ['first', 'second', 'third'];
     let expected = ['first', 'second', 'third'];
 
@@ -159,45 +159,6 @@ describe('MENUS SPEC: ', () => {
     expect(menus.currentSelection.name).toBe('first');
   });
 
-  it('getDirection returns menu movement direction', () => {
-    let dummyUpKeyValue = 0;
-    let dummyDownKeyValue = 1;
-    controls.menuKeys.up = [dummyUpKeyValue];
-    controls.menuKeys.down = [dummyDownKeyValue];
-    spyOn(controls, 'getMenuKeyPush').and.returnValue([dummyUpKeyValue]);
-    let expected = 'up';
-
-    let actual = menus.getDirection();
-
-    expect(actual).toEqual(expected);
-  });
-
-  it('getDirection returns menu movement direction', () => {
-    let dummyUpKeyValue = 0;
-    let dummyDownKeyValue = 1;
-    controls.menuKeys.up = [dummyUpKeyValue];
-    controls.menuKeys.down = [dummyDownKeyValue];
-    spyOn(controls, 'getMenuKeyPush').and.returnValue([dummyDownKeyValue]);
-    let expected = 'down';
-
-    let actual = menus.getDirection();
-
-    expect(actual).toEqual(expected);
-  });
-
-  it('getDirection returns menu movement direction', () => {
-    let dummyUpKeyValue = 0;
-    let dummyDownKeyValue = 1;
-    let someOtherValue = 999;
-    controls.menuKeys.up = [dummyUpKeyValue];
-    controls.menuKeys.down = [dummyDownKeyValue];
-    spyOn(controls, 'getMenuKeyPush').and.returnValue([someOtherValue]);
-    let expected = '';
-
-    let actual = menus.getDirection();
-
-    expect(actual).toEqual(expected);
-  });
 
   it('drawImages delegates to selection, text, and marker draw functions', () => {
     spyOn(menus, 'drawEntries');
@@ -218,7 +179,7 @@ describe('MENUS SPEC: ', () => {
 
     menus.drawEntries(menus.screens.main.entries);
 
-    expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(3);
+    expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(menus.screens.main.order.length);
   });
   it('drawEntries sets currentSelection entry when entry name matches', () => {
     game.init();

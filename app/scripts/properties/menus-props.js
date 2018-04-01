@@ -24,160 +24,11 @@ var menusProps = {
     }
   },
   screens : {
-    main : {
-      order : ['play', 'instructions', 'settings'],
-      entries : {
-        play : {
-          image : new Image(),
-          file : "play.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
-          },
-          dimensions : {width : 96, height : 40},
-          action : function() {
-            menus.disableMenus();
-            menus.show.playerSelect = true;
-          },
-        },
-        instructions : {
-          image : new Image(),
-          file : "instructions.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
-          },
-          dimensions : {width : 260, height : 40},
-          action : function() {
-            menus.disableMenus();
-            menus.show.instructions = true;
-          },
-        },
-        settings : {
-          image : new Image(),
-          file : "settings.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
-          },
-          dimensions : {width : 182, height : 40},
-          action : function() {
-            menus.disableMenus();
-            menus.show.settings = true;
-          },
-        },
-      },
-      text : {
-        entries : [
-          {
-            name : 'title',
-            text : 'CENTIPEDE! (warblegarble)',
-            component : {},
-            position : {x : 115, y : 200},
-            fontSize : '50px',
-          },
-        ],
-      },
-    },
-    playerSelect : {
-      order : ['onePlayer', 'twoPlayer', 'back'],
-      entries : {
-        onePlayer : {
-          image : new Image(),
-          file : "1player.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
-          },
-          dimensions : {width : 176, height : 40},
-          action : function() {
-            menus.disableMenus();
-            game.paused = false;
-          },
-        },
-        twoPlayer : {
-          image : new Image(),
-          file : "2players.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
-          },
-          dimensions : {width : 200, height : 40},
-          action : function() {
-            menus.disableMenus();
-            game.paused = false;
-          },
-        },
-        back : {
-          image : new Image(),
-          file : "back.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
-          },
-          dimensions : {width : 96, height : 40},
-          action : function() {
-            menus.disableMenus();
-            menus.show.main = true;
-          },
-        },
-      },
-      text : {
-        entries : [
-          {
-            name : 'playerSelect',
-            text : 'Choose number of players',
-            component : {},
-            position : {x : 115, y : 200},
-          },
-        ],
-      },
-    },
-    settings : {
-      order : ['doTheThing', 'back'],
-      entries : {
-        doTheThing : {
-          image : new Image(),
-          file : "thing.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
-          },
-          dimensions : {width : 110, height : 40},
-          action : function() {
-            console.log('doTheThing clicked');
-          },
-        },
-        back : {
-          image : new Image(),
-          file : "back.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
-          },
-          dimensions : {width : 96, height : 40},
-          action : function() {
-            menus.disableMenus();
-            menus.show.main = true;
-          },
-        },
-      },
-      text : {
-        entries : [
-          {
-            name : 'settings',
-            text : 'Settings Are Thither',
-            component : {},
-            position : {x : 115, y : 200},
-            fontSize : '50px',
-          },
-        ],
-      },
-    },
     instructions : {
       order : ['back'],
       entries : {
         back : {
+          enabled : true,
           image : new Image(),
           file : "back.png",
           position : {
@@ -232,6 +83,168 @@ var menusProps = {
           file : "ship.png",
           offset : 0,
         },
+      },
+    },
+    main : {
+      order : [
+        'play',
+        'instructions',
+        // 'settings',
+      ],
+      entries : {
+        play : {
+          enabled : true,
+          image : new Image(),
+          file : "play.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+          },
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.show.playerSelect = true;
+          },
+        },
+        instructions : {
+          enabled : true,
+          image : new Image(),
+          file : "instructions.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
+          },
+          dimensions : {width : 260, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.show.instructions = true;
+          },
+        },
+        settings : {
+          enabled : false,
+          image : new Image(),
+          file : "settings.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
+          },
+          dimensions : {width : 182, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.show.settings = true;
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            name : 'title',
+            text : 'CENTIPEDE! (warblegarble)',
+            component : {},
+            position : {x : 115, y : 200},
+            fontSize : '50px',
+          },
+        ],
+      },
+    },
+    playerSelect : {
+      order : ['onePlayer', 'twoPlayer', 'back'],
+      entries : {
+        onePlayer : {
+          enabled : true,
+          image : new Image(),
+          file : "1player.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+          },
+          dimensions : {width : 176, height : 40},
+          action : function() {
+            menus.disableMenus();
+            game.paused = false;
+          },
+        },
+        twoPlayer : {
+          enabled : true,
+          image : new Image(),
+          file : "2players.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
+          },
+          dimensions : {width : 200, height : 40},
+          action : function() {
+            menus.disableMenus();
+            game.paused = false;
+          },
+        },
+        back : {
+          enabled : true,
+          image : new Image(),
+          file : "back.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
+          },
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.show.main = true;
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            name : 'playerSelect',
+            text : 'Choose number of players',
+            component : {},
+            position : {x : 115, y : 200},
+          },
+        ],
+      },
+    },
+    settings : {
+      order : ['doTheThing', 'back'],
+      entries : {
+        doTheThing : {
+          enabled : false,
+          image : new Image(),
+          file : "thing.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+          },
+          dimensions : {width : 110, height : 40},
+          action : function() {
+            console.log('doTheThing clicked');
+          },
+        },
+        back : {
+          enabled : true,
+          image : new Image(),
+          file : "back.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
+          },
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.show.main = true;
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            name : 'settings',
+            text : 'Settings Are Thither',
+            component : {},
+            position : {x : 115, y : 200},
+            fontSize : '50px',
+          },
+        ],
       },
     },
   },
