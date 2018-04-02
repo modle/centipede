@@ -70,7 +70,8 @@ var knobsAndLevers = {
     },
   },
   game : {
-    playerCollisionsEnabled : true,
+    playerCollisionsEnabled : false,
+    soundsEnabled : false,
     defaultLives : 1,
     gameOverDelay : 600,
     startLevel : 0,

@@ -21,6 +21,9 @@ var sounds = {
     return soundArray;
   },
   manageSounds : function() {
+    if (!knobsAndLevers.game.soundsEnabled) {
+      return;
+    };
     this.manageCentipedeSounds();
     this.manageSpiderSounds();
     this.manageFlySounds();

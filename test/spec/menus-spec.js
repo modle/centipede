@@ -159,7 +159,6 @@ describe('MENUS SPEC: ', () => {
     expect(menus.currentSelection.name).toBe('first');
   });
 
-
   it('drawImages delegates to selection, text, and marker draw functions', () => {
     spyOn(menus, 'drawEntries');
     spyOn(menus, 'drawSelectionMarker');

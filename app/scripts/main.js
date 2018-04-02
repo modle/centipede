@@ -1,12 +1,13 @@
 /*jslint white: true */
 var main = {
+  framesToWaitToPauseAgain : 0,
   updateGameState : function() {
     // this gets executed every interval
     main.detectGamepad();
     if (menus.processMenus()) {
       return;
     };
-    controls.handleGamePause();
+    main.handleGamePause();
     if (main.processTriggers()) {
       return;
     };
@@ -19,6 +20,16 @@ var main = {
       return;
     };
     controls.captureGamepadAxes();
+  },
+  handleGamePause : function() {
+    if (this.framesToWaitToPauseAgain > 0) {
+      this.framesToWaitToPauseAgain--;
+      return;
+    };
+    if (controls.gamepadPausePressed() || controls.keyBoardFlowControlButtonPressed()) {
+      game.paused = !game.paused;
+      this.framesToWaitToPauseAgain = 50;
+    };
   },
   processTriggers : function() {
     let triggered = (

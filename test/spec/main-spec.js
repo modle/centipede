@@ -63,6 +63,53 @@ describe('MAIN SPEC: ', () => {
     expect(controls.captureGamepadAxes).toHaveBeenCalled();
   });
 
+  it('handleGamePause returns if enough frames since last pause have not passed', () => {
+    main.framesToWaitToPauseAgain = 5;
+
+    main.handleGamePause();
+
+    expect(main.framesToWaitToPauseAgain).toBe(4);
+  });
+  it('handleGamePause calls pause check functions when gamepad pause is pressed', () => {
+    main.framesToWaitToPauseAgain = 0;
+    spyOn(controls, 'gamepadPausePressed').and.returnValue(true);
+    spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(false);
+    game.paused = true;
+
+    main.handleGamePause();
+
+    expect(main.framesToWaitToPauseAgain).toBe(50);
+    expect(controls.gamepadPausePressed).toHaveBeenCalled();
+    expect(controls.keyBoardFlowControlButtonPressed).not.toHaveBeenCalled();
+    expect(game.paused).toBe(false);
+  });
+  it('handleGamePause calls pause check functions when keyboard pause is pressed', () => {
+    main.framesToWaitToPauseAgain = 0;
+    spyOn(controls, 'gamepadPausePressed').and.returnValue(false);
+    spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(true);
+    game.paused = false;
+
+    main.handleGamePause();
+
+    expect(main.framesToWaitToPauseAgain).toBe(50);
+    expect(controls.gamepadPausePressed).toHaveBeenCalled();
+    expect(controls.keyBoardFlowControlButtonPressed).toHaveBeenCalled();
+    expect(game.paused).toBe(true);
+  });
+  it('handleGamePause does toggle pause when pause functions return false', () => {
+    main.framesToWaitToPauseAgain = 0;
+    spyOn(controls, 'gamepadPausePressed').and.returnValue(false);
+    spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(false);
+    game.paused = false;
+
+    main.handleGamePause();
+
+    expect(main.framesToWaitToPauseAgain).toBe(0);
+    expect(controls.gamepadPausePressed).toHaveBeenCalled();
+    expect(controls.keyBoardFlowControlButtonPressed).toHaveBeenCalled();
+    expect(game.paused).toBe(false);
+  });
+
   it('processTriggers delegates to trigger checks and returns on true', () => {
     spyOn(main, 'checkPlayerDied').and.returnValue(false);
     spyOn(main, 'checkLevelOver').and.returnValue(true);

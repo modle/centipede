@@ -66,7 +66,6 @@ menus = {
   },
   shiftMenuListOrder : function(order) {
     let direction = controls.getDirection();
-    // console.log(direction);
     if (direction == "up") {
       order.unshift(order.pop());
     } else if (direction == "down") {

@@ -59,7 +59,7 @@ var player = {
     this.stop();
     this.setBoundaries();
     this.determineEligibleDirections();
-    this.moveTheThing(controls.getPositionModifiers(knobsAndLevers.player.speed, this.eligibleDirections));
+    this.moveTheThing(controls.getPositionModifiers(this.boundaries, knobsAndLevers.player.speed, this.eligibleDirections));
   },
   stop : function() {
     this.gamePiece.speedX = 0;
