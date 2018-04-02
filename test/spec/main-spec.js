@@ -254,8 +254,8 @@ describe('MAIN SPEC: ', () => {
     expect(menus.areActive).toHaveBeenCalled();
     expect(hud.update).toHaveBeenCalled();
   });
-  it('prepTheCanvas does not call hud if showMenu is true', () => {
-    menus.showMenu = true;
+  it('prepTheCanvas does not call hud if show.menu is true', () => {
+    menus.show = {menu : true};
     spyOn(game, 'startNextFrame');
     spyOn(sounds, 'manageSounds');
     spyOn(hud, 'update');

@@ -36,15 +36,6 @@ describe('INTERVAL CREATURES SPEC: ', () => {
 
     expect(testObj.update).toHaveBeenCalled();
   });
-  it('manage calls intervalCreatures.dropMushrooms if creature is flies', () => {
-    mockTestObj();
-    testObj.flies.push('a fly');
-
-    testObj.manage();
-
-    expect(testObj.dropMushrooms).toHaveBeenCalled();
-  });
-
 
   it('spawnCreatureAtIntervals calls getRandom at appropriate interval', () => {
     spyOn(testObj, 'spawn');
@@ -84,13 +75,13 @@ describe('INTERVAL CREATURES SPEC: ', () => {
     expect(mushrooms.generate).not.toHaveBeenCalled();
   });
 
-  it('dropMushroom calls mushrooms.generate eligible to drop', () => {
+  it('dropMushroom calls mushrooms.generate if eligible to drop', () => {
     spyOn(testObj, 'eligibleToDrop').and.returnValue(true);
     spyOn(mushrooms, 'generate').and.returnValue({});
     mushrooms.mushrooms = [];
-    testObj.flies = [{x : 5, y : 5}];
+    let fly = {x : 5, y : 5};
 
-    testObj.dropMushrooms();
+    testObj.dropMushrooms(fly);
 
     expect(testObj.eligibleToDrop).toHaveBeenCalled();
     expect(mushrooms.generate).toHaveBeenCalled();
@@ -125,6 +116,7 @@ describe('INTERVAL CREATURES SPEC: ', () => {
 
     testObj.update('worms');
 
+    expect(testObj.worms[0].update).toHaveBeenCalled();
     expect(testObj.worms[0].newPos).toHaveBeenCalled();
   });
   it('update calls component.update', () => {
