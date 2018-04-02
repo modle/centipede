@@ -71,7 +71,7 @@ var knobsAndLevers = {
   },
   game : {
     playerCollisionsEnabled : false,
-    soundsEnabled : false,
+    soundsEnabled : true,
     defaultLives : 1,
     gameOverDelay : 600,
     startLevel : 0,

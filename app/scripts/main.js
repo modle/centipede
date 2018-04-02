@@ -15,18 +15,18 @@ var main = {
     main.manageGameObjects();
   },
   detectGamepad : function() {
-    controls.checkGamepadState();
-    if (controls.controllerIndex < 0) {
+    controls.gamepad.checkState();
+    if (controls.gamepad.index < 0) {
       return;
     };
-    controls.captureGamepadAxes();
+    controls.gamepad.captureAxes();
   },
   handleGamePause : function() {
     if (this.framesToWaitToPauseAgain > 0) {
       this.framesToWaitToPauseAgain--;
       return;
     };
-    if (controls.gamepadPausePressed() || controls.keyBoardFlowControlButtonPressed()) {
+    if (controls.pausedIsPressed()) {
       game.paused = !game.paused;
       this.framesToWaitToPauseAgain = 50;
     };

@@ -251,13 +251,13 @@ describe('MENUS SPEC: ', () => {
     menus.timeSinceSelection = startTime;
     menus.minTimeToSelect = 30;
     menus.currentSelection.entry = menus.screens.main.entries.play;
-    spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(true);
+    spyOn(controls.keyboard, 'flowControlButtonPressed').and.returnValue(true);
     spyOn(menus.currentSelection.entry, 'action');
 
     menus.checkForSelection();
 
     expect(menus.timeSinceSelection).toBe(startTime + 1);
-    expect(controls.keyBoardFlowControlButtonPressed).toHaveBeenCalled();
+    expect(controls.keyboard.flowControlButtonPressed).toHaveBeenCalled();
     expect(menus.currentSelection.entry.action).toHaveBeenCalled();
   });
 
@@ -266,13 +266,13 @@ describe('MENUS SPEC: ', () => {
     menus.timeSinceSelection = startTime;
     menus.minTimeToSelect = 30;
     menus.currentSelection.entry = menus.screens.main.entries.play;
-    spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(true);
+    spyOn(controls.keyboard, 'flowControlButtonPressed').and.returnValue(true);
     spyOn(menus.currentSelection.entry, 'action');
 
     menus.checkForSelection();
 
     expect(menus.timeSinceSelection).toBe(startTime + 1);
-    expect(controls.keyBoardFlowControlButtonPressed).not.toHaveBeenCalled();
+    expect(controls.keyboard.flowControlButtonPressed).not.toHaveBeenCalled();
     expect(menus.currentSelection.entry.action).not.toHaveBeenCalled();
   });
 });

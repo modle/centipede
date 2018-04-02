@@ -3,6 +3,7 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
+      '../canvas-libs/app/scripts/controls/*.js',
       '../canvas-libs/app/scripts/*.js',
       'app/scripts/*.js',
       'app/scripts/properties/*.js',

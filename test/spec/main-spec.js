@@ -53,14 +53,14 @@ describe('MAIN SPEC: ', () => {
   });
 
   it('detectGamepad delegates to check controller state and handle game pause', () => {
-    spyOn(controls, 'checkGamepadState');
-    spyOn(controls, 'captureGamepadAxes');
+    spyOn(controls.gamepad, 'checkState');
+    spyOn(controls.gamepad, 'captureAxes');
 
-    controls.controllerIndex = 0;
+    controls.gamepad.index = 0;
     main.detectGamepad();
 
-    expect(controls.checkGamepadState).toHaveBeenCalled();
-    expect(controls.captureGamepadAxes).toHaveBeenCalled();
+    expect(controls.gamepad.checkState).toHaveBeenCalled();
+    expect(controls.gamepad.captureAxes).toHaveBeenCalled();
   });
 
   it('handleGamePause returns if enough frames since last pause have not passed', () => {
@@ -72,41 +72,41 @@ describe('MAIN SPEC: ', () => {
   });
   it('handleGamePause calls pause check functions when gamepad pause is pressed', () => {
     main.framesToWaitToPauseAgain = 0;
-    spyOn(controls, 'gamepadPausePressed').and.returnValue(true);
-    spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(false);
+    spyOn(controls.gamepad, 'pausePressed').and.returnValue(true);
+    spyOn(controls.keyboard, 'flowControlButtonPressed').and.returnValue(false);
     game.paused = true;
 
     main.handleGamePause();
 
     expect(main.framesToWaitToPauseAgain).toBe(50);
-    expect(controls.gamepadPausePressed).toHaveBeenCalled();
-    expect(controls.keyBoardFlowControlButtonPressed).not.toHaveBeenCalled();
+    expect(controls.gamepad.pausePressed).toHaveBeenCalled();
+    expect(controls.keyboard.flowControlButtonPressed).not.toHaveBeenCalled();
     expect(game.paused).toBe(false);
   });
   it('handleGamePause calls pause check functions when keyboard pause is pressed', () => {
     main.framesToWaitToPauseAgain = 0;
-    spyOn(controls, 'gamepadPausePressed').and.returnValue(false);
-    spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(true);
+    spyOn(controls.gamepad, 'pausePressed').and.returnValue(false);
+    spyOn(controls.keyboard, 'flowControlButtonPressed').and.returnValue(true);
     game.paused = false;
 
     main.handleGamePause();
 
     expect(main.framesToWaitToPauseAgain).toBe(50);
-    expect(controls.gamepadPausePressed).toHaveBeenCalled();
-    expect(controls.keyBoardFlowControlButtonPressed).toHaveBeenCalled();
+    expect(controls.gamepad.pausePressed).toHaveBeenCalled();
+    expect(controls.keyboard.flowControlButtonPressed).toHaveBeenCalled();
     expect(game.paused).toBe(true);
   });
   it('handleGamePause does toggle pause when pause functions return false', () => {
     main.framesToWaitToPauseAgain = 0;
-    spyOn(controls, 'gamepadPausePressed').and.returnValue(false);
-    spyOn(controls, 'keyBoardFlowControlButtonPressed').and.returnValue(false);
+    spyOn(controls.gamepad, 'pausePressed').and.returnValue(false);
+    spyOn(controls.keyboard, 'flowControlButtonPressed').and.returnValue(false);
     game.paused = false;
 
     main.handleGamePause();
 
     expect(main.framesToWaitToPauseAgain).toBe(0);
-    expect(controls.gamepadPausePressed).toHaveBeenCalled();
-    expect(controls.keyBoardFlowControlButtonPressed).toHaveBeenCalled();
+    expect(controls.gamepad.pausePressed).toHaveBeenCalled();
+    expect(controls.keyboard.flowControlButtonPressed).toHaveBeenCalled();
     expect(game.paused).toBe(false);
   });
 
