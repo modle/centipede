@@ -15,24 +15,24 @@ describe('LASERS SPEC: ', () => {
 
   it('spawn returns if lasers are not eligible to spawn', () => {
     spyOn(testObj, 'eligibleToSpawn').and.returnValue(false);
-    spyOn(testObj, 'generate');
+    spyOn(testObj, 'add');
     spyOn(sounds, 'playAvailableLaserSound');
 
     testObj.spawn();
 
     expect(testObj.eligibleToSpawn).toHaveBeenCalled();
-    expect(testObj.generate).not.toHaveBeenCalled();
+    expect(testObj.add).not.toHaveBeenCalled();
     expect(sounds.playAvailableLaserSound).not.toHaveBeenCalled();
   });
-  it('spawn calls generate and laser sound play if eligible to spawn', () => {
+  it('spawn calls add and laser sound play if eligible to spawn', () => {
     spyOn(testObj, 'eligibleToSpawn').and.returnValue(true);
-    spyOn(testObj, 'generate');
+    spyOn(testObj, 'add');
     spyOn(sounds, 'playAvailableLaserSound');
 
     testObj.spawn();
 
     expect(testObj.eligibleToSpawn).toHaveBeenCalled();
-    expect(testObj.generate).toHaveBeenCalled();
+    expect(testObj.add).toHaveBeenCalled();
     expect(sounds.playAvailableLaserSound).toHaveBeenCalled();
   });
 
@@ -64,23 +64,23 @@ describe('LASERS SPEC: ', () => {
     expect(spawnEligibility).toBeTruthy;
   });
 
-  it('generate pushes a laser to lasers.lasers array', () => {
+  it('add pushes a laser to lasers.lasers array', () => {
     testObj.lasers = [];
 
     expect(testObj.lasers.length).toBe(0);
 
-    spyOn(testObj, 'build').and.returnValue({});
+    spyOn(testObj, 'make').and.returnValue({});
 
-    testObj.generate();
+    testObj.add();
 
     expect(testObj.lasers.length).toBe(1);
   });
 
-  it('build laser builds a laser', () => {
+  it('make laser makes a laser', () => {
     knobsAndLevers.init();
     player.init();
 
-    let laser = testObj.build();
+    let laser = testObj.make();
     expect(laser.speedY).toBe(-knobsAndLevers.laser.speed);
     expect(laser.x).toBe(player.gamePiece.x + player.gamePiece.width / 2);
     expect(laser.y).toBe(player.gamePiece.y);

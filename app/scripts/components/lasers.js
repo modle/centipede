@@ -10,7 +10,7 @@ var lasers = Object.create(displayObjectPrototype, {
       if (!this.eligibleToSpawn()) {
         return;
       };
-      this.generate();
+      this.add(this.make());
       sounds.playAvailableLaserSound();
     },
     writable : false,
@@ -28,14 +28,7 @@ var lasers = Object.create(displayObjectPrototype, {
     writable : false,
     enumerable : true
   },
-  generate : {
-    value : function() {
-      this.lasers.push(this.build());
-    },
-    writable : true,
-    enumerable : true,
-  },
-  build : {
+  make : {
     value : function() {
       let laserArgs = knobsAndLevers.laser.args;
       laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed;
@@ -45,6 +38,13 @@ var lasers = Object.create(displayObjectPrototype, {
       laserArgs.x = player.gamePiece.x + player.gamePiece.width / 2;
       laserArgs.y = player.gamePiece.y;
       return new Component(laserArgs);
+    },
+    writable : true,
+    enumerable : true,
+  },
+  add : {
+    value : function() {
+      this.lasers.push(this.make());
     },
     writable : true,
     enumerable : true,

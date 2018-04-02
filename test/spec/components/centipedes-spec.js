@@ -43,7 +43,7 @@ describe('CENTIPEDES SPEC: ', () => {
   });
   it('spawn adds two centipedes to centipedes array', () => {
     let expected = {crashWith : function(){return false;}, x : 0, y : 0, width : 10, height : 10};
-    spyOn(testObj, 'construct').and.returnValue(expected);
+    spyOn(testObj, 'make').and.returnValue(expected);
     testObj.centipedes = [];
 
     testObj.spawn();
@@ -55,7 +55,7 @@ describe('CENTIPEDES SPEC: ', () => {
   });
   it('spawn does not add centipede to centipedes array when it collides with an existing centipede', () => {
     let expected = {crashWith : function(){return true;}, x : 0, y : 0, width : 10, height : 10};
-    spyOn(testObj, 'construct').and.returnValue(expected);
+    spyOn(testObj, 'make').and.returnValue(expected);
     testObj.centipedes = [];
 
     testObj.spawn();
@@ -64,10 +64,10 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(testObj.centipedes.length).toBe(1);
     expect(testObj.centipedes[0]).toBe(expected);
   });
-  it('construct returns a centipede', () => {
+  it('make returns a centipede', () => {
     metrics.init();
 
-    let segment = testObj.construct();
+    let segment = testObj.make();
     let expectedPointValue = 50 * metrics.currentLevel;
 
     expect(segment.reverseDirectionY).toBe(false);

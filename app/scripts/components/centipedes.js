@@ -17,7 +17,7 @@ var centipedes = {
     return eligible;
   },
   spawn : function() {
-    centipede = this.construct();
+    let centipede = this.make();
     for (i = 0; i < this.centipedes.length; i += 1) {
       if (this.centipedes[i].crashWith(centipede)) {
         return;
@@ -25,7 +25,7 @@ var centipedes = {
     };
     this.add(centipede);
   },
-  construct : function() {
+  make : function() {
     centipede = new Component(knobsAndLevers.centipede.args);
     centipede.directionX = 1;
     centipede.directionY = 1;
