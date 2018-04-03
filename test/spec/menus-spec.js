@@ -191,7 +191,8 @@ describe('MENUS SPEC: ', () => {
     expect(menus.currentSelection.entry.file).toBe(menus.screens.main.entries[menus.currentSelection.name].file);
   });
 
-  it('drawSelectionMarker calls drawImage', () => {
+  xit('drawSelectionMarker calls drawImage', () => {
+    // only needed when drawing ship image in menu
     game.init();
     game.gameArea.context = game.gameArea.canvas.getContext("2d");
     spyOn(game.gameArea.context, 'drawImage');

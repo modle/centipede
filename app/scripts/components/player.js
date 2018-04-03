@@ -21,7 +21,7 @@ var player = {
       color : "red",
       x : knobsAndLevers.gamePieceStartX,
       y : knobsAndLevers.gamePieceStartY,
-      extraArgs : {type : "gamePiece", speed : {x : 0, y : 0}}
+      extraArgs : {type : "player", speed : {x : 0, y : 0}}
     };
     this.gamePiece = new Component(gamePieceArgs);
     this.calculateStartingArea();

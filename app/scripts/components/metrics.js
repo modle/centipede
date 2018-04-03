@@ -3,7 +3,7 @@ var metrics = {
   floatingPoints : [],
   floatingPointCycleDuration : 50,
   init : function() {
-    this.lives = knobsAndLevers.game.defaultLives;
+    this.lives = knobsAndLevers.player.defaultLives;
     this.currentLevel = knobsAndLevers.game.startLevel;
     var scoreParams = Object.assign({}, knobsAndLevers.text.baseParams);
     scoreParams.x = game.gameArea.canvas.width / 10;
@@ -47,7 +47,7 @@ var metrics = {
     }
   },
   reset : function() {
-    this.lives = knobsAndLevers.game.defaultLives;
+    this.lives = knobsAndLevers.player.defaultLives;
     this.currentLevel = 1;
     this.score.value = 0;
   }

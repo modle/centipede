@@ -31,6 +31,11 @@ function Component(args) {
       this.makeText(ctx);
     } else if (this.type == "centipede") {
       this.makeACentipede(ctx);
+    // to draw the ship instead of a square
+    // } else if (this.type == "player") {
+    //   let playerImage = new Image();
+    //   playerImage.src = knobsAndLevers.mediaPath + "ship.png";
+    //   ctx.drawImage(playerImage, this.x, this.y);
     } else {
       this.makeARectangle(ctx);
     };

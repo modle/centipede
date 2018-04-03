@@ -48,7 +48,7 @@ menus = {
   },
   setImageFiles : function(images) {
     Array.from(Object.keys(images)).forEach(entry =>
-      images[entry].image.src = this.mediaPath + images[entry].file
+      images[entry].image.src = knobsAndLevers.mediaPath + images[entry].file
     );
   },
   drawMenu : function(images) {
@@ -91,15 +91,21 @@ menus = {
   },
   drawSelectionMarker : function(entries) {
     Array.from(Object.keys(entries)).forEach(entry => {
-      let offset =
-        entries[entry].offset
-          ? entries[entry].offset
-          : this.currentSelection.entry.dimensions.width;
-      game.gameArea.context.drawImage(
-        entries[entry].image,
-        this.currentSelection.entry.position.x + offset,
-        this.currentSelection.entry.position.y
+      game.gameArea.context.fillRect(
+        this.currentSelection.entry.position.x - knobsAndLevers.player.width,
+        this.currentSelection.entry.position.y + this.currentSelection.entry.dimensions.height / 2.5,
+        knobsAndLevers.player.width,
+        knobsAndLevers.player.height
       );
+      // let offset =
+      //   entries[entry].offset
+      //     ? entries[entry].offset
+      //     : this.currentSelection.entry.dimensions.width;
+      // game.gameArea.context.drawImage(
+      //   entries[entry].image,
+      //   this.currentSelection.entry.position.x + offset,
+      //   this.currentSelection.entry.position.y
+      // );
     });
   },
   drawTexts : function(images) {

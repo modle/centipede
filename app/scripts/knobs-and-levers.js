@@ -39,6 +39,7 @@ var knobsAndLevers = {
     this.mushroomSide = this.gridSquareSideLength * 0.8;
     console.log("knobsAndLevers initialized");
   },
+  mediaPath : "app/static/media/images/",
   canvas : {
     width : 800,
     height : 800,
@@ -57,8 +58,8 @@ var knobsAndLevers = {
     maxNumber: 1,
     pointValue : 200,
     interval : {
-      min: 100,
-      max: 1000,
+      min: 1000,
+      max: 3000,
     },
     mushroomCreateInterval : 75,
     args : {
@@ -70,9 +71,8 @@ var knobsAndLevers = {
     },
   },
   game : {
-    playerCollisionsEnabled : false,
+    playerCollisionsEnabled : true,
     soundsEnabled : true,
-    defaultLives : 1,
     gameOverDelay : 600,
     startLevel : 0,
     maxMushrooms : 50,
@@ -87,9 +87,11 @@ var knobsAndLevers = {
     }
   },
   player : {
+    defaultLives : 3,
     speed : 2,
     width : 15,
     height : 15,
+    extraArgs : {type : "player"},
   },
   spider : {
     maxNumber : 1,
@@ -121,8 +123,8 @@ var knobsAndLevers = {
     maxNumber: 1,
     pointValue : 1000,
     interval : {
-      min: 100,
-      max: 1000,
+      min: 1500,
+      max: 3250,
     },
     args : {
       color : "orange",

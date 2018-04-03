@@ -11,7 +11,6 @@ var menusProps = {
     settings : false,
     playerSelect : false,
   },
-  mediaPath : "app/static/media/images/",
   timeSinceSelection : 100,
   timeSinceMenuMove : 100,
   minTimeToSelect : 90,
@@ -139,7 +138,7 @@ var menusProps = {
         entries : [
           {
             name : 'title',
-            text : 'CENTIPEDE! (warblegarble)',
+            text : 'CENTIPEDE!',
             component : {},
             position : {x : 115, y : 200},
             fontSize : '50px',
@@ -148,7 +147,11 @@ var menusProps = {
       },
     },
     playerSelect : {
-      order : ['onePlayer', 'twoPlayer', 'back'],
+      order : [
+        'onePlayer',
+        // 'twoPlayer',
+        'back'
+      ],
       entries : {
         onePlayer : {
           enabled : true,
@@ -164,20 +167,20 @@ var menusProps = {
             game.paused = false;
           },
         },
-        twoPlayer : {
-          enabled : true,
-          image : new Image(),
-          file : "2players.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
-          },
-          dimensions : {width : 200, height : 40},
-          action : function() {
-            menus.disableMenus();
-            game.paused = false;
-          },
-        },
+        // twoPlayer : {
+        //   enabled : true,
+        //   image : new Image(),
+        //   file : "2players.png",
+        //   position : {
+        //     x : menusPropsDefaults.positions.x,
+        //     y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
+        //   },
+        //   dimensions : {width : 200, height : 40},
+        //   action : function() {
+        //     menus.disableMenus();
+        //     game.paused = false;
+        //   },
+        // },
         back : {
           enabled : true,
           image : new Image(),
