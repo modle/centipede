@@ -1,7 +1,14 @@
-describe('Testing text functions', () => {
+describe('TEXTS SPEC: ', () => {
+  let spec = 'TEXTS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, texts);
-    testParams = knobsAndLevers.baseTextParams;
+    testParams = knobsAndLevers.text.baseParams;
     testParams.x = 0;
     testParams.y = 0;
     testComponent = new Component(testParams);

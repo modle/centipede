@@ -1,4 +1,11 @@
-describe('Testing mushrooms functions', () => {
+describe('MUSHROOMS SPEC: ', () => {
+  let spec = 'MUSHROOMS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, mushrooms);
     knobsAndLevers.init();
@@ -34,14 +41,23 @@ describe('Testing mushrooms functions', () => {
 
     expect(testObj.mushrooms.length).toBe(expected);
   });
-  it('add pushes mushroom to mushrooms if valid', () => {
+  it('make does not push mushroom to mushrooms if coordinate test fails', () => {
     spyOn(testObj, 'generate');
-    let coordinates = {x : game.gameArea.canvas.width * 2, y : 0};
+    let coordinateOutsideCanvas = game.gameArea.canvas.width * 2;
+    let validCoordinate = 0;
+    let coordinates = {x : coordinateOutsideCanvas, y : validCoordinate};
 
-    testObj.add(coordinates);
+    testObj.make(coordinates);
 
     expect(testObj.generate).not.toHaveBeenCalled();
   });
+  it('make throws error if coordinates are undefined', () => {
+    let coordinates = {x : undefined, y : undefined};
+
+    expect(function(){ testObj.make(coordinates); })
+      .toThrow(new Error("coordinate error: x: " + coordinates.x + ", y: " + coordinates.y));
+  });
+
   it('update calls update on mushroom objects', () => {
     testObj.mushrooms = [];
     testObj.spawn(5);

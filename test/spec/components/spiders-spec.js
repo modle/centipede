@@ -1,4 +1,11 @@
-describe('Testing spiders functions', () => {
+describe('SPIDERS SPEC: ', () => {
+  let spec = 'SPIDERS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, spiders);
   });
@@ -197,7 +204,7 @@ describe('Testing spiders functions', () => {
   it('updateYDirection sets spider to negative directionY if it hits bottom of play area', () => {
     game.init();
     let expected = -1;
-    let spider = {y : knobsAndLevers.canvasHeight, height : 1, directionY : -expected};
+    let spider = {y : knobsAndLevers.canvas.height, height : 1, directionY : -expected};
 
     testObj.updateYDirection(spider);
 

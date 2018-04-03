@@ -1,4 +1,11 @@
-describe('Testing dom functions', () => {
+describe('DOM SPEC: ', () => {
+  let spec = 'DOM';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, dom);
     knobsAndLevers.init();

@@ -1,4 +1,11 @@
-describe('Testing collision functions', () => {
+describe('COLLISIONS SPEC: ', () => {
+  let spec = 'COLLISIONS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, collisions);
     knobsAndLevers.init();
@@ -130,19 +137,19 @@ describe('Testing collision functions', () => {
 
   it('playImpactSound does not play when target type is mushroom', () => {
     let type = 'mushroom';
-    spyOn(window, 'getAvailableImpactSound');
+    spyOn(sounds, 'getAvailableImpactSound');
 
     testObj.playImpactSound(type);
 
-    expect(window.getAvailableImpactSound).not.toHaveBeenCalled();
+    expect(sounds.getAvailableImpactSound).not.toHaveBeenCalled();
   });
   it('playImpactSound plays when target type is not mushroom', () => {
     let type = 'somethingElse';
-    spyOn(window, 'getAvailableImpactSound').and.returnValue({play : function(){}});
+    spyOn(sounds, 'getAvailableImpactSound').and.returnValue({play : function(){}});
 
     testObj.playImpactSound(type);
 
-    expect(window.getAvailableImpactSound).toHaveBeenCalled();
+    expect(sounds.getAvailableImpactSound).toHaveBeenCalled();
   });
 
   it('updateTargetAppearance adjusts height of target when target type is mushroom', () => {
@@ -200,7 +207,7 @@ describe('Testing collision functions', () => {
   });
 
   it('checkGamePieceVsEnemies does not process if playerCollisions are disabled', () => {
-    knobsAndLevers.playerCollisionsEnabled = false;
+    knobsAndLevers.game.playerCollisionsEnabled = false;
     game.gameOver = false;
     player.init();
     spyOn(player.gamePiece, 'crashWith').and.returnValue(true);
@@ -214,7 +221,7 @@ describe('Testing collision functions', () => {
     expect(game.gameOver).toBeFalsy();
   });
   it('checkGamePieceVsEnemies calls killsPlayer if crashWith', () => {
-    knobsAndLevers.playerCollisionsEnabled = true;
+    knobsAndLevers.game.playerCollisionsEnabled = true;
     game.gameOver = false;
     player.init();
     spyOn(player.gamePiece, 'crashWith').and.returnValue(true);
@@ -229,7 +236,7 @@ describe('Testing collision functions', () => {
     expect(game.gameOver).toBeFalsy();
   });
   it('checkGamePieceVsEnemy handles 0 length target list', () => {
-    knobsAndLevers.playerCollisionsEnabled = true;
+    knobsAndLevers.game.playerCollisionsEnabled = true;
     game.gameOver = false;
     player.init();
     spyOn(player.gamePiece, 'crashWith').and.callThrough();

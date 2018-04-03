@@ -1,28 +1,37 @@
-describe('Testing metrics functions', () => {
+describe('METRICS SPEC: ', () => {
+  let spec = 'METRICS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
+    game.init();
     testObj = Object.assign({}, metrics);
+    testObj.init();
   });
   it('changeScore changes the score when initialValue is non-negative', () => {
     let changeAmount = 5;
     let initialValue = 0;
-    testObj.scoreValue = initialValue;
+    testObj.score.value = initialValue;
     let expected = changeAmount + (initialValue < 0 ? 0 : initialValue);
 
     testObj.changeScore(changeAmount);
 
-    expect(testObj.scoreValue).toBe(expected);
+    expect(testObj.score.value).toBe(expected);
   });
   it('changeScore changes the score when initialValue is negative', () => {
     let changeAmount = -5;
     let initialValue = 0;
-    testObj.scoreValue = initialValue;
+    testObj.score.value = initialValue;
 
     let expected = initialValue + changeAmount;
     expected = expected < 0 ? 0 : expected;
 
     testObj.changeScore(changeAmount);
 
-    expect(testObj.scoreValue).toBe(expected);
+    expect(testObj.score.value).toBe(expected);
   });
   it('getNewPoint returns a new floating point', () => {
     let expectedX = 1;
@@ -80,12 +89,12 @@ describe('Testing metrics functions', () => {
   it('reset resets lives, level, and score', () => {
     testObj.lives = 0;
     testObj.currentLevel = 999;
-    testObj.scoreValue = 80085;
+    testObj.score.value = 80085;
 
     testObj.reset();
 
-    expect(testObj.lives).toBe(knobsAndLevers.defaultLives);
+    expect(testObj.lives).toBe(knobsAndLevers.player.defaultLives);
     expect(testObj.currentLevel).toBe(1);
-    expect(testObj.scoreValue).toBe(0);
+    expect(testObj.score.value).toBe(0);
   });
 });

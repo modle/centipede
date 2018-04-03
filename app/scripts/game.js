@@ -1,6 +1,7 @@
 var game = {
   paused : true,
   gameOver : false,
+  timeSinceGameOver : 0,
   delayed : 0,
   delayEndTime : 300,
   keysDown : {},
@@ -12,13 +13,9 @@ var game = {
       this.gameArea.stop();
       return;
     };
+    menus.reset();
     this.paused = true;
     this.gameArea.start();
-  },
-  reset : function() {
-    this.gameArea.stop();
-    hud.reset();
-    this.start();
   },
   levelIsOver : function() {
     return centipedes.numberSpawned === centipedes.numberKilled && this.gameArea.frameNo !== 0;
@@ -45,7 +42,7 @@ var game = {
   managePause : function() {
     texts.pausedMessage.text = "Paused";
     texts.pausedMessage.update();
-    stopAllSounds();
+    sounds.stopAllSounds();
   },
   manageDeath : function() {
     this.resetMoreThings();
@@ -54,14 +51,17 @@ var game = {
   },
   manageGameOver : function() {
     if (this.gameOver) {
-      stopAllSounds();
+      this.timeSinceGameOver += 1;
+      sounds.stopAllSounds();
       this.showGameOver();
+      if (this.timeSinceGameOver > knobsAndLevers.game.gameOverDelay) {
+        this.resetTheWholeTamale();
+      };
     };
   },
   showGameOver : function() {
     texts.gameOver.text = "Game Over";
     texts.gameOver.update();
-    this.gameArea.stop();
   },
   resetSomeThings : function() {
     this.gameArea.frameNo = 0;
@@ -73,5 +73,11 @@ var game = {
     intervalCreatures.clear();
     spiders.clear();
     player.reset();
+  },
+  resetTheWholeTamale : function() {
+    this.gameOver = false;
+    this.timeSinceGameOver = 0;
+    init.afterGameOver();
+    menus.reset();
   },
 };

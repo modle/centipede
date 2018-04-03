@@ -16,12 +16,12 @@ var player = {
   },
   init : function() {
     let gamePieceArgs = {
-      width: knobsAndLevers.gamePieceWidth,
-      height : knobsAndLevers.gamePieceHeight,
+      width: knobsAndLevers.player.width,
+      height : knobsAndLevers.player.height,
       color : "red",
       x : knobsAndLevers.gamePieceStartX,
       y : knobsAndLevers.gamePieceStartY,
-      extraArgs : {type : "gamePiece", speed : {x : 0, y : 0}}
+      extraArgs : {type : "player", speed : {x : 0, y : 0}}
     };
     this.gamePiece = new Component(gamePieceArgs);
     this.calculateStartingArea();
@@ -30,10 +30,10 @@ var player = {
   calculateStartingArea : function() {
     this.gamePieceStartingArea = new Component(
       {
-        x : knobsAndLevers.gamePieceStartX - knobsAndLevers.gamePieceWidth * 5,
+        x : knobsAndLevers.gamePieceStartX - knobsAndLevers.player.width * 5,
         y : knobsAndLevers.gamePieceTopLimit,
-        width : knobsAndLevers.gamePieceWidth * 10,
-        height : knobsAndLevers.canvasHeight - knobsAndLevers.gamePieceTopLimit,
+        width : knobsAndLevers.player.width * 10,
+        height : knobsAndLevers.canvas.height - knobsAndLevers.gamePieceTopLimit,
         color : "orange",
         extraArgs : {type : "startingArea"},
       }
@@ -59,7 +59,7 @@ var player = {
     this.stop();
     this.setBoundaries();
     this.determineEligibleDirections();
-    this.moveTheThing(controls.getPositionModifiers(knobsAndLevers.gamePieceSpeed, this.eligibleDirections));
+    this.moveTheThing(controls.getPositionModifiers(this.boundaries, knobsAndLevers.player.speed, this.eligibleDirections));
   },
   stop : function() {
     this.gamePiece.speedX = 0;

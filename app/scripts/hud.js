@@ -1,5 +1,4 @@
 /*jslint white: true */
-
 var hud = {
   update : function() {
     this.updateScore();
@@ -15,15 +14,7 @@ var hud = {
     texts.level.update();
   },
   updateScore : function() {
-    metrics.score.text = "Score: " + metrics.scoreValue;
+    metrics.score.text = "Score: " + metrics.score.value;
     metrics.score.update();
-  },
-  reset : function() {
-    metrics.reset();
-    centipedes.clear();
-    spiders.clear();
-    intervalCreatures.clear();
-    intervalCreatures.clear();
-    mushrooms.clear();
   },
 };

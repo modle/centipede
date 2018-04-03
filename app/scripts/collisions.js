@@ -38,7 +38,7 @@ var collisions = {
   },
   playImpactSound : function(type) {
     if (type !== 'mushroom') {
-      getAvailableImpactSound().play();
+      sounds.getAvailableImpactSound().play();
     };
   },
   updateTargetAppearance(target) {
@@ -53,7 +53,7 @@ var collisions = {
   },
   handleCentipedeKill(target) {
     if (target.type === 'centipede') {
-      mushrooms.mushrooms.push(mushrooms.generate({x : target.x, y : target.y}));
+      mushrooms.mushrooms.push(mushrooms.generate({x : target.x, y : target.y}, 'green'));
       centipedes.numberKilled += 1;
     };
   },
@@ -68,7 +68,7 @@ var collisions = {
     return targets;
   },
   checkGamePieceVsEnemies : function(targets) {
-    if (!knobsAndLevers.playerCollisionsEnabled) {
+    if (!knobsAndLevers.game.playerCollisionsEnabled) {
       return;
     };
     targets.forEach(target => {

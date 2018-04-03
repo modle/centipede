@@ -1,4 +1,11 @@
-describe('Testing intervalCreatures functions', () => {
+describe('INTERVAL CREATURES SPEC: ', () => {
+  let spec = 'INTERVAL CREATURES';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, intervalCreatures);
     testObj.init();
@@ -29,15 +36,6 @@ describe('Testing intervalCreatures functions', () => {
 
     expect(testObj.update).toHaveBeenCalled();
   });
-  it('manage calls intervalCreatures.dropMushrooms if creature is flies', () => {
-    mockTestObj();
-    testObj.flies.push('a fly');
-
-    testObj.manage();
-
-    expect(testObj.dropMushrooms).toHaveBeenCalled();
-  });
-
 
   it('spawnCreatureAtIntervals calls getRandom at appropriate interval', () => {
     spyOn(testObj, 'spawn');
@@ -77,13 +75,13 @@ describe('Testing intervalCreatures functions', () => {
     expect(mushrooms.generate).not.toHaveBeenCalled();
   });
 
-  it('dropMushroom calls mushrooms.generate eligible to drop', () => {
+  it('dropMushroom calls mushrooms.generate if eligible to drop', () => {
     spyOn(testObj, 'eligibleToDrop').and.returnValue(true);
     spyOn(mushrooms, 'generate').and.returnValue({});
     mushrooms.mushrooms = [];
-    testObj.flies = [{x : 5, y : 5}];
+    let fly = {x : 5, y : 5};
 
-    testObj.dropMushrooms();
+    testObj.dropMushrooms(fly);
 
     expect(testObj.eligibleToDrop).toHaveBeenCalled();
     expect(mushrooms.generate).toHaveBeenCalled();
@@ -118,6 +116,7 @@ describe('Testing intervalCreatures functions', () => {
 
     testObj.update('worms');
 
+    expect(testObj.worms[0].update).toHaveBeenCalled();
     expect(testObj.worms[0].newPos).toHaveBeenCalled();
   });
   it('update calls component.update', () => {

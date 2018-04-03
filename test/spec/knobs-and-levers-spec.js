@@ -1,4 +1,11 @@
-describe('Testing knobs and levers generation', () => {
+describe('KNOBS AND LEVERS SPEC: ', () => {
+  let spec = 'KNOBS AND LEVERS';
+  beforeAll(function () {
+    console.log('running ' + spec + ' SPEC');
+  });
+  afterAll(function () {
+    console.log(spec + ' SPEC complete');
+  });
   beforeEach(function () {
     testObj = Object.assign({}, knobsAndLevers);
   });
@@ -8,11 +15,11 @@ describe('Testing knobs and levers generation', () => {
     expect(testObj.gamePieceTopLimit).toBeTruthy();
     expect(testObj.gamePieceStartX).toBeTruthy();
     expect(testObj.gamePieceStartY).toBeTruthy();
-    expect(testObj.baseTextParams.x).toBeTruthy();
-    expect(testObj.baseTextBackgroundParams.height).toBeTruthy();
-    expect(testObj.baseTextBackgroundParams.width).toBeTruthy();
-    expect(testObj.baseTextParams.fontSize).toBeTruthy();
-    expect(testObj.gameInfoTextHeight).toBeTruthy();
+    expect(testObj.text.baseParams.x).toBeTruthy();
+    expect(testObj.text.baseBackgroundParams.height).toBeTruthy();
+    expect(testObj.text.baseBackgroundParams.width).toBeTruthy();
+    expect(testObj.text.baseParams.fontSize).toBeTruthy();
+    expect(testObj.text.gameInfoHeight).toBeTruthy();
     expect(testObj.coordinateScaleFactor).toBeTruthy();
     expect(testObj.mushroomSide).toBeTruthy();
     expect(testObj.spider.initialInterval).toBeTruthy();
