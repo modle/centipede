@@ -78,13 +78,15 @@ describe('CENTIPEDES SPEC: ', () => {
       {update : function(){}},
       {update : function(){}},
     ];
-    spyOn(testObj, 'determineDirections');
     spyOn(testObj, 'updateDirections');
+    spyOn(testObj, 'determineDirections');
     spyOn(testObj, 'updateCoordinates');
+    spyOn(testObj, 'resetCentipedeUpdateFlag');
     testObj.centipedes.forEach(centipede => spyOn(centipede, 'update'));
 
     testObj.update();
 
+    expect(testObj.resetCentipedeUpdateFlag).toHaveBeenCalled();
     expect(testObj.determineDirections).toHaveBeenCalled();
     expect(testObj.updateDirections).toHaveBeenCalled();
     expect(testObj.updateCoordinates).toHaveBeenCalled();
@@ -104,15 +106,17 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(testObj.numberKilled).toBe(0);
   });
   it('determineDirections delegates to direction functions', () => {
-    spyOn(testObj, 'resetCentipedeUpdateFlag');
     spyOn(testObj, 'moveDownwardInitially');
     spyOn(testObj, 'checkYDirectionInPlayerArea');
     spyOn(testObj, 'checkHorizonalCollisions');
     spyOn(testObj, 'reverseHorizontalAtNextLayer');
 
+    testObj.centipedes = [
+      {moveVertically : false, updated : false, y : game.gameArea.firstMushroomLayer - 2},
+    ];
+
     testObj.determineDirections();
 
-    expect(testObj.resetCentipedeUpdateFlag).toHaveBeenCalled();
     expect(testObj.moveDownwardInitially).toHaveBeenCalled();
     expect(testObj.checkYDirectionInPlayerArea).toHaveBeenCalled();
     expect(testObj.checkHorizonalCollisions).toHaveBeenCalled();
@@ -136,7 +140,9 @@ describe('CENTIPEDES SPEC: ', () => {
       {moveVertically : false, updated : false, y : game.gameArea.firstMushroomLayer},
     ];
 
-    testObj.moveDownwardInitially();
+    testObj.centipedes.filter(centipede => !centipede.updated).map(centipede => {
+      testObj.moveDownwardInitially(centipede);
+    });
 
     expect(testObj.centipedes[0].moveVertically).toBe(true);
     expect(testObj.centipedes[0].updated).toBe(true);
@@ -179,7 +185,9 @@ describe('CENTIPEDES SPEC: ', () => {
       },
     ];
 
-    testObj.checkYDirectionInPlayerArea();
+    testObj.centipedes.filter(centipede => !centipede.updated).map(centipede => {
+      testObj.checkYDirectionInPlayerArea(centipede);
+    });
 
     expect(testObj.centipedes[0].reverseDirectionY).toBe(true);
     expect(testObj.centipedes[1].reverseDirectionY).toBe(false);
@@ -192,74 +200,74 @@ describe('CENTIPEDES SPEC: ', () => {
     game.init();
     spyOn(testObj, 'hasCollidedWithWall').and.returnValue(false);
     spyOn(testObj, 'hasCollidedWithMushroom').and.returnValue(false);
-    testObj.centipedes = [
-      {
-        updated : false,
-        distanceMovedY : 0,
-        distanceMovedX : 0,
-        moveVertically : false,
-      },
-    ];
-    testObj.checkHorizonalCollisions();
-    expect(testObj.centipedes[0].moveVertically).toBe(false);
-    expect(testObj.centipedes[0].updated).toBe(true);
+    let centipede = {
+      updated : false,
+      distanceMovedY : 0,
+      distanceMovedX : 0,
+      moveVertically : false,
+    };
+
+    testObj.checkHorizonalCollisions(centipede);
+
+    expect(centipede.moveVertically).toBe(false);
+    expect(centipede.updated).toBe(true);
   });
   it('checkHorizontalCollisions sets moveVertically to true if wall collisions', () => {
     knobsAndLevers.init();
     game.init();
     spyOn(testObj, 'hasCollidedWithWall').and.returnValue(true);
     spyOn(testObj, 'hasCollidedWithMushroom').and.returnValue(false);
-    testObj.centipedes = [
-      {
-        updated : false,
-        distanceMovedY : 0,
-        distanceMovedX : 0,
-        moveVertically : false,
-      },
-    ];
-    testObj.checkHorizonalCollisions();
+    let centipede = {
+      updated : false,
+      distanceMovedY : 0,
+      distanceMovedX : 0,
+      moveVertically : false,
+    };
+
+    testObj.checkHorizonalCollisions(centipede);
+
     expect(testObj.hasCollidedWithWall).toHaveBeenCalled();
     expect(testObj.hasCollidedWithMushroom).not.toHaveBeenCalled();
-    expect(testObj.centipedes[0].updated).toBe(true);
-    expect(testObj.centipedes[0].distanceMovedX).toBe(0);
-    expect(testObj.centipedes[0].moveVertically).toBe(true);
+    expect(centipede.updated).toBe(true);
+    expect(centipede.distanceMovedX).toBe(0);
+    expect(centipede.moveVertically).toBe(true);
   });
   it('checkHorizontalCollisions sets moveVertically to true if mushroom collisions but not wall collisions', () => {
     knobsAndLevers.init();
     game.init();
     spyOn(testObj, 'hasCollidedWithWall').and.returnValue(false);
     spyOn(testObj, 'hasCollidedWithMushroom').and.returnValue(true);
-    testObj.centipedes = [
-      {
-        updated : false,
-        distanceMovedY : 0,
-        distanceMovedX : 10,
-        moveVertically : false,
-      },
-    ];
-    testObj.checkHorizonalCollisions();
+    let centipede = {
+      updated : false,
+      distanceMovedY : 0,
+      distanceMovedX : 10,
+      moveVertically : false,
+    };
+
+    testObj.checkHorizonalCollisions(centipede);
+
     expect(testObj.hasCollidedWithWall).toHaveBeenCalled();
     expect(testObj.hasCollidedWithMushroom).toHaveBeenCalled();
-    expect(testObj.centipedes[0].updated).toBe(true);
-    expect(testObj.centipedes[0].distanceMovedX).toBe(10);
-    expect(testObj.centipedes[0].moveVertically).toBe(true);
+    expect(centipede.updated).toBe(true);
+    expect(centipede.distanceMovedX).toBe(10);
+    expect(centipede.moveVertically).toBe(true);
   });
   it('checkHorizontalCollisions does not update if distanceMovedY is not 0', () => {
     knobsAndLevers.init();
     game.init();
     spyOn(testObj, 'hasCollidedWithWall').and.returnValue(false);
     spyOn(testObj, 'hasCollidedWithMushroom').and.returnValue(false);
-    testObj.centipedes = [
-      {
-        updated : false,
-        distanceMovedY : 1,
-        distanceMovedX : 0,
-        moveVertically : false,
-      },
-    ];
-    testObj.checkHorizonalCollisions();
-    expect(testObj.centipedes[0].moveVertically).toBe(false);
-    expect(testObj.centipedes[0].updated).toBe(false);
+    let centipede = {
+      updated : false,
+      distanceMovedY : 1,
+      distanceMovedX : 0,
+      moveVertically : false,
+    };
+
+    testObj.checkHorizonalCollisions(centipede);
+
+    expect(centipede.moveVertically).toBe(false);
+    expect(centipede.updated).toBe(false);
   });
   it('hasCollidedWithWall should return false if inside canvas sides and has moved horizontally', () => {
     knobsAndLevers.init();
@@ -327,31 +335,19 @@ describe('CENTIPEDES SPEC: ', () => {
   it('reverseHorizontalAtNextLayer does stuff', () => {
     knobsAndLevers.init();
     game.init();
-    testObj.centipedes = [
-      {
-        updated : false,
-        distanceMovedY : game.gameArea.gridSquareSideLength + 1,
-        reverseDirectionX : false,
-        moveVertically : true,
-      },
-      {
-        updated : false,
-        distanceMovedY : 1,
-        reverseDirectionX : false,
-        moveVertically : true,
-      },
-    ];
+    centipede = {
+      updated : false,
+      distanceMovedY : game.gameArea.gridSquareSideLength + 1,
+      reverseDirectionX : false,
+      moveVertically : true,
+    };
 
-    testObj.reverseHorizontalAtNextLayer();
+    testObj.reverseHorizontalAtNextLayer(centipede);
 
-    expect(testObj.centipedes[0].updated).toBe(true);
-    expect(testObj.centipedes[0].moveVertically).toBe(false);
-    expect(testObj.centipedes[0].distanceMovedY).toBe(0);
-    expect(testObj.centipedes[0].reverseDirectionX).toBe(true);
-    expect(testObj.centipedes[1].updated).toBe(false);
-    expect(testObj.centipedes[1].moveVertically).toBe(true);
-    expect(testObj.centipedes[1].distanceMovedY).toBe(1);
-    expect(testObj.centipedes[1].reverseDirectionX).toBe(false);
+    expect(centipede.updated).toBe(true);
+    expect(centipede.moveVertically).toBe(false);
+    expect(centipede.distanceMovedY).toBe(0);
+    expect(centipede.reverseDirectionX).toBe(true);
   });
   it('updateDirections does stuff', () => {
     knobsAndLevers.init();

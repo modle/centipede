@@ -7,6 +7,7 @@ describe('METRICS SPEC: ', () => {
     console.log(spec + ' SPEC complete');
   });
   beforeEach(function () {
+    game.init();
     testObj = Object.assign({}, metrics);
     testObj.init();
   });
