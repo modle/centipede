@@ -77,6 +77,7 @@ var game = {
   resetTheWholeTamale : function() {
     this.gameOver = false;
     this.timeSinceGameOver = 0;
+    mushrooms.clear();
     init.afterGameOver();
     menus.reset();
   },
