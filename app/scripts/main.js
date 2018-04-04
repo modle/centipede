@@ -3,10 +3,12 @@ var main = {
   framesToWaitToPauseAgain : 0,
   updateGameState : function() {
     // this gets executed every interval
-    main.detectGamepad();
-    if (menus.processMenus()) {
+    if (!game.running) {
+      controls.gamepad.checkState();
+      menus.processMenus();
       return;
     };
+    main.updateGamepad();
     main.handleGamePause();
     if (main.processTriggers()) {
       return;
@@ -14,11 +16,11 @@ var main = {
     main.prepTheCanvas();
     main.manageGameObjects();
   },
-  detectGamepad : function() {
-    controls.gamepad.checkState();
-    if (controls.gamepad.index < 0) {
+  updateGamepad : function() {
+    if (controls.gamepad.enabledGamepadIndices.size <= 0) {
       return;
     };
+    controls.gamepad.refreshGamepadData();
     controls.gamepad.captureAxes();
   },
   handleGamePause : function() {

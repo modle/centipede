@@ -22,6 +22,7 @@ menus = {
     this.show.instructions = false;
   },
   processMenus : function() {
+    // console.log('processing menus; game running?', game.running);
     if (game.gameArea.frameNo == 1) {
       this.setImages();
     };

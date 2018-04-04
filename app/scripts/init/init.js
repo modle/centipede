@@ -22,6 +22,8 @@ var init = {
     spiders.init();
     texts.init();
     intervalCreatures.init();
+    game.paused = true;
+    game.running = false;
     console.log("game reset");
   },
 }

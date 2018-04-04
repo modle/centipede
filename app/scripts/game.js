@@ -1,5 +1,6 @@
 var game = {
   paused : true,
+  running : false,
   gameOver : false,
   timeSinceGameOver : 0,
   delayed : 0,

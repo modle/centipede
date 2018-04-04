@@ -3,7 +3,9 @@ var menusPropsDefaults = {
     x : 268,
     y : 450,
     yDivider : 40,
-  }};
+  }
+};
+
 var menusProps = {
   show : {
     main : true,
@@ -164,6 +166,7 @@ var menusProps = {
           dimensions : {width : 176, height : 40},
           action : function() {
             menus.disableMenus();
+            game.running = true;
             game.paused = false;
           },
         },

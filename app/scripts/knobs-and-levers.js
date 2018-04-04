@@ -87,7 +87,7 @@ var knobsAndLevers = {
     }
   },
   player : {
-    defaultLives : 3,
+    defaultLives : 1,
     speed : 2,
     width : 15,
     height : 15,
