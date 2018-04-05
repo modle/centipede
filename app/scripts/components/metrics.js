@@ -2,6 +2,9 @@
 var metrics = {
   floatingPoints : [],
   floatingPointCycleDuration : 50,
+  lives : {},
+  currentLevel : {},
+  score : {},
   init : function() {
     this.lives = knobsAndLevers.player.defaultLives;
     this.currentLevel = knobsAndLevers.game.startLevel;

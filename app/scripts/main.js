@@ -99,4 +99,39 @@ var main = {
     collisions.check();
     metrics.manage();
   },
+  saveScore : function() {
+    try {
+      let currentLeaderboard = JSON.parse(localStorage.getItem('centipedeLeaderboard'));
+      let score = {when : Date.now(), score : metrics.score.value};
+      if (currentLeaderboard) {
+        currentLeaderboard.push(score);
+      } else {
+        currentLeaderboard = [score];
+      };
+      localStorage.setItem('centipedeLeaderboard', JSON.stringify(currentLeaderboard));
+    } catch(e) {
+      console.log('could not save leaderboard to localStorage', e);
+    };
+  },
+  readLeaderboard : function() {
+    try {
+      let currentLeaderboard = JSON.parse(localStorage.getItem('centipedeLeaderboard'));
+      if (currentLeaderboard) {
+        currentLeaderboard.forEach(entry => console.log('when:', entry.when, 'score:', entry.score));
+      } else {
+        console.log('no leaderboard found');
+      }
+    } catch(e) {
+      console.log('could not load leaderBoard from localStorage', e);
+    };
+  },
+  clearLeaderboard : function() {
+    let key = 'centipedeLeaderboard';
+    try {
+      localStorage.removeItem(key);
+      console.log(key, 'removed from local storage');
+    } catch(e) {
+      console.log(key, 'not found in localStorage', e);
+    };
+  },
 };

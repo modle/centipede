@@ -91,6 +91,8 @@ var menusProps = {
         'play',
         'instructions',
         // 'settings',
+        'leaderboardView',
+        'leaderboardClear',
       ],
       entries : {
         play : {
@@ -133,6 +135,36 @@ var menusProps = {
           action : function() {
             menus.disableMenus();
             menus.show.settings = true;
+          },
+        },
+        leaderboardView : {
+          enabled : true,
+          image : new Image(),
+          file : "leaderboard.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
+          },
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            // menus.disableMenus();
+            // menus.show.leaderboard = true;
+            main.readLeaderboard();
+          },
+        },
+        leaderboardClear : {
+          enabled : true,
+          image : new Image(),
+          file : "credits.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 3,
+          },
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            // menus.disableMenus();
+            // menus.show.leaderboard = true;
+            main.clearLeaderboard();
           },
         },
       },
