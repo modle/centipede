@@ -16,6 +16,7 @@ menus = {
       main.prepTheCanvas();
     };
     this.timeSinceSelection = 0;
+    this.show.initials = false;
     this.show.main = false;
     this.show.playerSelect = false;
     this.show.settings = false;
@@ -24,6 +25,16 @@ menus = {
   processMenus : function() {
     if (game.gameArea.frameNo == 1) {
       this.setImages();
+    };
+    if (this.show.initials) {
+      this.drawMenu(menus.screens.initials);
+      let initialsText = this.screens.initials.text.entries[2].text;
+      this.screens.initials.text.entries[1].text = 'your score: ' + metrics.lastScore;
+      if (initialsText.length >= 3) {
+        main.saveScore(initialsText);
+        this.reset();
+      };
+      return true;
     };
     if (this.show.main) {
       this.drawMenu(menus.screens.main);
@@ -97,15 +108,6 @@ menus = {
         knobsAndLevers.player.width,
         knobsAndLevers.player.height
       );
-      // let offset =
-      //   entries[entry].offset
-      //     ? entries[entry].offset
-      //     : this.currentSelection.entry.dimensions.width;
-      // game.gameArea.context.drawImage(
-      //   entries[entry].image,
-      //   this.currentSelection.entry.position.x + offset,
-      //   this.currentSelection.entry.position.y
-      // );
     });
   },
   drawTexts : function(images) {
@@ -134,5 +136,15 @@ menus = {
     ) {
       this.currentSelection.entry.action();
     };
+  },
+  addInitials : function(initial) {
+    let theText = this.screens.initials.text.entries[2].text;
+    if (theText.length < 3) {
+      theText += initial;
+    } else {
+      main.saveScore(theText);
+      this.reset();
+    };
+    this.screens.initials.text.entries[2].text = theText;    
   },
 };

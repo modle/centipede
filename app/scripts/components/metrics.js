@@ -5,6 +5,7 @@ var metrics = {
   lives : {},
   currentLevel : {},
   score : {},
+  lastScore : 0,
   init : function() {
     this.lives = knobsAndLevers.player.defaultLives;
     this.currentLevel = knobsAndLevers.game.startLevel;
@@ -19,7 +20,7 @@ var metrics = {
     this.score.value += change;
     if (this.score.value < 0) {
       this.score.value = 0;
-    }
+    };
   },
   addNewFloatingPoint : function(x, y, points, action) {
     let newPoint = this.getNewPoint(x, y);
@@ -46,12 +47,13 @@ var metrics = {
       this.floatingPoints[i].update();
       if (this.floatingPoints[i].cycleNumber > this.floatingPointCycleDuration) {
         this.floatingPoints.splice(i, 1);
-      }
-    }
+      };
+    };
   },
   reset : function() {
     this.lives = knobsAndLevers.player.defaultLives;
     this.currentLevel = 1;
+    this.lastScore = this.score.value;
     this.score.value = 0;
-  }
-}
+  },
+};

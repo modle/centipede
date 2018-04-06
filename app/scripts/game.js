@@ -16,7 +16,7 @@ var game = {
     };
     menus.reset();
     this.paused = true;
-    this.gameArea.start();
+    this.gameArea.start(); 
   },
   levelIsOver : function() {
     return centipedes.numberSpawned === centipedes.numberKilled && this.gameArea.frameNo !== 0;
@@ -76,11 +76,12 @@ var game = {
     player.reset();
   },
   resetTheWholeTamale : function() {
-    main.saveScore();
     this.gameOver = false;
     this.timeSinceGameOver = 0;
+    metrics.lastScore = metrics.score.value;
     mushrooms.clear();
     init.afterGameOver();
     menus.reset();
+    menus.show.initials = true;
   },
 };

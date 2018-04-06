@@ -8,6 +8,7 @@ var menusPropsDefaults = {
 
 var menusProps = {
   show : {
+    initials : true,
     main : true,
     instructions : false,
     settings : false,
@@ -147,8 +148,8 @@ var menusProps = {
           },
           dimensions : {width : 96, height : 40},
           action : function() {
-            // menus.disableMenus();
-            // menus.show.leaderboard = true;
+            menus.disableMenus();
+            menus.show.main = true;
             main.readLeaderboard();
           },
         },
@@ -281,6 +282,101 @@ var menusProps = {
             component : {},
             position : {x : 115, y : 200},
             fontSize : '50px',
+          },
+        ],
+      },
+    },
+    initials : {
+      order : ['a', 's', 'd', 'f',],
+      // order : ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+      entries : {
+        a : {
+          enabled : true,
+          image : new Image(),
+          value : 'A',
+          file : "a.png",
+          position : {
+            x : menusPropsDefaults.positions.x - 100,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+          },
+          dimensions : {width : 30, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.addInitials(this.value);
+            menus.show.initials = true;
+          },
+        },
+        s : {
+          enabled : true,
+          image : new Image(),
+          value : 'S',
+          file : "s.png",
+          position : {
+            x : menusPropsDefaults.positions.x - 50,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+          },
+          dimensions : {width : 30, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.addInitials(this.value);
+            menus.show.initials = true;
+          },
+        },
+        d : {
+          enabled : true,
+          image : new Image(),
+          value : 'D',
+          file : "d.png",
+          position : {
+            x : menusPropsDefaults.positions.x - 0,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+          },
+          dimensions : {width : 30, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.addInitials(this.value);
+            menus.show.initials = true;
+          },
+        },
+        f : {
+          enabled : true,
+          image : new Image(),
+          value : 'F',
+          file : "f.png",
+          position : {
+            x : menusPropsDefaults.positions.x + 50,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+          },
+          dimensions : {width : 30, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.addInitials(this.value);
+            menus.show.initials = true;
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            name : 'enterInitials',
+            text : 'Enter your initials',
+            component : {},
+            position : {x : 115, y : 200},
+            fontSize : '50px',
+          },
+          {
+            name : 'currentScore',
+            text : '',
+            component : {},
+            position : {x : 200, y : 250},
+            fontSize : '30px',
+          },
+          {
+            name : 'entered',
+            text : '',
+            component : {},
+            position : {x : 200, y : 300},
+            fontSize : '30px',
           },
         ],
       },
