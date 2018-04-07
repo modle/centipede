@@ -33,9 +33,6 @@ menus = {
     this.show.instructions = false;
   },
   processMenus : function() {
-    if (game.gameArea.frameNo == 1) {
-      this.setImages();
-    };
     if (this.show.initials) {
       this.drawMenu(menus.screens.initials);
       let initialsText = this.screens.initials.text.entries[2].text;
@@ -68,21 +65,15 @@ menus = {
     };
     return false;
   },
-  setImages : function() {
-    Array.from(Object.keys(menus.screens)).forEach(screen => this.setImageFiles(menus.screens[screen].entries));
-  },
-  setImageFiles : function(images) {
-    Array.from(Object.keys(images)).forEach(entry =>
-      images[entry].image.src = knobsAndLevers.mediaPath + images[entry].file
-    );
-  },
-  drawMenu : function(images) {
+  drawMenu : function(screen) {
     main.prepTheCanvas();
-    this.drawImages(images);
-    if (images.order) {
-      this.setMenuOrder(images.order);
+    this.drawEntries(screen.entries);
+    if (screen.order) {
+      this.setMenuOrder(screen.order);
     };
     this.checkForSelection();
+    this.drawSelectionMarker();
+    this.drawTexts(screen);
   },
   setMenuOrder : function(order) {
     this.timeSinceMenuMove += 1;
@@ -100,25 +91,27 @@ menus = {
     };
     this.currentSelection.name = order[0];
   },
-  drawImages : function(images) {
-    this.drawEntries(images.entries);
-    this.drawSelectionMarker();
-    this.drawTexts(images);
-  },
   drawEntries : function(entries) {
     Array.from(Object.keys(entries)).forEach(entry => {
-      if (!entries[entry].enabled) {
-        return;
+      let menuElement = entries[entry];
+      if (!menuElement.component) {
+        menuElement.component = this.buildDefaultComponent();
+      };
+      menuElement.component.x = menuElement.position.x;
+      menuElement.component.y = menuElement.position.y;
+      menuElement.component.text = menuElement.text;
+      if (menuElement.fontSize) {
+        menuElement.component.fontSize = menuElement.fontSize;
       };
       if (this.currentSelection.name == entry) {
-        this.currentSelection.entry = entries[entry];
+        this.currentSelection.entry = menuElement;
       };
-      game.gameArea.context.drawImage(entries[entry].image, entries[entry].position.x, entries[entry].position.y)
+      menuElement.component.update();
     });
   },
   drawSelectionMarker : function() {
-    this.selectionMarker.x = this.currentSelection.entry.position.x - knobsAndLevers.player.width;
-    this.selectionMarker.y = this.currentSelection.entry.position.y + this.currentSelection.entry.dimensions.height / 2.5;
+    this.selectionMarker.x = this.currentSelection.entry.position.x - knobsAndLevers.player.width * 2;
+    this.selectionMarker.y = this.currentSelection.entry.position.y - 15;
     this.selectionMarker.update();
   },
   drawTexts : function(images) {

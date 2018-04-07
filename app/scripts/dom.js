@@ -18,7 +18,6 @@ var dom = {
       this.addElement(this.getMobileMessageElement());
       return;
     };
-    this.addElement(this.getInstructionsElement());
     console.log("dom initialized");
   },
   addElement : function(element) {
@@ -34,12 +33,6 @@ var dom = {
       aLink.innerHTML = this.links[link].text;
       element.appendChild(aLink);
     });
-    return element;
-  },
-  getInstructionsElement : function() {
-    let element = document.createElement('div');
-    element.className = 'instructions';
-    element.innerHTML = this.instructions;
     return element;
   },
   getMobileMessageElement : function() {
