@@ -140,7 +140,3 @@ function TriangleVertices(direction, dimensions) {
     };
   };
 };
-
-var templates = {
-
-};

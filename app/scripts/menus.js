@@ -1,15 +1,7 @@
 menus = {
   init : function() {
     Object.assign(this, menusProps);
-    this.selectionMarker = new Component(
-      {
-        x : 700,
-        y : knobsAndLevers.text.gameInfoHeight - 15,
-        width : knobsAndLevers.player.width,
-        height : knobsAndLevers.player.height,
-        color : 'black',
-      }
-    );
+    this.selectionMarker = Object.assign({}, templates.marker);
   },
   areActive : function() {
     return Array.from(Object.keys(menus.show)).find(key => menus.show[key]);

@@ -14,15 +14,7 @@ var metrics = {
     scoreParams.y = knobsAndLevers.text.gameInfoHeight;
     this.score = new Component(scoreParams);
     this.score.value = 0;
-    this.livesMarker = new Component(
-      {
-        x : 700,
-        y : knobsAndLevers.text.gameInfoHeight - 15,
-        width : knobsAndLevers.player.width,
-        height : knobsAndLevers.player.height,
-        color : 'red',
-      }
-    );
+    this.livesMarker = Object.assign({}, templates.marker);
     console.log("metrics initialized");
   },
   changeScore : function(change) {
