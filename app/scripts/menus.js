@@ -1,4 +1,5 @@
 menus = {
+  leaderboards : undefined,
   init : function() {
     Object.assign(this, menusProps);
     this.selectionMarker = Object.assign({}, templates.marker);
@@ -10,6 +11,7 @@ menus = {
     game.gameOver = false;
     this.init();
     this.disableMenus();
+    this.screens.initials.text.entries[2].text = '';
     this.show.main = true;
   },
   disableMenus : function() {
@@ -49,6 +51,8 @@ menus = {
       return;
     };
     if (this.show.main) {
+      this.leaderboards = main.readLeaderboard();
+      this.setLeaderboardTexts();
       this.drawMenu(menus.screens.main);
       return;
     };
@@ -68,6 +72,7 @@ menus = {
   },
   drawMenu : function(screen) {
     main.prepTheCanvas();
+    this.drawTexts(this.title);
     this.drawEntries(screen.entries);
     if (screen.order) {
       this.setMenuOrder(screen.order);
@@ -76,7 +81,9 @@ menus = {
     if (!screen.ignoreMarker) {
       this.drawSelectionMarker();
     };
-    this.drawTexts(screen);
+    if (screen.text) {
+      this.drawTexts(screen.text);
+    };
   },
   setMenuOrder : function(order) {
     this.timeSinceMenuMove += 1;
@@ -123,21 +130,19 @@ menus = {
     this.selectionMarker.y = this.currentSelection.entry.position.y - 15;
     this.selectionMarker.update();
   },
-  drawTexts : function(images) {
-    if (images['text']) {
-      images.text.entries.forEach(entry => {
-        if (!entry.component) {
-          entry.component = this.buildDefaultComponent();
-        }
-        entry.component.x = entry.position.x;
-        entry.component.y = entry.position.y;
-        entry.component.text = entry.text;
-        if (entry.fontSize) {
-          entry.component.fontSize = entry.fontSize;
-        };
-        entry.component.update();
-      });
-    };
+  drawTexts : function(texts) {
+    texts.entries.forEach(entry => {
+      if (!entry.component) {
+        entry.component = this.buildDefaultComponent();
+      }
+      entry.component.x = entry.position.x;
+      entry.component.y = entry.position.y;
+      entry.component.text = entry.text;
+      if (entry.fontSize) {
+        entry.component.fontSize = entry.fontSize;
+      };
+      entry.component.update();
+    });
   },
   buildDefaultComponent : function() {
     return new Component(knobsAndLevers.text.baseParams);
@@ -160,6 +165,36 @@ menus = {
       main.saveScore(theText);
       this.reset();
     };
-    this.screens.initials.text.entries[2].text = theText;    
+    this.screens.initials.text.entries[2].text = theText;
   },
+  setLeaderboardTexts : function() {
+    if (!this.leaderboards) {
+      return;
+    };
+    this.screens.main.text.entries = [];
+    let entriesSoFar = 0;
+    this.leaderboards.sort(compare).forEach((entry, index) => {
+      entriesSoFar = this.screens.main.text.entries.length;
+      text = entry.initials + ': ' + entry.score;
+      if (index < 10) {
+        this.screens.main.text.entries.push(this.buildEntry(text, entriesSoFar));
+      };
+    });
+  },
+  buildEntry : function(text, count) {
+    return {
+      text : text,
+      component : undefined,
+      position : {x : 250, y : 175 + 25 * count},
+      fontSize : '15px',
+    };
+  },
+};
+
+function compare(a,b) {
+  if (a.score < b.score)
+    return 1;
+  if (a.score > b.score)
+    return -1;
+  return 0;
 };

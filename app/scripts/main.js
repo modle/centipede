@@ -122,8 +122,6 @@ var main = {
       let currentLeaderboard = JSON.parse(localStorage.getItem('centipedeLeaderboard'));
       if (currentLeaderboard) {
         return currentLeaderboard;
-        // currentLeaderboard.forEach(entry =>
-        //   console.log('initials:', entry.initials, 'score:', entry.score, 'when:', entry.when));
       } else {
         console.log('no leaderboard found');
       };
