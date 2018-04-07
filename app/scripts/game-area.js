@@ -14,6 +14,14 @@ function GameArea() {
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     this.frameNo = 0;
     this.interval = setInterval(main.updateGameState, supporting.intervalDivisor);
+    this.loadFont();
+  };
+  this.loadFont = function() {
+    let theLoadedFont = new FontFace('press-start', 'url(./app/static/css/fonts/prstartk.ttf)');
+    theLoadedFont.load().then((font) => {
+      document.fonts.add(font);
+      console.log('Font added', font);
+    });
   };
   this.setGridVertices = function() {
     this.xVertices = this.getXVertices();

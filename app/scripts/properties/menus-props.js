@@ -148,7 +148,7 @@ var menusProps = {
       ],
       entries : {
         onePlayer : {
-          text : '1 Player',
+          text : '1 PLAYER',
           fontSize : '15px',
           component : undefined,
           position : {

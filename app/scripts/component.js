@@ -1,11 +1,4 @@
 /*jslint white: true */
-
-var theLoadedFont = new FontFace('press-start', 'url(./app/static/css/fonts/prstartk.ttf)');
-theLoadedFont.load().then((font) => {
-  document.fonts.add(font);
-  console.log('Font added', font);
-});
-
 function Component(args) {
   this.remove = false;
   this.speedX = 0;
@@ -35,7 +28,7 @@ function Component(args) {
     if (this.type == "text") {
       this.makeText(ctx);
     } else if (this.type == "centipede") {
-      this.makeACentipede(ctx);
+      customComponents.makeACentipede(ctx, this.moveVertically, this);
     // to draw the ship instead of a square
     // } else if (this.type == "player") {
     //   let playerImage = new Image();
@@ -52,29 +45,6 @@ function Component(args) {
   this.makeText = function(ctx) {
     ctx.font = this.fontSize + " " + knobsAndLevers.text.font;
     ctx.fillText(this.text, this.x, this.y);
-  };
-  this.makeACentipede = function(ctx) {
-    ctx.beginPath();
-    let vertices = this.getCentipedeVertices(ctx);
-    ctx.moveTo(vertices['x1'], vertices['y1']);
-    ctx.lineTo(vertices['x2'], vertices['y2']);
-    ctx.lineTo(vertices['x3'], vertices['y3']);
-    ctx.fill();
-  };
-  this.getCentipedeVertices = function(ctx) {
-    if (this.moveVertically) {
-      if (this.directionY > 0) {
-        return getDownTriangle(ctx, this);
-      } else {
-        return getUpTriangle(ctx, this);
-      };
-    } else {
-      if (this.directionX > 0) {
-        return getRightTriangle(ctx, this);
-      } else {
-        return getLeftTriangle(ctx, this);
-      };
-    };
   };
   this.makeARectangle = function(ctx) {
     ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -118,46 +88,59 @@ function Component(args) {
   };
 };
 
-function getUpTriangle(ctx, myObject) {
-  vertices = {};
-  vertices['x1'] = myObject.x;
-  vertices['y1'] = myObject.y + myObject.height;
-  vertices['x2'] = myObject.x + myObject.width / 2;
-  vertices['y2'] = myObject.y;
-  vertices['x3'] = myObject.x + myObject.width;
-  vertices['y3'] = myObject.y + myObject.height;
-  return vertices;
+var customComponents = {
+  makeACentipede : function(ctx, isVertical, baseObject) {
+    ctx.beginPath();
+    let vertices = this.getCentipedeVertices(isVertical, baseObject);
+    ctx.moveTo(vertices.x1, vertices.y1);
+    ctx.lineTo(vertices.x2, vertices.y2);
+    ctx.lineTo(vertices.x3, vertices.y3);
+    ctx.fill();
+  },
+  getCentipedeVertices : function(isVertical, baseObject) {
+    let direction = '';
+    if (isVertical) {
+      direction = baseObject.directionY > 0 ? 'down' : 'up';
+    } else {
+      direction = baseObject.directionX > 0 ? 'right' : 'left';
+    };
+    return new TriangleVertices(direction, baseObject);
+  },
 };
 
-function getDownTriangle(ctx, myObject) {
-  vertices = {};
-  vertices['x1'] = myObject.x;
-  vertices['y1'] = myObject.y;
-  vertices['x2'] = myObject.x + myObject.width / 2;
-  vertices['y2'] = myObject.y + myObject.height;
-  vertices['x3'] = myObject.x + myObject.width;
-  vertices['y3'] = myObject.y;
-  return vertices;
+function TriangleVertices(direction, dimensions) {
+  with (dimensions) {
+    this.x1 = x;
+    this.y1 = y;
+    this.x2 = x;
+    this.y2 = y;
+    this.x3 = x;
+    this.y3 = y;
+    if (direction == 'up') {
+      this.y1 = y + height;
+      this.x2 = x + width / 2;
+      this.x3 = x + width;
+      this.y3 = y + height;
+    };
+    if (direction == 'down') {
+      this.x2 = x + width / 2;
+      this.y2 = y + height;
+      this.x3 = x + width;
+    };
+    if (direction == 'right') {
+      this.x2 = x + width;
+      this.y2 = y + height / 2;
+      this.y3 = y + height;
+    };
+    if (direction == 'left') {
+      this.x1 = x + width;
+      this.y2 = y + height / 2;
+      this.x3 = x + width;
+      this.y3 = y + height;
+    };
+  };
 };
 
-function getRightTriangle(ctx, myObject) {
-  vertices = {};
-  vertices['x1'] = myObject.x;
-  vertices['y1'] = myObject.y;
-  vertices['x2'] = myObject.x + myObject.width;
-  vertices['y2'] = myObject.y + myObject.height / 2;
-  vertices['x3'] = myObject.x;
-  vertices['y3'] = myObject.y + myObject.height;
-  return vertices;
-};
+var templates = {
 
-function getLeftTriangle(ctx, myObject) {
-  vertices = {};
-  vertices['x1'] = myObject.x + myObject.width;
-  vertices['y1'] = myObject.y;
-  vertices['x2'] = myObject.x;
-  vertices['y2'] = myObject.y + myObject.height / 2;
-  vertices['x3'] = myObject.x + myObject.width;
-  vertices['y3'] = myObject.y + myObject.height;
-  return vertices;
 };
