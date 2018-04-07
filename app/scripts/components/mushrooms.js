@@ -22,17 +22,17 @@ var mushrooms = {
     if (coordinates.x == undefined || coordinates.y == undefined) {
       throw new Error('coordinate error: x: ' + coordinates.x + ', y: ' + coordinates.y);
     };
-    if (coordinates.x < game.gameArea.canvas.width - knobsAndLevers.coordinateScaleFactor) {
+    if (coordinates.x < game.gameArea.canvas.width - knobsAndLevers.mushrooms.scaleFactor) {
       this.mushrooms.push(this.generate(coordinates, color));
     };
   },
   generate : function(coordinates, color) {
     let mushroomArgs = {
-      width: knobsAndLevers.mushroomSide,
-      height : knobsAndLevers.mushroomSide,
+      width: knobsAndLevers.mushrooms.side,
+      height : knobsAndLevers.mushrooms.side,
       color : color,
-      x : coordinates.x + knobsAndLevers.coordinateScaleFactor,
-      y : coordinates.y + knobsAndLevers.coordinateScaleFactor,
+      x : coordinates.x + knobsAndLevers.mushrooms.scaleFactor,
+      y : coordinates.y + knobsAndLevers.mushrooms.scaleFactor,
       extraArgs : {type : "mushroom"}
     };
     mushroom = new Component(mushroomArgs);

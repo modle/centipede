@@ -78,7 +78,7 @@ var centipedes = {
   checkYDirectionInPlayerArea : function(centipede) {
       if (centipede.getBottom() > game.gameArea.canvas.height) {
         centipede.reverseDirectionY = true;
-      } else if (centipede.getTop() < game.gameArea.gamePieceTopLimit && centipede.distanceMovedFromBottom > 0) {
+      } else if (centipede.getTop() < player.topLimit && centipede.distanceMovedFromBottom > 0) {
         centipede.reverseDirectionY = true;
         centipede.distanceMovedFromBottom = 0;
       };

@@ -4,7 +4,6 @@ function GameArea() {
   this.canvas = document.createElement("canvas"),
   this.xVertices = [],
   this.yVertices = [],
-  this.gamePieceTopLimit = knobsAndLevers.gamePieceTopLimit;
   this.canvas.width = knobsAndLevers.canvas.width;
   this.canvas.height = knobsAndLevers.canvas.height;
   this.gridSquareSideLength = knobsAndLevers.gridSquareSideLength;

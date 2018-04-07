@@ -15,12 +15,13 @@ var player = {
     'upLeft' : ['belowTop', 'insideLeft'],
   },
   init : function() {
+    this.topLimit = knobsAndLevers.player.topLimit;
     let gamePieceArgs = {
       width: knobsAndLevers.player.width,
       height : knobsAndLevers.player.height,
       color : "red",
-      x : knobsAndLevers.gamePieceStartX,
-      y : knobsAndLevers.gamePieceStartY,
+      x : knobsAndLevers.player.startX,
+      y : knobsAndLevers.player.startY,
       extraArgs : {type : "player", speed : {x : 0, y : 0}}
     };
     this.gamePiece = new Component(gamePieceArgs);
@@ -30,10 +31,10 @@ var player = {
   calculateStartingArea : function() {
     this.gamePieceStartingArea = new Component(
       {
-        x : knobsAndLevers.gamePieceStartX - knobsAndLevers.player.width * 5,
-        y : knobsAndLevers.gamePieceTopLimit,
+        x : knobsAndLevers.player.startX - knobsAndLevers.player.width * 5,
+        y : knobsAndLevers.player.topLimit,
         width : knobsAndLevers.player.width * 10,
-        height : knobsAndLevers.canvas.height - knobsAndLevers.gamePieceTopLimit,
+        height : knobsAndLevers.canvas.height - knobsAndLevers.player.topLimit,
         color : "orange",
         extraArgs : {type : "startingArea"},
       }
@@ -47,8 +48,8 @@ var player = {
     this.gamePiece.update();
   },
   reset : function() {
-    this.gamePiece.x = knobsAndLevers.gamePieceStartX;
-    this.gamePiece.y = knobsAndLevers.gamePieceStartY;
+    this.gamePiece.x = knobsAndLevers.player.startX;
+    this.gamePiece.y = knobsAndLevers.player.startY;
     this.removeMushroomsFromStartingArea();
   },
   // TODO move this to mushrooms.js
@@ -66,7 +67,7 @@ var player = {
     this.gamePiece.speedY = 0;
   },
   setBoundaries : function() {
-    this.boundaries.belowTop = this.gamePiece.getTop() > game.gameArea.gamePieceTopLimit;
+    this.boundaries.belowTop = this.gamePiece.getTop() > player.topLimit;
     this.boundaries.insideRight = this.gamePiece.getRight() < game.gameArea.canvas.width;
     this.boundaries.aboveBottom = this.gamePiece.getBottom() < game.gameArea.canvas.height;
     this.boundaries.insideLeft = this.gamePiece.getLeft() > 0;

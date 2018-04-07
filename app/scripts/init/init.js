@@ -4,6 +4,7 @@ var init = {
     knobsAndLevers.init();
     menus.init();
     game.init();
+    templates.init();
     metrics.init();
     player.init();
     spiders.init();

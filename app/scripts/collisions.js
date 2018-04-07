@@ -43,7 +43,7 @@ var collisions = {
   },
   updateTargetAppearance(target) {
     if (target.type == 'mushroom') {
-      target.height -= knobsAndLevers.mushroomSide * 0.25;
+      target.height -= knobsAndLevers.mushrooms.side * 0.25;
     };
   },
   processKill : function(target) {
