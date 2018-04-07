@@ -22,7 +22,7 @@ var texts = {
   },
   getLivesParams : function() {
     let livesParams = this.copyBaseMessageParams();
-    livesParams.x = game.gameArea.canvas.width * 0.4;
+    livesParams.x = 720;
     livesParams.y = knobsAndLevers.text.gameInfoHeight;
     return livesParams;
   },
@@ -46,7 +46,7 @@ var texts = {
   },
   getGameOverTextParams : function() {
     let gameOverTextParams = this.copyBaseMessageParams();
-    gameOverTextParams.fontSize = (knobsAndLevers.gridSquareSideLength * 3) + "px";
+    gameOverTextParams.fontSize = "50px";
     gameOverTextParams.color = "navy";
     gameOverTextParams.y = game.gameArea.canvas.height * 0.5;
     let backgroundParams = this.copyBaseTextBackgroundParams();

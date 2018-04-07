@@ -106,9 +106,9 @@ var knobsAndLevers = {
     },
   },
   text : {
+    font : "press-start",
     baseParams : {
-      fontSize : "30px",
-      fontType : "Arial",
+      fontSize : "20px",
       color : "black",
       extraArgs : {type:"text"},
     },

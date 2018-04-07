@@ -1,6 +1,15 @@
 menus = {
   init : function() {
     Object.assign(this, menusProps);
+    this.selectionMarker = new Component(
+      {
+        x : 700,
+        y : knobsAndLevers.text.gameInfoHeight - 15,
+        width : knobsAndLevers.player.width,
+        height : knobsAndLevers.player.height,
+        color : 'black',
+      }
+    );
   },
   areActive : function() {
     return Array.from(Object.keys(menus.show)).find(key => menus.show[key]);
@@ -17,6 +26,7 @@ menus = {
     };
     this.timeSinceSelection = 0;
     this.show.initials = false;
+    this.show.leaderboard = false;
     this.show.main = false;
     this.show.playerSelect = false;
     this.show.settings = false;
@@ -34,6 +44,10 @@ menus = {
         main.saveScore(initialsText);
         this.reset();
       };
+      return true;
+    };
+    if (this.show.leaderboard) {
+      this.drawMenu(menus.screens.leaderboard);
       return true;
     };
     if (this.show.main) {
@@ -64,8 +78,10 @@ menus = {
   },
   drawMenu : function(images) {
     main.prepTheCanvas();
-    this.setMenuOrder(images.order);
     this.drawImages(images);
+    if (images.order) {
+      this.setMenuOrder(images.order);
+    };
     this.checkForSelection();
   },
   setMenuOrder : function(order) {
@@ -86,7 +102,7 @@ menus = {
   },
   drawImages : function(images) {
     this.drawEntries(images.entries);
-    this.drawSelectionMarker(menus.screens.pointers.entries);
+    this.drawSelectionMarker();
     this.drawTexts(images);
   },
   drawEntries : function(entries) {
@@ -100,20 +116,17 @@ menus = {
       game.gameArea.context.drawImage(entries[entry].image, entries[entry].position.x, entries[entry].position.y)
     });
   },
-  drawSelectionMarker : function(entries) {
-    Array.from(Object.keys(entries)).forEach(entry => {
-      game.gameArea.context.fillRect(
-        this.currentSelection.entry.position.x - knobsAndLevers.player.width,
-        this.currentSelection.entry.position.y + this.currentSelection.entry.dimensions.height / 2.5,
-        knobsAndLevers.player.width,
-        knobsAndLevers.player.height
-      );
-    });
+  drawSelectionMarker : function() {
+    this.selectionMarker.x = this.currentSelection.entry.position.x - knobsAndLevers.player.width;
+    this.selectionMarker.y = this.currentSelection.entry.position.y + this.currentSelection.entry.dimensions.height / 2.5;
+    this.selectionMarker.update();
   },
   drawTexts : function(images) {
     if (images['text']) {
       images.text.entries.forEach(entry => {
-        entry.component = this.buildDefaultComponent();
+        if (!entry.component) {
+          entry.component = this.buildDefaultComponent();
+        }
         entry.component.x = entry.position.x;
         entry.component.y = entry.position.y;
         entry.component.text = entry.text;

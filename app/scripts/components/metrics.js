@@ -9,11 +9,20 @@ var metrics = {
   init : function() {
     this.lives = knobsAndLevers.player.defaultLives;
     this.currentLevel = knobsAndLevers.game.startLevel;
-    var scoreParams = Object.assign({}, knobsAndLevers.text.baseParams);
-    scoreParams.x = game.gameArea.canvas.width / 10;
+    let scoreParams = Object.assign({}, knobsAndLevers.text.baseParams);
+    scoreParams.x = 100;
     scoreParams.y = knobsAndLevers.text.gameInfoHeight;
     this.score = new Component(scoreParams);
     this.score.value = 0;
+    this.livesMarker = new Component(
+      {
+        x : 700,
+        y : knobsAndLevers.text.gameInfoHeight - 15,
+        width : knobsAndLevers.player.width,
+        height : knobsAndLevers.player.height,
+        color : 'red',
+      }
+    );
     console.log("metrics initialized");
   },
   changeScore : function(change) {
@@ -31,8 +40,7 @@ var metrics = {
   },
   getNewPoint : function(x, y) {
     let args = {
-      fontSize : (knobsAndLevers.gridSquareSideLength * 0.8) + "px",
-      fontType : "Arial",
+      fontSize : "15px",
       color : "black",
       x : x,
       y : y,

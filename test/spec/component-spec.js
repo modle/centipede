@@ -159,7 +159,6 @@ describe('COMPONENT SPEC: ', () => {
         x : 0,
         y : 0,
         fontSize : 30,
-        fontType : 'Arial',
         color : "black",
         extraArgs : {type:"text"},
       }
@@ -167,7 +166,7 @@ describe('COMPONENT SPEC: ', () => {
     game.init();
     let context = game.gameArea.canvas.getContext("2d");
     testComponent.makeText(context);
-    expect(context.font).toEqual('10px Arial');
+    expect(context.font).toEqual('10px press-start');
   });
   it('makeACentipede makes a centipede', () => {
     let testComponent = constructComponent(
@@ -175,7 +174,6 @@ describe('COMPONENT SPEC: ', () => {
         x : 0,
         y : 0,
         fontSize : 30,
-        fontType : 'Arial',
         color : "black",
         extraArgs : {type:"text"},
       }

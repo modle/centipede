@@ -8,7 +8,8 @@ var menusPropsDefaults = {
 
 var menusProps = {
   show : {
-    initials : true,
+    initials : false,
+    leaderboard : false,
     main : true,
     instructions : false,
     settings : false,
@@ -35,7 +36,7 @@ var menusProps = {
           file : "back.png",
           position : {
             x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
           },
           dimensions : {width : 96, height : 40},
           action : function() {
@@ -47,28 +48,18 @@ var menusProps = {
       text : {
         entries : [
           {
-            name : 'winning',
-            text : 'Kill the centipede to advance to the next level',
-            component : {},
-            position : {x : 100, y : 100},
-          },
-          {
-            name : 'losing',
-            text : 'Avoid all bugs to stay alive',
-            component : {},
-            position : {x : 215, y : 150},
-          },
-          {
             name : 'move',
             text : 'WASD : move',
-            component : {},
+            component : undefined,
             position : {x : 300, y : 200},
+            fontSize : "15px",
           },
           {
             name : 'shoot',
             text : 'arrow keys or shift : shoot',
-            component : {},
+            component : undefined,
             position : {x : 225, y : 250},
+            fontSize : "15px",
           },
         ],
       },
@@ -150,22 +141,9 @@ var menusProps = {
           action : function() {
             menus.disableMenus();
             menus.show.main = true;
-            main.readLeaderboard();
-          },
-        },
-        leaderboardClear : {
-          enabled : true,
-          image : new Image(),
-          file : "credits.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 3,
-          },
-          dimensions : {width : 96, height : 40},
-          action : function() {
-            // menus.disableMenus();
-            // menus.show.leaderboard = true;
-            main.clearLeaderboard();
+            menus.leaderboards = main.readLeaderboard();
+            menus.show.leaderboard = true;
+            console.log(menus.leaderboards);
           },
         },
       },
@@ -174,7 +152,7 @@ var menusProps = {
           {
             name : 'title',
             text : 'CENTIPEDE!',
-            component : {},
+            component : undefined,
             position : {x : 115, y : 200},
             fontSize : '50px',
           },
@@ -236,8 +214,8 @@ var menusProps = {
         entries : [
           {
             name : 'playerSelect',
-            text : 'Choose number of players',
-            component : {},
+            text : 'Player Select',
+            component : undefined,
             position : {x : 115, y : 200},
           },
         ],
@@ -279,7 +257,7 @@ var menusProps = {
           {
             name : 'settings',
             text : 'Settings Are Thither',
-            component : {},
+            component : undefined,
             position : {x : 115, y : 200},
             fontSize : '50px',
           },
@@ -360,22 +338,130 @@ var menusProps = {
           {
             name : 'enterInitials',
             text : 'Enter your initials',
-            component : {},
+            component : undefined,
             position : {x : 115, y : 200},
-            fontSize : '50px',
+            fontSize : '25px',
           },
           {
             name : 'currentScore',
             text : '',
-            component : {},
+            component : undefined,
             position : {x : 200, y : 250},
-            fontSize : '30px',
+            fontSize : '20px',
           },
           {
             name : 'entered',
             text : '',
-            component : {},
+            component : undefined,
             position : {x : 200, y : 300},
+            fontSize : '30px',
+          },
+        ],
+      },
+    },
+    leaderboard : {
+      order : ['clear', 'back'],
+      entries : {
+        clear : {
+          enabled : true,
+          image : new Image(),
+          file : "credits.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
+          },
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            // menus.disableMenus();
+            // menus.show.leaderboard = true;
+            main.clearLeaderboard();
+          },
+        },
+        back : {
+          enabled : true,
+          image : new Image(),
+          file : "back.png",
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
+          },
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            menus.disableMenus();
+            menus.show.main = true;
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            name : 'one',
+            text : 'a',
+            component : undefined,
+            position : {x : 200, y : 200},
+            fontSize : '30px',
+          },
+          {
+            name : 'two',
+            text : 'a',
+            component : undefined,
+            position : {x : 200, y : 250},
+            fontSize : '30px',
+          },
+          {
+            name : 'three',
+            text : 'a',
+            component : undefined,
+            position : {x : 200, y : 300},
+            fontSize : '30px',
+          },
+          {
+            name : 'four',
+            text : 'a',
+            component : undefined,
+            position : {x : 200, y : 350},
+            fontSize : '30px',
+          },
+          {
+            name : 'five',
+            text : 'a',
+            component : undefined,
+            position : {x : 200, y : 400},
+            fontSize : '30px',
+          },
+          {
+            name : 'six',
+            text : 'a',
+            component : undefined,
+            position : {x : 450, y : 200},
+            fontSize : '30px',
+          },
+          {
+            name : 'seven',
+            text : 'a',
+            component : undefined,
+            position : {x : 450, y : 250},
+            fontSize : '30px',
+          },
+          {
+            name : 'eight',
+            text : 'a',
+            component : undefined,
+            position : {x : 450, y : 300},
+            fontSize : '30px',
+          },
+          {
+            name : 'nine',
+            text : 'a',
+            component : undefined,
+            position : {x : 450, y : 350},
+            fontSize : '30px',
+          },
+          {
+            name : 'ten',
+            text : 'a',
+            component : undefined,
+            position : {x : 450, y : 400},
             fontSize : '30px',
           },
         ],

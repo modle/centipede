@@ -1,5 +1,11 @@
 /*jslint white: true */
 
+var theLoadedFont = new FontFace('press-start', 'url(./app/static/css/fonts/prstartk.ttf)');
+theLoadedFont.load().then((font) => {
+  document.fonts.add(font);
+  console.log('Font added', font);
+});
+
 function Component(args) {
   this.remove = false;
   this.speedX = 0;
@@ -15,7 +21,6 @@ function Component(args) {
   if (Array.from(Object.keys(args)).includes('extraArgs')) {
     this.type = args.extraArgs.type;
     this.fontSize = args.fontSize;
-    this.fontType = args.fontType;
     if (Array.from(Object.keys(args.extraArgs)).includes('speed')) {
       this.speedX = args.extraArgs.speed.x;
       this.speedY = args.extraArgs.speed.y;
@@ -45,7 +50,7 @@ function Component(args) {
     this.speedY = 0;
   },
   this.makeText = function(ctx) {
-    ctx.font = this.fontSize + " " + this.fontType;
+    ctx.font = this.fontSize + " " + knobsAndLevers.text.font;
     ctx.fillText(this.text, this.x, this.y);
   };
   this.makeACentipede = function(ctx) {
