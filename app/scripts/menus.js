@@ -26,36 +26,45 @@ menus = {
   },
   processMenus : function() {
     if (this.show.initials) {
-      this.drawMenu(menus.screens.initials);
+      let order = this.screens.initials.options.slice();
+      this.screens.initials.entries.previous.text = order.pop();
+      this.screens.initials.entries.previouser.text = order.pop();
+      this.screens.initials.entries.current.text = order.shift();
+      this.screens.initials.entries.next.text = order.shift();
+      this.screens.initials.entries.nexter.text = order.shift();
+      this.timeSinceMenuMove += 1;
+      this.shiftListOrder(this.screens.initials.options);
+      this.drawMenu(this.screens.initials);
       let initialsText = this.screens.initials.text.entries[2].text;
       this.screens.initials.text.entries[1].text = 'your score: ' + metrics.lastScore;
       if (initialsText.length >= 3) {
+        console.log(initialsText);
         main.saveScore(initialsText);
         this.reset();
       };
-      return true;
+      return;
     };
     if (this.show.leaderboard) {
       this.drawMenu(menus.screens.leaderboard);
-      return true;
+      return;
     };
     if (this.show.main) {
       this.drawMenu(menus.screens.main);
-      return true;
+      return;
     };
     if (this.show.instructions) {
       this.drawMenu(menus.screens.instructions);
-      return true;
+      return;
     };
     if (this.show.settings) {
       this.drawMenu(menus.screens.settings);
-      return true;
+      return;
     };
     if (this.show.playerSelect) {
       this.drawMenu(menus.screens.playerSelect);
-      return true;
+      return;
     };
-    return false;
+    return;
   },
   drawMenu : function(screen) {
     main.prepTheCanvas();
@@ -64,24 +73,29 @@ menus = {
       this.setMenuOrder(screen.order);
     };
     this.checkForSelection();
-    this.drawSelectionMarker();
+    if (!screen.ignoreMarker) {
+      this.drawSelectionMarker();
+    };
     this.drawTexts(screen);
   },
   setMenuOrder : function(order) {
     this.timeSinceMenuMove += 1;
-    if (this.timeSinceMenuMove > this.minTimeToMove) {
-      this.shiftMenuListOrder(order);
-      this.timeSinceMenuMove = 0;
-    };
-  },
-  shiftMenuListOrder : function(order) {
-    let direction = controls.getDirection();
-    if (direction == "up") {
-      order.unshift(order.pop());
-    } else if (direction == "down") {
-      order.push(order.shift());
-    };
+    this.shiftListOrder(order);
     this.currentSelection.name = order[0];
+  },
+  shiftListOrder : function(list) {
+    if (this.timeSinceMenuMove < this.minTimeToMove) {
+      return;
+    };
+    let direction = controls.getDirection();
+    if (list.length > 1) {
+      if (direction == "up") {
+        list.unshift(list.pop());
+      } else if (direction == "down") {
+        list.push(list.shift());
+      };
+    };
+    this.timeSinceMenuMove = 0;
   },
   drawEntries : function(entries) {
     Array.from(Object.keys(entries)).forEach(entry => {
@@ -95,7 +109,10 @@ menus = {
       if (menuElement.fontSize) {
         menuElement.component.fontSize = menuElement.fontSize;
       };
-      if (this.currentSelection.name == entry) {
+      if (menuElement.color) {
+        menuElement.component.color = menuElement.color;
+      };
+      if (this.currentSelection.name == entry && !menuElement.noSelection) {
         this.currentSelection.entry = menuElement;
       };
       menuElement.component.update();

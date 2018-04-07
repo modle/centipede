@@ -32,16 +32,16 @@ var knobsAndLevers = {
     },
   },
   flies : {
-    maxNumber: 1,
+    maxNumber: 100,
     pointValue : 200,
     interval : {
-      min: 1000,
-      max: 3000,
+      min: 0,
+      max: 0,
     },
     mushroomCreateInterval : 75,
     args : {
       color : "green",
-      extraArgs : {type : "fly", speed : {x : 0, y : 2}},
+      extraArgs : {type : "fly", speed : {x : 0, y : 4}},
       constructorFunctions : {
         setX : function() { knobsAndLevers.flies.args.x = supporting.getRandom(0, knobsAndLevers.canvas.width) },
       }
@@ -61,8 +61,8 @@ var knobsAndLevers = {
     maxMushrooms : 50,
   },
   laser : {
-    speed : 5,
-    maxNumber : 1,
+    speed : 20,
+    maxNumber : 20,
     interval : 10,
     args : {
       color : "purple",

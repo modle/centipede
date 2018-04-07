@@ -242,16 +242,37 @@ var menusProps = {
       },
     },
     initials : {
-      order : ['a', 's', 'd', 'f',],
-      // order : ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+      ignoreMarker : true,
+      order : ['current'],
+      options : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M',
+        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
       entries : {
-        a : {
-          text : 'A',
+        previouser : {
+          noSelection: true,
           fontSize : '15px',
+          component : undefined,
+          position : {
+            x : menusPropsDefaults.positions.x - 140,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -1,
+          },
+          color : 'grey',
+        },
+        previous : {
+          noSelection: true,
+          fontSize : '20px',
+          component : undefined,
+          position : {
+            x : menusPropsDefaults.positions.x - 120,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+          },
+          color : 'darkgrey',
+        },
+        current : {
+          fontSize : '30px',
           component : undefined,
           position : {
             x : menusPropsDefaults.positions.x - 100,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
           },
           action : function() {
             menus.disableMenus();
@@ -259,47 +280,25 @@ var menusProps = {
             menus.show.initials = true;
           },
         },
-        s : {
-          text : 'S',
-          fontSize : '15px',
+        next : {
+          noSelection: true,
+          fontSize : '20px',
           component : undefined,
           position : {
-            x : menusPropsDefaults.positions.x - 50,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+            x : menusPropsDefaults.positions.x - 120,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
           },
-          action : function() {
-            menus.disableMenus();
-            menus.addInitials(this.text);
-            menus.show.initials = true;
-          },
+          color : 'darkgrey',
         },
-        d : {
-          text : 'D',
+        nexter : {
+          noSelection: true,
           fontSize : '15px',
           component : undefined,
           position : {
-            x : menusPropsDefaults.positions.x - 0,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+            x : menusPropsDefaults.positions.x - 140,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 3,
           },
-          action : function() {
-            menus.disableMenus();
-            menus.addInitials(this.text);
-            menus.show.initials = true;
-          },
-        },
-        f : {
-          text : 'F',
-          fontSize : '15px',
-          component : undefined,
-          position : {
-            x : menusPropsDefaults.positions.x + 50,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
-          },
-          action : function() {
-            menus.disableMenus();
-            menus.addInitials(this.text);
-            menus.show.initials = true;
-          },
+          color : 'grey',
         },
       },
       text : {

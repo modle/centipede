@@ -90,6 +90,7 @@ var main = {
     hud.update();
   },
   manageGameObjects : function() {
+    metrics.manage();
     mushrooms.manage();
     centipedes.manage();
     intervalCreatures.manage();
@@ -97,12 +98,12 @@ var main = {
     lasers.manage();
     player.manage();
     collisions.check();
-    metrics.manage();
   },
   // TODO leaderboard functions only work on chrome
   // either disable the leaderboard menu option when not in chrome
   // or figure out firefox storage usage
   saveScore : function(initials) {
+    console.log('saving score');
     try {
       let currentLeaderboard = JSON.parse(localStorage.getItem('centipedeLeaderboard'));
       let score = {initials : initials, score : metrics.lastScore, when : Date.now()};
