@@ -3,9 +3,10 @@ menus = {
   init : function() {
     Object.assign(this, menusProps);
     this.selectionMarker = Object.assign({}, templates.marker);
+    console.log('menus initialized');
   },
   areActive : function() {
-    return Array.from(Object.keys(menus.show)).find(key => menus.show[key]);
+    return Array.from(Object.keys(this.show)).find(key => this.show[key]);
   },
   reset : function() {
     game.gameOver = false;
@@ -27,52 +28,53 @@ menus = {
     this.show.instructions = false;
   },
   processMenus : function() {
+    let screen = undefined;
     if (this.show.initials) {
-      let order = this.screens.initials.options.slice();
-      this.screens.initials.entries.previous.text = order.pop();
-      this.screens.initials.entries.previouser.text = order.pop();
-      this.screens.initials.entries.current.text = order.shift();
-      this.screens.initials.entries.next.text = order.shift();
-      this.screens.initials.entries.nexter.text = order.shift();
-      this.timeSinceMenuMove += 1;
-      this.shiftListOrder(this.screens.initials.options);
-      this.drawMenu(this.screens.initials);
-      let initialsText = this.screens.initials.text.entries[2].text;
-      this.screens.initials.text.entries[1].text = 'your score: ' + metrics.lastScore;
-      if (initialsText.length >= 3) {
-        console.log(initialsText);
-        main.saveScore(initialsText);
-        this.reset();
-      };
+      this.manageInitials();
+      screen = this.screens.initials;
+      this.drawMenu(screen);
       return;
     };
     if (this.show.leaderboard) {
-      this.drawMenu(menus.screens.leaderboard);
-      return;
+      screen = this.screens.leaderboard;
     };
     if (this.show.main) {
       this.leaderboards = main.readLeaderboard();
       this.setLeaderboardTexts();
-      this.drawMenu(menus.screens.main);
-      return;
+      screen = this.screens.main;
     };
     if (this.show.instructions) {
-      this.drawMenu(menus.screens.instructions);
-      return;
+      screen = this.screens.instructions;
     };
     if (this.show.settings) {
-      this.drawMenu(menus.screens.settings);
-      return;
+      screen = this.screens.settings;
     };
     if (this.show.playerSelect) {
-      this.drawMenu(menus.screens.playerSelect);
-      return;
+      screen = this.screens.playerSelect;
     };
-    return;
+    if (screen) {
+      this.drawMenu(screen);
+    };
+  },
+  manageInitials : function() {
+    let order = this.screens.initials.options.slice();
+    this.screens.initials.entries.previous.text = order.pop();
+    this.screens.initials.entries.previouser.text = order.pop();
+    this.screens.initials.entries.current.text = order.shift();
+    this.screens.initials.entries.next.text = order.shift();
+    this.screens.initials.entries.nexter.text = order.shift();
+    this.timeSinceMenuMove += 1;
+    this.shiftListOrder(this.screens.initials.options);
+    let initialsText = this.screens.initials.text.entries[2].text;
+    this.screens.initials.text.entries[1].text = 'your score: ' + metrics.lastScore;
+    if (initialsText.length >= 3) {
+      main.saveScore(initialsText);
+      this.reset();
+    };
   },
   drawMenu : function(screen) {
     main.prepTheCanvas();
-    this.drawTexts(this.title);
+    this.drawTexts(menus.title);
     this.drawEntries(screen.entries);
     if (screen.order) {
       this.setMenuOrder(screen.order);

@@ -8,6 +8,7 @@ var game = {
   keysDown : {},
   init : function() {
     this.gameArea = new GameArea();
+    console.log('game initialized');
   },
   start : function() {
     if (supporting.isMobile()) {

@@ -1,6 +1,6 @@
 var knobsAndLevers = {
   init : function() {
-    this.gridSquareSideLength = Math.floor(this.canvas.width / this.canvas.gridDivisor);
+    this.general.init(this);
     this.centipede.init(this);
     this.flies.init(this);
     this.player.init(this);
@@ -12,6 +12,11 @@ var knobsAndLevers = {
     console.log("knobsAndLevers initialized");
   },
   mediaPath : "app/static/media/images/",
+  general : {
+    init : function(configs) {
+      this.gridSquareSideLength = Math.floor(configs.canvas.width / configs.canvas.gridDivisor);
+    },
+  },
   canvas : {
     width : 800,
     height : 800,
@@ -26,8 +31,8 @@ var knobsAndLevers = {
       extraArgs : {type : "centipede"},
     },
     init : function(configs) {
-      this.args.width = configs.gridSquareSideLength;
-      this.args.height = configs.gridSquareSideLength;
+      this.args.width = configs.general.gridSquareSideLength;
+      this.args.height = configs.general.gridSquareSideLength;
       this.args.x = configs.canvas.width / 2;
     },
   },
@@ -48,8 +53,8 @@ var knobsAndLevers = {
     },
     init : function(configs) {
       this.initialInterval = supporting.getRandom(this.interval.min, this.interval.max);
-      this.args.width = configs.gridSquareSideLength * 0.75;
-      this.args.height = configs.gridSquareSideLength * 0.75;
+      this.args.width = configs.general.gridSquareSideLength * 0.75;
+      this.args.height = configs.general.gridSquareSideLength * 0.75;
       this.args.y = -configs.canvas.height / 10;
     },
   },
@@ -69,16 +74,16 @@ var knobsAndLevers = {
       extraArgs : {type : "laser", speed : {x : 0, y : 0}},
     },
     init : function(configs) {
-      this.args.width = configs.gridSquareSideLength / 10;
-      this.args.height = configs.gridSquareSideLength * 0.5;
+      this.args.width = configs.general.gridSquareSideLength / 10;
+      this.args.height = configs.general.gridSquareSideLength * 0.5;
     },
   },
   mushrooms : {
     scaleFactor : 1,
     side : 0,
     init : function(configs) {
-      this.scaleFactor = configs.gridSquareSideLength * 0.1;
-      this.side = configs.gridSquareSideLength * 0.8;
+      this.scaleFactor = configs.general.gridSquareSideLength * 0.1;
+      this.side = configs.general.gridSquareSideLength * 0.8;
     },
   },
   player : {
@@ -106,8 +111,8 @@ var knobsAndLevers = {
     },
     init : function(configs) {
       this.initialInterval = supporting.getRandom(this.interval.min, this.interval.max);
-      this.args.width = configs.gridSquareSideLength * 0.8;
-      this.args.height = configs.gridSquareSideLength * 0.3;
+      this.args.width = configs.general.gridSquareSideLength * 0.8;
+      this.args.height = configs.general.gridSquareSideLength * 0.3;
       this.args.x = -this.args.width * 0.8;
       this.args.y = configs.player.topLimit;
     },
@@ -127,10 +132,10 @@ var knobsAndLevers = {
     gameInfoHeight : 40,
     init : function(configs) {
       this.baseParams.x = configs.canvas.width * 0.25;
-      this.baseBackgroundParams.height = configs.gridSquareSideLength;
+      this.baseBackgroundParams.height = configs.general.gridSquareSideLength;
       this.baseBackgroundParams.width = configs.canvas.width;
-      this.baseParams.fontSize = configs.gridSquareSideLength + "px";
-      this.gameInfoHeight = configs.gridSquareSideLength * 1.3;
+      this.baseParams.fontSize = configs.general.gridSquareSideLength + "px";
+      this.gameInfoHeight = configs.general.gridSquareSideLength * 1.3;
     },
   },
   worms : {
@@ -149,8 +154,8 @@ var knobsAndLevers = {
     },
     init : function(configs) {
       this.initialInterval = supporting.getRandom(this.interval.min, this.interval.max);
-      this.args.width = configs.gridSquareSideLength * 1.5;
-      this.args.height = configs.gridSquareSideLength;
+      this.args.width = configs.general.gridSquareSideLength * 1.5;
+      this.args.height = configs.general.gridSquareSideLength;
       this.args.x = -configs.canvas.width / 10;
     },
   },

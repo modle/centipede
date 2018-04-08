@@ -7,6 +7,7 @@ var intervalCreatures = {
       flies : knobsAndLevers.flies.initialInterval,
       worms : knobsAndLevers.worms.initialInterval,
     };
+    console.log('intervalCreatures initialized');
   },
   manage : function() {
     Array.from(Object.keys(this.intervals)).forEach(creature => {

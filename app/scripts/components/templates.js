@@ -14,5 +14,6 @@ var templates = {
         y : knobsAndLevers.text.gameInfoHeight - 15,
       })
     );
+    console.log('templates initialized');
   },
 };

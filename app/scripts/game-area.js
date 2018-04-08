@@ -6,8 +6,8 @@ function GameArea() {
   this.yVertices = [],
   this.canvas.width = knobsAndLevers.canvas.width;
   this.canvas.height = knobsAndLevers.canvas.height;
-  this.gridSquareSideLength = knobsAndLevers.gridSquareSideLength;
-  this.firstMushroomLayer = knobsAndLevers.gridSquareSideLength * 2;
+  this.gridSquareSideLength = knobsAndLevers.general.gridSquareSideLength;
+  this.firstMushroomLayer = knobsAndLevers.general.gridSquareSideLength * 2;
   this.start = function() {
     this.context = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);

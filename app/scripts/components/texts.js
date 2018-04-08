@@ -28,7 +28,7 @@ var texts = {
   },
   getDiedTextParams : function() {
     let diedTextParams = this.copyBaseMessageParams();
-    diedTextParams.fontSize = (knobsAndLevers.gridSquareSideLength * 1.5) + "px";
+    diedTextParams.fontSize = (knobsAndLevers.general.gridSquareSideLength * 1.5) + "px";
     diedTextParams.y = game.gameArea.canvas.height * 0.75;
     let backgroundParams = this.copyBaseTextBackgroundParams();
     backgroundParams.height *= 1.5;

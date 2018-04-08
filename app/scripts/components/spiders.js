@@ -3,6 +3,7 @@ var spiders = {
   spiders : [],
   init : function() {
     this.interval = knobsAndLevers.spider.initialInterval;
+    console.log('spiders initialized');
   },
   manage : function() {
     this.spawn();

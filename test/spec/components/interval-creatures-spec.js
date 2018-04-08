@@ -76,6 +76,8 @@ describe('INTERVAL CREATURES SPEC: ', () => {
   });
 
   it('dropMushroom calls mushrooms.generate if eligible to drop', () => {
+    knobsAndLevers.init();
+    player.init();
     spyOn(testObj, 'eligibleToDrop').and.returnValue(true);
     spyOn(mushrooms, 'generate').and.returnValue({});
     mushrooms.mushrooms = [];

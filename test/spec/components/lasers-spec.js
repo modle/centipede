@@ -25,6 +25,7 @@ describe('LASERS SPEC: ', () => {
     expect(sounds.playAvailableLaserSound).not.toHaveBeenCalled();
   });
   it('spawn calls add and laser sound play if eligible to spawn', () => {
+    player.init();
     spyOn(testObj, 'eligibleToSpawn').and.returnValue(true);
     spyOn(testObj, 'add');
     spyOn(sounds, 'playAvailableLaserSound');

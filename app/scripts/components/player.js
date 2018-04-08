@@ -26,7 +26,7 @@ var player = {
     };
     this.gamePiece = new Component(gamePieceArgs);
     this.calculateStartingArea();
-    console.log("gamePiece initialized");
+    console.log("player initialized");
   },
   calculateStartingArea : function() {
     this.gamePieceStartingArea = new Component(

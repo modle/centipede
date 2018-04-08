@@ -16,170 +16,107 @@ describe('MENUS SPEC: ', () => {
     menus.show.instructions = false;
   }
   it('processMenus calls drawMenu with screens.main if show.main is true', () => {
-    spyOn(menus, 'setImages');
+    spyOn(main, 'readLeaderboard');
+    spyOn(menus, 'setLeaderboardTexts');
     spyOn(menus, 'drawMenu');
     resetShowFlags();
     menus.show.main = true;
-    game.init();
-    game.gameArea.frameNo = 1;
 
-    result = menus.processMenus();
+    menus.processMenus();
 
-    expect(result).toBe(true);
-    expect(menus.setImages).toHaveBeenCalled();
+    expect(main.readLeaderboard).toHaveBeenCalled();
+    expect(menus.setLeaderboardTexts).toHaveBeenCalled();
     expect(menus.drawMenu).toHaveBeenCalledTimes(1);
     expect(menus.drawMenu).toHaveBeenCalledWith(menus.screens.main);
   });
   it('processMenus calls drawMenu with screens.instructions if show.instructions is true', () => {
-    spyOn(menus, 'setImages');
     spyOn(menus, 'drawMenu');
     resetShowFlags();
     menus.show.instructions = true;
-    game.init();
-    game.gameArea.frameNo = 1;
 
-    result = menus.processMenus();
+    menus.processMenus();
 
-    expect(result).toBe(true);
-    expect(menus.setImages).toHaveBeenCalled();
     expect(menus.drawMenu).toHaveBeenCalledTimes(1);
     expect(menus.drawMenu).toHaveBeenCalledWith(menus.screens.instructions);
   });
   it('processMenus calls returns false if all show flags are false', () => {
-    spyOn(menus, 'setImages');
     spyOn(menus, 'drawMenu');
     resetShowFlags();
-    game.init();
-    game.gameArea.frameNo = 1;
 
-    result = menus.processMenus();
+    menus.processMenus();
 
-    expect(result).toBe(false);
-    expect(menus.setImages).toHaveBeenCalled();
     expect(menus.drawMenu).not.toHaveBeenCalled();
   });
 
-  it('setImages calls setImageFiles if first frame', () => {
-    game.init();
-    game.gameArea.frameNo = 1;
-    spyOn(menus, 'setImageFiles');
-
-    menus.setImages();
-
-    expect(menus.setImageFiles).toHaveBeenCalledTimes(5);
-  });
-  it('setImages returns without calling setImageFiles if not first frame', () => {
-    game.init();
-    game.gameArea.frameNo = 2;
-    spyOn(menus, 'setImageFiles');
-
-    menus.setImages();
-
-    expect(menus.setImageFiles).not.toHaveBeenCalledTimes(3);
-  });
-  it('setImageFiles returns if not first frame', () => {
-    let play = menus.screens.main.entries.play;
-    let instructions = menus.screens.main.entries.instructions;
-    play.image.src = '';
-    instructions.image.src = '';
-
-    menus.setImageFiles(menus.screens.main.entries);
-
-    expect(play.image.src).toBeTruthy();
-    expect(instructions.image.src).toBeTruthy();
-  });
-
   it('drawMenu delegates to menu functions', () => {
+    templates.init();
+    menus.init();
     spyOn(main, 'prepTheCanvas');
+    spyOn(menus, 'drawTexts');
+    spyOn(menus, 'drawEntries');
     spyOn(menus, 'setMenuOrder');
-    spyOn(menus, 'drawImages');
     spyOn(menus, 'checkForSelection');
+    spyOn(menus, 'drawSelectionMarker');
 
-    menus.drawMenu(menus.screens.main.entries);
+    menus.drawMenu(menus.screens.main);
 
     expect(main.prepTheCanvas).toHaveBeenCalled();
+    expect(menus.drawTexts).toHaveBeenCalledTimes(2);
+    expect(menus.drawEntries).toHaveBeenCalled();
     expect(menus.setMenuOrder).toHaveBeenCalled();
-    expect(menus.drawImages).toHaveBeenCalled();
     expect(menus.checkForSelection).toHaveBeenCalled();
+    expect(menus.drawSelectionMarker).toHaveBeenCalled();
   });
 
-  it('setMenuOrder calls shiftMenuListOrder if enough time has passed since last move', () => {
+  it('setMenuOrder calls shiftListOrder if enough time has passed since last move', () => {
     let startTime = 30;
+    let order = ['first'];
     menus.timeSinceMenuMove = startTime;
-    spyOn(menus, 'shiftMenuListOrder');
+    spyOn(menus, 'shiftListOrder');
 
-    menus.setMenuOrder([]);
+    menus.setMenuOrder(order);
 
-    expect(menus.timeSinceMenuMove).toBe(0);
-  });
-
-  it('setMenuOrder does not call shiftMenuListOrder if not enough time has passed since last move', () => {
-    let startTime = 1;
-    menus.timeSinceMenuMove = startTime;
-    spyOn(menus, 'shiftMenuListOrder');
-
-    menus.setMenuOrder([]);
-
+    expect(menus.currentSelection.name).toBe(order[0]);
     expect(menus.timeSinceMenuMove).toBe(startTime + 1);
+    expect(menus.shiftListOrder).toHaveBeenCalled();
   });
 
-  it('shiftMenuListOrder shifts array order up and currentSelection.name matches the first entry', () => {
-    currentSelection = {name : ''};
+  it('shiftListOrder shifts array order up and currentSelection.name matches the first entry', () => {
+    let startTime = 10;
+    menus.timeSinceMenuMove = startTime;
+    menus.minTimeToMove = startTime - 1;
     spyOn(controls, 'getDirection').and.returnValue('up');
     let actual = ['first', 'second', 'third'];
     let expected = ['third', 'first', 'second'];
 
-    menus.shiftMenuListOrder(actual);
+    menus.shiftListOrder(actual);
 
     expect(actual).toEqual(expected);
-    expect(menus.currentSelection.name).toBe('third');
   });
 
-  it('shiftMenuListOrder shifts array order down and currentSelection.name matches the first entry', () => {
-    menus.currentSelection = {name : ''};
+  it('shiftListOrder shifts array order down', () => {
+    let startTime = 10;
+    menus.timeSinceMenuMove = startTime;
+    menus.minTimeToMove = startTime - 1;
     spyOn(controls, 'getDirection').and.returnValue('down');
     let actual = ['first', 'second', 'third'];
     let expected = ['second', 'third', 'first'];
 
-    menus.shiftMenuListOrder(actual);
+    menus.shiftListOrder(actual);
 
     expect(actual).toEqual(expected);
-    expect(menus.currentSelection.name).toBe('second');
   });
 
-  it('shiftMenuListOrder sets currentshifts array order down', () => {
-    menus.currentSelection = {name : ''};
+  it('shiftListOrder does not shifts array order when no direction is returned', () => {
     spyOn(controls, 'getDirection').and.returnValue("");
     let actual = ['first', 'second', 'third'];
     let expected = ['first', 'second', 'third'];
 
-    menus.shiftMenuListOrder(actual);
+    menus.shiftListOrder(actual);
 
     expect(actual).toEqual(expected);
-    expect(menus.currentSelection.name).toBe('first');
   });
 
-  it('drawImages delegates to selection, text, and marker draw functions', () => {
-    spyOn(menus, 'drawEntries');
-    spyOn(menus, 'drawSelectionMarker');
-    spyOn(menus, 'drawTexts');
-
-    menus.drawImages(menus.screens.main);
-
-    expect(menus.drawEntries).toHaveBeenCalled();
-    expect(menus.drawSelectionMarker).toHaveBeenCalled();
-    expect(menus.drawTexts).toHaveBeenCalled();
-  });
-
-  it('drawEntries calls drawImage for each entry', () => {
-    game.init();
-    game.gameArea.context = game.gameArea.canvas.getContext("2d");
-    spyOn(game.gameArea.context, 'drawImage');
-
-    menus.drawEntries(menus.screens.main.entries);
-
-    expect(game.gameArea.context.drawImage).toHaveBeenCalledTimes(menus.screens.main.order.length);
-  });
   it('drawEntries sets currentSelection entry when entry name matches', () => {
     game.init();
     game.gameArea.context = game.gameArea.canvas.getContext("2d");
@@ -205,19 +142,19 @@ describe('MENUS SPEC: ', () => {
   });
 
   it('drawTexts calls text.component.update when text components are present', () => {
-    testImages = {text : Object.assign({}, menus.screens.main.text)};
+    let testScreen = Object.assign({}, menus.screens.instructions.text);
     let testComponent = new Component(knobsAndLevers.text.baseParams);
     spyOn(testComponent, 'update');
     spyOn(menus, 'buildDefaultComponent').and.returnValue(testComponent);
 
-    menus.drawTexts(testImages);
+    menus.drawTexts(testScreen);
 
-    expect(testImages.text.entries[0].component.update).toHaveBeenCalledTimes(1);
+    expect(testScreen.entries[0].component.update).toHaveBeenCalledTimes(2);
   });
   it('drawTexts does not set fontSize if not on overridden on text object', () => {
     let testComponent = new Component(knobsAndLevers.text.baseParams);
     spyOn(testComponent, 'update');
-    let testImages = {
+    let testMenu = {
       text : {
         entries : [
           {
@@ -231,18 +168,18 @@ describe('MENUS SPEC: ', () => {
     };
     spyOn(menus, 'buildDefaultComponent').and.returnValue(testComponent);
 
-    menus.drawTexts(testImages);
+    menus.drawTexts(testMenu.text);
 
-    expect(testImages.text.entries[0].component.fontSize)
+    expect(testMenu.text.entries[0].component.fontSize)
       .toBe(knobsAndLevers.text.baseParams.fontSize);
-    expect(testImages.text.entries[0].component.update).toHaveBeenCalledTimes(1);
+    expect(testMenu.text.entries[0].component.update).toHaveBeenCalledTimes(1);
   });
-  it('drawTexts does nothing if no texts are present', () => {
-    testImages = {};
+  it('drawTexts does nothing if entries is empty', () => {
+    testText = {entries: []};
 
     // does this really even need a test?
     // there's nothing to check, but else branch needs covered
-    menus.drawTexts(testImages);
+    menus.drawTexts(testText);
 
     expect(true).toBe(true);
   });
