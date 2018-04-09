@@ -37,11 +37,11 @@ var knobsAndLevers = {
     },
   },
   flies : {
-    maxNumber: 100,
+    maxNumber: 2,
     pointValue : 200,
     interval : {
-      min: 0,
-      max: 0,
+      min: 1000,
+      max: 1000,
     },
     mushroomCreateInterval : 75,
     args : {

@@ -186,10 +186,28 @@ var menusProps = {
       },
     },
     settings : {
-      order : ['doTheThing', 'back'],
+      order : ['sound', 'back'],
       entries : {
-        doTheThing : {
-          text : 'THING',
+       // sound
+          // on/off
+        // difficulty
+          // god - invincible
+          // demigod - a ton of lives
+          // easy - no spiders
+          // hard - 10 flies
+          // impossible - 100 flies
+        // number of bullets
+          // many/one
+        // rate of fire
+          // high/normal
+        // ship speed
+        // spider aggression
+          // high/normal
+        // centipedes
+          // tiny/normal
+        // can't really do anything with centipede speed until the vertical movement logic gets
+        sound : {
+          text : 'sound : ',
           fontSize : '15px',
           component : undefined,
           position : {

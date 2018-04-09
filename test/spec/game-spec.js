@@ -85,14 +85,6 @@ describe('GAME SPEC: ', () => {
     expect(texts.diedText.text).toBe(expectedText);
     expect(texts.diedText.update).toHaveBeenCalled();
   });
-  it('playDiedSound calls sounds.playerDied.play', () => {
-    sounds.init();
-    spyOn(sounds.playerDied, 'play');
-
-    testObj.playDiedSound();
-
-    expect(sounds.playerDied.play).toHaveBeenCalled();
-  });
   it('managePause manages pause', () => {
     texts.init();
     spyOn(texts.pausedMessage, 'update');

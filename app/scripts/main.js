@@ -46,7 +46,7 @@ var main = {
     if (player.died) {
       if (game.delayed === 0) {
         game.setDiedText();
-        game.playDiedSound();
+        sounds.playDiedSound();
         game.delayed++;
         return true;
       } else if (game.delayed < game.delayEndTime) {

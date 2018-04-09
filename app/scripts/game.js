@@ -38,9 +38,6 @@ var game = {
     texts.diedText.text = "You died.";
     texts.diedText.update();
   },
-  playDiedSound : function() {
-    sounds.playerDied.play();
-  },
   managePause : function() {
     texts.pausedMessage.text = "Paused";
     texts.pausedMessage.update();

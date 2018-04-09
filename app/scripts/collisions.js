@@ -2,7 +2,7 @@
 var collisions = {
   check : function() {
     this.checkLaser(this.getLaserTargets());
-    this.checkGamePieceVsEnemies(this.getPlayerEnemies());
+    this.checkPlayerVsEnemies(this.getPlayerEnemies());
     this.removeDestroyedTargets();
   },
   getLaserTargets : function() {
@@ -27,18 +27,13 @@ var collisions = {
   },
   processImpact : function(target) {
     this.damageTarget(target);
-    this.playImpactSound(target.type);
+    sounds.playImpactSound(target.type);
     this.updateTargetAppearance(target);
   },
   damageTarget : function(target) {
     target.hitPoints--;
     if (target.hitPoints <= 0) {
       this.processKill(target);
-    };
-  },
-  playImpactSound : function(type) {
-    if (type !== 'mushroom') {
-      sounds.getAvailableImpactSound().play();
     };
   },
   updateTargetAppearance(target) {
@@ -67,7 +62,7 @@ var collisions = {
     targets.push(...intervalCreatures.flies);
     return targets;
   },
-  checkGamePieceVsEnemies : function(targets) {
+  checkPlayerVsEnemies : function(targets) {
     if (!knobsAndLevers.game.playerCollisionsEnabled) {
       return;
     };

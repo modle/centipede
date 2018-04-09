@@ -177,13 +177,13 @@ describe('MAIN SPEC: ', () => {
     player.died = expected;
     game.delayed = 0;
     spyOn(game, 'setDiedText');
-    spyOn(game, 'playDiedSound');
+    spyOn(sounds, 'playDiedSound');
 
     let actual = main.checkPlayerDied();
 
     expect(actual).toEqual(expected);
     expect(game.setDiedText).toHaveBeenCalled();
-    expect(game.playDiedSound).toHaveBeenCalled();
+    expect(sounds.playDiedSound).toHaveBeenCalled();
     expect(game.delayed).toEqual(1);
   });
   it('checkPlayerDied delays a frame if delay counter is between 0 and delayEndTime', () => {
