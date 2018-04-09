@@ -50,8 +50,7 @@ var menusProps = {
             y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
           },
           action : function() {
-            menus.disableMenus();
-            menus.show.main = true;
+            menus.display('main');
           },
         },
       },
@@ -90,8 +89,7 @@ var menusProps = {
             y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
           },
           action : function() {
-            menus.disableMenus();
-            menus.show.playerSelect = true;
+            menus.display('playerSelect');
           },
         },
         instructions : {
@@ -103,8 +101,7 @@ var menusProps = {
             y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
           },
           action : function() {
-            menus.disableMenus();
-            menus.show.instructions = true;
+            menus.display('instructions');
           },
         },
         settings : {
@@ -116,8 +113,7 @@ var menusProps = {
             y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
           },
           action : function() {
-            menus.disableMenus();
-            menus.show.settings = true;
+            menus.display('settings');
           },
         },
       },
@@ -168,8 +164,7 @@ var menusProps = {
             y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
           },
           action : function() {
-            menus.disableMenus();
-            menus.show.main = true;
+            menus.display('main');
           },
         },
       },
@@ -207,7 +202,7 @@ var menusProps = {
           // tiny/normal
         // can't really do anything with centipede speed until the vertical movement logic gets
         sound : {
-          text : 'sound : ',
+          text : 'SOUND ' + (knobsAndLevers.game.soundsEnabled ? 'ON' : 'OFF'),
           fontSize : '15px',
           component : undefined,
           position : {
@@ -215,7 +210,14 @@ var menusProps = {
             y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
           },
           action : function() {
-            console.log('doTheThing clicked');
+            knobsAndLevers.game.soundsEnabled = !knobsAndLevers.game.soundsEnabled;
+            let text = 'SOUND OFF';
+            if (knobsAndLevers.game.soundsEnabled) {
+              sounds.playAvailableLaserSound();
+              text = 'SOUND ON';
+            };
+            menus.screens.settings.entries.sound.text = text;
+            menus.display('settings');
           },
         },
         back : {
@@ -228,8 +230,7 @@ var menusProps = {
           },
           dimensions : {width : 96, height : 40},
           action : function() {
-            menus.disableMenus();
-            menus.show.main = true;
+            menus.display('main');
           },
         },
       },
@@ -279,9 +280,8 @@ var menusProps = {
             y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
           },
           action : function() {
-            menus.disableMenus();
             menus.addInitials(this.text);
-            menus.show.initials = true;
+            menus.display('initials');
           },
         },
         next : {

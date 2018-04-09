@@ -70,7 +70,6 @@ var sounds = {
   stopSound : function(type) {
     this.tracks[type].stop();
   },
-
   playAvailableLaserSound : function() {
     this.playSound(this.getSoundFromPool('laserPool'));
   },

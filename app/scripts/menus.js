@@ -15,6 +15,10 @@ menus = {
     this.screens.initials.text.entries[2].text = '';
     this.show.main = true;
   },
+  display : function(menu) {
+    menus.disableMenus();
+    menus.show[menu] = true;
+  },
   disableMenus : function() {
     if (game.gameArea.frameNo > 0) {
       main.prepTheCanvas();
