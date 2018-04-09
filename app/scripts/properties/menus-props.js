@@ -181,21 +181,14 @@ var menusProps = {
       },
     },
     settings : {
-      order : ['sound', 'back'],
+      order : ['sound', 'laserQTY', 'laserSpeed', 'shipSpeed', 'back'],
       entries : {
-       // sound
-          // on/off
         // difficulty
           // god - invincible
           // demigod - a ton of lives
           // easy - no spiders
           // hard - 10 flies
           // impossible - 100 flies
-        // number of bullets
-          // many/one
-        // rate of fire
-          // high/normal
-        // ship speed
         // spider aggression
           // high/normal
         // centipedes
@@ -207,7 +200,7 @@ var menusProps = {
           component : undefined,
           position : {
             x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -6,
           },
           action : function() {
             knobsAndLevers.game.soundsEnabled = !knobsAndLevers.game.soundsEnabled;
@@ -217,6 +210,48 @@ var menusProps = {
               text = 'SOUND ON';
             };
             menus.screens.settings.entries.sound.text = text;
+            menus.display('settings');
+          },
+        },
+        laserQTY : {
+          text : 'LASER QTY: ' + (knobsAndLevers.laser.maxNumber == 1 ? 'ONE' : 'MANY'),
+          fontSize : '15px',
+          component : undefined,
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -5,
+          },
+          action : function() {
+            knobsAndLevers.laser.maxNumber = knobsAndLevers.laser.maxNumber === 1 ? 5 : 1;
+            menus.screens.settings.entries.laserQTY.text = 'LASER QTY: ' + (knobsAndLevers.laser.maxNumber == 1 ? 'NORMAL' : 'MANY');
+            menus.display('settings');
+          },
+        },
+        laserSpeed : {
+          text : 'LASER SPEED: ' + (knobsAndLevers.laser.speed == 5 ? 'NORMAL' : 'FAST'),
+          fontSize : '15px',
+          component : undefined,
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -4,
+          },
+          action : function() {
+            knobsAndLevers.laser.speed = knobsAndLevers.laser.speed === 5 ? 15 : 5;
+            menus.screens.settings.entries.laserSpeed.text = 'LASER SPEED: ' + (knobsAndLevers.laser.speed == 5 ? 'NORMAL' : 'FAST');
+            menus.display('settings');
+          },
+        },
+        shipSpeed : {
+          text : 'SHIP SPEED: ' + (knobsAndLevers.player.speed == 2 ? 'NORMAL' : 'FAST'),
+          fontSize : '15px',
+          component : undefined,
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -3,
+          },
+          action : function() {
+            knobsAndLevers.player.speed = knobsAndLevers.player.speed === 2 ? 4 : 2;
+            menus.screens.settings.entries.shipSpeed.text = 'SHIP SPEED: ' + (knobsAndLevers.player.speed == 2 ? 'NORMAL' : 'FAST');
             menus.display('settings');
           },
         },

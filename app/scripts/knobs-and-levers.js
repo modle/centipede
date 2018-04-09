@@ -66,8 +66,8 @@ var knobsAndLevers = {
     maxMushrooms : 50,
   },
   laser : {
-    speed : 20,
-    maxNumber : 20,
+    speed : 5,
+    maxNumber : 1,
     interval : 10,
     args : {
       color : "purple",
