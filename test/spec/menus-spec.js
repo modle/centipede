@@ -10,11 +10,32 @@ describe('MENUS SPEC: ', () => {
     menus.init();
   });
   function resetShowFlags() {
-    menus.show.main = false;
-    menus.show.playerSelect = false;
-    menus.show.settings = false;
-    menus.show.instructions = false;
-  }
+    Array.from(Object.keys(menus.show)).forEach(menu => menus.show[menu] = false);
+  };
+  it('display resets show object and sets selected menu to active', () => {
+    spyOn(menus, 'disableMenus');
+    actual = {thing1 : false, thing2 : true};
+    expected = {thing1 : true, thing2 : true};
+    menus.show = actual;
+
+    menus.display('thing1');
+
+    expect(actual).toEqual(expected);
+    expect(menus.disableMenus).toHaveBeenCalled();
+  });
+
+  it('disableMenus calls prep the canvas if frame number is not 0', () => {
+    game.init();
+    game.gameArea.frameNo = 10;
+    menus.timeSinceSelection = 10;
+    spyOn(main, 'prepTheCanvas');
+
+    menus.disableMenus();
+
+    expect(main.prepTheCanvas).toHaveBeenCalled();
+    expect(menus.timeSinceSelection).toBe(0);
+  });
+
   it('processMenus calls drawMenu with screens.main if show.main is true', () => {
     spyOn(main, 'readLeaderboard');
     spyOn(menus, 'setLeaderboardTexts');
@@ -26,7 +47,6 @@ describe('MENUS SPEC: ', () => {
 
     expect(main.readLeaderboard).toHaveBeenCalled();
     expect(menus.setLeaderboardTexts).toHaveBeenCalled();
-    expect(menus.drawMenu).toHaveBeenCalledTimes(1);
     expect(menus.drawMenu).toHaveBeenCalledWith(menus.screens.main);
   });
   it('processMenus calls drawMenu with screens.instructions if show.instructions is true', () => {
@@ -36,16 +56,95 @@ describe('MENUS SPEC: ', () => {
 
     menus.processMenus();
 
-    expect(menus.drawMenu).toHaveBeenCalledTimes(1);
     expect(menus.drawMenu).toHaveBeenCalledWith(menus.screens.instructions);
   });
-  it('processMenus calls returns false if all show flags are false', () => {
+  it('processMenus calls drawMenu with screens.settings if show.settings is true', () => {
+    spyOn(menus, 'drawMenu');
+    resetShowFlags();
+    menus.show.settings = true;
+
+    menus.processMenus();
+
+    expect(menus.drawMenu).toHaveBeenCalledWith(menus.screens.settings);
+  });
+  it('processMenus calls drawMenu with screens.playerSelect if show.playerSelect is true', () => {
+    spyOn(menus, 'drawMenu');
+    resetShowFlags();
+    menus.show.playerSelect = true;
+
+    menus.processMenus();
+
+    expect(menus.drawMenu).toHaveBeenCalledWith(menus.screens.playerSelect);
+  });
+  it('processMenus calls drawMenu with screens.initials if show.initials is true', () => {
+    spyOn(menus, 'drawMenu');
+    spyOn(menus, 'manageInitials');
+    resetShowFlags();
+    menus.show.initials = true;
+
+    menus.processMenus();
+
+    expect(menus.manageInitials).toHaveBeenCalled();
+    expect(menus.drawMenu).toHaveBeenCalledWith(menus.screens.initials);
+  });
+  it('processMenus does nothing and returns if all show flags are false', () => {
     spyOn(menus, 'drawMenu');
     resetShowFlags();
 
     menus.processMenus();
 
     expect(menus.drawMenu).not.toHaveBeenCalled();
+  });
+
+  it('manageInitials does too many things at too many lavels of abstraction', () => {
+    spyOn(menus, 'setInitialsMenuEntries');
+    spyOn(menus, 'shiftListOrder');
+    spyOn(main, 'saveScore');
+    spyOn(menus, 'reset');
+    menus.timeSinceMenuMove = 0;
+    metrics.lastScore = 999;
+    menus.screens.initials.text.entries[2].text = '';
+
+    menus.manageInitials();
+
+    expect(menus.screens.initials.text.entries[1].text).toBe('your score: 999');
+    expect(menus.timeSinceMenuMove).toBe(1);
+    expect(menus.setInitialsMenuEntries).toHaveBeenCalled();
+    expect(menus.shiftListOrder).toHaveBeenCalled();
+    expect(main.saveScore).not.toHaveBeenCalled();
+    expect(menus.reset).not.toHaveBeenCalled();
+  });
+  it('manageInitials still does too many things at too many lavels of abstraction', () => {
+    spyOn(menus, 'setInitialsMenuEntries');
+    spyOn(menus, 'shiftListOrder');
+    spyOn(main, 'saveScore');
+    spyOn(menus, 'reset');
+    menus.timeSinceMenuMove = 0;
+    metrics.lastScore = 999;
+    let expected = 'asdf';
+    menus.screens.initials.text.entries[2].text = expected;
+
+    menus.manageInitials();
+
+    expect(menus.screens.initials.text.entries[1].text).toBe('your score: 999');
+    expect(menus.timeSinceMenuMove).toBe(1);
+    expect(menus.setInitialsMenuEntries).toHaveBeenCalled();
+    expect(menus.shiftListOrder).toHaveBeenCalled();
+    expect(main.saveScore).toHaveBeenCalledWith(expected);
+    expect(menus.reset).toHaveBeenCalled();
+  });
+
+  it('setInitialsMenuEntries sets the menu entries in the correct order', () => {
+    menus.screens.initials.options = [0, 1, 2, 3, 4];
+    let initialOptions = menus.screens.initials.options;
+
+    menus.setInitialsMenuEntries();
+
+    expect(menus.screens.initials.entries.previous.text).toBe(initialOptions[4]);
+    expect(menus.screens.initials.entries.previouser.text).toBe(initialOptions[3]);
+    expect(menus.screens.initials.entries.current.text).toBe(initialOptions[0]);
+    expect(menus.screens.initials.entries.next.text).toBe(initialOptions[1]);
+    expect(menus.screens.initials.entries.nexter.text).toBe(initialOptions[2]);
   });
 
   it('drawMenu delegates to menu functions', () => {
@@ -81,6 +180,15 @@ describe('MENUS SPEC: ', () => {
     expect(menus.shiftListOrder).toHaveBeenCalled();
   });
 
+  it('shiftListOrder returns immediately if not enough time has passed', () => {
+    menus.timeSinceMenuMove = 1;
+    menus.minTimeToMove = 2;
+    spyOn(controls, 'getDirection');
+
+    menus.shiftListOrder([]);
+
+    expect(controls.getDirection).not.toHaveBeenCalled();
+  });
   it('shiftListOrder shifts array order up and currentSelection.name matches the first entry', () => {
     let startTime = 10;
     menus.timeSinceMenuMove = startTime;
@@ -93,7 +201,6 @@ describe('MENUS SPEC: ', () => {
 
     expect(actual).toEqual(expected);
   });
-
   it('shiftListOrder shifts array order down', () => {
     let startTime = 10;
     menus.timeSinceMenuMove = startTime;
@@ -106,7 +213,6 @@ describe('MENUS SPEC: ', () => {
 
     expect(actual).toEqual(expected);
   });
-
   it('shiftListOrder does not shifts array order when no direction is returned', () => {
     spyOn(controls, 'getDirection').and.returnValue("");
     let actual = ['first', 'second', 'third'];
@@ -198,7 +304,6 @@ describe('MENUS SPEC: ', () => {
     expect(controls.keyboard.flowControlButtonPressed).toHaveBeenCalled();
     expect(menus.currentSelection.entry.action).toHaveBeenCalled();
   });
-
   it('checkForSelection does not call currentSelectionEntry action when not enough time has passed', () => {
     startTime = 0;
     menus.timeSinceSelection = startTime;
@@ -213,4 +318,76 @@ describe('MENUS SPEC: ', () => {
     expect(controls.keyboard.flowControlButtonPressed).not.toHaveBeenCalled();
     expect(menus.currentSelection.entry.action).not.toHaveBeenCalled();
   });
+
+  it('addInitials updates initials text entry if text entry length is less than 3', () => {
+    let expected = 'AB';
+    menus.screens.initials.text.entries[2].text = 'A';
+    let textToAdd = 'B';
+    spyOn(main, 'saveScore');
+
+    menus.addInitials(textToAdd);
+
+    expect(menus.screens.initials.text.entries[2].text).toBe(expected);
+  });
+  it('addInitials calls main.saveScore if text is 3 characters long', () => {
+    let expected = 'ABC';
+    menus.screens.initials.text.entries[2].text = expected;
+    let textToAdd = 'B';
+    spyOn(main, 'saveScore');
+
+    menus.addInitials(textToAdd);
+
+    expect(menus.screens.initials.text.entries[2].text).toBe(expected);
+    expect(main.saveScore).toHaveBeenCalledWith(expected);
+  });
+
+  it('setLeaderboardTexts adds an entry to main texts array for each leaderboard record', () => {
+    spyOn(window, 'compare').and.callThrough();
+    menus.leaderboards = [{initials : 'ASD', score : 1}, {initials : 'EFG', score : 2}];
+    let expected = {first : 'EFG: 2', second : 'ASD: 1'};
+
+    menus.setLeaderboardTexts();
+    let actual = menus.screens.main.text.entries;
+
+    expect(window.compare).toHaveBeenCalledTimes(1);
+    expect(actual[0].text).toBe(expected.first);
+    expect(actual[1].text).toBe(expected.second);
+  });
+  it('setLeaderboardTexts returns if leaderboards is falsey', () => {
+    spyOn(window, 'compare').and.callThrough();
+    menus.leaderboards = undefined;
+
+    menus.setLeaderboardTexts();
+
+    expect(window.compare).not.toHaveBeenCalled();
+  });
+
+  it('compare returns 0 if b.score equals a.score', () => {
+    let a = {score : 1};
+    let b = {score : 1};
+    let expected = 0;
+
+    let actual = compare(a, b);
+
+    expect(actual).toBe(expected);
+  });
+  it('compare returns 1 if b.score is greater than a.score', () => {
+    let a = {score : 1};
+    let b = {score : 2};
+    let expected = 1;
+
+    let actual = compare(a, b);
+
+    expect(actual).toBe(expected);
+  });
+  it('compare returns -1 if a.score is greater than b.score', () => {
+    let a = {score : 2};
+    let b = {score : 1};
+    let expected = -1;
+
+    let actual = compare(a, b);
+
+    expect(actual).toBe(expected);
+  });
+
 });

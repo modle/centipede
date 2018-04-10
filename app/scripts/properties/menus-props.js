@@ -360,7 +360,7 @@ var menusProps = {
             name : 'entered',
             text : '',
             component : undefined,
-            position : {x : 200, y : 300},
+            position : {x : 350, y : 540},
             fontSize : '30px',
           },
         ],

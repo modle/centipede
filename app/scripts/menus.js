@@ -1,5 +1,12 @@
 menus = {
   leaderboards : undefined,
+  show : {
+    initials : false,
+    main : false,
+    playerSelect : false,
+    settings : false,
+    instructions : false
+  },
   init : function() {
     Object.assign(this, menusProps);
     this.selectionMarker = Object.assign({}, templates.marker);
@@ -24,12 +31,7 @@ menus = {
       main.prepTheCanvas();
     };
     this.timeSinceSelection = 0;
-    this.show.initials = false;
-    this.show.leaderboard = false;
-    this.show.main = false;
-    this.show.playerSelect = false;
-    this.show.settings = false;
-    this.show.instructions = false;
+    Array.from(Object.keys(this.show)).forEach(menu => this.show[menu] = false);
   },
   processMenus : function() {
     let screen = undefined;
@@ -38,9 +40,6 @@ menus = {
       screen = this.screens.initials;
       this.drawMenu(screen);
       return;
-    };
-    if (this.show.leaderboard) {
-      screen = this.screens.leaderboard;
     };
     if (this.show.main) {
       this.leaderboards = main.readLeaderboard();
@@ -61,12 +60,7 @@ menus = {
     };
   },
   manageInitials : function() {
-    let order = this.screens.initials.options.slice();
-    this.screens.initials.entries.previous.text = order.pop();
-    this.screens.initials.entries.previouser.text = order.pop();
-    this.screens.initials.entries.current.text = order.shift();
-    this.screens.initials.entries.next.text = order.shift();
-    this.screens.initials.entries.nexter.text = order.shift();
+    this.setInitialsMenuEntries();
     this.timeSinceMenuMove += 1;
     this.shiftListOrder(this.screens.initials.options);
     let initialsText = this.screens.initials.text.entries[2].text;
@@ -75,6 +69,14 @@ menus = {
       main.saveScore(initialsText);
       this.reset();
     };
+  },
+  setInitialsMenuEntries : function() {
+    let order = this.screens.initials.options.slice();
+    this.screens.initials.entries.previous.text = order.pop();
+    this.screens.initials.entries.previouser.text = order.pop();
+    this.screens.initials.entries.current.text = order.shift();
+    this.screens.initials.entries.next.text = order.shift();
+    this.screens.initials.entries.nexter.text = order.shift();
   },
   drawMenu : function(screen) {
     main.prepTheCanvas();
@@ -179,6 +181,7 @@ menus = {
     };
     this.screens.main.text.entries = [];
     let entriesSoFar = 0;
+    let text = '';
     this.leaderboards.sort(compare).forEach((entry, index) => {
       entriesSoFar = this.screens.main.text.entries.length;
       text = entry.initials + ': ' + entry.score;
@@ -197,10 +200,12 @@ menus = {
   },
 };
 
-function compare(a,b) {
-  if (a.score < b.score)
+function compare(a, b) {
+  if (a.score < b.score) {
     return 1;
-  if (a.score > b.score)
+  } else if (a.score > b.score) {
     return -1;
-  return 0;
+  } else {
+    return 0;
+  };
 };
