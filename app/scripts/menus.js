@@ -52,6 +52,9 @@ menus = {
     if (this.show.settings) {
       screen = this.screens.settings;
     };
+    if (this.show.cheats) {
+      screen = this.screens.cheats;
+    };
     if (this.show.playerSelect) {
       screen = this.screens.playerSelect;
     };

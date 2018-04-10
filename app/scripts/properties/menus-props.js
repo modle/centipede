@@ -20,7 +20,7 @@ var menusProps = {
   },
   show : {
     initials : false,
-    leaderboard : false,
+    cheats : false,
     main : true,
     instructions : false,
     settings : false,
@@ -78,6 +78,7 @@ var menusProps = {
         'play',
         'instructions',
         'settings',
+        'cheats',
       ],
       entries : {
         play : {
@@ -114,6 +115,18 @@ var menusProps = {
           },
           action : function() {
             menus.display('settings');
+          },
+        },
+        cheats : {
+          text : 'CHEATS',
+          fontSize : '15px',
+          component : undefined,
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 3,
+          },
+          action : function() {
+            menus.display('cheats');
           },
         },
       },
@@ -181,11 +194,9 @@ var menusProps = {
       },
     },
     settings : {
-      order : ['sound', 'laserQTY', 'laserSpeed', 'shipSpeed', 'back'],
+      order : ['sound', 'back'],
       entries : {
         // difficulty
-          // god - invincible
-          // demigod - a ton of lives
           // easy - no spiders
           // hard - 10 flies
           // impossible - 100 flies
@@ -213,8 +224,40 @@ var menusProps = {
             menus.display('settings');
           },
         },
+        back : {
+          text : 'BACK',
+          fontSize : '15px',
+          component : undefined,
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
+          },
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            menus.display('main');
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            name : 'settings',
+            text : 'Settings Are Thither',
+            component : undefined,
+            position : {x : 115, y : 200},
+            fontSize : '20px',
+          },
+        ],
+      },
+    },
+    cheats : {
+      order : ['laserQTY', 'laserSpeed', 'shipSpeed', 'reset', 'back'],
+      entries : {
+        // god - invincible
+        // demigod - a ton of lives
         laserQTY : {
-          text : 'LASER QTY: ' + (knobsAndLevers.laser.maxNumber == 1 ? 'ONE' : 'MANY'),
+          text : 'MORE LASERS: ' + (knobsAndLevers.laser.maxNumber == 1 ? 'OFF' : 'ON'),
+          initialText : 'MORE LASERS: ' + (knobsAndLevers.laser.maxNumber == 1 ? 'OFF' : 'ON'),
           fontSize : '15px',
           component : undefined,
           position : {
@@ -223,12 +266,13 @@ var menusProps = {
           },
           action : function() {
             knobsAndLevers.laser.maxNumber = knobsAndLevers.laser.maxNumber === 1 ? 5 : 1;
-            menus.screens.settings.entries.laserQTY.text = 'LASER QTY: ' + (knobsAndLevers.laser.maxNumber == 1 ? 'NORMAL' : 'MANY');
-            menus.display('settings');
+            menus.screens.cheats.entries.laserQTY.text = 'MORE LASERS: ' + (knobsAndLevers.laser.maxNumber == 1 ? 'OFF' : 'ON');
+            menus.display('cheats');
           },
         },
         laserSpeed : {
-          text : 'LASER SPEED: ' + (knobsAndLevers.laser.speed == 5 ? 'NORMAL' : 'FAST'),
+          text : 'FASTER LASERS: ' + (knobsAndLevers.laser.speed == 5 ? 'OFF' : 'ON'),
+          initialText : 'FASTER LASERS: ' + (knobsAndLevers.laser.speed == 5 ? 'OFF' : 'ON'),
           fontSize : '15px',
           component : undefined,
           position : {
@@ -237,12 +281,13 @@ var menusProps = {
           },
           action : function() {
             knobsAndLevers.laser.speed = knobsAndLevers.laser.speed === 5 ? 15 : 5;
-            menus.screens.settings.entries.laserSpeed.text = 'LASER SPEED: ' + (knobsAndLevers.laser.speed == 5 ? 'NORMAL' : 'FAST');
-            menus.display('settings');
+            menus.screens.cheats.entries.laserSpeed.text = 'FASTER LASERS: ' + (knobsAndLevers.laser.speed == 5 ? 'OFF' : 'ON');
+            menus.display('cheats');
           },
         },
         shipSpeed : {
-          text : 'SHIP SPEED: ' + (knobsAndLevers.player.speed == 2 ? 'NORMAL' : 'FAST'),
+          text : 'FASTER SHIP: ' + (knobsAndLevers.player.speed == 2 ? 'OFF' : 'ON'),
+          initialText : 'FASTER SHIP: ' + (knobsAndLevers.player.speed == 2 ? 'OFF' : 'ON'),
           fontSize : '15px',
           component : undefined,
           position : {
@@ -251,8 +296,25 @@ var menusProps = {
           },
           action : function() {
             knobsAndLevers.player.speed = knobsAndLevers.player.speed === 2 ? 4 : 2;
-            menus.screens.settings.entries.shipSpeed.text = 'SHIP SPEED: ' + (knobsAndLevers.player.speed == 2 ? 'NORMAL' : 'FAST');
-            menus.display('settings');
+            menus.screens.cheats.entries.shipSpeed.text = 'FASTER SHIP: ' + (knobsAndLevers.player.speed == 2 ? 'OFF' : 'ON');
+            menus.display('cheats');
+          },
+        },
+        reset : {
+          text : 'RESET',
+          fontSize : '15px',
+          component : undefined,
+          position : {
+            x : menusPropsDefaults.positions.x,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+          },
+          dimensions : {width : 96, height : 40},
+          action : function() {
+            menus.screens.cheats.entries.laserQTY.text = menus.screens.cheats.entries.laserQTY.initialText;
+            menus.screens.cheats.entries.laserSpeed.text = menus.screens.cheats.entries.laserSpeed.initialText;
+            menus.screens.cheats.entries.shipSpeed.text = menus.screens.cheats.entries.shipSpeed.initialText;
+            knobsAndLevers.resetCheats();
+            menus.display('cheats');
           },
         },
         back : {
@@ -273,7 +335,7 @@ var menusProps = {
         entries : [
           {
             name : 'settings',
-            text : 'Settings Are Thither',
+            text : 'Cheater',
             component : undefined,
             position : {x : 115, y : 200},
             fontSize : '20px',

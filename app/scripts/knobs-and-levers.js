@@ -9,7 +9,14 @@ var knobsAndLevers = {
     this.spider.init(this);
     this.text.init(this);
     this.worms.init(this);
+    this.resetCheats();
     console.log("knobsAndLevers initialized");
+  },
+  resetCheats : function() {
+    this.laser.speed = 5;
+    this.laser.maxNumber = 1;
+    this.player.speed = 2;
+    console.log('cheats reset');
   },
   mediaPath : "app/static/media/images/",
   general : {
