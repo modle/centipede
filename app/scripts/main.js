@@ -3,12 +3,12 @@ var main = {
   framesToWaitToPauseAgain : 0,
   updateGameState : function() {
     // this gets executed every interval
+    main.updateGamepad();
     if (!game.running) {
       controls.gamepad.checkState();
       menus.processMenus();
       return;
     };
-    main.updateGamepad();
     main.handleGamePause();
     if (main.processTriggers()) {
       return;
