@@ -16,6 +16,14 @@ var knobsAndLevers = {
     this.player.resetCheats();
     console.log('cheats reset');
   },
+  toggleParameter : function(parameter) {
+    parameter.value = parameter.value === parameter.default ? parameter.cheat.value : parameter.default;
+    parameter.cheat.state = parameter.cheat.state === 'OFF' ? 'ON' : 'OFF';
+  },
+  resetParameter : function(parameter) {
+    parameter.value = parameter.default;
+    parameter.cheat.state = 'OFF';
+  },
   mediaPath : "app/static/media/images/",
   general : {
     init : function(configs) {
@@ -82,14 +90,6 @@ var knobsAndLevers = {
         state : 'OFF',
         text : 'FASTER LASERS: ',
       },
-      reset : function() {
-        this.value = this.default;
-        this.cheat.state = 'OFF';
-      },
-      toggleCheat : function() {
-        this.value = this.value === this.default ? this.cheat.value : this.default;
-        this.cheat.state = this.cheat.state === 'OFF' ? 'ON' : 'OFF';
-      },
     },
     quantity : {
       value : 1,
@@ -98,14 +98,6 @@ var knobsAndLevers = {
         value : 5,
         state : 'OFF',
         text : 'MORE LASERS: ',
-      },
-      reset : function() {
-        this.value = this.default;
-        this.cheat.state = 'OFF';
-      },
-      toggleCheat : function() {
-        this.value = this.value === this.default ? this.cheat.value : this.default;
-        this.cheat.state = this.cheat.state === 'OFF' ? 'ON' : 'OFF';
       },
     },
     interval : 10,
@@ -118,8 +110,8 @@ var knobsAndLevers = {
       this.args.height = configs.general.gridSquareSideLength * 0.5;
     },
     resetCheats : function() {
-      this.speed.reset();
-      this.quantity.reset();
+      knobsAndLevers.resetParameter(this.speed);
+      knobsAndLevers.resetParameter(this.quantity);
     },
   },
   mushrooms : {
@@ -140,14 +132,6 @@ var knobsAndLevers = {
         state : 'OFF',
         text : 'FASTER SHIP: ',
       },
-      reset : function() {
-        this.value = this.default;
-        this.cheat.state = 'OFF';
-      },
-      toggleCheat : function() {
-        this.value = this.value === this.default ? this.cheat.value : this.default;
-        this.cheat.state = this.cheat.state === 'OFF' ? 'ON' : 'OFF';
-      },
     },
     width : 15,
     height : 15,
@@ -158,7 +142,7 @@ var knobsAndLevers = {
       this.startY = configs.canvas.height * 0.9;
     },
     resetCheats : function() {
-      this.speed.reset();
+      knobsAndLevers.resetParameter(this.speed);
     },
   },
   spider : {

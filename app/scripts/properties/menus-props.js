@@ -268,7 +268,7 @@ var menusProps = {
             y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -3,
           },
           action : function() {
-            knobsAndLevers.laser.quantity.toggleCheat();
+            knobsAndLevers.toggleParameter(knobsAndLevers.laser.quantity);
             this.text = knobsAndLevers.laser.quantity.cheat.text + knobsAndLevers.laser.quantity.cheat.state;
             console.log('value', knobsAndLevers.laser.quantity.value, 'cheat', knobsAndLevers.laser.quantity.cheat);
             menus.display('cheats');
@@ -284,7 +284,7 @@ var menusProps = {
             y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -2,
           },
           action : function() {
-            knobsAndLevers.laser.speed.toggleCheat();
+            knobsAndLevers.toggleParameter(knobsAndLevers.laser.speed);
             this.text = knobsAndLevers.laser.speed.cheat.text + knobsAndLevers.laser.speed.cheat.state;
             console.log('value', knobsAndLevers.laser.speed.value, 'cheat', knobsAndLevers.laser.speed.cheat);
             menus.display('cheats');
@@ -300,7 +300,7 @@ var menusProps = {
             y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -1,
           },
           action : function() {
-            knobsAndLevers.player.speed.toggleCheat();
+            knobsAndLevers.toggleParameter(knobsAndLevers.player.speed);
             this.text = knobsAndLevers.player.speed.cheat.text + knobsAndLevers.player.speed.cheat.state;
             console.log('value', knobsAndLevers.player.speed.value, 'cheat', knobsAndLevers.player.speed.cheat);
             menus.display('cheats');
