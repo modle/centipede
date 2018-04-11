@@ -13,7 +13,7 @@ var knobsAndLevers = {
   },
   resetCheats : function() {
     this.laser.resetCheats();
-    this.player.speed = 2;
+    this.player.resetCheats();
     console.log('cheats reset');
   },
   mediaPath : "app/static/media/images/",
@@ -132,7 +132,23 @@ var knobsAndLevers = {
   },
   player : {
     defaultLives : 1,
-    speed : 2,
+    speed : {
+      value : 2,
+      default : 2,
+      cheat : {
+        value : 4,
+        state : 'OFF',
+        text : 'FASTER SHIP: ',
+      },
+      reset : function() {
+        this.value = this.default;
+        this.cheat.state = 'OFF';
+      },
+      toggleCheat : function() {
+        this.value = this.value === this.default ? this.cheat.value : this.default;
+        this.cheat.state = this.cheat.state === 'OFF' ? 'ON' : 'OFF';
+      },
+    },
     width : 15,
     height : 15,
     extraArgs : {type : "player"},
@@ -140,6 +156,9 @@ var knobsAndLevers = {
       this.topLimit = configs.canvas.height * 0.8;
       this.startX = (configs.canvas.width - this.width) * 0.5;
       this.startY = configs.canvas.height * 0.9;
+    },
+    resetCheats : function() {
+      this.speed.reset();
     },
   },
   spider : {

@@ -265,7 +265,7 @@ var menusProps = {
           component : undefined,
           position : {
             x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -5,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -3,
           },
           action : function() {
             knobsAndLevers.laser.quantity.toggleCheat();
@@ -281,7 +281,7 @@ var menusProps = {
           component : undefined,
           position : {
             x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -4,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -2,
           },
           action : function() {
             knobsAndLevers.laser.speed.toggleCheat();
@@ -291,17 +291,18 @@ var menusProps = {
           },
         },
         shipSpeed : {
-          text : knobsAndLevers.cheats.shipSpeed.initialText,
-          initialText : knobsAndLevers.cheats.shipSpeed.initialText,
+          text : knobsAndLevers.player.speed.cheat.text + knobsAndLevers.player.speed.cheat.state,
+          initialText : knobsAndLevers.player.speed.cheat.text + knobsAndLevers.player.speed.cheat.state,
           fontSize : '15px',
           component : undefined,
           position : {
             x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -3,
+            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -1,
           },
           action : function() {
-            knobsAndLevers.player.speed = knobsAndLevers.player.speed === 2 ? 4 : 2;
-            menus.screens.cheats.entries.shipSpeed.text = 'FASTER SHIP: ' + (knobsAndLevers.player.speed == 2 ? 'OFF' : 'ON');
+            knobsAndLevers.player.speed.toggleCheat();
+            this.text = knobsAndLevers.player.speed.cheat.text + knobsAndLevers.player.speed.cheat.state;
+            console.log('value', knobsAndLevers.player.speed.value, 'cheat', knobsAndLevers.player.speed.cheat);
             menus.display('cheats');
           },
         },

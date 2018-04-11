@@ -60,7 +60,7 @@ describe('MAIN SPEC: ', () => {
 
     expect(controls.gamepad.checkState).toHaveBeenCalled();
     expect(menus.processMenus).toHaveBeenCalled();
-    expect(main.updateGamepad).not.toHaveBeenCalled();
+    expect(main.updateGamepad).toHaveBeenCalled();
     expect(main.handleGamePause).not.toHaveBeenCalled();
     expect(main.processTriggers).not.toHaveBeenCalled();
     expect(main.prepTheCanvas).not.toHaveBeenCalled();
