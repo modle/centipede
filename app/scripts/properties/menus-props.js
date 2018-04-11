@@ -252,12 +252,15 @@ var menusProps = {
     },
     cheats : {
       order : ['laserQTY', 'laserSpeed', 'shipSpeed', 'reset', 'back'],
+      getSetting : function() {
+
+      },
       entries : {
         // god - invincible
         // demigod - a ton of lives
         laserQTY : {
-          text : 'MORE LASERS: ' + (knobsAndLevers.laser.maxNumber == 1 ? 'OFF' : 'ON'),
-          initialText : 'MORE LASERS: ' + (knobsAndLevers.laser.maxNumber == 1 ? 'OFF' : 'ON'),
+          text : knobsAndLevers.laser.quantity.cheat.text + knobsAndLevers.laser.quantity.cheat.state,
+          initialText : knobsAndLevers.laser.quantity.cheat.text + knobsAndLevers.laser.quantity.cheat.state,
           fontSize : '15px',
           component : undefined,
           position : {
@@ -265,14 +268,15 @@ var menusProps = {
             y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -5,
           },
           action : function() {
-            knobsAndLevers.laser.maxNumber = knobsAndLevers.laser.maxNumber === 1 ? 5 : 1;
-            menus.screens.cheats.entries.laserQTY.text = 'MORE LASERS: ' + (knobsAndLevers.laser.maxNumber == 1 ? 'OFF' : 'ON');
+            knobsAndLevers.laser.quantity.toggleCheat();
+            this.text = knobsAndLevers.laser.quantity.cheat.text + knobsAndLevers.laser.quantity.cheat.state;
+            console.log('value', knobsAndLevers.laser.quantity.value, 'cheat', knobsAndLevers.laser.quantity.cheat);
             menus.display('cheats');
           },
         },
         laserSpeed : {
-          text : 'FASTER LASERS: ' + (knobsAndLevers.laser.speed == 5 ? 'OFF' : 'ON'),
-          initialText : 'FASTER LASERS: ' + (knobsAndLevers.laser.speed == 5 ? 'OFF' : 'ON'),
+          text : knobsAndLevers.laser.speed.cheat.text + knobsAndLevers.laser.speed.cheat.state,
+          initialText : knobsAndLevers.laser.speed.cheat.text + knobsAndLevers.laser.speed.cheat.state,
           fontSize : '15px',
           component : undefined,
           position : {
@@ -280,14 +284,15 @@ var menusProps = {
             y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * -4,
           },
           action : function() {
-            knobsAndLevers.laser.speed = knobsAndLevers.laser.speed === 5 ? 15 : 5;
-            menus.screens.cheats.entries.laserSpeed.text = 'FASTER LASERS: ' + (knobsAndLevers.laser.speed == 5 ? 'OFF' : 'ON');
+            knobsAndLevers.laser.speed.toggleCheat();
+            this.text = knobsAndLevers.laser.speed.cheat.text + knobsAndLevers.laser.speed.cheat.state;
+            console.log('value', knobsAndLevers.laser.speed.value, 'cheat', knobsAndLevers.laser.speed.cheat);
             menus.display('cheats');
           },
         },
         shipSpeed : {
-          text : 'FASTER SHIP: ' + (knobsAndLevers.player.speed == 2 ? 'OFF' : 'ON'),
-          initialText : 'FASTER SHIP: ' + (knobsAndLevers.player.speed == 2 ? 'OFF' : 'ON'),
+          text : knobsAndLevers.cheats.shipSpeed.initialText,
+          initialText : knobsAndLevers.cheats.shipSpeed.initialText,
           fontSize : '15px',
           component : undefined,
           position : {
@@ -338,6 +343,20 @@ var menusProps = {
             text : 'Cheater',
             component : undefined,
             position : {x : 115, y : 200},
+            fontSize : '20px',
+          },
+          {
+            name : 'settings',
+            text : 'Scores will not be recorded',
+            component : undefined,
+            position : {x : 135, y : 225},
+            fontSize : '20px',
+          },
+          {
+            name : 'settings',
+            text : 'if any of these are set',
+            component : undefined,
+            position : {x : 155, y : 250},
             fontSize : '20px',
           },
         ],

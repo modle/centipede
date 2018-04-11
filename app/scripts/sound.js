@@ -8,7 +8,7 @@ var sounds = {
       worm : this.buildSound("worm", 0.5, "loop"),
       playerDied : this.buildSound("player-died", 0.5),
       laserPool : this.buildManySounds("laser", 20),
-      impactPool : this.buildManySounds("laser-impact", knobsAndLevers.laser.maxNumber),
+      impactPool : this.buildManySounds("laser-impact", knobsAndLevers.laser.quantity.value),
     };
     console.log("sounds initialized");
   },

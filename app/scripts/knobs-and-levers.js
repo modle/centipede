@@ -9,12 +9,10 @@ var knobsAndLevers = {
     this.spider.init(this);
     this.text.init(this);
     this.worms.init(this);
-    this.resetCheats();
     console.log("knobsAndLevers initialized");
   },
   resetCheats : function() {
-    this.laser.speed = 5;
-    this.laser.maxNumber = 1;
+    this.laser.resetCheats();
     this.player.speed = 2;
     console.log('cheats reset');
   },
@@ -42,6 +40,9 @@ var knobsAndLevers = {
       this.args.height = configs.general.gridSquareSideLength;
       this.args.x = configs.canvas.width / 2;
     },
+  },
+  cheats : {
+    shipSpeed : {initialText : 'FASTER SHIP: OFF'},
   },
   flies : {
     maxNumber: 2,
@@ -73,8 +74,40 @@ var knobsAndLevers = {
     maxMushrooms : 50,
   },
   laser : {
-    speed : 5,
-    maxNumber : 1,
+    speed : {
+      value : 5,
+      default : 5,
+      cheat : {
+        value : 15,
+        state : 'OFF',
+        text : 'FASTER LASERS: ',
+      },
+      reset : function() {
+        this.value = this.default;
+        this.cheat.state = 'OFF';
+      },
+      toggleCheat : function() {
+        this.value = this.value === this.default ? this.cheat.value : this.default;
+        this.cheat.state = this.cheat.state === 'OFF' ? 'ON' : 'OFF';
+      },
+    },
+    quantity : {
+      value : 1,
+      default : 1,
+      cheat : {
+        value : 5,
+        state : 'OFF',
+        text : 'MORE LASERS: ',
+      },
+      reset : function() {
+        this.value = this.default;
+        this.cheat.state = 'OFF';
+      },
+      toggleCheat : function() {
+        this.value = this.value === this.default ? this.cheat.value : this.default;
+        this.cheat.state = this.cheat.state === 'OFF' ? 'ON' : 'OFF';
+      },
+    },
     interval : 10,
     args : {
       color : "purple",
@@ -83,6 +116,10 @@ var knobsAndLevers = {
     init : function(configs) {
       this.args.width = configs.general.gridSquareSideLength / 10;
       this.args.height = configs.general.gridSquareSideLength * 0.5;
+    },
+    resetCheats : function() {
+      this.speed.reset();
+      this.quantity.reset();
     },
   },
   mushrooms : {

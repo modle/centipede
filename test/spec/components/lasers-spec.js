@@ -39,13 +39,13 @@ describe('LASERS SPEC: ', () => {
 
   it('eligibleToSpawn returns false if lasers is at max', () => {
     testObj.lasers = [];
-    while (testObj.lasers.length < knobsAndLevers.laser.maxNumber) {
+    while (testObj.lasers.length < knobsAndLevers.laser.quantity.value) {
       testObj.lasers.push({});
     };
     spyOn(supporting, 'everyinterval').and.returnValue(true);
     spyOn(controls, 'isFiring').and.returnValue(true);
 
-    expect(testObj.lasers.length).toBe(knobsAndLevers.laser.maxNumber);
+    expect(testObj.lasers.length).toBe(knobsAndLevers.laser.quantity.value);
 
     let spawnEligibility = testObj.eligibleToSpawn();
 
@@ -58,7 +58,7 @@ describe('LASERS SPEC: ', () => {
     spyOn(supporting, 'everyinterval').and.returnValue(true);
     spyOn(controls, 'isFiring').and.returnValue(true);
 
-    expect(testObj.lasers.length).toBeLessThan(knobsAndLevers.laser.maxNumber);
+    expect(testObj.lasers.length).toBeLessThan(knobsAndLevers.laser.quantity.value);
 
     let spawnEligibility = testObj.eligibleToSpawn();
 
@@ -82,7 +82,7 @@ describe('LASERS SPEC: ', () => {
     player.init();
 
     let laser = testObj.make();
-    expect(laser.speedY).toBe(-knobsAndLevers.laser.speed);
+    expect(laser.speedY).toBe(-knobsAndLevers.laser.speed.value);
     expect(laser.x).toBe(player.gamePiece.x + player.gamePiece.width / 2);
     expect(laser.y).toBe(player.gamePiece.y);
   })
