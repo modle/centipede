@@ -32,10 +32,12 @@ menus = {
     } else if (this.show.main) {
       this.leaderboards = main.readLeaderboard();
       this.setLeaderboardTexts();
-    } else if (this.show.cheats) {
-      this.screens.cheats.update();
     };
-    this.drawMenu(this.screens[this.getCurrentScreen()]);
+    let screen = this.screens[this.getCurrentScreen()];
+    if (screen.update) {
+      screen.update();
+    };
+    this.drawMenu(screen);
   },
   manageInitials : function() {
     this.setInitialsMenuEntries();

@@ -139,6 +139,14 @@ var menusProps = {
     },
     settings : {
       order : ['sound', 'back'],
+      update : function() {
+        let theSettings = menus.screens.settings.entries;
+        Array.from(Object.keys(theSettings)).forEach(setting => {
+          if (!theSettings[setting].text) {
+            theSettings[setting].update();
+          };
+        });
+      },
       entries : {
         // difficulty
           // easy - no spiders
@@ -150,15 +158,15 @@ var menusProps = {
           // tiny/normal
         // can't really do anything with centipede speed until the vertical movement logic gets
         sound : {
-          text : 'SOUND ' + (knobsAndLevers.game.soundsEnabled ? 'ON' : 'OFF'),
+          update : function() {
+            this.text = knobsAndLevers.game.sounds.setting.render();
+          },
           action : function() {
-            knobsAndLevers.game.soundsEnabled = !knobsAndLevers.game.soundsEnabled;
-            let text = 'SOUND OFF';
-            if (knobsAndLevers.game.soundsEnabled) {
+            knobsAndLevers.toggleParameter(knobsAndLevers.game.sounds);
+            this.update();
+            if (knobsAndLevers.game.sounds.value) {
               sounds.playAvailableLaserSound();
-              text = 'SOUND ON';
             };
-            menus.screens.settings.entries.sound.text = text;
             menus.display('settings');
           },
         },
@@ -180,16 +188,17 @@ var menusProps = {
     cheats : {
       order : ['laserQTY', 'laserSpeed', 'shipSpeed', 'reset', 'back'],
       update : function() {
-        menus.screens.cheats.entries.laserQTY.update();
-        menus.screens.cheats.entries.laserSpeed.update();
-        menus.screens.cheats.entries.shipSpeed.update();
+        let theCheats = menus.screens.cheats.entries;
+        theCheats.laserQTY.update();
+        theCheats.laserSpeed.update();
+        theCheats.shipSpeed.update();
       },
       entries : {
         // TODO god - invincible
         // TODO demigod - a ton of lives
         laserQTY : {
           update : function() {
-            this.text = knobsAndLevers.laser.quantity.cheat.render();
+            this.text = knobsAndLevers.laser.quantity.setting.render();
           },
           action : function() {
             knobsAndLevers.toggleParameter(knobsAndLevers.laser.quantity);
@@ -199,7 +208,7 @@ var menusProps = {
         },
         laserSpeed : {
           update : function() {
-            this.text = knobsAndLevers.laser.speed.cheat.render();
+            this.text = knobsAndLevers.laser.speed.setting.render();
           },
           action : function() {
             knobsAndLevers.toggleParameter(knobsAndLevers.laser.speed);
@@ -209,7 +218,7 @@ var menusProps = {
         },
         shipSpeed : {
           update : function() {
-            this.text = knobsAndLevers.player.speed.cheat.render();
+            this.text = knobsAndLevers.player.speed.setting.render();
           },
           action : function() {
             knobsAndLevers.toggleParameter(knobsAndLevers.player.speed);

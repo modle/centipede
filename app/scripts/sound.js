@@ -23,7 +23,7 @@ var sounds = {
     return soundArray;
   },
   manageSounds : function() {
-    if (!knobsAndLevers.game.soundsEnabled) {
+    if (!knobsAndLevers.game.sounds.value) {
       return;
     };
     this.manageCentipedeSounds();
@@ -40,7 +40,7 @@ var sounds = {
     return this.tracks[type];
   },
   playSound : function(sound) {
-    if (knobsAndLevers.game.soundsEnabled) {
+    if (knobsAndLevers.game.sounds.value) {
       sound.play();
     };
   },

@@ -34,7 +34,7 @@ describe('SOUND SPEC: ', () => {
     spyOn(testObj, 'manageSpiderSounds');
     spyOn(testObj, 'manageFlySounds');
     spyOn(testObj, 'manageWormSounds');
-    knobsAndLevers.game.soundsEnabled = true;
+    knobsAndLevers.game.sounds.value = true;
 
     testObj.manageSounds();
 

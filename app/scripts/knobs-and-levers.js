@@ -17,12 +17,13 @@ var knobsAndLevers = {
     console.log('cheats reset');
   },
   toggleParameter : function(parameter) {
-    parameter.value = parameter.value === parameter.default ? parameter.cheat.value : parameter.default;
-    parameter.cheat.state = parameter.cheat.state === 'OFF' ? 'ON' : 'OFF';
+    parameter.value = parameter.value === parameter.default ? parameter.setting.value : parameter.default;
+    parameter.setting.state = parameter.setting.state === 'OFF' ? 'ON' : 'OFF';
+    console.log(parameter);
   },
   resetParameter : function(parameter) {
     parameter.value = parameter.default;
-    parameter.cheat.state = 'OFF';
+    parameter.setting.state = 'OFF';
   },
   mediaPath : "app/static/media/images/",
   general : {
@@ -73,7 +74,18 @@ var knobsAndLevers = {
   },
   game : {
     playerCollisionsEnabled : true,
-    soundsEnabled : true,
+    sounds : {
+      value : true,
+      default : true,
+      setting : {
+        value : false,
+        state : 'ON',
+        text : 'SOUNDS',
+        render : function() {
+          return supporting.align(this.text) + this.state;
+        },
+      },
+    },
     gameOverDelay : 600,
     startLevel : 0,
     maxMushrooms : 50,
@@ -82,7 +94,7 @@ var knobsAndLevers = {
     speed : {
       value : 5,
       default : 5,
-      cheat : {
+      setting : {
         value : 15,
         state : 'OFF',
         text : 'FASTER LASERS',
@@ -94,7 +106,7 @@ var knobsAndLevers = {
     quantity : {
       value : 1,
       default : 1,
-      cheat : {
+      setting : {
         value : 5,
         state : 'OFF',
         text : 'MORE LASERS',
@@ -130,7 +142,7 @@ var knobsAndLevers = {
     speed : {
       value : 2,
       default : 2,
-      cheat : {
+      setting : {
         value : 4,
         state : 'OFF',
         text : 'FASTER SHIP',
