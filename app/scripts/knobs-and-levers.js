@@ -181,7 +181,6 @@ var knobsAndLevers = {
       this.baseParams.x = configs.canvas.width * 0.25;
       this.baseBackgroundParams.height = configs.general.gridSquareSideLength;
       this.baseBackgroundParams.width = configs.canvas.width;
-      this.baseParams.fontSize = configs.general.gridSquareSideLength + "px";
       this.gameInfoHeight = configs.general.gridSquareSideLength * 1.3;
     },
   },

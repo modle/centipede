@@ -7,14 +7,16 @@ function Component(args) {
   this.y = args.y;
   this.width = args.width;
   this.height = args.height;
-  if (Array.from(Object.keys(args)).includes('background')) {
+  if (args.background) {
     this.background = args.background;
   };
   this.color = args.color;
-  if (Array.from(Object.keys(args)).includes('extraArgs')) {
-    this.type = args.extraArgs.type;
+  if (args.fontSize) {
     this.fontSize = args.fontSize;
-    if (Array.from(Object.keys(args.extraArgs)).includes('speed')) {
+  };
+  if (args.extraArgs) {
+    this.type = args.extraArgs.type;
+    if (args.extraArgs.speed) {
       this.speedX = args.extraArgs.speed.x;
       this.speedY = args.extraArgs.speed.y;
     };

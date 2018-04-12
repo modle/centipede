@@ -1,12 +1,5 @@
 menus = {
   leaderboards : undefined,
-  show : {
-    initials : false,
-    main : false,
-    playerSelect : false,
-    settings : false,
-    instructions : false
-  },
   currentSelection : undefined,
   init : function() {
     Object.assign(this, menusProps);
@@ -103,13 +96,13 @@ menus = {
     this.timeSinceMenuMove = 0;
   },
   drawEntries : function(entries) {
-    Array.from(Object.keys(entries)).forEach(entry => {
+    Array.from(Object.keys(entries)).forEach((entry, index) => {
       let menuElement = entries[entry];
       if (!menuElement.component) {
         menuElement.component = this.buildDefaultComponent();
       };
-      menuElement.component.x = menuElement.position.x;
-      menuElement.component.y = menuElement.position.y;
+      menuElement.component.x = menusPropsDefaults.positions.x + (menuElement.xAdjust ? menuElement.xAdjust : 0);
+      menuElement.component.y = menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * index;
       menuElement.component.text = menuElement.text;
       if (menuElement.fontSize) {
         menuElement.component.fontSize = menuElement.fontSize;
@@ -124,15 +117,18 @@ menus = {
     });
   },
   drawSelectionMarker : function() {
-    this.selectionMarker.x = this.currentSelection.entry.position.x - knobsAndLevers.player.width * 2;
-    this.selectionMarker.y = this.currentSelection.entry.position.y - 15;
+    if (!this.currentSelection.entry) {
+      return;
+    };
+    this.selectionMarker.x = this.currentSelection.entry.component.x - knobsAndLevers.player.width * 2;
+    this.selectionMarker.y = this.currentSelection.entry.component.y - 15;
     this.selectionMarker.update();
   },
   drawTexts : function(texts) {
     texts.entries.forEach(entry => {
       if (!entry.component) {
         entry.component = this.buildDefaultComponent();
-      }
+      };
       entry.component.x = entry.position.x;
       entry.component.y = entry.position.y;
       entry.component.text = entry.text;
