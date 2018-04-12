@@ -7,6 +7,7 @@ menus = {
     settings : false,
     instructions : false
   },
+  currentSelection : undefined,
   init : function() {
     Object.assign(this, menusProps);
     this.selectionMarker = Object.assign({}, templates.marker);
@@ -18,9 +19,8 @@ menus = {
   reset : function() {
     game.gameOver = false;
     this.init();
-    this.disableMenus();
     this.screens.initials.text.entries[2].text = '';
-    this.show.main = true;
+    this.display(metrics.lastScore ? 'initials' : 'main');
   },
   display : function(menu) {
     menus.disableMenus();
@@ -34,33 +34,13 @@ menus = {
     Array.from(Object.keys(this.show)).forEach(menu => this.show[menu] = false);
   },
   processMenus : function() {
-    let screen = undefined;
     if (this.show.initials) {
       this.manageInitials();
-      screen = this.screens.initials;
-      this.drawMenu(screen);
-      return;
-    };
-    if (this.show.main) {
+    } else if (this.show.main) {
       this.leaderboards = main.readLeaderboard();
       this.setLeaderboardTexts();
-      screen = this.screens.main;
     };
-    if (this.show.instructions) {
-      screen = this.screens.instructions;
-    };
-    if (this.show.settings) {
-      screen = this.screens.settings;
-    };
-    if (this.show.cheats) {
-      screen = this.screens.cheats;
-    };
-    if (this.show.playerSelect) {
-      screen = this.screens.playerSelect;
-    };
-    if (screen) {
-      this.drawMenu(screen);
-    };
+    this.drawMenu(this.screens[this.getCurrentScreen()]);
   },
   manageInitials : function() {
     this.setInitialsMenuEntries();
@@ -70,6 +50,7 @@ menus = {
     this.screens.initials.text.entries[1].text = 'your score: ' + metrics.lastScore;
     if (initialsText.length >= 3) {
       main.saveScore(initialsText);
+      metrics.lastScore = 0;
       this.reset();
     };
   },
@@ -81,7 +62,13 @@ menus = {
     this.screens.initials.entries.next.text = order.shift();
     this.screens.initials.entries.nexter.text = order.shift();
   },
+  getCurrentScreen : function() {
+    return Array.from(Object.keys(this.show)).find(menu => this.show[menu]);
+  },
   drawMenu : function(screen) {
+    if (!screen) {
+      return;
+    };
     main.prepTheCanvas();
     this.drawTexts(menus.title);
     this.drawEntries(screen.entries);
@@ -174,6 +161,7 @@ menus = {
       theText += initial;
     } else {
       main.saveScore(theText);
+      this.show.main = true;
       this.reset();
     };
     this.screens.initials.text.entries[2].text = theText;

@@ -80,6 +80,5 @@ var game = {
     mushrooms.clear();
     init.afterGameOver();
     menus.reset();
-    menus.show.initials = true;
   },
 };

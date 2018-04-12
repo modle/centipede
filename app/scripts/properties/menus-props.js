@@ -341,7 +341,7 @@ var menusProps = {
         entries : [
           {
             name : 'settings',
-            text : 'Cheater',
+            text : 'Dear cheater,',
             component : undefined,
             position : {x : 115, y : 200},
             fontSize : '20px',
