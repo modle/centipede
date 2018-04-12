@@ -32,6 +32,8 @@ menus = {
     } else if (this.show.main) {
       this.leaderboards = main.readLeaderboard();
       this.setLeaderboardTexts();
+    } else if (this.show.cheats) {
+      this.screens.cheats.update();
     };
     this.drawMenu(this.screens[this.getCurrentScreen()]);
   },
@@ -101,8 +103,8 @@ menus = {
       if (!menuElement.component) {
         menuElement.component = this.buildDefaultComponent();
       };
-      menuElement.component.x = menusPropsDefaults.positions.x + (menuElement.xAdjust ? menuElement.xAdjust : 0);
-      menuElement.component.y = menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * index;
+      menuElement.component.x = menuDefaults.entries.x + (menuElement.xAdjust ? menuElement.xAdjust : 0);
+      menuElement.component.y = menuDefaults.entries.y + menuDefaults.yDivider * index;
       menuElement.component.text = menuElement.text;
       if (menuElement.fontSize) {
         menuElement.component.fontSize = menuElement.fontSize;
@@ -125,12 +127,12 @@ menus = {
     this.selectionMarker.update();
   },
   drawTexts : function(texts) {
-    texts.entries.forEach(entry => {
+    texts.entries.forEach((entry, index) => {
       if (!entry.component) {
         entry.component = this.buildDefaultComponent();
       };
-      entry.component.x = entry.position.x;
-      entry.component.y = entry.position.y;
+      entry.component.x = menuDefaults.text.x + (entry.xAdjust ? entry.xAdjust : 0);
+      entry.component.y = menuDefaults.text.y + (entry.yAdjust ? entry.yAdjust : 0) + menuDefaults.yDivider * index;
       entry.component.text = entry.text;
       if (entry.fontSize) {
         entry.component.fontSize = entry.fontSize;

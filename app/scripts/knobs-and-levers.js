@@ -49,9 +49,6 @@ var knobsAndLevers = {
       this.args.x = configs.canvas.width / 2;
     },
   },
-  cheats : {
-    shipSpeed : {initialText : 'FASTER SHIP: OFF'},
-  },
   flies : {
     maxNumber: 2,
     pointValue : 200,
@@ -88,7 +85,10 @@ var knobsAndLevers = {
       cheat : {
         value : 15,
         state : 'OFF',
-        text : 'FASTER LASERS: ',
+        text : 'FASTER LASERS',
+        render : function() {
+          return supporting.align(this.text) + this.state;
+        },
       },
     },
     quantity : {
@@ -97,7 +97,10 @@ var knobsAndLevers = {
       cheat : {
         value : 5,
         state : 'OFF',
-        text : 'MORE LASERS: ',
+        text : 'MORE LASERS',
+        render : function() {
+          return supporting.align(this.text) + this.state;
+        },
       },
     },
     interval : 10,
@@ -130,7 +133,10 @@ var knobsAndLevers = {
       cheat : {
         value : 4,
         state : 'OFF',
-        text : 'FASTER SHIP: ',
+        text : 'FASTER SHIP',
+        render : function() {
+          return supporting.align(this.text) + this.state;
+        },
       },
     },
     width : 15,

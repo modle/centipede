@@ -1,8 +1,12 @@
-var menusPropsDefaults = {
-  positions : {
+var menuDefaults = {
+  yDivider : 25,
+  entries : {
     x : 250,
     y : 500,
-    yDivider : 40,
+  },
+  text : {
+    x : 115,
+    y : 200,
   }
 };
 
@@ -12,8 +16,7 @@ var menusProps = {
       {
         name : 'title',
         text : 'CENTIPEDE!',
-        component : undefined,
-        position : {x : 115, y : 100},
+        yAdjust : -100,
         fontSize : '50px',
       },
     ],
@@ -40,7 +43,6 @@ var menusProps = {
       entries : {
         back : {
           text : 'BACK',
-          component : undefined,
           action : function() {
             menus.display('main');
           },
@@ -49,16 +51,10 @@ var menusProps = {
       text : {
         entries : [
           {
-            name : 'move',
             text : 'WASD : move',
-            component : undefined,
-            position : {x : 115, y : 200},
           },
           {
-            name : 'shoot',
             text : 'arrow keys or shift : shoot',
-            component : undefined,
-            position : {x : 115, y : 250},
           },
         ],
       },
@@ -73,28 +69,24 @@ var menusProps = {
       entries : {
         play : {
           text : 'PLAY',
-          component : undefined,
           action : function() {
             menus.display('playerSelect');
           },
         },
         instructions : {
           text : 'INSTRUCTIONS',
-          component : undefined,
           action : function() {
             menus.display('instructions');
           },
         },
         settings : {
           text : 'SETTINGS',
-          component : undefined,
           action : function() {
             menus.display('settings');
           },
         },
         cheats : {
           text : 'CHEATS',
-          component : undefined,
           action : function() {
             menus.display('cheats');
           },
@@ -112,7 +104,6 @@ var menusProps = {
       entries : {
         onePlayer : {
           text : '1 PLAYER',
-          component : undefined,
           action : function() {
             menus.disableMenus();
             game.running = true;
@@ -133,7 +124,6 @@ var menusProps = {
         // },
         back : {
           text : 'BACK',
-          component : undefined,
           action : function() {
             menus.display('main');
           },
@@ -142,10 +132,7 @@ var menusProps = {
       text : {
         entries : [
           {
-            name : 'playerSelect',
             text : 'Player Select',
-            component : undefined,
-            position : {x : 115, y : 200},
           },
         ],
       },
@@ -164,7 +151,6 @@ var menusProps = {
         // can't really do anything with centipede speed until the vertical movement logic gets
         sound : {
           text : 'SOUND ' + (knobsAndLevers.game.soundsEnabled ? 'ON' : 'OFF'),
-          component : undefined,
           action : function() {
             knobsAndLevers.game.soundsEnabled = !knobsAndLevers.game.soundsEnabled;
             let text = 'SOUND OFF';
@@ -178,7 +164,6 @@ var menusProps = {
         },
         back : {
           text : 'BACK',
-          component : undefined,
           action : function() {
             menus.display('main');
           },
@@ -187,71 +172,61 @@ var menusProps = {
       text : {
         entries : [
           {
-            name : 'settings',
             text : 'Settings Are Thither',
-            component : undefined,
-            position : {x : 115, y : 200},
           },
         ],
       },
     },
     cheats : {
       order : ['laserQTY', 'laserSpeed', 'shipSpeed', 'reset', 'back'],
-      getSetting : function() {
-
+      update : function() {
+        menus.screens.cheats.entries.laserQTY.update();
+        menus.screens.cheats.entries.laserSpeed.update();
+        menus.screens.cheats.entries.shipSpeed.update();
       },
       entries : {
-        // god - invincible
-        // demigod - a ton of lives
+        // TODO god - invincible
+        // TODO demigod - a ton of lives
         laserQTY : {
-          text : knobsAndLevers.laser.quantity.cheat.text + knobsAndLevers.laser.quantity.cheat.state,
-          initialText : knobsAndLevers.laser.quantity.cheat.text + knobsAndLevers.laser.quantity.cheat.state,
-          component : undefined,
+          update : function() {
+            this.text = knobsAndLevers.laser.quantity.cheat.render();
+          },
           action : function() {
             knobsAndLevers.toggleParameter(knobsAndLevers.laser.quantity);
-            this.text = knobsAndLevers.laser.quantity.cheat.text + knobsAndLevers.laser.quantity.cheat.state;
-            console.log('value', knobsAndLevers.laser.quantity.value, 'cheat', knobsAndLevers.laser.quantity.cheat);
+            this.update();
             menus.display('cheats');
           },
         },
         laserSpeed : {
-          text : knobsAndLevers.laser.speed.cheat.text + knobsAndLevers.laser.speed.cheat.state,
-          initialText : knobsAndLevers.laser.speed.cheat.text + knobsAndLevers.laser.speed.cheat.state,
-          component : undefined,
+          update : function() {
+            this.text = knobsAndLevers.laser.speed.cheat.render();
+          },
           action : function() {
             knobsAndLevers.toggleParameter(knobsAndLevers.laser.speed);
-            this.text = knobsAndLevers.laser.speed.cheat.text + knobsAndLevers.laser.speed.cheat.state;
-            console.log('value', knobsAndLevers.laser.speed.value, 'cheat', knobsAndLevers.laser.speed.cheat);
+            this.update();
             menus.display('cheats');
           },
         },
         shipSpeed : {
-          text : knobsAndLevers.player.speed.cheat.text + knobsAndLevers.player.speed.cheat.state,
-          initialText : knobsAndLevers.player.speed.cheat.text + knobsAndLevers.player.speed.cheat.state,
-          component : undefined,
+          update : function() {
+            this.text = knobsAndLevers.player.speed.cheat.render();
+          },
           action : function() {
             knobsAndLevers.toggleParameter(knobsAndLevers.player.speed);
-            this.text = knobsAndLevers.player.speed.cheat.text + knobsAndLevers.player.speed.cheat.state;
-            console.log('value', knobsAndLevers.player.speed.value, 'cheat', knobsAndLevers.player.speed.cheat);
+            this.update();
             menus.display('cheats');
           },
         },
         reset : {
           text : 'RESET',
-          component : undefined,
-          dimensions : {width : 96, height : 40},
           action : function() {
-            menus.screens.cheats.entries.laserQTY.text = menus.screens.cheats.entries.laserQTY.initialText;
-            menus.screens.cheats.entries.laserSpeed.text = menus.screens.cheats.entries.laserSpeed.initialText;
-            menus.screens.cheats.entries.shipSpeed.text = menus.screens.cheats.entries.shipSpeed.initialText;
             knobsAndLevers.resetCheats();
+            menus.screens.cheats.update();
             menus.display('cheats');
           },
         },
         back : {
           text : 'BACK',
-          component : undefined,
-          dimensions : {width : 96, height : 40},
           action : function() {
             menus.display('main');
           },
@@ -260,22 +235,13 @@ var menusProps = {
       text : {
         entries : [
           {
-            name : 'settings',
             text : 'Dear cheater,',
-            component : undefined,
-            position : {x : 115, y : 200},
           },
           {
-            name : 'settings',
             text : 'Scores will not be recorded',
-            component : undefined,
-            position : {x : 135, y : 225},
           },
           {
-            name : 'settings',
             text : 'if any of these are set',
-            component : undefined,
-            position : {x : 155, y : 250},
           },
         ],
       },
@@ -288,20 +254,17 @@ var menusProps = {
       entries : {
         previouser : {
           noSelection: true,
-          component : undefined,
+          fontSize : '15px',
           xAdjust : -140,
           color : 'darkgrey',
         },
         previous : {
           noSelection: true,
-          fontSize : '20px',
-          component : undefined,
           xAdjust : -120,
           color : 'grey',
         },
         current : {
           fontSize : '30px',
-          component : undefined,
           xAdjust : -100,
           action : function() {
             menus.addInitials(this.text);
@@ -310,14 +273,12 @@ var menusProps = {
         },
         next : {
           noSelection: true,
-          fontSize : '20px',
-          component : undefined,
           xAdjust : -120,
           color : 'grey',
         },
         nexter : {
           noSelection: true,
-          component : undefined,
+          fontSize : '15px',
           xAdjust : -140,
           color : 'darkgrey',
         },
@@ -327,22 +288,20 @@ var menusProps = {
           {
             name : 'enterInitials',
             text : 'Enter your initials',
-            component : undefined,
-            position : {x : 115, y : 200},
             fontSize : '25px',
           },
           {
             name : 'currentScore',
             text : '',
-            component : undefined,
-            position : {x : 200, y : 250},
+            xAdjust : 85,
+            yAdjust : 50,
             fontSize : '20px',
           },
           {
             name : 'entered',
             text : '',
-            component : undefined,
-            position : {x : 350, y : 540},
+            yAdjust : menuDefaults.entries.y - menuDefaults.text.y,
+            xAdjust : 235,
             fontSize : '30px',
           },
         ],
