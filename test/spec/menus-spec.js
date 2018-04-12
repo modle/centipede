@@ -87,14 +87,6 @@ describe('MENUS SPEC: ', () => {
     expect(menus.manageInitials).toHaveBeenCalled();
     expect(menus.drawMenu).toHaveBeenCalledWith(menus.screens.initials);
   });
-  it('processMenus does nothing and returns if all show flags are false', () => {
-    spyOn(menus, 'drawMenu');
-    resetShowFlags();
-
-    menus.processMenus();
-
-    expect(menus.drawMenu).not.toHaveBeenCalled();
-  });
 
   it('manageInitials does too many things at too many lavels of abstraction', () => {
     spyOn(menus, 'setInitialsMenuEntries');
@@ -165,6 +157,13 @@ describe('MENUS SPEC: ', () => {
     expect(menus.setMenuOrder).toHaveBeenCalled();
     expect(menus.checkForSelection).toHaveBeenCalled();
     expect(menus.drawSelectionMarker).toHaveBeenCalled();
+  });
+  it('processMenus returns if screen is falsey', () => {
+    spyOn(main, 'prepTheCanvas');
+
+    menus.drawMenu(undefined);
+
+    expect(main.prepTheCanvas).not.toHaveBeenCalled();
   });
 
   it('setMenuOrder calls shiftListOrder if enough time has passed since last move', () => {
@@ -334,10 +333,12 @@ describe('MENUS SPEC: ', () => {
     menus.screens.initials.text.entries[2].text = expected;
     let textToAdd = 'B';
     spyOn(main, 'saveScore');
+    spyOn(menus, 'reset');
 
     menus.addInitials(textToAdd);
 
     expect(menus.screens.initials.text.entries[2].text).toBe(expected);
+    expect(menus.reset).toHaveBeenCalled();
     expect(main.saveScore).toHaveBeenCalledWith(expected);
   });
 
