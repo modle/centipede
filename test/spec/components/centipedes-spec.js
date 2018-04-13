@@ -68,10 +68,8 @@ describe('CENTIPEDES SPEC: ', () => {
     metrics.init();
 
     let segment = testObj.make();
-    let expectedPointValue = 50 * metrics.currentLevel;
 
     expect(segment.reverseDirectionY).toBe(false);
-    expect(segment.pointValue).toBe(expectedPointValue);
   });
   it('update delegates to centipede update functions', () => {
     testObj.centipedes = [

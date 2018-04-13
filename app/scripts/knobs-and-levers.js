@@ -39,6 +39,7 @@ var knobsAndLevers = {
   centipede : {
     baseSpeed : 10,
     maxNumber : 10,
+    pointValue : 20,
     args : {
       color : "blue",
       y : 0,
@@ -51,16 +52,17 @@ var knobsAndLevers = {
     },
   },
   flies : {
-    maxNumber: 2,
+    maxNumber : 2,
+    hitPoints : 2,
     pointValue : 200,
     interval : {
-      min: 1000,
-      max: 1000,
+      min: 800,
+      max: 1200,
     },
-    mushroomCreateInterval : 75,
+    mushroomCreateInterval : 100,
     args : {
       color : "green",
-      extraArgs : {type : "fly", speed : {x : 0, y : 4}},
+      extraArgs : {type : "fly", speed : {x : 0, y : 2}},
       constructorFunctions : {
         setX : function() { knobsAndLevers.flies.args.x = supporting.getRandom(0, knobsAndLevers.canvas.width) },
       }
@@ -165,7 +167,7 @@ var knobsAndLevers = {
   },
   spider : {
     maxNumber : 1,
-    pointValue: 200,
+    pointValue: 500,
     interval : {
       min: 1000,
       max: 2000,
@@ -205,6 +207,7 @@ var knobsAndLevers = {
   worms : {
     maxNumber: 1,
     pointValue : 1000,
+    hitPoints : 1,
     interval : {
       min: 1500,
       max: 3250,

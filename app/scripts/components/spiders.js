@@ -39,7 +39,7 @@ var spiders = {
   make : function() {
     let spider = new Component(knobsAndLevers.spider.args);
     spider.directionY = 1;
-    spider.pointValue = knobsAndLevers.spider.pointValue * metrics.currentLevel;
+    spider.pointValue = supporting.getRandom(knobsAndLevers.spider.pointValue, knobsAndLevers.spider.pointValue + 400);
     spider.hitPoints = 1;
     this.spiders.push(spider);
   },

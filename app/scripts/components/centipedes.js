@@ -35,7 +35,8 @@ var centipedes = {
     centipede.reverseDirectionX = false;
     centipede.reverseDirectionY = false;
     centipede.moveVertically = true;
-    centipede.pointValue = 50 * metrics.currentLevel;
+    let pointValue = knobsAndLevers.centipede.pointValue;
+    centipede.pointValue = supporting.getRandom(pointValue, pointValue + 20);
     centipede.hitPoints = 1;
     centipede.updated = false;
     return centipede;
