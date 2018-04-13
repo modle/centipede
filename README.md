@@ -6,9 +6,9 @@
 
 # [Video](https://www.youtube.com/watch?v=LNqIR2k6KcA)
 
-[![Gameplay gif](https://gitlab.com/taciturn-pachyderm/centipede/blob/0726461d40cccef4a580b15f41f75d7d85faab3b/app/static/media/images/centipede.gif)](https://www.youtube.com/watch?v=LNqIR2k6KcA)
+[![Gameplay gif](https://gitlab.com/taciturn-pachyderm/centipede/raw/7f2d2fb9b77cdd4a35750e8f0c05e1dcb8e1bf89/app/static/media/images/centipede.gif)](https://www.youtube.com/watch?v=LNqIR2k6KcA)
 
-[![Menu gif](https://gitlab.com/taciturn-pachyderm/centipede/blob/17c6220340c669cd282f13bb022ce85a6b239d32/app/static/media/images/centipede-menu.gif)](https://www.youtube.com/watch?v=LNqIR2k6KcA)
+[![Menu gif](https://gitlab.com/taciturn-pachyderm/centipede/raw/7f2d2fb9b77cdd4a35750e8f0c05e1dcb8e1bf89/app/static/media/images/centipede-menu.gif)](https://www.youtube.com/watch?v=LNqIR2k6KcA)
 
 # Running Locally
 
