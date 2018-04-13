@@ -353,52 +353,24 @@ describe('MENUS SPEC: ', () => {
   });
 
   it('setLeaderboardTexts adds an entry to main texts array for each leaderboard record', () => {
-    spyOn(window, 'compare').and.callThrough();
+    spyOn(supporting, 'compare').and.callThrough();
+    supporting.fieldToCompare = 'score';
     menus.leaderboards = [{initials : 'ASD', score : 1}, {initials : 'EFG', score : 2}];
     let expected = {first : 'EFG: 2', second : 'ASD: 1'};
 
     menus.setLeaderboardTexts();
     let actual = menus.screens.main.text.entries;
 
-    expect(window.compare).toHaveBeenCalledTimes(1);
+    expect(supporting.compare).toHaveBeenCalledTimes(1);
     expect(actual[0].text).toBe(expected.first);
     expect(actual[1].text).toBe(expected.second);
   });
   it('setLeaderboardTexts returns if leaderboards is falsey', () => {
-    spyOn(window, 'compare').and.callThrough();
+    spyOn(supporting, 'compare').and.callThrough();
     menus.leaderboards = undefined;
 
     menus.setLeaderboardTexts();
 
-    expect(window.compare).not.toHaveBeenCalled();
+    expect(supporting.compare).not.toHaveBeenCalled();
   });
-
-  it('compare returns 0 if b.score equals a.score', () => {
-    let a = {score : 1};
-    let b = {score : 1};
-    let expected = 0;
-
-    let actual = compare(a, b);
-
-    expect(actual).toBe(expected);
-  });
-  it('compare returns 1 if b.score is greater than a.score', () => {
-    let a = {score : 1};
-    let b = {score : 2};
-    let expected = 1;
-
-    let actual = compare(a, b);
-
-    expect(actual).toBe(expected);
-  });
-  it('compare returns -1 if a.score is greater than b.score', () => {
-    let a = {score : 2};
-    let b = {score : 1};
-    let expected = -1;
-
-    let actual = compare(a, b);
-
-    expect(actual).toBe(expected);
-  });
-
 });

@@ -270,20 +270,19 @@ describe('MAIN SPEC: ', () => {
     expect(game.managePause).toHaveBeenCalled();
   });
   it('prepTheCanvas calls delegate functions', () => {
+    game.running = true;
     spyOn(game, 'startNextFrame');
     spyOn(sounds, 'manageSounds');
-    spyOn(menus, 'areActive').and.returnValue(false);
     spyOn(hud, 'update');
 
     main.prepTheCanvas();
 
     expect(game.startNextFrame).toHaveBeenCalled();
     expect(sounds.manageSounds).toHaveBeenCalled();
-    expect(menus.areActive).toHaveBeenCalled();
     expect(hud.update).toHaveBeenCalled();
   });
   it('prepTheCanvas does not call hud if show.menu is true', () => {
-    menus.show = {menu : true};
+    game.running = false;
     spyOn(game, 'startNextFrame');
     spyOn(sounds, 'manageSounds');
     spyOn(hud, 'update');

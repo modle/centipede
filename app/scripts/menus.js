@@ -7,7 +7,7 @@ menus = {
     console.log('menus initialized');
   },
   areActive : function() {
-    return Array.from(Object.keys(this.show)).find(key => this.show[key]);
+    supporting.getFirstTruthy(this.show);
   },
   reset : function() {
     game.gameOver = false;
@@ -64,7 +64,7 @@ menus = {
     this.screens.initials.entries.nexter.text = order.shift();
   },
   getCurrentScreen : function() {
-    let activeScreen = Array.from(Object.keys(this.show)).find(menu => this.show[menu]);
+    let activeScreen = supporting.getFirstTruthy(this.show);
     let screen = {};
     if (activeScreen) {
       screen = this.screens[activeScreen];
@@ -188,7 +188,8 @@ menus = {
     this.screens.main.text.entries = [];
     let entriesSoFar = 0;
     let text = '';
-    this.leaderboards.sort(compare).forEach((entry, index) => {
+    supporting.fieldToCompare = 'score';
+    this.leaderboards.sort(supporting.compare).forEach((entry, index) => {
       entriesSoFar = this.screens.main.text.entries.length;
       text = entry.initials + ': ' + entry.score;
       if (index < 10) {
@@ -199,19 +200,7 @@ menus = {
   buildEntry : function(text, count) {
     return {
       text : text,
-      component : undefined,
-      position : {x : 250, y : 175 + 25 * count},
-      fontSize : '15px',
+      xAdjust : 175,
     };
   },
-};
-
-function compare(a, b) {
-  if (a.score < b.score) {
-    return 1;
-  } else if (a.score > b.score) {
-    return -1;
-  } else {
-    return 0;
-  };
 };

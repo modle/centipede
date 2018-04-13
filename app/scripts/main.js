@@ -86,10 +86,9 @@ var main = {
   prepTheCanvas : function() {
     game.startNextFrame();
     sounds.manageSounds();
-    if (menus.areActive()) {
-      return;
+    if (game.running) {
+      hud.update();
     };
-    hud.update();
   },
   manageGameObjects : function() {
     metrics.manage();
