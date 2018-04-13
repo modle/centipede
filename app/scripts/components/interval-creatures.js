@@ -25,7 +25,6 @@ var intervalCreatures = {
       this.spawn(creature);
       if (creature == 'flies') {
         knobsAndLevers.flies.mushroomCreateInterval = supporting.getRandom(75, 150);
-        console.log(knobsAndLevers.flies.mushroomCreateInterval);
       };
     };
   },
@@ -67,7 +66,7 @@ var intervalCreatures = {
     });
   },
   dropMushrooms : function(fly) {
-    if (this.eligibleToDrop() && fly.y <= player.topLimit) {
+    if (this.eligibleToDrop() && fly.y <= player.topLimit && fly.y >= game.gameArea.firstMushroomLayer) {
       mushrooms.make({x : fly.x, y : fly.y}, 'purple');
     };
   },

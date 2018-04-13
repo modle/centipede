@@ -81,7 +81,7 @@ describe('INTERVAL CREATURES SPEC: ', () => {
     spyOn(testObj, 'eligibleToDrop').and.returnValue(true);
     spyOn(mushrooms, 'generate').and.returnValue({});
     mushrooms.mushrooms = [];
-    let fly = {x : 5, y : 5};
+    let fly = {x : 5, y : 100};
 
     testObj.dropMushrooms(fly);
 

@@ -4,9 +4,11 @@
 
 # [Demo](http://centipede.matthewodle.com/index.html)
 
-# [Video](https://youtu.be/V_LdZUEypng)
+# [Video](https://www.youtube.com/watch?v=LNqIR2k6KcA)
 
-![Gameplay gif](https://gitlab.com/taciturn-pachyderm/centipede/raw/901df6b828fa359d461581b451f75b80bb1a9324/media/centipede.gif)
+[![Gameplay gif](https://gitlab.com/taciturn-pachyderm/centipede/raw/7f2d2fb9b77cdd4a35750e8f0c05e1dcb8e1bf89/app/static/media/images/centipede.gif)](https://www.youtube.com/watch?v=LNqIR2k6KcA)
+
+[![Menu gif](https://gitlab.com/taciturn-pachyderm/centipede/raw/7f2d2fb9b77cdd4a35750e8f0c05e1dcb8e1bf89/app/static/media/images/centipede-menu.gif)](https://www.youtube.com/watch?v=LNqIR2k6KcA)
 
 # Running Locally
 
