@@ -202,6 +202,7 @@ var menusProps = {
           },
           action : function() {
             knobsAndLevers.toggleParameter(knobsAndLevers.laser.quantity);
+            game.activeCheets['laserQty'] = knobsAndLevers.laser.quantity.setting.state == "ON";
             this.update();
             menus.display('cheats');
           },
@@ -212,6 +213,7 @@ var menusProps = {
           },
           action : function() {
             knobsAndLevers.toggleParameter(knobsAndLevers.laser.speed);
+            game.activeCheets['laserSpeed'] = knobsAndLevers.laser.speed.setting.state == "ON";
             this.update();
             menus.display('cheats');
           },
@@ -222,6 +224,7 @@ var menusProps = {
           },
           action : function() {
             knobsAndLevers.toggleParameter(knobsAndLevers.player.speed);
+            game.activeCheets['shipSpeed'] = knobsAndLevers.player.speed.setting.state == "ON";
             this.update();
             menus.display('cheats');
           },
@@ -248,9 +251,11 @@ var menusProps = {
           },
           {
             text : 'Scores will not be recorded',
+            xAdjust : 20,
           },
           {
             text : 'if any of these are set',
+            xAdjust : 20,
           },
         ],
       },

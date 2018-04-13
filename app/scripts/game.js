@@ -6,6 +6,7 @@ var game = {
   delayed : 0,
   delayEndTime : 300,
   keysDown : {},
+  activeCheets : {},
   init : function() {
     this.gameArea = new GameArea();
     console.log('game initialized');
@@ -28,6 +29,9 @@ var game = {
   },
   getFrameNo : function() {
     return this.gameArea.frameNo;
+  },
+  cheatsAreActive : function() {
+    return Array.from(Object.keys(game.activeCheets)).find(entry => game.activeCheets[entry])
   },
   manageLevel : function() {
     this.resetSomeThings();

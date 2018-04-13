@@ -27,17 +27,21 @@ menus = {
     Array.from(Object.keys(this.show)).forEach(menu => this.show[menu] = false);
   },
   processMenus : function() {
+    this.checkForCheats();
     if (this.show.initials) {
       this.manageInitials();
     } else if (this.show.main) {
       this.leaderboards = main.readLeaderboard();
       this.setLeaderboardTexts();
     };
-    let screen = this.screens[this.getCurrentScreen()];
-    if (screen.update) {
-      screen.update();
-    };
+    let screen = this.getCurrentScreen();
     this.drawMenu(screen);
+  },
+  checkForCheats : function() {
+    if (this.show.initials && game.cheatsAreActive()) {
+      this.show.initials = false;
+      this.show.main = true;
+    };
   },
   manageInitials : function() {
     this.setInitialsMenuEntries();
@@ -60,13 +64,24 @@ menus = {
     this.screens.initials.entries.nexter.text = order.shift();
   },
   getCurrentScreen : function() {
-    return Array.from(Object.keys(this.show)).find(menu => this.show[menu]);
+    let activeScreen = Array.from(Object.keys(this.show)).find(menu => this.show[menu]);
+    let screen = {};
+    if (activeScreen) {
+      screen = this.screens[activeScreen];
+    };
+    return screen;
+  },
+  hasElements : function(object) {
+    return Array.from(Object.keys(object)).length > 0;
   },
   drawMenu : function(screen) {
-    if (!screen) {
+    if (!this.hasElements(screen)) {
       return;
     };
     main.prepTheCanvas();
+    if (screen.update) {
+      screen.update();
+    };
     this.drawTexts(menus.title);
     this.drawEntries(screen.entries);
     if (screen.order) {

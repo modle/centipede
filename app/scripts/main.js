@@ -105,7 +105,7 @@ var main = {
   saveScore : function(initials) {
     console.log('saving score');
     try {
-      let currentLeaderboard = JSON.parse(localStorage.getItem('centipedeLeaderboard'));
+      let currentLeaderboard = this.readLeaderboard();
       let score = {initials : initials, score : metrics.lastScore, when : Date.now()};
       if (currentLeaderboard) {
         currentLeaderboard.push(score);

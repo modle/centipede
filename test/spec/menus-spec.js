@@ -160,10 +160,20 @@ describe('MENUS SPEC: ', () => {
   });
   it('processMenus returns if screen is falsey', () => {
     spyOn(main, 'prepTheCanvas');
+    spyOn(menus, 'drawTexts');
+    spyOn(menus, 'drawEntries');
+    spyOn(menus, 'setMenuOrder');
+    spyOn(menus, 'checkForSelection');
+    spyOn(menus, 'drawSelectionMarker');
 
-    menus.drawMenu(undefined);
+    menus.drawMenu({});
 
     expect(main.prepTheCanvas).not.toHaveBeenCalled();
+    expect(menus.drawTexts).not.toHaveBeenCalled();
+    expect(menus.drawEntries).not.toHaveBeenCalled();
+    expect(menus.setMenuOrder).not.toHaveBeenCalled();
+    expect(menus.checkForSelection).not.toHaveBeenCalled();
+    expect(menus.drawSelectionMarker).not.toHaveBeenCalled();
   });
 
   it('setMenuOrder calls shiftListOrder if enough time has passed since last move', () => {
