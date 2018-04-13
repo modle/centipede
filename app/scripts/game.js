@@ -1,12 +1,15 @@
 var game = {
   paused : true,
+  running : false,
   gameOver : false,
   timeSinceGameOver : 0,
   delayed : 0,
   delayEndTime : 300,
   keysDown : {},
+  activeCheets : {},
   init : function() {
     this.gameArea = new GameArea();
+    console.log('game initialized');
   },
   start : function() {
     if (supporting.isMobile()) {
@@ -15,7 +18,7 @@ var game = {
     };
     menus.reset();
     this.paused = true;
-    this.gameArea.start();
+    this.gameArea.start(); 
   },
   levelIsOver : function() {
     return centipedes.numberSpawned === centipedes.numberKilled && this.gameArea.frameNo !== 0;
@@ -27,6 +30,9 @@ var game = {
   getFrameNo : function() {
     return this.gameArea.frameNo;
   },
+  cheatsAreActive : function() {
+    return Array.from(Object.keys(game.activeCheets)).find(entry => game.activeCheets[entry])
+  },
   manageLevel : function() {
     this.resetSomeThings();
     this.levelOver = false;
@@ -35,9 +41,6 @@ var game = {
   setDiedText : function() {
     texts.diedText.text = "You died.";
     texts.diedText.update();
-  },
-  playDiedSound : function() {
-    sounds.playerDied.play();
   },
   managePause : function() {
     texts.pausedMessage.text = "Paused";
@@ -77,6 +80,8 @@ var game = {
   resetTheWholeTamale : function() {
     this.gameOver = false;
     this.timeSinceGameOver = 0;
+    metrics.lastScore = metrics.score.value;
+    mushrooms.clear();
     init.afterGameOver();
     menus.reset();
   },

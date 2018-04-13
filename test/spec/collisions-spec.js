@@ -21,13 +21,13 @@ describe('COLLISIONS SPEC: ', () => {
 
   it('check calls checkLaser', () => {
     spyOn(testObj, 'checkLaser');
-    spyOn(testObj, 'checkGamePieceVsEnemies');
+    spyOn(testObj, 'checkPlayerVsEnemies');
     spyOn(testObj, 'removeDestroyedTargets');
 
     testObj.check();
 
     expect(testObj.checkLaser).toHaveBeenCalled();
-    expect(testObj.checkGamePieceVsEnemies).toHaveBeenCalled();
+    expect(testObj.checkPlayerVsEnemies).toHaveBeenCalled();
     expect(testObj.removeDestroyedTargets).toHaveBeenCalled();
   });
 
@@ -106,13 +106,13 @@ describe('COLLISIONS SPEC: ', () => {
 
   it('processImpact delegates to impact functions', () => {
     spyOn(testObj, 'damageTarget');
-    spyOn(testObj, 'playImpactSound');
+    spyOn(sounds, 'playImpactSound');
     spyOn(testObj, 'updateTargetAppearance');
 
     testObj.processImpact({type : 'aTarget'});
 
     expect(testObj.damageTarget).toHaveBeenCalled();
-    expect(testObj.playImpactSound).toHaveBeenCalled();
+    expect(sounds.playImpactSound).toHaveBeenCalled();
     expect(testObj.updateTargetAppearance).toHaveBeenCalled();
   });
 
@@ -135,22 +135,6 @@ describe('COLLISIONS SPEC: ', () => {
     expect(target.hitPoints).toEqual(1);
   });
 
-  it('playImpactSound does not play when target type is mushroom', () => {
-    let type = 'mushroom';
-    spyOn(sounds, 'getAvailableImpactSound');
-
-    testObj.playImpactSound(type);
-
-    expect(sounds.getAvailableImpactSound).not.toHaveBeenCalled();
-  });
-  it('playImpactSound plays when target type is not mushroom', () => {
-    let type = 'somethingElse';
-    spyOn(sounds, 'getAvailableImpactSound').and.returnValue({play : function(){}});
-
-    testObj.playImpactSound(type);
-
-    expect(sounds.getAvailableImpactSound).toHaveBeenCalled();
-  });
 
   it('updateTargetAppearance adjusts height of target when target type is mushroom', () => {
     let baseHeight = knobsAndLevers.mushroomSide;
@@ -206,7 +190,7 @@ describe('COLLISIONS SPEC: ', () => {
     expect(targets.length).toEqual(2);
   });
 
-  it('checkGamePieceVsEnemies does not process if playerCollisions are disabled', () => {
+  it('checkPlayerVsEnemies does not process if playerCollisions are disabled', () => {
     knobsAndLevers.game.playerCollisionsEnabled = false;
     game.gameOver = false;
     player.init();
@@ -214,13 +198,13 @@ describe('COLLISIONS SPEC: ', () => {
     spyOn(testObj, 'killPlayer');
     targets = [{remove: true, crashWith : function(target){}}];
 
-    testObj.checkGamePieceVsEnemies(targets);
+    testObj.checkPlayerVsEnemies(targets);
 
     expect(testObj.killPlayer).not.toHaveBeenCalled();
     expect(player.gamePiece.crashWith).not.toHaveBeenCalled();
     expect(game.gameOver).toBeFalsy();
   });
-  it('checkGamePieceVsEnemies calls killsPlayer if crashWith', () => {
+  it('checkPlayerVsEnemies calls killsPlayer if crashWith', () => {
     knobsAndLevers.game.playerCollisionsEnabled = true;
     game.gameOver = false;
     player.init();
@@ -229,7 +213,7 @@ describe('COLLISIONS SPEC: ', () => {
     game.init();
     metrics.init();
     targets = [{remove: true, crashWith : function(target){}}];
-    testObj.checkGamePieceVsEnemies(targets);
+    testObj.checkPlayerVsEnemies(targets);
 
     expect(testObj.killPlayer).toHaveBeenCalled();
     expect(player.gamePiece.crashWith).toHaveBeenCalled();
@@ -244,7 +228,7 @@ describe('COLLISIONS SPEC: ', () => {
     game.init();
     metrics.init();
 
-    testObj.checkGamePieceVsEnemies([]);
+    testObj.checkPlayerVsEnemies([]);
 
     expect(testObj.killPlayer).not.toHaveBeenCalled();
     expect(player.gamePiece.crashWith).not.toHaveBeenCalled();

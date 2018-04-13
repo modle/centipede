@@ -1,45 +1,36 @@
 var knobsAndLevers = {
   init : function() {
-    this.gamePieceTopLimit = this.canvas.height * 0.8;
-    this.gamePieceStartX = (this.canvas.width - this.player.width) * 0.5;
-    this.gamePieceStartY = this.canvas.height * 0.9;
-
-    this.gridSquareSideLength = Math.floor(this.canvas.width / this.canvas.gridDivisor);
-    this.coordinateScaleFactor = this.gridSquareSideLength * 0.1;
-
-    this.text.baseParams.x = this.canvas.width * 0.25;
-    this.text.baseBackgroundParams.height = this.gridSquareSideLength;
-    this.text.baseBackgroundParams.width = this.canvas.width;
-    this.text.baseParams.fontSize = this.gridSquareSideLength + "px";
-    this.text.gameInfoHeight = this.gridSquareSideLength * 1.3;
-
-    this.spider.initialInterval = supporting.getRandom(this.spider.interval.min, this.spider.interval.max);
-    this.spider.args.width = this.gridSquareSideLength * 0.8;
-    this.spider.args.height = this.gridSquareSideLength * 0.3;
-    this.spider.args.x = -this.spider.args.width * 0.8;
-    this.spider.args.y = this.gamePieceTopLimit;
-
-    this.worms.initialInterval = supporting.getRandom(this.worms.interval.min, this.worms.interval.max);
-    this.worms.args.width = this.gridSquareSideLength * 1.5;
-    this.worms.args.height = this.gridSquareSideLength;
-    this.worms.args.x = -this.canvas.width / 10;
-
-    this.flies.initialInterval = supporting.getRandom(this.flies.interval.min, this.flies.interval.max);
-    this.flies.args.width = this.gridSquareSideLength * 0.75;
-    this.flies.args.height = this.gridSquareSideLength * 0.75;
-    this.flies.args.y = -this.canvas.height / 10;
-
-    this.centipede.args.width = this.gridSquareSideLength;
-    this.centipede.args.height = this.gridSquareSideLength;
-    this.centipede.args.x = this.canvas.width / 2;
-
-    this.laser.args.width = this.gridSquareSideLength / 10;
-    this.laser.args.height = this.gridSquareSideLength * 0.5;
-
-    this.mushroomSide = this.gridSquareSideLength * 0.8;
+    this.general.init(this);
+    this.centipede.init(this);
+    this.flies.init(this);
+    this.player.init(this);
+    this.laser.init(this);
+    this.mushrooms.init(this);
+    this.spider.init(this);
+    this.text.init(this);
+    this.worms.init(this);
     console.log("knobsAndLevers initialized");
   },
+  resetCheats : function() {
+    this.laser.resetCheats();
+    this.player.resetCheats();
+    console.log('cheats reset');
+  },
+  toggleParameter : function(parameter) {
+    parameter.value = parameter.value === parameter.default ? parameter.setting.value : parameter.default;
+    parameter.setting.state = parameter.setting.state === 'OFF' ? 'ON' : 'OFF';
+    console.log(parameter);
+  },
+  resetParameter : function(parameter) {
+    parameter.value = parameter.default;
+    parameter.setting.state = 'OFF';
+  },
   mediaPath : "app/static/media/images/",
+  general : {
+    init : function(configs) {
+      this.gridSquareSideLength = Math.floor(configs.canvas.width / configs.canvas.gridDivisor);
+    },
+  },
   canvas : {
     width : 800,
     height : 800,
@@ -51,47 +42,126 @@ var knobsAndLevers = {
     args : {
       color : "blue",
       y : 0,
-      extraArgs : {type : "centipede"}
+      extraArgs : {type : "centipede"},
+    },
+    init : function(configs) {
+      this.args.width = configs.general.gridSquareSideLength;
+      this.args.height = configs.general.gridSquareSideLength;
+      this.args.x = configs.canvas.width / 2;
     },
   },
   flies : {
-    maxNumber: 1,
+    maxNumber: 2,
     pointValue : 200,
     interval : {
       min: 1000,
-      max: 3000,
+      max: 1000,
     },
     mushroomCreateInterval : 75,
     args : {
       color : "green",
-      extraArgs : {type : "fly", speed : {x : 0, y : 2}},
+      extraArgs : {type : "fly", speed : {x : 0, y : 4}},
       constructorFunctions : {
         setX : function() { knobsAndLevers.flies.args.x = supporting.getRandom(0, knobsAndLevers.canvas.width) },
       }
     },
+    init : function(configs) {
+      this.initialInterval = supporting.getRandom(this.interval.min, this.interval.max);
+      this.args.width = configs.general.gridSquareSideLength * 0.75;
+      this.args.height = configs.general.gridSquareSideLength * 0.75;
+      this.args.y = -configs.canvas.height / 10;
+    },
   },
   game : {
     playerCollisionsEnabled : true,
-    soundsEnabled : true,
+    sounds : {
+      value : true,
+      default : true,
+      setting : {
+        value : false,
+        state : 'ON',
+        text : 'SOUNDS',
+        render : function() {
+          return supporting.align(this.text) + this.state;
+        },
+      },
+    },
     gameOverDelay : 600,
     startLevel : 0,
     maxMushrooms : 50,
   },
   laser : {
-    speed : 5,
-    maxNumber : 1,
+    speed : {
+      value : 5,
+      default : 5,
+      setting : {
+        value : 15,
+        state : 'OFF',
+        text : 'FASTER LASERS',
+        render : function() {
+          return supporting.align(this.text) + this.state;
+        },
+      },
+    },
+    quantity : {
+      value : 1,
+      default : 1,
+      setting : {
+        value : 5,
+        state : 'OFF',
+        text : 'MORE LASERS',
+        render : function() {
+          return supporting.align(this.text) + this.state;
+        },
+      },
+    },
     interval : 10,
     args : {
       color : "purple",
-      extraArgs : {type : "laser", speed : {x : 0, y : 0}}
-    }
+      extraArgs : {type : "laser", speed : {x : 0, y : 0}},
+    },
+    init : function(configs) {
+      this.args.width = configs.general.gridSquareSideLength / 10;
+      this.args.height = configs.general.gridSquareSideLength * 0.5;
+    },
+    resetCheats : function() {
+      knobsAndLevers.resetParameter(this.speed);
+      knobsAndLevers.resetParameter(this.quantity);
+    },
+  },
+  mushrooms : {
+    scaleFactor : 1,
+    side : 0,
+    init : function(configs) {
+      this.scaleFactor = configs.general.gridSquareSideLength * 0.1;
+      this.side = configs.general.gridSquareSideLength * 0.8;
+    },
   },
   player : {
     defaultLives : 3,
-    speed : 2,
+    speed : {
+      value : 2,
+      default : 2,
+      setting : {
+        value : 4,
+        state : 'OFF',
+        text : 'FASTER SHIP',
+        render : function() {
+          return supporting.align(this.text) + this.state;
+        },
+      },
+    },
     width : 15,
     height : 15,
     extraArgs : {type : "player"},
+    init : function(configs) {
+      this.topLimit = configs.canvas.height * 0.8;
+      this.startX = (configs.canvas.width - this.width) * 0.5;
+      this.startY = configs.canvas.height * 0.9;
+    },
+    resetCheats : function() {
+      knobsAndLevers.resetParameter(this.speed);
+    },
   },
   spider : {
     maxNumber : 1,
@@ -102,13 +172,20 @@ var knobsAndLevers = {
     },
     args : {
       color : "fuchsia",
-      extraArgs : {type : "spider", speed : {x : 1, y : 1}}
+      extraArgs : {type : "spider", speed : {x : 1, y : 1}},
+    },
+    init : function(configs) {
+      this.initialInterval = supporting.getRandom(this.interval.min, this.interval.max);
+      this.args.width = configs.general.gridSquareSideLength * 0.8;
+      this.args.height = configs.general.gridSquareSideLength * 0.3;
+      this.args.x = -this.args.width * 0.8;
+      this.args.y = configs.player.topLimit;
     },
   },
   text : {
+    font : "press-start",
     baseParams : {
-      fontSize : "30px",
-      fontType : "Arial",
+      fontSize : "20px",
       color : "black",
       extraArgs : {type:"text"},
     },
@@ -118,6 +195,12 @@ var knobsAndLevers = {
       extraArgs : {type:"background"},
     },
     gameInfoHeight : 40,
+    init : function(configs) {
+      this.baseParams.x = configs.canvas.width * 0.25;
+      this.baseBackgroundParams.height = configs.general.gridSquareSideLength;
+      this.baseBackgroundParams.width = configs.canvas.width;
+      this.gameInfoHeight = configs.general.gridSquareSideLength * 1.3;
+    },
   },
   worms : {
     maxNumber: 1,
@@ -132,6 +215,12 @@ var knobsAndLevers = {
       constructorFunctions : {
         setY : function() { knobsAndLevers.worms.args.y = supporting.getRandom(0, knobsAndLevers.canvas.height / 5) },
       }
+    },
+    init : function(configs) {
+      this.initialInterval = supporting.getRandom(this.interval.min, this.interval.max);
+      this.args.width = configs.general.gridSquareSideLength * 1.5;
+      this.args.height = configs.general.gridSquareSideLength;
+      this.args.x = -configs.canvas.width / 10;
     },
   },
 };

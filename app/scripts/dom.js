@@ -5,8 +5,7 @@ var dom = {
     source : {text : 'gitlab.', url : 'https://gitlab.com/taciturn-pachyderm/centipede'},
     otherGames : {text : 'other games.', url : 'http://blog.matthewodle.com/games/'},
   },
-  instructions : '<strong>Centipede!</strong><br><strong>WASD</strong> : move<br><strong><strong>' +
-                    '<input id="gamepadToggle" type="checkbox" checked>Gamepad Enabled?',
+  instructions : '<strong>Centipede!</strong><br><strong>WASD</strong> : move<br><strong><strong>',
   mobileWarning : "Mobile is not supported.<br><br>" +
                     "The use of a keyboard is required.<br><br>" +
                     "Sorry!<br><br>" +
@@ -19,7 +18,6 @@ var dom = {
       this.addElement(this.getMobileMessageElement());
       return;
     };
-    this.addElement(this.getInstructionsElement());
     console.log("dom initialized");
   },
   addElement : function(element) {
@@ -35,12 +33,6 @@ var dom = {
       aLink.innerHTML = this.links[link].text;
       element.appendChild(aLink);
     });
-    return element;
-  },
-  getInstructionsElement : function() {
-    let element = document.createElement('div');
-    element.className = 'instructions';
-    element.innerHTML = this.instructions;
     return element;
   },
   getMobileMessageElement : function() {

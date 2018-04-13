@@ -36,3 +36,8 @@ canvas {
     background: white;
   }
 }
+
+@font-face {
+  font-family: "Press Start";
+  src: url("css/fonts/prstart.ttf");
+}

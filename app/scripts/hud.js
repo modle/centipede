@@ -3,10 +3,11 @@ var hud = {
   update : function() {
     this.updateScore();
     this.updateLives();
-    this.updateLevel();
+    // this.updateLevel();
   },
   updateLives : function() {
-    texts.livesDisplay.text = "Lives: " + metrics.lives;
+    metrics.livesMarker.update();
+    texts.livesDisplay.text = metrics.lives;
     texts.livesDisplay.update();
   },
   updateLevel : function() {
@@ -14,7 +15,7 @@ var hud = {
     texts.level.update();
   },
   updateScore : function() {
-    metrics.score.text = "Score: " + metrics.score.value;
+    metrics.score.text = metrics.score.value;
     metrics.score.update();
   },
 };

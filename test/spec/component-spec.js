@@ -76,16 +76,20 @@ describe('COMPONENT SPEC: ', () => {
     component.type = 'centipede';
     game.init();
     game.gameArea.context = game.gameArea.canvas.getContext("2d");
-    spyOn(component, 'makeACentipede');
+    spyOn(customComponents, 'makeACentipede');
+
     component.update();
-    expect(component.makeACentipede).toHaveBeenCalled();
+
+    expect(customComponents.makeACentipede).toHaveBeenCalled();
   });
   it('makeARectangle gets called on update when component has no type', () => {
     let component = constructComponent({});
     game.init();
     game.gameArea.context = game.gameArea.canvas.getContext("2d");
     spyOn(component, 'makeARectangle');
+
     component.update();
+
     expect(component.makeARectangle).toHaveBeenCalled();
   });
 
@@ -94,55 +98,43 @@ describe('COMPONENT SPEC: ', () => {
     component.moveVertically = moveVertically;
     component.directionX = direction.x;
     component.directionY = direction.y;
-    spyOn(window, 'getDownTriangle');
-    spyOn(window, 'getUpTriangle');
-    spyOn(window, 'getRightTriangle');
-    spyOn(window, 'getLeftTriangle');
     return component;
   }
-  it('getCentipedeVertices calls getDownTriangle when centipede is moving downward', () => {
+  it('getCentipedeVertices calls TriangleVertices with down when centipede is moving downward', () => {
     let component = setUpTriangleBuildTest(true, {x : 0, y : 1});
     let context = game.gameArea.canvas.getContext("2d");
+    spyOn(window, 'TriangleVertices');
 
-    component.getCentipedeVertices(context);
+    customComponents.getCentipedeVertices(true, component);
 
-    expect(window.getDownTriangle).toHaveBeenCalled();
-    expect(window.getUpTriangle).not.toHaveBeenCalled();
-    expect(window.getRightTriangle).not.toHaveBeenCalled();
-    expect(window.getLeftTriangle).not.toHaveBeenCalled();
+    expect(window.TriangleVertices).toHaveBeenCalledWith('down', component);
   });
   it('getCentipedeVertices calls getUpTriangle when centipede is moving upward', () => {
     let component = setUpTriangleBuildTest(true, {x : 0, y : -1});
     let context = game.gameArea.canvas.getContext("2d");
+    spyOn(window, 'TriangleVertices');
 
-    component.getCentipedeVertices(context);
+    customComponents.getCentipedeVertices(true, component);
 
-    expect(window.getDownTriangle).not.toHaveBeenCalled();
-    expect(window.getUpTriangle).toHaveBeenCalled();
-    expect(window.getRightTriangle).not.toHaveBeenCalled();
-    expect(window.getLeftTriangle).not.toHaveBeenCalled();
+    expect(window.TriangleVertices).toHaveBeenCalledWith('up', component);
   });
   it('getCentipedeVertices calls getRightTriangle when centipede is moving to the right', () => {
     let component = setUpTriangleBuildTest(false, {x : 1, y : 0});
     let context = game.gameArea.canvas.getContext("2d");
+    spyOn(window, 'TriangleVertices');
 
-    component.getCentipedeVertices(context);
+    customComponents.getCentipedeVertices(false, component);
 
-    expect(window.getDownTriangle).not.toHaveBeenCalled();
-    expect(window.getUpTriangle).not.toHaveBeenCalled();
-    expect(window.getRightTriangle).toHaveBeenCalled();
-    expect(window.getLeftTriangle).not.toHaveBeenCalled();
+    expect(window.TriangleVertices).toHaveBeenCalledWith('right', component);
   });
   it('getCentipedeVertices calls getLeftTriangle when centipede is moving to the left', () => {
     let component = setUpTriangleBuildTest(false, {x : -1, y : 0});
     let context = game.gameArea.canvas.getContext("2d");
+    spyOn(window, 'TriangleVertices');
 
-    component.getCentipedeVertices(context);
+    customComponents.getCentipedeVertices(false, component);
 
-    expect(window.getDownTriangle).not.toHaveBeenCalled();
-    expect(window.getUpTriangle).not.toHaveBeenCalled();
-    expect(window.getRightTriangle).not.toHaveBeenCalled();
-    expect(window.getLeftTriangle).toHaveBeenCalled();
+    expect(window.TriangleVertices).toHaveBeenCalledWith('left', component);
   });
 
   it('speedX,speedY is set to 0,0 when stop is called', () => {
@@ -159,7 +151,6 @@ describe('COMPONENT SPEC: ', () => {
         x : 0,
         y : 0,
         fontSize : 30,
-        fontType : 'Arial',
         color : "black",
         extraArgs : {type:"text"},
       }
@@ -167,28 +158,18 @@ describe('COMPONENT SPEC: ', () => {
     game.init();
     let context = game.gameArea.canvas.getContext("2d");
     testComponent.makeText(context);
-    expect(context.font).toEqual('10px Arial');
+    expect(context.font).toEqual('10px press-start');
   });
   it('makeACentipede makes a centipede', () => {
-    let testComponent = constructComponent(
-      {
-        x : 0,
-        y : 0,
-        fontSize : 30,
-        fontType : 'Arial',
-        color : "black",
-        extraArgs : {type:"text"},
-      }
-    );
-    let vertices = {x1 : 430, y1 : 63, x2 : 398, y2 : 79, x3 : 430};
-    spyOn(testComponent, 'getCentipedeVertices').and.returnValue(vertices);
+    let vertices = {x1 : 1, y1 : 0, x2 : 0, y2 : 1, x3 : 0, y3 : -1};
+    spyOn(customComponents, 'getCentipedeVertices').and.returnValue(vertices);
     game.init();
     let ctx = game.gameArea.canvas.getContext("2d");
     spyOn(ctx, 'moveTo');
     spyOn(ctx, 'lineTo');
     spyOn(ctx, 'fill');
 
-    testComponent.makeACentipede(ctx);
+    customComponents.makeACentipede(ctx, false, {});
 
     expect(ctx.moveTo).toHaveBeenCalled();
     expect(ctx.lineTo).toHaveBeenCalledTimes(2);
@@ -249,69 +230,117 @@ describe('COMPONENT SPEC: ', () => {
   it('getMiddleX returns horizontal center of component', () => {
     let component = createTestComponent();
     let expected = component.x + component.width / 2;
+
     let actual = component.getMiddleX();
+
     expect(actual).toEqual(expected);
   });
   it('getMiddleY returns vertical center of component', () => {
     let component = createTestComponent();
     let expected = component.y + component.height / 2;
+
     let actual = component.getMiddleY();
+
     expect(actual).toEqual(expected);
   });
   it('getTop returns y top of component', () => {
     let component = createTestComponent();
     let expected = component.y;
+
     let actual = component.getTop();
+
     expect(actual).toEqual(expected);
   });
   it('getBottom returns y bottom of component', () => {
     let component = createTestComponent();
     let expected = component.y + component.height;
+
     let actual = component.getBottom();
+
     expect(actual).toEqual(expected);
   });
   it('getLeft returns x left of component', () => {
     let component = createTestComponent();
     let expected = component.x;
+
     let actual = component.getLeft();
+
     expect(actual).toEqual(expected);
   });
   it('getRight returns x right of component', () => {
     let component = createTestComponent();
     let expected = component.x + component.width;
+
     let actual = component.getRight();
+
     expect(actual).toEqual(expected);
   });
-  it('getUpTriangle returns triangle pointing up', () => {
+  it('TriangleVertices represents triangle pointing up', () => {
     let expected = {x1 : 10, x2 : 15, x3 : 20, y1: 20, y2 : 10, y3 : 20};
     let component = createTestComponent();
-    game.init();
-    game.gameArea.context = game.gameArea.canvas.getContext("2d");
-    actual = getUpTriangle(game.gameArea.context, component);
+
+    let theVerticesObject = new TriangleVertices('up', component);
+
+    let actual = {};
+    with (theVerticesObject) {
+      actual.x1 = x1;
+      actual.y1 = y1;
+      actual.x2 = x2;
+      actual.y2 = y2;
+      actual.x3 = x3;
+      actual.y3 = y3;
+    };
     expect(actual).toEqual(expected);
   });
-  it('getDownTriangle returns triangle pointing down', () => {
+  it('TriangleVertices represents triangle pointing down', () => {
     let expected = {x1 : 10, x2 : 15, x3 : 20, y1: 10, y2 : 20, y3 : 10};
     let component = createTestComponent();
-    game.init();
-    game.gameArea.context = game.gameArea.canvas.getContext("2d");
-    actual = getDownTriangle(game.gameArea.context, component);
+
+    let theVerticesObject = new TriangleVertices('down', component);
+
+    let actual = {};
+    with (theVerticesObject) {
+      actual.x1 = x1;
+      actual.y1 = y1;
+      actual.x2 = x2;
+      actual.y2 = y2;
+      actual.x3 = x3;
+      actual.y3 = y3;
+    };
     expect(actual).toEqual(expected);
   });
-  it('getRightTriangle returns triangle pointing right', () => {
+  it('TriangleVertices represents triangle pointing right', () => {
     let expected = {x1 : 10, x2 : 20, x3 : 10, y1: 10, y2 : 15, y3 : 20};
     let component = createTestComponent();
-    game.init();
-    game.gameArea.context = game.gameArea.canvas.getContext("2d");
-    actual = getRightTriangle(game.gameArea.context, component);
+
+    let theVerticesObject = new TriangleVertices('right', component);
+
+    let actual = {};
+    with (theVerticesObject) {
+      actual.x1 = x1;
+      actual.y1 = y1;
+      actual.x2 = x2;
+      actual.y2 = y2;
+      actual.x3 = x3;
+      actual.y3 = y3;
+    };
     expect(actual).toEqual(expected);
   });
-  it('getLeftTriangle returns triangle pointing left', () => {
+  it('TriangleVertices represents triangle pointing left', () => {
     let expected = {x1 : 20, x2 : 10, x3 : 20, y1: 10, y2 : 15, y3 : 20};
     let component = createTestComponent();
-    game.init();
-    game.gameArea.context = game.gameArea.canvas.getContext("2d");
-    actual = getLeftTriangle(game.gameArea.context, component);
+
+    let theVerticesObject = new TriangleVertices('left', component);
+
+    let actual = {};
+    with (theVerticesObject) {
+      actual.x1 = x1;
+      actual.y1 = y1;
+      actual.x2 = x2;
+      actual.y2 = y2;
+      actual.x3 = x3;
+      actual.y3 = y3;
+    };
     expect(actual).toEqual(expected);
   });
 });

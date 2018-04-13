@@ -4,6 +4,7 @@ var init = {
     knobsAndLevers.init();
     menus.init();
     game.init();
+    templates.init();
     metrics.init();
     player.init();
     spiders.init();
@@ -22,6 +23,8 @@ var init = {
     spiders.init();
     texts.init();
     intervalCreatures.init();
+    game.paused = true;
+    game.running = false;
     console.log("game reset");
   },
 }

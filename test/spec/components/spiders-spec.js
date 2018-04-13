@@ -8,6 +8,7 @@ describe('SPIDERS SPEC: ', () => {
   });
   beforeEach(function () {
     testObj = Object.assign({}, spiders);
+    knobsAndLevers.init();
   });
   it('init sets interval from knobsAndLevers', () => {
     let expected = knobsAndLevers.spider.initialInterval;
@@ -212,7 +213,8 @@ describe('SPIDERS SPEC: ', () => {
   });
   it('updateYDirection sets spider to positive directionY if it hits top of play area', () => {
     game.init();
-    game.gameArea.gamePieceTopLimit = 10;
+    player.init();
+    player.topLimit = 10;
     let expected = 1;
     let spider = {y : 1, height : 1, directionY : -expected};
 
@@ -222,7 +224,8 @@ describe('SPIDERS SPEC: ', () => {
   });
   it('updateYDirection does nothing if neither condition is met', () => {
     game.init();
-    game.gameArea.gamePieceTopLimit = 10;
+    player.init();
+    player.topLimit = 10;
     let expected = 1;
     let spider = {y : 10, height : 1, directionY : expected};
 

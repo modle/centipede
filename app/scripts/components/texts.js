@@ -22,13 +22,13 @@ var texts = {
   },
   getLivesParams : function() {
     let livesParams = this.copyBaseMessageParams();
-    livesParams.x = game.gameArea.canvas.width * 0.4;
+    livesParams.x = 720;
     livesParams.y = knobsAndLevers.text.gameInfoHeight;
     return livesParams;
   },
   getDiedTextParams : function() {
     let diedTextParams = this.copyBaseMessageParams();
-    diedTextParams.fontSize = (knobsAndLevers.gridSquareSideLength * 1.5) + "px";
+    diedTextParams.fontSize = (knobsAndLevers.general.gridSquareSideLength * 1.5) + "px";
     diedTextParams.y = game.gameArea.canvas.height * 0.75;
     let backgroundParams = this.copyBaseTextBackgroundParams();
     backgroundParams.height *= 1.5;
@@ -46,7 +46,7 @@ var texts = {
   },
   getGameOverTextParams : function() {
     let gameOverTextParams = this.copyBaseMessageParams();
-    gameOverTextParams.fontSize = (knobsAndLevers.gridSquareSideLength * 3) + "px";
+    gameOverTextParams.fontSize = "50px";
     gameOverTextParams.color = "navy";
     gameOverTextParams.y = game.gameArea.canvas.height * 0.5;
     let backgroundParams = this.copyBaseTextBackgroundParams();

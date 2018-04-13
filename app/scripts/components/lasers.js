@@ -18,7 +18,7 @@ var lasers = Object.create(displayObjectPrototype, {
   },
   eligibleToSpawn : {
     value : function() {
-      let eligible = this.lasers.length < knobsAndLevers.laser.maxNumber
+      let eligible = this.lasers.length < knobsAndLevers.laser.quantity.value
         && supporting.everyinterval(
           game.gameArea.frameNo, knobsAndLevers.laser.interval
         )
@@ -31,7 +31,7 @@ var lasers = Object.create(displayObjectPrototype, {
   make : {
     value : function() {
       let laserArgs = knobsAndLevers.laser.args;
-      laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed;
+      laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed.value;
       if (player.gamePiece == undefined) {
         throw('player.gamePiece is undefined');
       };

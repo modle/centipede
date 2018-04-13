@@ -2,21 +2,26 @@
 var metrics = {
   floatingPoints : [],
   floatingPointCycleDuration : 50,
+  lives : 0,
+  currentLevel : {},
+  score : {},
+  lastScore : 0,
   init : function() {
-    this.lives = knobsAndLevers.player.defaultLives;
     this.currentLevel = knobsAndLevers.game.startLevel;
-    var scoreParams = Object.assign({}, knobsAndLevers.text.baseParams);
-    scoreParams.x = game.gameArea.canvas.width / 10;
+    let scoreParams = Object.assign({}, knobsAndLevers.text.baseParams);
+    scoreParams.x = 100;
     scoreParams.y = knobsAndLevers.text.gameInfoHeight;
     this.score = new Component(scoreParams);
     this.score.value = 0;
+    this.lives = knobsAndLevers.player.defaultLives;
+    this.livesMarker = Object.assign({}, templates.marker);
     console.log("metrics initialized");
   },
   changeScore : function(change) {
     this.score.value += change;
     if (this.score.value < 0) {
       this.score.value = 0;
-    }
+    };
   },
   addNewFloatingPoint : function(x, y, points, action) {
     let newPoint = this.getNewPoint(x, y);
@@ -27,8 +32,7 @@ var metrics = {
   },
   getNewPoint : function(x, y) {
     let args = {
-      fontSize : (knobsAndLevers.gridSquareSideLength * 0.8) + "px",
-      fontType : "Arial",
+      fontSize : "15px",
       color : "black",
       x : x,
       y : y,
@@ -43,12 +47,13 @@ var metrics = {
       this.floatingPoints[i].update();
       if (this.floatingPoints[i].cycleNumber > this.floatingPointCycleDuration) {
         this.floatingPoints.splice(i, 1);
-      }
-    }
+      };
+    };
   },
   reset : function() {
     this.lives = knobsAndLevers.player.defaultLives;
     this.currentLevel = 1;
+    this.lastScore = this.score.value;
     this.score.value = 0;
-  }
-}
+  },
+};

@@ -1,13 +1,15 @@
 var sounds = {
   path : 'app/static/media/sounds/',
   init : function() {
-    this.centipede = this.buildSound("centipede", 0.5);
-    this.spider = this.buildSound("spider", 0.3);
-    this.fly = this.buildSound("fly", 0.3);
-    this.worm = this.buildSound("worm", 0.5, "loop");
-    this.playerDied = this.buildSound("player-died", 0.5);
-    this.laserPool = this.buildManySounds("laser", 20);
-    this.impactPool = this.buildManySounds("laser-impact", knobsAndLevers.laser.maxNumber);
+    this.tracks = {
+      centipede : this.buildSound("centipede", 0.5),
+      spider : this.buildSound("spider", 0.3),
+      fly : this.buildSound("fly", 0.3),
+      worm : this.buildSound("worm", 0.5, "loop"),
+      playerDied : this.buildSound("player-died", 0.5),
+      laserPool : this.buildManySounds("laser", 20),
+      impactPool : this.buildManySounds("laser-impact", knobsAndLevers.laser.quantity.value),
+    };
     console.log("sounds initialized");
   },
   buildSound : function(filename, volume, loop) {
@@ -21,7 +23,7 @@ var sounds = {
     return soundArray;
   },
   manageSounds : function() {
-    if (!knobsAndLevers.game.soundsEnabled) {
+    if (!knobsAndLevers.game.sounds.value) {
       return;
     };
     this.manageCentipedeSounds();
@@ -31,49 +33,66 @@ var sounds = {
   },
   manageCentipedeSounds : function() {
     if (centipedes.centipedes != false) {
-      this.centipede.play();
+      this.playSound(this.getSound('centipede'));
+    };
+  },
+  getSound : function(type) {
+    return this.tracks[type];
+  },
+  playSound : function(sound) {
+    if (knobsAndLevers.game.sounds.value) {
+      sound.play();
     };
   },
   manageSpiderSounds : function() {
     if (spiders.spiders != false) {
-      this.spider.play();
+      this.playSound(this.getSound('spider'));
     };
   },
   manageFlySounds : function() {
+    let sound = this.tracks['fly'];
     if (intervalCreatures.flies != false) {
-      if (!this.fly.played) {
-        this.fly.play();
+      if (!sound.played) {
+        this.playSound(sound);
       };
-      this.fly.played = true;
+      sound.played = true;
     } else {
-      this.fly.played = false;
+      sound.played = false;
     };
   },
   manageWormSounds : function() {
     if (intervalCreatures.worms != false) {
-      this.worm.play();
+      this.playSound(this.getSound('worm'));
     } else {
-      this.worm.stop();
+      this.stopSound('worm');
     };
   },
+  stopSound : function(type) {
+    this.tracks[type].stop();
+  },
   playAvailableLaserSound : function() {
-    this.getAvailableLaserSound().play();
+    this.playSound(this.getSoundFromPool('laserPool'));
   },
-  getAvailableLaserSound : function() {
-    return this.getAvailableSound(sounds.laserPool);
-  },
-  getAvailableImpactSound : function() {
-    return this.getAvailableSound(sounds.impactPool);
+  getSoundFromPool : function(pool) {
+    return this.getAvailableSound(this.tracks[pool]);
   },
   getAvailableSound : function(availableSounds) {
     let sound = availableSounds.pop();
     availableSounds.unshift(sound);
     return sound;
   },
+  playImpactSound : function(type) {
+    if (type !== 'mushroom') {
+      this.playSound(this.getSoundFromPool('impactPool'));
+    };
+  },
+  playDiedSound : function() {
+    this.playSound(this.getSound('playerDied'));
+  },
   stopAllSounds : function() {
-    this.centipede.stop();
-    this.spider.stop();
-    this.worm.stop();
-    this.fly.stop();
+    this.stopSound('centipede');
+    this.stopSound('spider');
+    this.stopSound('worm');
+    this.stopSound('fly');
   },
 };

@@ -4,16 +4,23 @@ function GameArea() {
   this.canvas = document.createElement("canvas"),
   this.xVertices = [],
   this.yVertices = [],
-  this.gamePieceTopLimit = knobsAndLevers.gamePieceTopLimit;
   this.canvas.width = knobsAndLevers.canvas.width;
   this.canvas.height = knobsAndLevers.canvas.height;
-  this.gridSquareSideLength = knobsAndLevers.gridSquareSideLength;
-  this.firstMushroomLayer = knobsAndLevers.gridSquareSideLength * 2;
+  this.gridSquareSideLength = knobsAndLevers.general.gridSquareSideLength;
+  this.firstMushroomLayer = knobsAndLevers.general.gridSquareSideLength * 2;
   this.start = function() {
     this.context = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     this.frameNo = 0;
     this.interval = setInterval(main.updateGameState, supporting.intervalDivisor);
+    this.loadFont();
+  };
+  this.loadFont = function() {
+    let theLoadedFont = new FontFace('press-start', 'url(./app/static/css/fonts/prstartk.ttf)');
+    theLoadedFont.load().then((font) => {
+      document.fonts.add(font);
+      console.log('Font added', font);
+    });
   };
   this.setGridVertices = function() {
     this.xVertices = this.getXVertices();

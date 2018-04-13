@@ -151,36 +151,16 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(testObj.centipedes[2].moveVertically).toBe(false);
     expect(testObj.centipedes[2].updated).toBe(false);
   });
-  it('checkYDirectionInPlayerArea sets reverseDirectionY appropriately', () => {
-    knobsAndLevers.init();
+  it('checkYDirectionInPlayerArea sets reverseDirectionY when hitting canvas bottom', () => {
     game.init();
+    let top = game.gameArea.canvas.height - 10;
+    let bottom = game.gameArea.canvas.height + 10;
     testObj.centipedes = [
       {
         reverseDirectionY : false,
         updated : false,
-        getBottom : function(){return game.gameArea.canvas.height + 1},
-        getTop : function(){return game.gameArea.gamePieceTopLimit},
-        distanceMovedFromBottom : 10,
-      },
-      {
-        reverseDirectionY : false,
-        updated : false,
-        getBottom : function(){return game.gameArea.canvas.height},
-        getTop : function(){return game.gameArea.gamePieceTopLimit},
-        distanceMovedFromBottom : 10,
-      },
-      {
-        reverseDirectionY : false,
-        updated : false,
-        getBottom : function(){return game.gameArea.canvas.height},
-        getTop : function(){return game.gameArea.gamePieceTopLimit + 1},
-        distanceMovedFromBottom : 0,
-      },
-      {
-        reverseDirectionY : false,
-        updated : false,
-        getBottom : function(){return game.gameArea.canvas.height},
-        getTop : function(){return game.gameArea.gamePieceTopLimit - 1},
+        getBottom : function(){return bottom},
+        getTop : function(){return top},
         distanceMovedFromBottom : 10,
       },
     ];
@@ -190,10 +170,28 @@ describe('CENTIPEDES SPEC: ', () => {
     });
 
     expect(testObj.centipedes[0].reverseDirectionY).toBe(true);
-    expect(testObj.centipedes[1].reverseDirectionY).toBe(false);
-    expect(testObj.centipedes[2].reverseDirectionY).toBe(false);
-    expect(testObj.centipedes[3].reverseDirectionY).toBe(true);
-    expect(testObj.centipedes[3].distanceMovedFromBottom).toBe(0);
+  });
+  it('checkYDirectionInPlayerArea sets reverseDirectionY when hitting playerTopLimit while moving up', () => {
+    knobsAndLevers.init();
+    game.init();
+    player.init();
+    let top = knobsAndLevers.player.topLimit - 10;
+    let bottom = top + 20;
+    testObj.centipedes = [
+      {
+        reverseDirectionY : false,
+        updated : false,
+        getBottom : function(){return bottom},
+        getTop : function(){return top},
+        distanceMovedFromBottom : 10,
+      },
+    ];
+
+    testObj.centipedes.filter(centipede => !centipede.updated).map(centipede => {
+      testObj.checkYDirectionInPlayerArea(centipede);
+    });
+
+    expect(testObj.centipedes[0].reverseDirectionY).toBe(true);
   });
   it('checkHorizontalCollisions does not set moveVertically to true if no collisions', () => {
     knobsAndLevers.init();

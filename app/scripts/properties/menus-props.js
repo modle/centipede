@@ -1,11 +1,29 @@
-var menusPropsDefaults = {
-  positions : {
-    x : 268,
-    y : 450,
-    yDivider : 40,
-  }};
+var menuDefaults = {
+  yDivider : 25,
+  entries : {
+    x : 250,
+    y : 500,
+  },
+  text : {
+    x : 115,
+    y : 200,
+  }
+};
+
 var menusProps = {
+  title : {
+    entries : [
+      {
+        name : 'title',
+        text : 'CENTIPEDE!',
+        yAdjust : -100,
+        fontSize : '50px',
+      },
+    ],
+  },
   show : {
+    initials : false,
+    cheats : false,
     main : true,
     instructions : false,
     settings : false,
@@ -17,235 +35,288 @@ var menusProps = {
   minTimeToMove : 30,
   currentSelection : {
     name : '',
-    entry : {
-      position : {x : 0, y : 0},
-      dimensions : {width : 0, height : 0},
-    }
+    entry : undefined,
   },
   screens : {
     instructions : {
       order : ['back'],
       entries : {
         back : {
-          enabled : true,
-          image : new Image(),
-          file : "back.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
-          },
-          dimensions : {width : 96, height : 40},
+          text : 'BACK',
           action : function() {
-            menus.disableMenus();
-            menus.show.main = true;
+            menus.display('main');
           },
         },
       },
       text : {
         entries : [
           {
-            name : 'winning',
-            text : 'Kill the centipede to advance to the next level',
-            component : {},
-            position : {x : 100, y : 100},
-          },
-          {
-            name : 'losing',
-            text : 'Avoid all bugs to stay alive',
-            component : {},
-            position : {x : 215, y : 150},
-          },
-          {
-            name : 'move',
             text : 'WASD : move',
-            component : {},
-            position : {x : 300, y : 200},
           },
           {
-            name : 'shoot',
             text : 'arrow keys or shift : shoot',
-            component : {},
-            position : {x : 225, y : 250},
           },
         ],
-      },
-    },
-    pointers : {
-      entries : {
-        before : {
-          image : new Image(),
-          file : "ship.png",
-          offset : -35,
-        },
-        after : {
-          image : new Image(),
-          file : "ship.png",
-          offset : 0,
-        },
       },
     },
     main : {
       order : [
         'play',
         'instructions',
-        // 'settings',
+        'settings',
+        'cheats',
       ],
       entries : {
         play : {
-          enabled : true,
-          image : new Image(),
-          file : "play.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
-          },
-          dimensions : {width : 96, height : 40},
+          text : 'PLAY',
           action : function() {
-            menus.disableMenus();
-            menus.show.playerSelect = true;
+            menus.display('playerSelect');
           },
         },
         instructions : {
-          enabled : true,
-          image : new Image(),
-          file : "instructions.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
-          },
-          dimensions : {width : 260, height : 40},
+          text : 'INSTRUCTIONS',
           action : function() {
-            menus.disableMenus();
-            menus.show.instructions = true;
+            menus.display('instructions');
           },
         },
         settings : {
-          enabled : false,
-          image : new Image(),
-          file : "settings.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
-          },
-          dimensions : {width : 182, height : 40},
+          text : 'SETTINGS',
           action : function() {
-            menus.disableMenus();
-            menus.show.settings = true;
+            menus.display('settings');
+          },
+        },
+        cheats : {
+          text : 'CHEATS',
+          action : function() {
+            menus.display('cheats');
           },
         },
       },
       text : {
-        entries : [
-          {
-            name : 'title',
-            text : 'CENTIPEDE!',
-            component : {},
-            position : {x : 115, y : 200},
-            fontSize : '50px',
-          },
-        ],
+        entries : [],
       },
     },
     playerSelect : {
       order : [
         'onePlayer',
-        // 'twoPlayer',
-        'back'
+        'back',
       ],
       entries : {
         onePlayer : {
-          enabled : true,
-          image : new Image(),
-          file : "1player.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
-          },
-          dimensions : {width : 176, height : 40},
+          text : '1 PLAYER',
           action : function() {
             menus.disableMenus();
+            game.running = true;
             game.paused = false;
           },
         },
         // twoPlayer : {
-        //   enabled : true,
-        //   image : new Image(),
-        //   file : "2players.png",
+        //   text : '2 Players',
+        //   component : undefined,
         //   position : {
         //     x : menusPropsDefaults.positions.x,
-        //     y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
+        //     y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
         //   },
-        //   dimensions : {width : 200, height : 40},
         //   action : function() {
         //     menus.disableMenus();
         //     game.paused = false;
         //   },
         // },
         back : {
-          enabled : true,
-          image : new Image(),
-          file : "back.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 2,
-          },
-          dimensions : {width : 96, height : 40},
+          text : 'BACK',
           action : function() {
-            menus.disableMenus();
-            menus.show.main = true;
+            menus.display('main');
           },
         },
       },
       text : {
         entries : [
           {
-            name : 'playerSelect',
-            text : 'Choose number of players',
-            component : {},
-            position : {x : 115, y : 200},
+            text : 'Player Select',
           },
         ],
       },
     },
     settings : {
-      order : ['doTheThing', 'back'],
+      order : ['sound', 'back'],
+      update : function() {
+        let theSettings = menus.screens.settings.entries;
+        Array.from(Object.keys(theSettings)).forEach(setting => {
+          if (!theSettings[setting].text) {
+            theSettings[setting].update();
+          };
+        });
+      },
       entries : {
-        doTheThing : {
-          enabled : false,
-          image : new Image(),
-          file : "thing.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
+        // difficulty
+          // easy - no spiders
+          // hard - 10 flies
+          // impossible - 100 flies
+        // spider aggression
+          // high/normal
+        // centipedes
+          // tiny/normal
+        // can't really do anything with centipede speed until the vertical movement logic gets
+        sound : {
+          update : function() {
+            this.text = knobsAndLevers.game.sounds.setting.render();
           },
-          dimensions : {width : 110, height : 40},
           action : function() {
-            console.log('doTheThing clicked');
+            knobsAndLevers.toggleParameter(knobsAndLevers.game.sounds);
+            this.update();
+            if (knobsAndLevers.game.sounds.value) {
+              sounds.playAvailableLaserSound();
+            };
+            menus.display('settings');
           },
         },
         back : {
-          enabled : true,
-          image : new Image(),
-          file : "back.png",
-          position : {
-            x : menusPropsDefaults.positions.x,
-            y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 1,
-          },
-          dimensions : {width : 96, height : 40},
+          text : 'BACK',
           action : function() {
-            menus.disableMenus();
-            menus.show.main = true;
+            menus.display('main');
           },
         },
       },
       text : {
         entries : [
           {
-            name : 'settings',
             text : 'Settings Are Thither',
-            component : {},
-            position : {x : 115, y : 200},
-            fontSize : '50px',
+          },
+        ],
+      },
+    },
+    cheats : {
+      order : ['laserQTY', 'laserSpeed', 'shipSpeed', 'reset', 'back'],
+      update : function() {
+        let theCheats = menus.screens.cheats.entries;
+        theCheats.laserQTY.update();
+        theCheats.laserSpeed.update();
+        theCheats.shipSpeed.update();
+      },
+      entries : {
+        // TODO god - invincible
+        // TODO demigod - a ton of lives
+        laserQTY : {
+          update : function() {
+            this.text = knobsAndLevers.laser.quantity.setting.render();
+          },
+          action : function() {
+            knobsAndLevers.toggleParameter(knobsAndLevers.laser.quantity);
+            game.activeCheets['laserQty'] = knobsAndLevers.laser.quantity.setting.state == "ON";
+            this.update();
+            menus.display('cheats');
+          },
+        },
+        laserSpeed : {
+          update : function() {
+            this.text = knobsAndLevers.laser.speed.setting.render();
+          },
+          action : function() {
+            knobsAndLevers.toggleParameter(knobsAndLevers.laser.speed);
+            game.activeCheets['laserSpeed'] = knobsAndLevers.laser.speed.setting.state == "ON";
+            this.update();
+            menus.display('cheats');
+          },
+        },
+        shipSpeed : {
+          update : function() {
+            this.text = knobsAndLevers.player.speed.setting.render();
+          },
+          action : function() {
+            knobsAndLevers.toggleParameter(knobsAndLevers.player.speed);
+            game.activeCheets['shipSpeed'] = knobsAndLevers.player.speed.setting.state == "ON";
+            this.update();
+            menus.display('cheats');
+          },
+        },
+        reset : {
+          text : 'RESET',
+          action : function() {
+            knobsAndLevers.resetCheats();
+            menus.screens.cheats.update();
+            menus.display('cheats');
+          },
+        },
+        back : {
+          text : 'BACK',
+          action : function() {
+            menus.display('main');
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            text : 'Dear cheater,',
+          },
+          {
+            text : 'Scores will not be recorded',
+            xAdjust : 20,
+          },
+          {
+            text : 'if any of these are set',
+            xAdjust : 20,
+          },
+        ],
+      },
+    },
+    initials : {
+      ignoreMarker : true,
+      order : ['current'],
+      options : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M',
+        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+      entries : {
+        previouser : {
+          noSelection: true,
+          fontSize : '15px',
+          xAdjust : -140,
+          color : 'darkgrey',
+        },
+        previous : {
+          noSelection: true,
+          xAdjust : -120,
+          color : 'grey',
+        },
+        current : {
+          fontSize : '30px',
+          xAdjust : -100,
+          action : function() {
+            menus.addInitials(this.text);
+            menus.display('initials');
+          },
+        },
+        next : {
+          noSelection: true,
+          xAdjust : -120,
+          color : 'grey',
+        },
+        nexter : {
+          noSelection: true,
+          fontSize : '15px',
+          xAdjust : -140,
+          color : 'darkgrey',
+        },
+      },
+      text : {
+        entries : [
+          {
+            name : 'enterInitials',
+            text : 'Enter your initials',
+            fontSize : '25px',
+          },
+          {
+            name : 'currentScore',
+            text : '',
+            xAdjust : 85,
+            yAdjust : 50,
+            fontSize : '20px',
+          },
+          {
+            name : 'entered',
+            text : '',
+            yAdjust : menuDefaults.entries.y - menuDefaults.text.y,
+            xAdjust : 235,
+            fontSize : '30px',
           },
         ],
       },

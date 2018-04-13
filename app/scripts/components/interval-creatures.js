@@ -7,6 +7,7 @@ var intervalCreatures = {
       flies : knobsAndLevers.flies.initialInterval,
       worms : knobsAndLevers.worms.initialInterval,
     };
+    console.log('intervalCreatures initialized');
   },
   manage : function() {
     Array.from(Object.keys(this.intervals)).forEach(creature => {
@@ -61,7 +62,7 @@ var intervalCreatures = {
     });
   },
   dropMushrooms : function(fly) {
-    if (this.eligibleToDrop() && fly.y <= game.gameArea.gamePieceTopLimit) {
+    if (this.eligibleToDrop() && fly.y <= player.topLimit) {
       mushrooms.make({x : fly.x, y : fly.y}, 'purple');
     };
   },

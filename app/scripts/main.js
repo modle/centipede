@@ -3,8 +3,10 @@ var main = {
   framesToWaitToPauseAgain : 0,
   updateGameState : function() {
     // this gets executed every interval
-    main.detectGamepad();
-    if (menus.processMenus()) {
+    main.updateGamepad();
+    if (!game.running) {
+      controls.gamepad.checkState();
+      menus.processMenus();
       return;
     };
     main.handleGamePause();
@@ -14,11 +16,11 @@ var main = {
     main.prepTheCanvas();
     main.manageGameObjects();
   },
-  detectGamepad : function() {
-    controls.gamepad.checkState();
-    if (controls.gamepad.index < 0) {
+  updateGamepad : function() {
+    if (controls.gamepad.enabledGamepadIndices.size <= 0) {
       return;
     };
+    controls.gamepad.refreshGamepadData();
     controls.gamepad.captureAxes();
   },
   handleGamePause : function() {
@@ -44,7 +46,7 @@ var main = {
     if (player.died) {
       if (game.delayed === 0) {
         game.setDiedText();
-        game.playDiedSound();
+        sounds.playDiedSound();
         game.delayed++;
         return true;
       } else if (game.delayed < game.delayEndTime) {
@@ -88,6 +90,7 @@ var main = {
     hud.update();
   },
   manageGameObjects : function() {
+    metrics.manage();
     mushrooms.manage();
     centipedes.manage();
     intervalCreatures.manage();
@@ -95,6 +98,44 @@ var main = {
     lasers.manage();
     player.manage();
     collisions.check();
-    metrics.manage();
+  },
+  // TODO leaderboard functions only work on chrome
+  // either disable the leaderboard menu option when not in chrome
+  // or figure out firefox storage usage
+  saveScore : function(initials) {
+    console.log('saving score');
+    try {
+      let currentLeaderboard = this.readLeaderboard();
+      let score = {initials : initials, score : metrics.lastScore, when : Date.now()};
+      if (currentLeaderboard) {
+        currentLeaderboard.push(score);
+      } else {
+        currentLeaderboard = [score];
+      };
+      localStorage.setItem('centipedeLeaderboard', JSON.stringify(currentLeaderboard));
+    } catch(e) {
+      console.log('could not save leaderboard to localStorage', e);
+    };
+  },
+  readLeaderboard : function() {
+    try {
+      let currentLeaderboard = JSON.parse(localStorage.getItem('centipedeLeaderboard'));
+      if (currentLeaderboard) {
+        return currentLeaderboard;
+      } else {
+        console.log('no leaderboard found');
+      };
+    } catch(e) {
+      console.log('could not load leaderBoard from localStorage', e);
+    };
+  },
+  clearLeaderboard : function() {
+    let key = 'centipedeLeaderboard';
+    try {
+      localStorage.removeItem(key);
+      console.log(key, 'removed from local storage');
+    } catch(e) {
+      console.log(key, 'not found in localStorage', e);
+    };
   },
 };

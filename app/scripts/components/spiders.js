@@ -3,6 +3,7 @@ var spiders = {
   spiders : [],
   init : function() {
     this.interval = knobsAndLevers.spider.initialInterval;
+    console.log('spiders initialized');
   },
   manage : function() {
     this.spawn();
@@ -67,7 +68,7 @@ var spiders = {
   updateYDirection : function(spider) {
     if (spider.y + spider.height > game.gameArea.canvas.height) {
       spider.directionY = -1;
-    } else if (spider.y < game.gameArea.gamePieceTopLimit) {
+    } else if (spider.y < player.topLimit) {
       spider.directionY = 1;
     };
   },
