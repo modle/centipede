@@ -23,6 +23,10 @@ var intervalCreatures = {
     if (supporting.everyinterval(game.gameArea.frameNo, this.intervals[creature])) {
       this.intervals[creature] = supporting.getRandom(knobsAndLevers[creature].interval.min, knobsAndLevers[creature].interval.max);
       this.spawn(creature);
+      if (creature == 'flies') {
+        knobsAndLevers.flies.mushroomCreateInterval = supporting.getRandom(75, 150);
+        console.log(knobsAndLevers.flies.mushroomCreateInterval);
+      };
     };
   },
   spawn : function(creature) {
@@ -34,8 +38,9 @@ var intervalCreatures = {
   },
   make : function(creature) {
     let spawnedCreature = new Component(knobsAndLevers[creature].args);
-    spawnedCreature.pointValue = knobsAndLevers[creature].pointValue * metrics.currentLevel;
-    spawnedCreature.hitPoints = 1;
+    let pointValue = knobsAndLevers[creature].pointValue;
+    spawnedCreature.pointValue = supporting.getRandom(pointValue, pointValue + 400);
+    spawnedCreature.hitPoints = knobsAndLevers[creature].hitPoints;
     this[creature].push(spawnedCreature);
   },
   executeConstructorFunctions : function(creature) {

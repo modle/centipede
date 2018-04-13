@@ -119,12 +119,7 @@ var main = {
   },
   readLeaderboard : function() {
     try {
-      let currentLeaderboard = JSON.parse(localStorage.getItem('centipedeLeaderboard'));
-      if (currentLeaderboard) {
-        return currentLeaderboard;
-      } else {
-        console.log('no leaderboard found');
-      };
+      return JSON.parse(localStorage.getItem('centipedeLeaderboard'));
     } catch(e) {
       console.log('could not load leaderBoard from localStorage', e);
     };
