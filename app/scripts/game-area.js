@@ -1,5 +1,4 @@
 /*jslint white: true */
-
 function GameArea() {
   this.canvas = document.createElement("canvas"),
   this.xVertices = [],
@@ -9,11 +8,18 @@ function GameArea() {
   this.gridSquareSideLength = knobsAndLevers.general.gridSquareSideLength;
   this.firstMushroomLayer = knobsAndLevers.general.gridSquareSideLength * 2;
   this.start = function() {
+    this.loadCanvas();
+    this.loadFrame();
+    this.loadFont();
+    this.loadBackground();
+  };
+  this.loadCanvas = function() {
     this.context = this.canvas.getContext("2d");
-    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+    document.getElementById("canvas-wrapper").appendChild(this.canvas);
+  };
+  this.loadFrame = function() {
     this.frameNo = 0;
     this.interval = setInterval(main.updateGameState, supporting.intervalDivisor);
-    this.loadFont();
   };
   this.loadFont = function() {
     let theLoadedFont = new FontFace('press-start', 'url(./app/static/css/fonts/prstartk.ttf)');
@@ -21,6 +27,22 @@ function GameArea() {
       document.fonts.add(font);
       console.log('Font added', font);
     });
+  };
+  this.loadBackground = function() {
+    let backgroundId = 'canvas-background';
+    if (!document.getElementById(backgroundId)) {
+      let canvasBackground = new Image();
+      canvasBackground.src = 'app/static/media/images/centipede.gif';
+      canvasBackground.id = backgroundId;
+      document.getElementById("canvas-wrapper").appendChild(canvasBackground);
+    };
+  };
+  this.removeBackground = function() {
+    let background = document.getElementById('canvas-background');
+    if (!background) {
+      return;
+    };
+    background.parentNode.removeChild(background);
   };
   this.setGridVertices = function() {
     this.xVertices = this.getXVertices();

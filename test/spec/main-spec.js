@@ -47,10 +47,12 @@ describe('MAIN SPEC: ', () => {
     expect(main.manageGameObjects).not.toHaveBeenCalled();
   });
   it('updateGameState returns after processMenus when game.running is false', () => {
+    game.init();
     game.running = false;
+    spyOn(main, 'updateGamepad');
+    spyOn(game.gameArea, 'loadBackground');
     spyOn(controls.gamepad, 'checkState');
     spyOn(menus, 'processMenus');
-    spyOn(main, 'updateGamepad');
     spyOn(main, 'handleGamePause');
     spyOn(main, 'processTriggers');
     spyOn(main, 'prepTheCanvas');
@@ -58,9 +60,10 @@ describe('MAIN SPEC: ', () => {
 
     main.updateGameState();
 
+    expect(main.updateGamepad).toHaveBeenCalled();
+    expect(game.gameArea.loadBackground).toHaveBeenCalled();
     expect(controls.gamepad.checkState).toHaveBeenCalled();
     expect(menus.processMenus).toHaveBeenCalled();
-    expect(main.updateGamepad).toHaveBeenCalled();
     expect(main.handleGamePause).not.toHaveBeenCalled();
     expect(main.processTriggers).not.toHaveBeenCalled();
     expect(main.prepTheCanvas).not.toHaveBeenCalled();

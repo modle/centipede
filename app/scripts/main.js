@@ -5,10 +5,12 @@ var main = {
     // this gets executed every interval
     main.updateGamepad();
     if (!game.running) {
+      game.gameArea.loadBackground();
       controls.gamepad.checkState();
       menus.processMenus();
       return;
     };
+    game.gameArea.removeBackground();
     main.handleGamePause();
     if (main.processTriggers()) {
       return;
