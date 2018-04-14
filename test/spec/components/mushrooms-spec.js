@@ -87,23 +87,6 @@ describe('MUSHROOMS SPEC: ', () => {
     );
   });
 
-  xit('activateOverlyComplexMushroomSafetyValve sets hitPoints of the first mushroom in an overlapping pair to 0 if there are more than 200 mushrooms', () => {
-    let mushroom1 = {hitPoints: 2, x: 5, y: 5};
-    let mushroom2 = {hitPoints: 2, x: 5, y: 5};
-    let mushroom3 = {hitPoints: 2, x: 6, y: 6};
-    testObj.mushrooms = [mushroom1, mushroom2, mushroom3];
-    while (testObj.mushrooms.length < 201) {
-      testObj.mushrooms.push({hitPoints: 2, x: 6, y: 6})
-    };
-
-    testObj.activateOverlyComplexMushroomSafetyValve();
-
-    expect(testObj.mushrooms.length).toBe(201);
-    expect(testObj.mushrooms[0].hitPoints).toEqual(0);
-    expect(testObj.mushrooms[1].hitPoints).toEqual(2);
-    expect(testObj.mushrooms[100].hitPoints).toEqual(0);
-  });
-
   it('clear clears mushroom objects', () => {
     testObj.mushrooms = [{}];
 

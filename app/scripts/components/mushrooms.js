@@ -67,23 +67,6 @@ var mushrooms = {
       this.mushrooms[i].update();
     };
   },
-  activateOverlyComplexMushroomSafetyValve : function() {
-    if (this.mushrooms.length < 530) {
-      return;
-    };
-    this.mushrooms.forEach((mushroom, index) =>
-      mushroom.hitPoints > 0
-        &&
-      this.mushrooms.find((submushroom, subIndex) =>
-        index != subIndex
-        && submushroom.hitPoints > 0
-        && mushroom.x == submushroom.x
-        && mushroom.y == submushroom.y
-      )
-      ? mushroom.hitPoints = 0
-      : 'do nothing'
-    );
-  },
   clear : function() {
     this.mushrooms = [];
   },
