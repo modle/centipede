@@ -57,8 +57,8 @@ var knobsAndLevers = {
     hitPoints : 2,
     pointValue : 200,
     interval : {
-      min: 0,
-      max: 0,
+      min: 1500,
+      max: 2500,
     },
     mushroomCreateInterval : 100,
     args : {
@@ -76,7 +76,7 @@ var knobsAndLevers = {
     },
   },
   game : {
-    playerCollisionsEnabled : false,
+    playerCollisionsEnabled : true,
     sounds : {
       value : true,
       default : true,
@@ -143,7 +143,7 @@ var knobsAndLevers = {
     },
   },
   player : {
-    defaultLives : 1,
+    defaultLives : 3,
     speed : {
       value : 2,
       default : 2,
@@ -172,8 +172,8 @@ var knobsAndLevers = {
     maxNumber : 1,
     pointValue: 500,
     interval : {
-      min: 1000,
-      max: 2000,
+      min: 1500,
+      max: 2500,
     },
     args : {
       color : "fuchsia",
