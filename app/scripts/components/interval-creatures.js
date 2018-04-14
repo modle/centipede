@@ -66,7 +66,7 @@ var intervalCreatures = {
     });
   },
   dropMushrooms : function(fly) {
-    if (this.eligibleToDrop() && fly.y <= player.topLimit && fly.y >= game.gameArea.firstMushroomLayer) {
+    if (this.eligibleToDrop() && fly.y <= game.gameArea.canvas.height * 0.90 && fly.y >= game.gameArea.firstMushroomLayer) {
       mushrooms.make({x : fly.x, y : fly.y}, 'purple');
     };
   },

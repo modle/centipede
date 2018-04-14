@@ -161,15 +161,15 @@ describe('COLLISIONS SPEC: ', () => {
     expect(testObj.handleCentipedeKill).toHaveBeenCalled();
   });
 
-  it('handleCentipedeKill creates mushroom and counts kill', () => {
+  it('handleCentipedeKill alls mushrooms.make and counts kill', () => {
     target = {type : 'centipede', x : 1, y : 1};
     centipedes.numberKilled = 0;
-    mushrooms.mushrooms = [];
+    spyOn(mushrooms, 'make');
 
     testObj.handleCentipedeKill(target);
 
     expect(centipedes.numberKilled).toEqual(1);
-    expect(mushrooms.mushrooms.length).toEqual(1);
+    expect(mushrooms.make).toHaveBeenCalled();
   });
 
   it('removeUsedLasers removes used lasers when remove is true', () => {

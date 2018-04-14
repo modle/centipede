@@ -53,7 +53,7 @@ var knobsAndLevers = {
     },
   },
   flies : {
-    maxNumber : 100,
+    maxNumber : 1,
     hitPoints : 2,
     pointValue : 200,
     interval : {
@@ -76,7 +76,7 @@ var knobsAndLevers = {
     },
   },
   game : {
-    playerCollisionsEnabled : true,
+    playerCollisionsEnabled : false,
     sounds : {
       value : true,
       default : true,
@@ -133,7 +133,9 @@ var knobsAndLevers = {
     },
   },
   mushrooms : {
+    initialAmount : 50,
     scaleFactor : 1,
+    hitPoints : 4,
     side : 0,
     init : function(configs) {
       this.scaleFactor = configs.general.gridSquareSideLength * 0.1;

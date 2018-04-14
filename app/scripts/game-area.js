@@ -60,7 +60,7 @@ function GameArea() {
   this.getYVertices = function() {
     let y = this.firstMushroomLayer;
     let vertices = [];
-    while (y < this.canvas.height * 0.75) {
+    while (y < this.canvas.height) {
       vertices.push(Math.ceil(y));
       y += this.gridSquareSideLength;
     };
