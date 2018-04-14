@@ -14,6 +14,7 @@ var knobsAndLevers = {
   resetCheats : function() {
     this.laser.resetCheats();
     this.player.resetCheats();
+    this.game.activeCheats = {};
     console.log('cheats reset');
   },
   toggleParameter : function(parameter) {
@@ -52,12 +53,12 @@ var knobsAndLevers = {
     },
   },
   flies : {
-    maxNumber : 2,
+    maxNumber : 1,
     hitPoints : 2,
     pointValue : 200,
     interval : {
-      min: 800,
-      max: 1200,
+      min: 1500,
+      max: 2500,
     },
     mushroomCreateInterval : 100,
     args : {
@@ -132,7 +133,9 @@ var knobsAndLevers = {
     },
   },
   mushrooms : {
+    initialAmount : 50,
     scaleFactor : 1,
+    hitPoints : 4,
     side : 0,
     init : function(configs) {
       this.scaleFactor = configs.general.gridSquareSideLength * 0.1;
@@ -169,8 +172,8 @@ var knobsAndLevers = {
     maxNumber : 1,
     pointValue: 500,
     interval : {
-      min: 1000,
-      max: 2000,
+      min: 1500,
+      max: 2500,
     },
     args : {
       color : "fuchsia",

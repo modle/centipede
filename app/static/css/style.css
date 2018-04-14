@@ -1,15 +1,21 @@
 canvas {
+  position: absolute;
+  background-color: #f1f1f1;
+}
+
+#canvas-wrapper {
+  border: 1px solid #d3d3d3;
   margin: 0 auto;
   padding: 0;
   display: block;
-  border: 1px solid #d3d3d3;
-  background-color: #f1f1f1;
   width: 800px;
+  height: 800px;
 }
 
-.instructions {
-  margin: 2em auto;
+#canvas-background {
+  position: absolute;
   width: 800px;
+  opacity: 0.1;
 }
 
 .linkButton {

@@ -202,7 +202,7 @@ var menusProps = {
           },
           action : function() {
             knobsAndLevers.toggleParameter(knobsAndLevers.laser.quantity);
-            game.activeCheets['laserQty'] = knobsAndLevers.laser.quantity.setting.state == "ON";
+            game.activeCheats['laserQty'] = knobsAndLevers.laser.quantity.setting.state == "ON";
             this.update();
             menus.display('cheats');
           },
@@ -213,7 +213,7 @@ var menusProps = {
           },
           action : function() {
             knobsAndLevers.toggleParameter(knobsAndLevers.laser.speed);
-            game.activeCheets['laserSpeed'] = knobsAndLevers.laser.speed.setting.state == "ON";
+            game.activeCheats['laserSpeed'] = knobsAndLevers.laser.speed.setting.state == "ON";
             this.update();
             menus.display('cheats');
           },
@@ -224,7 +224,7 @@ var menusProps = {
           },
           action : function() {
             knobsAndLevers.toggleParameter(knobsAndLevers.player.speed);
-            game.activeCheets['shipSpeed'] = knobsAndLevers.player.speed.setting.state == "ON";
+            game.activeCheats['shipSpeed'] = knobsAndLevers.player.speed.setting.state == "ON";
             this.update();
             menus.display('cheats');
           },
@@ -269,17 +269,18 @@ var menusProps = {
         previouser : {
           noSelection: true,
           fontSize : '15px',
-          xAdjust : -140,
+          xAdjust : -60,
+          yAdjust : -10,
           color : 'darkgrey',
         },
         previous : {
           noSelection: true,
-          xAdjust : -120,
+          xAdjust : -30,
+          yAdjust : -10,
           color : 'grey',
         },
         current : {
           fontSize : '30px',
-          xAdjust : -100,
           action : function() {
             menus.addInitials(this.text);
             menus.display('initials');
@@ -287,13 +288,15 @@ var menusProps = {
         },
         next : {
           noSelection: true,
-          xAdjust : -120,
+          xAdjust : -30,
+          yAdjust : -10,
           color : 'grey',
         },
         nexter : {
           noSelection: true,
           fontSize : '15px',
-          xAdjust : -140,
+          xAdjust : -60,
+          yAdjust : -10,
           color : 'darkgrey',
         },
       },

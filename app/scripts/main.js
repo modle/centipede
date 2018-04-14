@@ -5,10 +5,12 @@ var main = {
     // this gets executed every interval
     main.updateGamepad();
     if (!game.running) {
+      game.gameArea.loadBackground();
       controls.gamepad.checkState();
       menus.processMenus();
       return;
     };
+    game.gameArea.removeBackground();
     main.handleGamePause();
     if (main.processTriggers()) {
       return;
@@ -84,10 +86,9 @@ var main = {
   prepTheCanvas : function() {
     game.startNextFrame();
     sounds.manageSounds();
-    if (menus.areActive()) {
-      return;
+    if (game.running) {
+      hud.update();
     };
-    hud.update();
   },
   manageGameObjects : function() {
     metrics.manage();

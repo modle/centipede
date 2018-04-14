@@ -26,7 +26,7 @@ describe('GAME AREA SPEC: ', () => {
     expect(gameArea.getXVertices().length).toBe(expectedNumVertices);
   });
   it('getYVertices returns a reasonable array of vertices', () => {
-    let expectedNumVertices = (knobsAndLevers.canvas.height * 0.75 - knobsAndLevers.general.gridSquareSideLength) / knobsAndLevers.general.gridSquareSideLength;
+    let expectedNumVertices = (knobsAndLevers.canvas.height - knobsAndLevers.general.gridSquareSideLength - 1) / knobsAndLevers.general.gridSquareSideLength;
     expect(gameArea.getYVertices().length).toBe(Math.floor(expectedNumVertices));
   });
   it('clear calls context.clearRect', () => {

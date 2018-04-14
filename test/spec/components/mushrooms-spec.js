@@ -41,21 +41,36 @@ describe('MUSHROOMS SPEC: ', () => {
 
     expect(testObj.mushrooms.length).toBe(expected);
   });
-  it('make does not push mushroom to mushrooms if coordinate test fails', () => {
+  it('make pushes mushroom with max value from xVertices if coordinates.x is outside canvas', () => {
+    game.init();
+    game.gameArea.xVertices = [20, 30];
+    game.gameArea.yVertices = [5, 10];
     spyOn(testObj, 'generate');
-    let coordinateOutsideCanvas = game.gameArea.canvas.width * 2;
-    let validCoordinate = 0;
-    let coordinates = {x : coordinateOutsideCanvas, y : validCoordinate};
+    let coordinateOutsideCanvasRight = game.gameArea.canvas.width * 2;
+    let coordinateAboveCanvas = -100;
+    let coordinates = {x : coordinateOutsideCanvasRight, y : coordinateAboveCanvas};
 
     testObj.make(coordinates);
 
-    expect(testObj.generate).not.toHaveBeenCalled();
+    expect(coordinates.x).toBe(30);
+    expect(coordinates.y).toBe(5);
+    expect(testObj.generate).toHaveBeenCalled();
   });
   it('make throws error if coordinates are undefined', () => {
     let coordinates = {x : undefined, y : undefined};
 
     expect(function(){ testObj.make(coordinates); })
       .toThrow(new Error("coordinate error: x: " + coordinates.x + ", y: " + coordinates.y));
+  });
+
+  it('update calls update on mushroom objects', () => {
+    knobsAndLevers.mushrooms.scaleFactor = 0.1
+    let coordinates = {hitPoints: 5, x: 5, y: 5};
+    testObj.mushrooms = [{hitPoints: 5, x: 5.1, y: 5.1}];
+
+    let result = testObj.willOverlap(coordinates);
+
+    expect(result).toBeTruthy();
   });
 
   it('update calls update on mushroom objects', () => {
@@ -71,6 +86,7 @@ describe('MUSHROOMS SPEC: ', () => {
       expect(mushroom.update).toHaveBeenCalled()
     );
   });
+
   it('clear clears mushroom objects', () => {
     testObj.mushrooms = [{}];
 
