@@ -61,11 +61,7 @@ var spiders = {
   updateSpeed : function(spider) {
     // TODO work on the spider movement algorithm
     // spiders need to move up and down erratically, and occasionally move horizontally
-    // if (supporting.everyinterval(game.getFrameNo(), this.interval / 20)) {
     spider.speedX = Math.sign(spider.speedX) * (supporting.getRandom(-50, 5) < 0 ? 0.01 : 5);
-    // };
-    // if (supporting.everyinterval(game.getFrameNo(), this.interval / 50)) {
-    // };
     spider.speedY = spider.directionY * (supporting.getRandom(-50, 5) < 0 ? 0.01 : 5);
     if (supporting.everyinterval(game.getFrameNo(), this.interval * supporting.getRandom(0.1, 1))) {
       spider.directionY *= -1;

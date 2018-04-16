@@ -34,6 +34,9 @@ var intervalCreatures = {
     };
     this.executeConstructorFunctions(creature);
     this.make(creature);
+    if (creature == 'worms') {
+      console.log(this.worms);
+    };
   },
   make : function(creature) {
     let spawnedCreature = new Component(knobsAndLevers[creature].args);
@@ -44,7 +47,7 @@ var intervalCreatures = {
   },
   executeConstructorFunctions : function(creature) {
     let args = knobsAndLevers[creature].args;
-    if (Array.from(Object.keys(args)).includes('constructorFunctions')) {
+    if (args.constructorFunctions) {
       Array.from(Object.keys(args.constructorFunctions))
         .forEach(theFunction => args.constructorFunctions[theFunction]());
     };
@@ -53,6 +56,7 @@ var intervalCreatures = {
     if (this[creature] == false) { return; };
     return this[creature].filter(target => {
       return target.x < game.gameArea.canvas.width
+        && target.x > 0
         && target.y < game.gameArea.canvas.height
     });
   },

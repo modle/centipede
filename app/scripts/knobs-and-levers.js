@@ -214,24 +214,31 @@ var knobsAndLevers = {
   },
   worms : {
     maxNumber: 1,
-    pointValue : 1000,
+    pointValue :200,
     hitPoints : 1,
     interval : {
-      min: 1500,
-      max: 3250,
+      min: 0,
+      max: 0,
     },
     args : {
       color : "orange",
       extraArgs : {type : "worm", speed : {x : 1, y : 0}},
       constructorFunctions : {
-        setY : function() { knobsAndLevers.worms.args.y = supporting.getRandom(0, knobsAndLevers.canvas.height / 5) },
+        setX : function() {
+          knobsAndLevers.worms.args.extraArgs.speed.x = supporting.getRandom(-1, 1) < 0 ? -1 : 1;
+          if (knobsAndLevers.worms.args.extraArgs.speed.x < 0) {
+            knobsAndLevers.worms.args.x = game.gameArea.canvas.width - 1;
+          } else {
+            knobsAndLevers.worms.args.x = 1;
+          };
+        },
+        setY : function() { knobsAndLevers.worms.args.y = supporting.getRandom(0, player.topLimit - player.areaHeight) },
       }
     },
     init : function(configs) {
       this.initialInterval = supporting.getRandom(this.interval.min, this.interval.max);
       this.args.width = configs.general.gridSquareSideLength * 1.5;
       this.args.height = configs.general.gridSquareSideLength;
-      this.args.x = -configs.canvas.width / 10;
     },
   },
 };
