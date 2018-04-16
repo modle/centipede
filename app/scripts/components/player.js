@@ -15,6 +15,7 @@ var player = {
     'upLeft' : ['belowTop', 'insideLeft'],
   },
   init : function() {
+    this.areaHeight = knobsAndLevers.player.areaHeight;
     this.topLimit = knobsAndLevers.player.topLimit;
     let gamePieceArgs = {
       width: knobsAndLevers.player.width,

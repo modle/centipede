@@ -76,7 +76,7 @@ var knobsAndLevers = {
     },
   },
   game : {
-    playerCollisionsEnabled : true,
+    playerCollisionsEnabled : false,
     sounds : {
       value : true,
       default : true,
@@ -160,7 +160,8 @@ var knobsAndLevers = {
     height : 15,
     extraArgs : {type : "player"},
     init : function(configs) {
-      this.topLimit = configs.canvas.height * 0.8;
+      this.areaHeight = configs.canvas.height * 0.2;
+      this.topLimit = knobsAndLevers.canvas.height - this.areaHeight;
       this.startX = (configs.canvas.width - this.width) * 0.5;
       this.startY = configs.canvas.height * 0.9;
     },
@@ -170,10 +171,15 @@ var knobsAndLevers = {
   },
   spider : {
     maxNumber : 1,
-    pointValue: 500,
+    hitPoints : 1,
+    directionY : 1,
+    points : {
+      base : 500,
+      range : 400,
+    },
     interval : {
-      min: 1500,
-      max: 2500,
+      min: 300,
+      max: 600,
     },
     args : {
       color : "fuchsia",
@@ -183,8 +189,7 @@ var knobsAndLevers = {
       this.initialInterval = supporting.getRandom(this.interval.min, this.interval.max);
       this.args.width = configs.general.gridSquareSideLength * 0.8;
       this.args.height = configs.general.gridSquareSideLength * 0.3;
-      this.args.x = -this.args.width * 0.8;
-      this.args.y = configs.player.topLimit;
+      this.args.x = 1;
     },
   },
   text : {
