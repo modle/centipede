@@ -5,9 +5,12 @@ var centipedes = {
   numberSpawned : 0,
   numberKilled : 0,
   manage : function() {
+    if (game.levelIsOver()) {
+      this.determineHorizontalPosition();
+    };
     if (this.eligibleToSpawn()) {
       this.spawn();
-    }
+    };
     this.update();
   },
   eligibleToSpawn : function() {
@@ -15,6 +18,10 @@ var centipedes = {
       game.gameArea.frameNo == 1
         || this.numberSpawned < knobsAndLevers.centipede.maxNumber + metrics.currentLevel;
     return eligible;
+  },
+  determineHorizontalPosition : function() {
+    let baseRange = game.gameArea.canvas.width;
+    knobsAndLevers.centipede.args.x = supporting.getRandom(baseRange * 0.2, baseRange * 0.8);
   },
   spawn : function() {
     let centipede = this.make();

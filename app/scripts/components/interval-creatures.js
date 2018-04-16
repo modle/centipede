@@ -34,9 +34,6 @@ var intervalCreatures = {
     };
     this.executeConstructorFunctions(creature);
     this.make(creature);
-    if (creature == 'worms') {
-      console.log(this.worms);
-    };
   },
   make : function(creature) {
     let spawnedCreature = new Component(knobsAndLevers[creature].args);
