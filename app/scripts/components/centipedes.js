@@ -2,35 +2,20 @@
 var centipedes = {
   // TODO rename this to segments?
   centipedes : [],
+  positions : [],
   numberSpawned : 0,
   numberKilled : 0,
   spawnPoints : 1,
   manage : function() {
-    if (game.levelIsOver()) {
-      this.buildCentipedeStructure();
-      this.determineHorizontalPosition();
-    };
-    if (this.eligibleToSpawn()) {
-      this.spawn();
-    };
+    this.spawn();
     this.update();
   },
-  buildCentipedeStructure : function() {
-    let tier = knobsAndLevers.game.tier;
-    this.segments = tier + knobsAndLevers.centipede.maxNumber;
-  },
-  eligibleToSpawn : function() {
-    // console.log('tier', knobsAndLevers.game.tier, 'segments', this.segments, 'numberSpawned', this.numberSpawned);
-    let eligible =
-      game.gameArea.frameNo == 1
-        || this.numberSpawned < this.segments;
-    return eligible;
-  },
-  determineHorizontalPosition : function() {
-    let baseRange = game.gameArea.canvas.width;
-    knobsAndLevers.centipede.args.x = supporting.getRandom(baseRange * 0.2, baseRange * 0.8);
-  },
   spawn : function() {
+    this.determineSpawnPositions();
+    if (!this.eligibleToSpawn()) {
+      return;
+    };
+    knobsAndLevers.centipede.args.x = this.positions[this.centipedes.length % this.positions.length];
     let centipede = this.make();
     for (i = 0; i < this.centipedes.length; i += 1) {
       if (this.centipedes[i].crashWith(centipede)) {
@@ -38,6 +23,30 @@ var centipedes = {
       };
     };
     this.add(centipede);
+  },
+  determineSpawnPositions : function() {
+    if (!game.levelIsOver()) {
+      return;
+    };
+    this.buildCentipedeStructure();
+  },
+  buildCentipedeStructure : function() {
+    let tier = knobsAndLevers.game.tier ? knobsAndLevers.game.tier : 1;
+    this.segments = tier + knobsAndLevers.centipede.maxNumber;
+    this.positions = [];
+    let maxTier = knobsAndLevers.game.maxTier;
+    let upperLimit = tier < maxTier ? tier : maxTier;
+    while (this.positions.length < upperLimit) {
+      this.positions.push(this.determineHorizontalPosition());
+    };
+  },
+  determineHorizontalPosition : function() {
+    let baseRange = game.gameArea.canvas.width;
+    return supporting.getRandom(baseRange * 0.2, baseRange * 0.8);
+  },
+  eligibleToSpawn : function() {
+    let eligible = this.numberSpawned < this.segments;
+    return eligible;
   },
   make : function() {
     centipede = new Component(knobsAndLevers.centipede.args);

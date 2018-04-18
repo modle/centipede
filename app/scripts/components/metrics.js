@@ -39,7 +39,7 @@ var metrics = {
     };
   },
   setTier : function() {
-    knobsAndLevers.game.tier = Math.floor((this.score.value + 1) / knobsAndLevers.game.incrementThingsScore) + 1;
+    knobsAndLevers.game.tier = Math.floor((this.score.value + 1) / knobsAndLevers.game.incrementThingsScore);
   },
   addNewFloatingPoint : function(x, y, points, action) {
     let newPoint = this.getNewPoint(x, y);

@@ -92,7 +92,7 @@ var knobsAndLevers = {
     gameOverDelay : 600,
     startLevel : 0,
     maxMushrooms : 50,
-    incrementThingsScore : 500,
+    incrementThingsScore : 10000,
     tier : 1,
     maxTier : 5,
   },
