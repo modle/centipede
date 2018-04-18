@@ -95,4 +95,7 @@ var sounds = {
     this.stopSound('worm');
     this.stopSound('fly');
   },
+  playExtraLifeSound : function() {
+    console.log('boop beep implement me');
+  },
 };

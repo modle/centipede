@@ -3,6 +3,7 @@ var metrics = {
   floatingPoints : [],
   floatingPointCycleDuration : 50,
   lives : 0,
+  extraLivesGained : 0,
   currentLevel : {},
   score : {},
   lastScore : 0,
@@ -21,6 +22,15 @@ var metrics = {
     this.score.value += change;
     if (this.score.value < 0) {
       this.score.value = 0;
+    };
+    let tier = Math.floor((this.score.value + 1) / knobsAndLevers.game.incrementThingsScore);
+    let maxTier = knobsAndLevers.game.maxTier;
+    knobsAndLevers.spider.maxNumber = tier < maxTier ? tier + 1 : maxTier;
+    knobsAndLevers.flies.maxNumber = tier < maxTier ? tier + 1 : maxTier;
+    if (this.extraLivesGained < tier) {
+      this.lives += 1;
+      this.extraLivesGained += 1;
+      sounds.playExtraLifeSound();
     };
   },
   addNewFloatingPoint : function(x, y, points, action) {
