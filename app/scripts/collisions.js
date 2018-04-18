@@ -43,7 +43,7 @@ var collisions = {
   },
   processKill : function(target) {
     metrics.addNewFloatingPoint(target.getMiddleX(), target.getMiddleY(), target.pointValue, "gain");
-    metrics.changeScore(target.pointValue);
+    metrics.manageScore(target.pointValue);
     this.handleCentipedeKill(target);
   },
   handleCentipedeKill(target) {

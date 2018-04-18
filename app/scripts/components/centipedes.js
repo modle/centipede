@@ -4,8 +4,10 @@ var centipedes = {
   centipedes : [],
   numberSpawned : 0,
   numberKilled : 0,
+  spawnPoints : 1,
   manage : function() {
     if (game.levelIsOver()) {
+      this.buildCentipedeStructure();
       this.determineHorizontalPosition();
     };
     if (this.eligibleToSpawn()) {
@@ -13,10 +15,15 @@ var centipedes = {
     };
     this.update();
   },
+  buildCentipedeStructure : function() {
+    let tier = knobsAndLevers.game.tier;
+    this.segments = tier + knobsAndLevers.centipede.maxNumber;
+  },
   eligibleToSpawn : function() {
+    // console.log('tier', knobsAndLevers.game.tier, 'segments', this.segments, 'numberSpawned', this.numberSpawned);
     let eligible =
       game.gameArea.frameNo == 1
-        || this.numberSpawned < knobsAndLevers.centipede.maxNumber + metrics.currentLevel;
+        || this.numberSpawned < this.segments;
     return eligible;
   },
   determineHorizontalPosition : function() {

@@ -92,12 +92,13 @@ var knobsAndLevers = {
     gameOverDelay : 600,
     startLevel : 0,
     maxMushrooms : 50,
-    incrementThingsScore : 10000,
+    incrementThingsScore : 500,
+    tier : 1,
     maxTier : 5,
   },
   laser : {
     speed : {
-      value : 5,
+      value : 10,
       default : 5,
       setting : {
         value : 15,
@@ -109,7 +110,7 @@ var knobsAndLevers = {
       },
     },
     quantity : {
-      value : 1,
+      value : 10,
       default : 1,
       setting : {
         value : 5,

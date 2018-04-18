@@ -11,17 +11,17 @@ describe('METRICS SPEC: ', () => {
     testObj = Object.assign({}, metrics);
     testObj.init();
   });
-  it('changeScore changes the score when initialValue is non-negative', () => {
+  it('manageScore changes the score when initialValue is non-negative', () => {
     let changeAmount = 5;
     let initialValue = 0;
     testObj.score.value = initialValue;
     let expected = changeAmount + (initialValue < 0 ? 0 : initialValue);
 
-    testObj.changeScore(changeAmount);
+    testObj.manageScore(changeAmount);
 
     expect(testObj.score.value).toBe(expected);
   });
-  it('changeScore changes the score when initialValue is negative', () => {
+  it('manageScore changes the score when initialValue is negative', () => {
     let changeAmount = -5;
     let initialValue = 0;
     testObj.score.value = initialValue;
@@ -29,7 +29,7 @@ describe('METRICS SPEC: ', () => {
     let expected = initialValue + changeAmount;
     expected = expected < 0 ? 0 : expected;
 
-    testObj.changeScore(changeAmount);
+    testObj.manageScore(changeAmount);
 
     expect(testObj.score.value).toBe(expected);
   });

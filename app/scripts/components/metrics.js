@@ -18,13 +18,18 @@ var metrics = {
     this.livesMarker = Object.assign({}, templates.marker);
     console.log("metrics initialized");
   },
+  manageScore : function(change) {
+    this.changeScore(change);
+    this.manageTier();
+  },
   changeScore : function(change) {
     this.score.value += change;
-    if (this.score.value < 0) {
-      this.score.value = 0;
-    };
-    let tier = Math.floor((this.score.value + 1) / knobsAndLevers.game.incrementThingsScore);
+    this.score.value = this.score.value < 0 ? 0 : this.score.value;
+  },
+  manageTier : function() {
+    this.setTier();
     let maxTier = knobsAndLevers.game.maxTier;
+    let tier = knobsAndLevers.game.tier;
     knobsAndLevers.spider.maxNumber = tier < maxTier ? tier + 1 : maxTier;
     knobsAndLevers.flies.maxNumber = tier < maxTier ? tier + 1 : maxTier;
     if (this.extraLivesGained < tier) {
@@ -32,6 +37,9 @@ var metrics = {
       this.extraLivesGained += 1;
       sounds.playExtraLifeSound();
     };
+  },
+  setTier : function() {
+    knobsAndLevers.game.tier = Math.floor((this.score.value + 1) / knobsAndLevers.game.incrementThingsScore) + 1;
   },
   addNewFloatingPoint : function(x, y, points, action) {
     let newPoint = this.getNewPoint(x, y);

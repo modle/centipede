@@ -150,14 +150,14 @@ describe('COLLISIONS SPEC: ', () => {
 
   it('processKill delegates to metrics functions', () => {
     spyOn(metrics, 'addNewFloatingPoint');
-    spyOn(metrics, 'changeScore');
+    spyOn(metrics, 'manageScore');
     spyOn(testObj, 'handleCentipedeKill');
 
     target = {type : 'notACentipede', getMiddleX : function(){}, getMiddleY : function(){}};
     testObj.processKill(target);
 
     expect(metrics.addNewFloatingPoint).toHaveBeenCalled();
-    expect(metrics.changeScore).toHaveBeenCalled();
+    expect(metrics.manageScore).toHaveBeenCalled();
     expect(testObj.handleCentipedeKill).toHaveBeenCalled();
   });
 
