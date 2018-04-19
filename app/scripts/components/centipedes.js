@@ -102,6 +102,7 @@ var centipedes = {
   checkYDirectionInPlayerArea : function(centipede) {
     if (centipede.getBottom() > game.gameArea.canvas.height) {
       centipede.reverseDirectionY = true;
+      centipede.poisoned = false;
     } else if (centipede.getTop() < player.topLimit && centipede.distanceMovedFromBottom > 0) {
       centipede.reverseDirectionY = true;
       centipede.distanceMovedFromBottom = 0;
@@ -126,6 +127,14 @@ var centipedes = {
     return hasCollided;
   },
   hasCollidedWithMushroom : function(centipede) {
+    let theMushroom = this.getTheMushroom(centipede);
+    if (theMushroom && theMushroom.poisoned) {
+      centipede.poisoned = true;
+      console.log('poisoned mushroom');
+    };
+    return theMushroom;
+  },
+  getTheMushroom : function(centipede) {
     return mushrooms.mushrooms.find(mushroom =>
       centipede.crashWith(mushroom)
         &&
@@ -139,6 +148,7 @@ var centipedes = {
       centipede.distanceMovedY = 0;
       centipede.updated = true;
     };
+    centipede.moveVertically = centipede.poisoned ? true : centipede.moveVertically;
   },
   updateDirections : function() {
     for (i = 0; i < this.centipedes.length; i += 1) {

@@ -81,7 +81,12 @@ var intervalCreatures = {
     );
   },
   changeMushrooms : function(creature) {
-    mushrooms.mushrooms.forEach(mushroom => creature.crashWithMiddle(mushroom) ? mushroom.color = 'purple' : null);
+    mushrooms.mushrooms.forEach(mushroom => {
+      if (creature.crashWithMiddle(mushroom)) {
+        mushroom.color = 'purple';
+        mushroom.poisoned = true;
+      };
+    });
   },
   clear : function() {
     this.worms = [];
