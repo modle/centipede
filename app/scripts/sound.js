@@ -7,6 +7,7 @@ var sounds = {
       fly : this.buildSound("fly", 0.3),
       worm : this.buildSound("worm", 0.5, "loop"),
       playerDied : this.buildSound("player-died", 0.5),
+      tierChange : this.buildSound("tier-change", 0.3),
       laserPool : this.buildManySounds("laser", 20),
       impactPool : this.buildManySounds("laser-impact", knobsAndLevers.laser.quantity.value),
     };
@@ -89,13 +90,14 @@ var sounds = {
   playDiedSound : function() {
     this.playSound(this.getSound('playerDied'));
   },
+  playTierChangeSound : function() {
+    this.playSound(this.getSound('tierChange'));
+  },
   stopAllSounds : function() {
     this.stopSound('centipede');
     this.stopSound('spider');
     this.stopSound('worm');
     this.stopSound('fly');
-  },
-  playExtraLifeSound : function() {
-    console.log('boop beep implement me');
+    this.stopSound('tierChange');
   },
 };

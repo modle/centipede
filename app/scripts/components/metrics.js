@@ -35,7 +35,7 @@ var metrics = {
     if (this.extraLivesGained < tier) {
       this.lives += 1;
       this.extraLivesGained += 1;
-      sounds.playExtraLifeSound();
+      sounds.playTierChangeSound();
     };
   },
   setTier : function() {
