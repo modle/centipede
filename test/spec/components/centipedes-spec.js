@@ -324,8 +324,8 @@ describe('CENTIPEDES SPEC: ', () => {
     testObj.centipedes.forEach(centipede => {
       let expected = centipede.expected;
       let actual = testObj.hasCollidedWithMushroom(centipede);
-      expect(actual).toBe(expected);
-    })
+      expect(actual).toBeTruthy;
+    });
 
   });
   it('reverseHorizontalAtNextLayer does stuff', () => {

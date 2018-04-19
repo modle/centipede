@@ -64,11 +64,14 @@ var intervalCreatures = {
       if (creatureType == 'flies') {
         this.dropMushrooms(creature);
       };
+      if (creatureType == 'worms') {
+        this.changeMushrooms(creature);
+      };
     });
   },
   dropMushrooms : function(fly) {
     if (this.eligibleToDrop() && fly.y <= game.gameArea.canvas.height * 0.90 && fly.y >= game.gameArea.firstMushroomLayer) {
-      mushrooms.make({x : fly.x, y : fly.y}, 'purple');
+      mushrooms.make({x : fly.x, y : fly.y});
     };
   },
   eligibleToDrop : function() {
@@ -76,6 +79,9 @@ var intervalCreatures = {
       game.gameArea.frameNo,
       knobsAndLevers.flies.mushroomCreateInterval
     );
+  },
+  changeMushrooms : function(creature) {
+    mushrooms.mushrooms.forEach(mushroom => creature.crashWithMiddle(mushroom) ? mushroom.color = 'purple' : null);
   },
   clear : function() {
     this.worms = [];

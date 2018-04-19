@@ -70,6 +70,23 @@ function Component(args) {
     };
     return crash;
   };
+  this.crashWithMiddle = function(otherObject) {
+    let crash = false;
+    if (this.crashWithMiddleX(otherObject) && this.crashWithMiddleY(otherObject)) {
+      crash = true;
+    };
+    return crash;
+  };
+  this.crashWithMiddleX = function(otherObject) {
+    let thisMiddleX = this.getMiddleX();
+    let otherMiddleX = otherObject.getMiddleX();
+    return thisMiddleX < otherMiddleX + 5 && thisMiddleX > otherMiddleX - 5;
+  };
+  this.crashWithMiddleY = function(otherObject) {
+    let thisMiddleY = this.getMiddleY();
+    let otherMiddleY = otherObject.getMiddleY();
+    return thisMiddleY < otherMiddleY + 5 && thisMiddleY > otherMiddleY - 5;
+  }
   this.getMiddleX = function() {
     return this.x + this.width / 2;
   };

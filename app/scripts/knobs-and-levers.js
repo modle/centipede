@@ -235,7 +235,10 @@ var knobsAndLevers = {
             knobsAndLevers.worms.args.x = 1;
           };
         },
-        setY : function() { knobsAndLevers.worms.args.y = supporting.getRandom(0, player.topLimit - player.areaHeight) },
+        setY : function() {
+          let randomYPos = supporting.getRandom(0, player.topLimit - player.areaHeight);
+          knobsAndLevers.worms.args.y = supporting.getClosest(game.gameArea.yVertices, randomYPos);
+        },
       }
     },
     init : function(configs) {

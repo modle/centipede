@@ -48,7 +48,7 @@ var collisions = {
   },
   handleCentipedeKill(target) {
     if (target.type === 'centipede') {
-      mushrooms.make({x : target.x, y : target.y}, 'green')
+      mushrooms.make({x : target.x, y : target.y})
       centipedes.numberKilled += 1;
     };
   },
@@ -82,12 +82,7 @@ var collisions = {
     };
   },
   withMushrooms : function(obj) {
-    for (i = 0; i < mushrooms.mushrooms.length; i += 1) {
-      if (obj.crashWith(mushrooms.mushrooms[i])) {
-        return true;
-      };
-    };
-    return false;
+    return mushrooms.mushrooms.find(mushroom => obj.crashWith(mushroom));
   },
   removeDestroyedTargets : function(targets) {
     mushrooms.mushrooms = mushrooms.mushrooms.filter(mushroom => mushroom.hitPoints > 0);
