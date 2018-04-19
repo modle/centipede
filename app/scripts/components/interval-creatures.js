@@ -53,7 +53,7 @@ var intervalCreatures = {
     if (this[creature] == false) { return; };
     return this[creature].filter(target => {
       return target.x < game.gameArea.canvas.width
-        && target.x > 0
+        && target.x > 0 - target.width
         && target.y < game.gameArea.canvas.height
     });
   },
