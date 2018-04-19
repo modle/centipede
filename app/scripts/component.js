@@ -62,7 +62,7 @@ function Component(args) {
     };
     return crash;
   };
-  this.crashWithSidesOnly = function(otherObject) {
+  this.crashWithXOnly = function(otherObject) {
     let crash = true;
     // delay collision slightly by allowing objects to overlap by 1 pixel
     if (this.getRight() < otherObject.getLeft() + 1 || this.getLeft() > otherObject.getRight() - 1) {
@@ -70,9 +70,16 @@ function Component(args) {
     };
     return crash;
   };
+  this.crashWithYOnly = function(otherObject) {
+    let crash = true;
+    if (this.getBottom() < otherObject.getTop() + 1 || this.getTop() > otherObject.getBottom() - 1) {
+      crash = false;
+    };
+    return crash;
+  };
   this.crashWithMiddle = function(otherObject) {
     let crash = false;
-    if (this.crashWithMiddleX(otherObject) && this.crashWithMiddleY(otherObject)) {
+    if (this.crashWithMiddleX(otherObject) && this.crashWithYOnly(otherObject)) {
       crash = true;
     };
     return crash;
@@ -80,7 +87,7 @@ function Component(args) {
   this.crashWithMiddleX = function(otherObject) {
     let thisMiddleX = this.getMiddleX();
     let otherMiddleX = otherObject.getMiddleX();
-    return thisMiddleX < otherMiddleX + 5 && thisMiddleX > otherMiddleX - 5;
+    return thisMiddleX < otherMiddleX + 5 && thisMiddleX > otherMiddleX - 5 && this.crashWithYOnly(otherObject);
   };
   this.crashWithMiddleY = function(otherObject) {
     let thisMiddleY = this.getMiddleY();

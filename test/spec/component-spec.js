@@ -203,7 +203,7 @@ describe('COMPONENT SPEC: ', () => {
 
     expect(result).toBe(expected);
   });
-  it('crashWithSidesOnly crashes', () => {
+  it('crashWithXOnly crashes', () => {
     let component = createTestComponent({});
     let somethingElse = {
       getRight : function() {return component.x + component.width},
@@ -211,11 +211,11 @@ describe('COMPONENT SPEC: ', () => {
     };
     let expected = true;
 
-    let result = component.crashWithSidesOnly(somethingElse);
+    let result = component.crashWithXOnly(somethingElse);
 
     expect(result).toBe(expected);
   });
-  it('crashWithSidesOnly does not crash', () => {
+  it('crashWithXOnly does not crash', () => {
     let component = createTestComponent({});
     let somethingElse = {
       getRight : function() {return component.x - 1},
@@ -223,7 +223,7 @@ describe('COMPONENT SPEC: ', () => {
     };
     let expected = false;
 
-    let result = component.crashWithSidesOnly(somethingElse);
+    let result = component.crashWithXOnly(somethingElse);
 
     expect(result).toBe(expected);
   });

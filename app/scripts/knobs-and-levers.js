@@ -140,6 +140,7 @@ var knobsAndLevers = {
     scaleFactor : 1,
     hitPoints : 4,
     side : 0,
+    color : 'teal',
     init : function(configs) {
       this.scaleFactor = configs.general.gridSquareSideLength * 0.1;
       this.side = configs.general.gridSquareSideLength * 0.8;

@@ -299,21 +299,21 @@ describe('CENTIPEDES SPEC: ', () => {
     mushrooms.mushrooms = [{y : 1}];
     testObj.centipedes = [
       {
-        crashWithSidesOnly : function(){return true;},
+        crashWithXOnly : function(){return true;},
         y : 0,
         distanceMovedX : game.gameArea.gridSquareSideLength + 1,
         moveVertically : true,
         expected : true,
       },
       {
-        crashWithSidesOnly : function(){return false;},
+        crashWithXOnly : function(){return false;},
         y : 0,
         distanceMovedX : game.gameArea.gridSquareSideLength + 1,
         moveVertically : true,
         expected : false,
       },
       {
-        crashWithSidesOnly : function(){return false;},
+        crashWithXOnly : function(){return false;},
         y : game.gameArea.firstMushroomLayer,
         distanceMovedX : game.gameArea.gridSquareSideLength + 1,
         moveVertically : true,

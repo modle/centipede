@@ -16,7 +16,7 @@ var mushrooms = {
       if (coordinates.y > knobsAndLevers.player.topLimit) {
         continue;
       };
-      this.make(coordinates, 'teal');
+      this.make(coordinates, knobsAndLevers.mushrooms.color);
     };
   },
   getCoordinates : function() {
@@ -29,6 +29,7 @@ var mushrooms = {
     if (coordinates.x == undefined || coordinates.y == undefined) {
       throw new Error('coordinate error: x: ' + coordinates.x + ', y: ' + coordinates.y);
     };
+    color = color ? color : knobsAndLevers.mushrooms.color;
     coordinates.x = supporting.getClosest(game.gameArea.xVertices, coordinates.x);
     coordinates.y = supporting.getClosest(game.gameArea.yVertices, coordinates.y);
 

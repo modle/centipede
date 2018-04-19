@@ -128,7 +128,7 @@ var centipedes = {
   hasCollidedWithMushroom : function(centipede) {
     for (j = 0; j < mushrooms.mushrooms.length; j += 1) {
       if (
-        centipede.crashWithSidesOnly(mushrooms.mushrooms[j])
+        centipede.crashWithXOnly(mushrooms.mushrooms[j])
         && Math.abs(centipede.y - mushrooms.mushrooms[j].y) < 5
         && centipede.distanceMovedX > game.gameArea.gridSquareSideLength
       ) {
