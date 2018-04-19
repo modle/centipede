@@ -93,7 +93,7 @@ var knobsAndLevers = {
     startLevel : 0,
     maxMushrooms : 50,
     incrementThingsScore : 10000,
-    tier : 1,
+    tier : 5,
     maxTier : 5,
   },
   laser : {

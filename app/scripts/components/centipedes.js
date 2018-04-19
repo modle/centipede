@@ -126,23 +126,11 @@ var centipedes = {
     return hasCollided;
   },
   hasCollidedWithMushroom : function(centipede) {
-    for (j = 0; j < mushrooms.mushrooms.length; j += 1) {
-      if (
-        centipede.crashWithXOnly(mushrooms.mushrooms[j])
-        && Math.abs(centipede.y - mushrooms.mushrooms[j].y) < 5
-        && centipede.distanceMovedX > game.gameArea.gridSquareSideLength
-      ) {
-        this.centipedes.filter(centipede => !centipede.updated).map(centipede => {
-          if (centipede.y < game.gameArea.firstMushroomLayer - 1) {
-            centipede.moveVertically = true;
-            centipede.updated = true;
-          };
-          this.reverseHorizontalAtNextLayer(centipede);
-        });
-        return true;
-      };
-    };
-    return false;
+    return mushrooms.mushrooms.find(mushroom =>
+      centipede.crashWith(mushroom)
+        &&
+      centipede.distanceMovedX > game.gameArea.gridSquareSideLength
+    );
   },
   reverseHorizontalAtNextLayer : function(centipede) {
     if (centipede.distanceMovedY >= game.gameArea.gridSquareSideLength) {
