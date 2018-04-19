@@ -1,6 +1,7 @@
 /*jslint white: true */
 var spiders = {
   spiders : [],
+  interval : 0,
   init : function() {
     this.interval = knobsAndLevers.spider.initialInterval;
     console.log('spiders initialized');
@@ -61,11 +62,13 @@ var spiders = {
   updateSpeed : function(spider) {
     // TODO work on the spider movement algorithm
     // spiders need to move up and down erratically, and occasionally move horizontally
-    spider.speedX = Math.sign(spider.speedX) * (supporting.getRandom(-50, 5) < 0 ? 0.01 : 5);
-    spider.speedY = spider.directionY * (supporting.getRandom(-50, 5) < 0 ? 0.01 : 5);
-    if (supporting.everyinterval(game.getFrameNo(), this.interval * supporting.getRandom(0.1, 1))) {
-      spider.directionY *= -1;
-    };
+    let speedLimits = knobsAndLevers.spider.speedLimits;
+    spider.speedX = spider.speedX == 0 ? speedLimits.min : spider.speedX;
+    // TODO supporting.getRandom is a little confusing
+    // basically, most of the time we want to do speedLimits.min (when less than 0, to avoid direction switching)
+    // turn this into a roll check instead. 1d20 if 20, set speed to max, else speed to min
+    spider.speedX = Math.sign(spider.speedX) * (supporting.getRandom(-50, 5) < 0 ? speedLimits.min : speedLimits.max);
+    spider.speedY = spider.directionY * (supporting.getRandom(-50, 5) < 0 ? speedLimits.min : speedLimits.max);
   },
   updatePos : function(spider) {
     spider.newPos();
@@ -82,7 +85,7 @@ var spiders = {
   },
   clearOutsideCanvas : function() {
     if (this.spiders == false) { return; };
-    this.spiders = this.spiders.filter(spider => spider.x < game.gameArea.canvas.width && spider.x > 1);
+    this.spiders = this.spiders.filter(spider => spider.x < game.gameArea.canvas.width && spider.x > 0 - spider.width);
   },
   clear : function() {
     this.spiders = [];

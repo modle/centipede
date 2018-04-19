@@ -188,6 +188,10 @@ var knobsAndLevers = {
       color : "fuchsia",
       extraArgs : {type : "spider", speed : {x : 1, y : 1}},
     },
+    speedLimits : {
+      min : 0.01,
+      max : 5,
+    },
     init : function(configs) {
       this.initialInterval = supporting.getRandom(this.interval.min, this.interval.max);
       this.args.width = configs.general.gridSquareSideLength * 0.8;
