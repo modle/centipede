@@ -134,6 +134,11 @@ var menusProps = {
           {
             text : 'Player Select',
           },
+          {
+            text : 'Active gamepads: 0',
+            xAdjust : 50,
+            yAdjust : 50,
+          },
         ],
       },
     },

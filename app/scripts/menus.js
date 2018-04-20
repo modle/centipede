@@ -33,6 +33,8 @@ menus = {
     } else if (this.show.main) {
       this.leaderboards = main.readLeaderboard();
       this.setLeaderboardTexts();
+    } else if (this.show.playerSelect) {
+      this.setGamepadText();
     };
     let screen = this.getCurrentScreen();
     this.drawMenu(screen);
@@ -202,5 +204,13 @@ menus = {
       text : text,
       xAdjust : 175,
     };
+  },
+  setGamepadText : function() {
+    let gamepadsEnabled = controls.gamepad.enabledGamepadIndices.size;
+    if (gamepadsEnabled == 0) {
+      return;
+    };
+    let playerSelectEntries = this.screens.playerSelect.text.entries;
+    playerSelectEntries[1].text = "Active gamepads: " + gamepadsEnabled;
   },
 };
