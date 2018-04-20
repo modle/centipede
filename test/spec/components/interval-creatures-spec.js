@@ -115,19 +115,23 @@ describe('INTERVAL CREATURES SPEC: ', () => {
     testObj.worms = [{newPos : function(){}, update : function(){}}];
     spyOn(testObj.worms[0], 'newPos');
     spyOn(testObj.worms[0], 'update');
+    spyOn(testObj, 'changeMushrooms');
 
     testObj.update('worms');
 
     expect(testObj.worms[0].update).toHaveBeenCalled();
     expect(testObj.worms[0].newPos).toHaveBeenCalled();
+    expect(testObj.changeMushrooms).toHaveBeenCalled();
   });
   it('update calls component.update', () => {
     testObj.worms = [{update : function(){}, newPos : function(){}}];
     spyOn(testObj.worms[0], 'update');
+    spyOn(testObj, 'changeMushrooms');
 
     testObj.update('worms');
 
     expect(testObj.worms[0].update).toHaveBeenCalled();
+    expect(testObj.changeMushrooms).toHaveBeenCalled();
   });
   it('clearOutsideCanvas clears worms with x greater than canvas width', () => {
     testObj.worms = [{}];
