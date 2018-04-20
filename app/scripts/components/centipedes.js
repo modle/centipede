@@ -7,12 +7,10 @@ var centipedes = {
   numberKilled : 0,
   spawnPoints : 1,
   manage : function() {
-    console.log(this.numberSpawned, this.numberKilled);
     this.spawn();
     this.update();
   },
   spawn : function() {
-    // TODO this is pretty complicated
     this.determineSpawnPositions();
     if (!this.eligibleToSpawn()) {
       return;
@@ -38,7 +36,6 @@ var centipedes = {
     while (this.positions.length < supporting.getRandom(1, upperLimit)) {
       this.positions.push(this.determineHorizontalPosition());
     };
-    console.log('upperLimit', upperLimit, 'positions', this.positions);
   },
   determineHorizontalPosition : function() {
     let baseRange = game.gameArea.canvas.width;
@@ -67,12 +64,7 @@ var centipedes = {
     return centipede;
   },
   cannotAdd : function(centipede) {
-    for (i = 0; i < this.centipedes.length; i += 1) {
-      if (this.centipedes[i].crashWith(centipede)) {
-        return true;
-      };
-    };
-    return false;
+    return this.centipedes.find(checkCentipede => checkCentipede.crashWith(centipede));
   },
   add : function(centipede) {
     this.centipedes.push(centipede);
@@ -93,7 +85,7 @@ var centipedes = {
     this.numberKilled = 0;
   },
   determineDirections : function() {
-    this.centipedes.filter(centipede => !centipede.updated).map(centipede => {
+    this.centipedes.filter(centipede => !centipede.updated).forEach(centipede => {
       this.moveDownwardInitially(centipede);
       this.checkYDirectionInPlayerArea(centipede);
       this.checkHorizonalCollisions(centipede);
