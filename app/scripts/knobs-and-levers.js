@@ -93,8 +93,8 @@ var knobsAndLevers = {
     startLevel : 0,
     maxMushrooms : 50,
     incrementThingsScore : 10000,
-    tier : 5,
-    maxTier : 5,
+    tier : 10,
+    maxTier : 10,
   },
   laser : {
     speed : {
@@ -225,12 +225,12 @@ var knobsAndLevers = {
     pointValue :200,
     hitPoints : 1,
     interval : {
-      min: 0,
-      max: 0,
+      min: 1500,
+      max: 2500,
     },
     args : {
       color : "orange",
-      extraArgs : {type : "worm", speed : {x : 1, y : 0}},
+      extraArgs : {type : "worm", speed : {x : 0.5, y : 0}},
       constructorFunctions : {
         setX : function() {
           knobsAndLevers.worms.args.extraArgs.speed.x = supporting.getRandom(-1, 1) < 0 ? -1 : 1;

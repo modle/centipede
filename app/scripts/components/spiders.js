@@ -53,11 +53,21 @@ var spiders = {
   },
   update : function() {
     this.spiders.forEach(spider => {
+      this.removeMushrooms(spider);
       this.updateSpeed(spider);
       this.updatePos(spider);
       this.updateComponent(spider);
       this.updateYDirection(spider);
     });
+  },
+  removeMushrooms : function(spider) {
+    let theMushroom = mushrooms.mushrooms.find(mushroom => spider.crashWith(mushroom));
+    // TODO 1d4, ignore if not 4
+    let doRemove = supporting.getRandom(-3, 1);
+    if (theMushroom) {
+      theMushroom.hitPoints = doRemove < 0 || theMushroom.spiderTouched ? theMushroom.hitPoints : 0;
+      theMushroom.spiderTouched = true;
+    };
   },
   updateSpeed : function(spider) {
     // TODO work on the spider movement algorithm
