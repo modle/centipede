@@ -77,6 +77,7 @@ var spiders = {
     // TODO supporting.getRandom is a little confusing
     // basically, most of the time we want to do speedLimits.min (when less than 0, to avoid direction switching)
     // turn this into a roll check instead. 1d20 if 20, set speed to max, else speed to min
+    // -.-
     spider.speedX = Math.sign(spider.speedX) * (supporting.getRandom(-50, 5) < 0 ? speedLimits.min : speedLimits.max);
     spider.speedY = spider.directionY * (supporting.getRandom(-50, 5) < 0 ? speedLimits.min : speedLimits.max);
   },
@@ -95,7 +96,10 @@ var spiders = {
   },
   clearOutsideCanvas : function() {
     if (this.spiders == false) { return; };
-    this.spiders = this.spiders.filter(spider => spider.x < game.gameArea.canvas.width && spider.x > 0 - spider.width);
+    this.spiders = this.spiders.filter(spider =>
+      spider.x < game.gameArea.canvas.width
+        && spider.x > -spider.width
+    );
   },
   clear : function() {
     this.spiders = [];
