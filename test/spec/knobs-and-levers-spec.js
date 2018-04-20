@@ -82,7 +82,6 @@ describe('KNOBS AND LEVERS SPEC: ', () => {
     expect(testObj.spider.args.width).toBeTruthy();
     expect(testObj.spider.args.height).toBeTruthy();
     expect(testObj.spider.args.x).toBeTruthy();
-    expect(testObj.spider.args.y).toBeTruthy();
   });
   it('text.init initializes text parameters', () => {
     testObj.text.init(knobsAndLevers);
