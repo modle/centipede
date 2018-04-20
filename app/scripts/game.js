@@ -81,7 +81,7 @@ var game = {
   resetTheWholeTamale : function() {
     this.gameOver = false;
     this.timeSinceGameOver = 0;
-    metrics.lastScore = metrics.score.value;
+    metrics.lastScore = metrics.score.player1.value;
     mushrooms.clear();
     init.afterGameOver();
     menus.reset();

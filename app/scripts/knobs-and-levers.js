@@ -76,7 +76,7 @@ var knobsAndLevers = {
     },
   },
   game : {
-    playerCollisionsEnabled : false,
+    playerCollisionsEnabled : true,
     sounds : {
       value : true,
       default : true,

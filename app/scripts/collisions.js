@@ -75,8 +75,8 @@ var collisions = {
   },
   killPlayer : function() {
     player.died = true;
-    metrics.lives -= 1;
-    if (metrics.lives <= 0) {
+    metrics.lives.player1 -= 1;
+    if (metrics.lives.player1 <= 0) {
       game.gameOver = true;
       return;
     };

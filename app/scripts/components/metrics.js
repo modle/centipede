@@ -12,14 +12,15 @@ var metrics = {
     let scoreParams = Object.assign({}, knobsAndLevers.text.baseParams);
     scoreParams.x = 100;
     scoreParams.y = knobsAndLevers.text.gameInfoHeight;
-    this.score = new Component(scoreParams);
-    this.score.value = 0;
-    // this.score.player1 = new Component(scoreParams);
-    // this.score.player1.value = 0;
-    // this.score.player2 = new Component(scoreParams);
-    // this.score.player2.value = 0;
+    // this.score = new Component(scoreParams);
+    // this.score.value = 0;
+    this.score.player1 = new Component(scoreParams);
+    this.score.player1.value = 0;
+    scoreParams.x = 200;
+    this.score.player2 = new Component(scoreParams);
+    this.score.player2.value = 0;
     this.lives.player1 = knobsAndLevers.player.defaultLives;
-    // this.lives.player2 = knobsAndLevers.player.defaultLives;
+    this.lives.player2 = knobsAndLevers.player.defaultLives;
     this.livesMarker = Object.assign({}, templates.marker);
     console.log("metrics initialized");
   },
@@ -28,19 +29,23 @@ var metrics = {
     this.manageTier();
   },
   changeScore : function(change) {
-    this.score.value += change;
-    this.score.value = this.score.value < 0 ? 0 : this.score.value;
+    this.score.player1.value += change;
+    this.score.player1.value = this.score.player1.value < 0 ? 0 : this.score.player1.value;
   },
   manageTier : function() {
     this.setTier();
     this.manageLives();
   },
   setTier : function() {
-    knobsAndLevers.game.tier.update(Math.floor((this.score.value + 1) / knobsAndLevers.game.tier.incrementScore) + 1);
+    let newTier = Math.floor((this.score.player1.value + 1) / knobsAndLevers.game.tier.incrementScore) + 1;
+    if (!newTier) {
+      throw('problem calculating tier');
+    };
+    knobsAndLevers.game.tier.update(newTier);
   },
   manageLives : function() {
-    if (this.extraLivesGained < knobsAndLevers.game.tier.current) {
-      this.lives += 1;
+    if (this.extraLivesGained < knobsAndLevers.game.tier.current - 1) {
+      this.lives.player1 += 1;
       this.extraLivesGained += 1;
       sounds.playTierChangeSound();
     };
@@ -76,7 +81,8 @@ var metrics = {
     this.lives.player1 = knobsAndLevers.player.defaultLives;
     this.lives.player2 = knobsAndLevers.player.defaultLives;
     this.currentLevel = 1;
-    this.lastScore = this.score.value;
-    this.score.value = 0;
+    this.lastScore = this.score.player1.value;
+    this.score.player1.value = 0;
+    this.score.player2.value = 0;
   },
 };
