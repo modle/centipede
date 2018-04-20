@@ -7,6 +7,7 @@ var centipedes = {
   numberKilled : 0,
   spawnPoints : 1,
   manage : function() {
+    console.log(this.numberSpawned, this.numberKilled);
     this.spawn();
     this.update();
   },
@@ -30,14 +31,14 @@ var centipedes = {
     this.buildCentipedeStructure();
   },
   buildCentipedeStructure : function() {
-    let tier = knobsAndLevers.game.tier ? knobsAndLevers.game.tier : 1;
-    this.segments = tier + knobsAndLevers.centipede.maxNumber;
+    let tier = knobsAndLevers.game.tier;
+    this.segments = tier.current * 2 + knobsAndLevers.centipede.maxNumber;
     this.positions = [];
-    let maxTier = knobsAndLevers.game.maxTier;
-    let upperLimit = tier < maxTier ? tier : maxTier;
-    while (this.positions.length < upperLimit) {
+    let upperLimit = tier.isMaxed ? tier.max : tier.current;
+    while (this.positions.length < supporting.getRandom(1, upperLimit)) {
       this.positions.push(this.determineHorizontalPosition());
     };
+    console.log('upperLimit', upperLimit, 'positions', this.positions);
   },
   determineHorizontalPosition : function() {
     let baseRange = game.gameArea.canvas.width;

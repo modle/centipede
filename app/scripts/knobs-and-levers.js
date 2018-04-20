@@ -57,8 +57,8 @@ var knobsAndLevers = {
     hitPoints : 2,
     pointValue : 200,
     interval : {
-      min: 1500,
-      max: 2500,
+      min: 0,
+      max: 0,
     },
     mushroomCreateInterval : 100,
     args : {
@@ -92,9 +92,16 @@ var knobsAndLevers = {
     gameOverDelay : 600,
     startLevel : 0,
     maxMushrooms : 50,
-    incrementThingsScore : 10000,
-    tier : 10,
-    maxTier : 10,
+    tier : {
+      incrementScore : 10000,
+      current: 1,
+      max : 10,
+      isMaxed : false,
+      update : function(newTier) {
+        this.current = newTier;
+        this.isMaxed = this.current >= this.max ? true : false;
+      },
+    }
   },
   laser : {
     speed : {
@@ -182,8 +189,8 @@ var knobsAndLevers = {
       range : 400,
     },
     interval : {
-      min: 300,
-      max: 600,
+      min: 0,
+      max: 0,
     },
     args : {
       color : "fuchsia",

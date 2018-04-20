@@ -20,7 +20,12 @@ var spiders = {
     };
   },
   maxedOut : function() {
+    this.setMax();
     return this.spiders.length >= knobsAndLevers.spider.maxNumber;
+  },
+  setMax : function() {
+    let tier = knobsAndLevers.game.tier;
+    knobsAndLevers.spider.maxNumber = tier.isMaxed ? tier.max : tier.current;
   },
   updateInterval : function() {
     if (this.canUpdate()) {

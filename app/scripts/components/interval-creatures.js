@@ -29,11 +29,16 @@ var intervalCreatures = {
     };
   },
   spawn : function(creature) {
+    this.setMax(creature);
     if (this[creature].length >= knobsAndLevers[creature].maxNumber) {
       return;
     };
     this.executeConstructorFunctions(creature);
     this.make(creature);
+  },
+  setMax : function(creature) {
+    let tier = knobsAndLevers.game.tier;
+    knobsAndLevers[creature].maxNumber = tier.isMaxed ? tier.max : tier.current;
   },
   make : function(creature) {
     let spawnedCreature = new Component(knobsAndLevers[creature].args);

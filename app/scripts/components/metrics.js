@@ -12,12 +12,14 @@ var metrics = {
     let scoreParams = Object.assign({}, knobsAndLevers.text.baseParams);
     scoreParams.x = 100;
     scoreParams.y = knobsAndLevers.text.gameInfoHeight;
-    this.score.player1 = new Component(scoreParams);
-    this.score.player1.value = 0;
-    this.score.player2 = new Component(scoreParams);
-    this.score.player2.value = 0;
+    this.score = new Component(scoreParams);
+    this.score.value = 0;
+    // this.score.player1 = new Component(scoreParams);
+    // this.score.player1.value = 0;
+    // this.score.player2 = new Component(scoreParams);
+    // this.score.player2.value = 0;
     this.lives.player1 = knobsAndLevers.player.defaultLives;
-    this.lives.player2 = knobsAndLevers.player.defaultLives;
+    // this.lives.player2 = knobsAndLevers.player.defaultLives;
     this.livesMarker = Object.assign({}, templates.marker);
     console.log("metrics initialized");
   },
@@ -31,18 +33,17 @@ var metrics = {
   },
   manageTier : function() {
     this.setTier();
-    let maxTier = knobsAndLevers.game.maxTier;
-    let tier = knobsAndLevers.game.tier;
-    knobsAndLevers.spider.maxNumber = tier < maxTier ? tier + 1 : maxTier;
-    knobsAndLevers.flies.maxNumber = tier < maxTier ? tier + 1 : maxTier;
-    if (this.extraLivesGained < tier) {
+    this.manageLives();
+  },
+  setTier : function() {
+    knobsAndLevers.game.tier.update(Math.floor((this.score.value + 1) / knobsAndLevers.game.tier.incrementScore) + 1);
+  },
+  manageLives : function() {
+    if (this.extraLivesGained < knobsAndLevers.game.tier.current) {
       this.lives += 1;
       this.extraLivesGained += 1;
       sounds.playTierChangeSound();
     };
-  },
-  setTier : function() {
-    knobsAndLevers.game.tier = Math.floor((this.score.value + 1) / knobsAndLevers.game.incrementThingsScore);
   },
   addNewFloatingPoint : function(x, y, points, action) {
     let newPoint = this.getNewPoint(x, y);
