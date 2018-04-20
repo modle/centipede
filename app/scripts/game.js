@@ -7,6 +7,7 @@ var game = {
   delayEndTime : 300,
   keysDown : {},
   activeCheats : {},
+  numberOfPlayers : 1,
   init : function() {
     this.gameArea = new GameArea();
     console.log('game initialized');

@@ -108,20 +108,18 @@ var menusProps = {
             menus.disableMenus();
             game.running = true;
             game.paused = false;
+            game.numberOfPlayers = 1;
           },
         },
-        // twoPlayer : {
-        //   text : '2 Players',
-        //   component : undefined,
-        //   position : {
-        //     x : menusPropsDefaults.positions.x,
-        //     y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
-        //   },
-        //   action : function() {
-        //     menus.disableMenus();
-        //     game.paused = false;
-        //   },
-        // },
+        twoPlayer : {
+          text : '2 PLAYERS',
+          action : function() {
+            menus.disableMenus();
+            game.running = true;
+            game.paused = false;
+            game.numberOfPlayers = 2;
+          },
+        },
         back : {
           text : 'BACK',
           action : function() {

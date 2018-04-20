@@ -2,7 +2,7 @@
 var metrics = {
   floatingPoints : [],
   floatingPointCycleDuration : 50,
-  lives : 0,
+  lives : {player1 : 0, player2 : 0},
   extraLivesGained : 0,
   currentLevel : {},
   score : {},
@@ -12,9 +12,12 @@ var metrics = {
     let scoreParams = Object.assign({}, knobsAndLevers.text.baseParams);
     scoreParams.x = 100;
     scoreParams.y = knobsAndLevers.text.gameInfoHeight;
-    this.score = new Component(scoreParams);
-    this.score.value = 0;
-    this.lives = knobsAndLevers.player.defaultLives;
+    this.score.player1 = new Component(scoreParams);
+    this.score.player1.value = 0;
+    this.score.player2 = new Component(scoreParams);
+    this.score.player2.value = 0;
+    this.lives.player1 = knobsAndLevers.player.defaultLives;
+    this.lives.player2 = knobsAndLevers.player.defaultLives;
     this.livesMarker = Object.assign({}, templates.marker);
     console.log("metrics initialized");
   },
@@ -69,7 +72,8 @@ var metrics = {
     };
   },
   reset : function() {
-    this.lives = knobsAndLevers.player.defaultLives;
+    this.lives.player1 = knobsAndLevers.player.defaultLives;
+    this.lives.player2 = knobsAndLevers.player.defaultLives;
     this.currentLevel = 1;
     this.lastScore = this.score.value;
     this.score.value = 0;
