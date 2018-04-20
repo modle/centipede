@@ -28,32 +28,30 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(actual).toBe(expected);
   });
   it('spawn adds two centipedes to centipedes array', () => {
-    testObj.segments = 2;
-    let expected = {crashWith : function(){return false;}, x : 0, y : 0, width : 10, height : 10};
     spyOn(testObj, 'determineSpawnPositions');
-    spyOn(testObj, 'make').and.returnValue(expected);
-
-    testObj.centipedes = [];
+    spyOn(testObj, 'eligibleToSpawn').and.returnValue(true);
+    spyOn(testObj, 'setXPosition');
+    spyOn(testObj, 'make').and.returnValue({});
+    spyOn(testObj, 'cannotAdd').and.returnValue(false);
+    spyOn(testObj, 'add');
 
     testObj.spawn();
     testObj.spawn();
 
-    expect(testObj.centipedes.length).toBe(2);
-    expect(testObj.centipedes[0]).toBe(expected);
-    expect(testObj.centipedes[1]).toBe(expected);
+    expect(testObj.add).toHaveBeenCalledTimes(2);
   });
   it('spawn does not add centipede to centipedes array when it collides with an existing centipede', () => {
-    testObj.segments = 1;
-    let expected = {crashWith : function(){return true;}, x : 0, y : 0, width : 10, height : 10};
     spyOn(testObj, 'determineSpawnPositions');
-    spyOn(testObj, 'make').and.returnValue(expected);
-    testObj.centipedes = [];
+    spyOn(testObj, 'eligibleToSpawn').and.returnValue(true);
+    spyOn(testObj, 'setXPosition');
+    spyOn(testObj, 'make').and.returnValue({});
+    spyOn(testObj, 'cannotAdd').and.returnValue(true);
+    spyOn(testObj, 'add');
 
     testObj.spawn();
     testObj.spawn();
 
-    expect(testObj.centipedes.length).toBe(1);
-    expect(testObj.centipedes[0]).toBe(expected);
+    expect(testObj.add).toHaveBeenCalledTimes(0);
   });
   it('make returns a centipede', () => {
     metrics.init();

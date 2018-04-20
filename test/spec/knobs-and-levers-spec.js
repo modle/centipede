@@ -98,7 +98,6 @@ describe('KNOBS AND LEVERS SPEC: ', () => {
     expect(testObj.worms.initialInterval).toBeTruthy();
     expect(testObj.worms.args.width).toBeTruthy();
     expect(testObj.worms.args.height).toBeTruthy();
-    expect(testObj.worms.args.x).toBeTruthy();
   });
   it('flies.args.constructorFunctions.setX should set knobsAndLevers.flies.args.x', () => {
     knobsAndLevers.init();

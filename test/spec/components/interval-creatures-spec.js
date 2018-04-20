@@ -7,11 +7,12 @@ describe('INTERVAL CREATURES SPEC: ', () => {
     console.log(spec + ' SPEC complete');
   });
   beforeEach(function () {
+    knobsAndLevers.init();
+    game.init();
     testObj = Object.assign({}, intervalCreatures);
     testObj.init();
     testObj.worms = [];
     testObj.flies = [];
-    game.init();
   });
   function mockTestObj() {
     spyOn(testObj, 'spawnCreatureAtIntervals');
@@ -76,22 +77,18 @@ describe('INTERVAL CREATURES SPEC: ', () => {
   });
 
   it('dropMushroom calls mushrooms.generate if eligible to drop', () => {
-    knobsAndLevers.init();
-    player.init();
     spyOn(testObj, 'eligibleToDrop').and.returnValue(true);
-    spyOn(mushrooms, 'generate').and.returnValue({});
+    spyOn(mushrooms, 'make').and.returnValue({});
     mushrooms.mushrooms = [];
     let fly = {x : 5, y : 100};
 
     testObj.dropMushrooms(fly);
 
     expect(testObj.eligibleToDrop).toHaveBeenCalled();
-    expect(mushrooms.generate).toHaveBeenCalled();
-    expect(mushrooms.mushrooms.length).toBe(1);
+    expect(mushrooms.make).toHaveBeenCalled();
   });
 
   it('eligibleToDrop returns false if not valid interval', () => {
-    game.init();
     game.frameNo = 1;
     knobsAndLevers.flies.mushroomCreateInterval = 2;
 
@@ -100,9 +97,15 @@ describe('INTERVAL CREATURES SPEC: ', () => {
   });
 
   it('spawn once creates one worm', () => {
+    testObj.worms = []
+    knobsAndLevers.worms.maxNumber = 1;
+    spyOn(testObj, 'executeConstructorFunctions');
+    spyOn(testObj, 'make');
+
     testObj.spawn('worms');
 
-    expect(testObj.worms.length).toBe(1);
+    expect(testObj.executeConstructorFunctions).toHaveBeenCalled();
+    expect(testObj.make).toHaveBeenCalled();
   });
   it('spawn more than max worms does not create more than max worms', () => {
     for (let i = 0; i < knobsAndLevers.worms.maxNumber + 100; i++) {

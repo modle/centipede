@@ -126,6 +126,7 @@ describe('SPIDERS SPEC: ', () => {
   });
 
   it('make adds a spider', () => {
+    game.init();
     testObj.spiders = [];
 
     testObj.make();

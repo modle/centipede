@@ -11,16 +11,15 @@ var centipedes = {
     this.update();
   },
   spawn : function() {
+    // TODO this is pretty complicated
     this.determineSpawnPositions();
     if (!this.eligibleToSpawn()) {
       return;
     };
-    knobsAndLevers.centipede.args.x = this.positions[this.centipedes.length % this.positions.length];
+    this.setXPosition();
     let centipede = this.make();
-    for (i = 0; i < this.centipedes.length; i += 1) {
-      if (this.centipedes[i].crashWith(centipede)) {
-        return;
-      };
+    if (this.cannotAdd(centipede)) {
+      return;
     };
     this.add(centipede);
   },
@@ -47,6 +46,9 @@ var centipedes = {
   eligibleToSpawn : function() {
     return this.numberSpawned < this.segments;
   },
+  setXPosition : function() {
+    knobsAndLevers.centipede.args.x = this.positions[this.centipedes.length % this.positions.length];
+  },
   make : function() {
     centipede = new Component(knobsAndLevers.centipede.args);
     centipede.directionX = 1;
@@ -62,6 +64,14 @@ var centipedes = {
     centipede.hitPoints = 1;
     centipede.updated = false;
     return centipede;
+  },
+  cannotAdd : function(centipede) {
+    for (i = 0; i < this.centipedes.length; i += 1) {
+      if (this.centipedes[i].crashWith(centipede)) {
+        return true;
+      };
+    };
+    return false;
   },
   add : function(centipede) {
     this.centipedes.push(centipede);
