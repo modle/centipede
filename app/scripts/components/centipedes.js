@@ -45,8 +45,7 @@ var centipedes = {
     return supporting.getRandom(baseRange * 0.2, baseRange * 0.8);
   },
   eligibleToSpawn : function() {
-    let eligible = this.numberSpawned < this.segments;
-    return eligible;
+    return this.numberSpawned < this.segments;
   },
   make : function() {
     centipede = new Component(knobsAndLevers.centipede.args);
