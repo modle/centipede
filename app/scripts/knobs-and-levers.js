@@ -174,7 +174,7 @@ var knobsAndLevers = {
       this.areaHeight = configs.canvas.height * 0.2;
       this.topLimit = knobsAndLevers.canvas.height - this.areaHeight;
       this.startX = (configs.canvas.width - this.width) * 0.5;
-      this.startY = configs.canvas.height * 0.9;
+      this.startY = configs.canvas.height - this.height - 1;
     },
     resetCheats : function() {
       knobsAndLevers.resetParameter(this.speed);

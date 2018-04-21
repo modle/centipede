@@ -26,20 +26,7 @@ var player = {
       extraArgs : {type : "player", speed : {x : 0, y : 0}}
     };
     this.gamePiece = new Component(gamePieceArgs);
-    this.calculateStartingArea();
     console.log("player initialized");
-  },
-  calculateStartingArea : function() {
-    this.gamePieceStartingArea = new Component(
-      {
-        x : knobsAndLevers.player.startX - knobsAndLevers.player.width * 5,
-        y : knobsAndLevers.player.topLimit,
-        width : knobsAndLevers.player.width * 10,
-        height : knobsAndLevers.canvas.height - knobsAndLevers.player.topLimit,
-        color : "orange",
-        extraArgs : {type : "startingArea"},
-      }
-    );
   },
   manage : function() {
     this.move();
@@ -51,11 +38,6 @@ var player = {
   reset : function() {
     this.gamePiece.x = knobsAndLevers.player.startX;
     this.gamePiece.y = knobsAndLevers.player.startY;
-    this.removeMushroomsFromStartingArea();
-  },
-  // TODO move this to mushrooms.js
-  removeMushroomsFromStartingArea : function() {
-    mushrooms.mushrooms = mushrooms.mushrooms.filter(mushroom => !mushroom.crashWith(this.gamePieceStartingArea));
   },
   move : function() {
     this.stop();
