@@ -8,6 +8,7 @@ var game = {
   keysDown : {},
   activeCheats : {},
   numberOfPlayers : 1,
+  activePlayers : 1,
   init : function() {
     this.gameArea = new GameArea();
     console.log('game initialized');

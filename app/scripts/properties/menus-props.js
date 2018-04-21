@@ -28,6 +28,7 @@ var menusProps = {
     instructions : false,
     settings : false,
     playerSelect : false,
+    playerActivate : false,
   },
   timeSinceSelection : 100,
   timeSinceMenuMove : 100,
@@ -235,9 +236,54 @@ var menusProps = {
         entries : [],
       },
     },
+    playerActivate : {
+      order : [
+        'check',
+        'back',
+      ],
+      entries : {
+        check : {
+          text : 'CHECK',
+          action : function() {
+            menus.display('playerActivate');
+          },
+        },
+        back : {
+          text : 'DONE',
+          action : function() {
+            menus.display('playerSelect');
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            text : 'Activate players',
+          },
+          {
+            text : 'Active gamepads: 0',
+            xAdjust : 50,
+            yAdjust : 50,
+          },
+          {
+            text : 'Player 1: KEYBOARD',
+            base : 'Player 1: ',
+            xAdjust : 50,
+            yAdjust : 100,
+          },
+          {
+            text : 'Player 2: KEYBOARD',
+            base : 'Player 2: ',
+            xAdjust : 50,
+            yAdjust : 100,
+          },
+        ],
+      },
+    },
     playerSelect : {
       order : [
         'onePlayer',
+        'twoPlayer',
         'back',
       ],
       entries : {
@@ -248,15 +294,20 @@ var menusProps = {
             game.running = true;
             game.paused = false;
             game.numberOfPlayers = 1;
+            game.activePlayers = 1;
           },
         },
         twoPlayer : {
           text : '2 PLAYERS',
           action : function() {
             menus.disableMenus();
-            game.running = true;
-            game.paused = false;
             game.numberOfPlayers = 2;
+            if (game.activePlayers != game.numberOfPlayers) {
+              menus.display('playerActivate');
+            } else {
+              game.running = true;
+              game.paused = false;
+            };
           },
         },
         back : {
@@ -270,11 +321,6 @@ var menusProps = {
         entries : [
           {
             text : 'Player Select',
-          },
-          {
-            text : 'Active gamepads: 0',
-            xAdjust : 50,
-            yAdjust : 50,
           },
         ],
       },

@@ -33,7 +33,7 @@ menus = {
     } else if (this.show.main) {
       this.leaderboards = main.readLeaderboard();
       this.setLeaderboardTexts();
-    } else if (this.show.playerSelect) {
+    } else if (this.show.playerActivate) {
       this.setGamepadText();
     };
     let screen = this.getCurrentScreen();
@@ -207,10 +207,17 @@ menus = {
   },
   setGamepadText : function() {
     let gamepadsEnabled = controls.gamepad.enabledGamepadIndices.size;
-    if (gamepadsEnabled == 0) {
-      return;
+    let playerActivateEntries = this.screens.playerActivate.text.entries;
+    playerActivateEntries[1].text = "Active gamepads: " + gamepadsEnabled;
+    if (gamepadsEnabled > 0) {
+      entry = playerActivateEntries[2];
+      game.activePlayers = 1;
+      entry.text = entry.base + 'GAMEPAD';
     };
-    let playerSelectEntries = this.screens.playerSelect.text.entries;
-    playerSelectEntries[1].text = "Active gamepads: " + gamepadsEnabled;
+    if (gamepadsEnabled > 1) {
+      entry = playerActivateEntries[3];
+      game.activePlayers = 2;
+      entry.text = entry.base + 'GAMEPAD';
+    };
   },
 };
