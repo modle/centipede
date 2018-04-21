@@ -18,19 +18,23 @@ var players = {
     'upLeft' : ['belowTop', 'insideLeft'],
   },
   init : function() {
-    let gamePieceArgs = {
-      width: knobsAndLevers.player.width,
-      height : knobsAndLevers.player.height,
-      color : "red",
-      x : knobsAndLevers.player.startX,
-      y : knobsAndLevers.player.startY,
-      extraArgs : {type : "player", speed : {x : 0, y : 0}}
-    };
     this.players = [];
     while (this.players.length < game.numberOfPlayers) {
-      this.players.push(new Component(gamePieceArgs));
+      this.players.push(new Component(this.getPlayerArgs()));
     };
     console.log('players initialized', this.players);
+  },
+  getPlayerArgs : function() {
+    let defaults = knobsAndLevers.player;
+    console.log(defaults);
+    return {
+      width: defaults.dimensions.width,
+      height : defaults.dimensions.height,
+      color : defaults.colors[this.players.length],
+      x : defaults.startX[this.players.length],
+      y : defaults.startY,
+      extraArgs : {type : "player", speed : {x : 0, y : 0}}
+    };
   },
   manage : function() {
     this.players.forEach(player => {

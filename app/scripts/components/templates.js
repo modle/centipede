@@ -4,8 +4,8 @@ var templates = {
   baseMarkerParams : {},
   init : function() {
     this.baseMarkerParams = {
-      width : knobsAndLevers.player.width,
-      height : knobsAndLevers.player.height,
+      width : knobsAndLevers.player.dimensions.width,
+      height : knobsAndLevers.player.dimensions.height,
       color : 'red',
     };
     this.marker = new Component(

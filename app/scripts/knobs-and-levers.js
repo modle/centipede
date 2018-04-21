@@ -154,7 +154,19 @@ var knobsAndLevers = {
     },
   },
   player : {
+    colors : ['red', 'purple'],
     defaultLives : 3,
+    dimensions : {width : 15, height : 15},
+    extraArgs : {type : "player"},
+    init : function(configs) {
+      this.areaHeight = configs.canvas.height * 0.2;
+      this.topLimit = knobsAndLevers.canvas.height - this.areaHeight;
+      this.startX = [
+        (configs.canvas.width - this.dimensions.width * 2) * 0.5,
+        (configs.canvas.width + this.dimensions.width * 2) * 0.5,
+      ],
+      this.startY = configs.canvas.height - this.dimensions.height - 1;
+    },
     speed : {
       value : 2,
       default : 2,
@@ -166,15 +178,6 @@ var knobsAndLevers = {
           return supporting.align(this.text) + this.state;
         },
       },
-    },
-    width : 15,
-    height : 15,
-    extraArgs : {type : "player"},
-    init : function(configs) {
-      this.areaHeight = configs.canvas.height * 0.2;
-      this.topLimit = knobsAndLevers.canvas.height - this.areaHeight;
-      this.startX = (configs.canvas.width - this.width) * 0.5;
-      this.startY = configs.canvas.height - this.height - 1;
     },
     resetCheats : function() {
       knobsAndLevers.resetParameter(this.speed);
