@@ -38,6 +38,145 @@ var menusProps = {
     entry : undefined,
   },
   screens : {
+    cheats : {
+      order : ['laserQTY', 'laserSpeed', 'shipSpeed', 'reset', 'back'],
+      update : function() {
+        let theCheats = menus.screens.cheats.entries;
+        theCheats.laserQTY.update();
+        theCheats.laserSpeed.update();
+        theCheats.shipSpeed.update();
+      },
+      entries : {
+        // TODO god - invincible
+        // TODO demigod - a ton of lives
+        laserQTY : {
+          update : function() {
+            this.text = knobsAndLevers.laser.quantity.setting.render();
+          },
+          action : function() {
+            knobsAndLevers.toggleParameter(knobsAndLevers.laser.quantity);
+            game.activeCheats['laserQty'] = knobsAndLevers.laser.quantity.setting.state == "ON";
+            this.update();
+            menus.display('cheats');
+          },
+        },
+        laserSpeed : {
+          update : function() {
+            this.text = knobsAndLevers.laser.speed.setting.render();
+          },
+          action : function() {
+            knobsAndLevers.toggleParameter(knobsAndLevers.laser.speed);
+            game.activeCheats['laserSpeed'] = knobsAndLevers.laser.speed.setting.state == "ON";
+            this.update();
+            menus.display('cheats');
+          },
+        },
+        shipSpeed : {
+          update : function() {
+            this.text = knobsAndLevers.player.speed.setting.render();
+          },
+          action : function() {
+            knobsAndLevers.toggleParameter(knobsAndLevers.player.speed);
+            game.activeCheats['shipSpeed'] = knobsAndLevers.player.speed.setting.state == "ON";
+            this.update();
+            menus.display('cheats');
+          },
+        },
+        reset : {
+          text : 'RESET',
+          action : function() {
+            knobsAndLevers.resetCheats();
+            menus.screens.cheats.update();
+            menus.display('cheats');
+          },
+        },
+        back : {
+          text : 'BACK',
+          action : function() {
+            menus.display('main');
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            text : 'Dear cheater,',
+          },
+          {
+            text : 'Scores will not be recorded',
+            xAdjust : 20,
+          },
+          {
+            text : 'if any of these are set',
+            xAdjust : 20,
+          },
+        ],
+      },
+    },
+    initials : {
+      ignoreMarker : true,
+      order : ['current'],
+      options : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M',
+        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+      entries : {
+        previouser : {
+          noSelection: true,
+          fontSize : '15px',
+          xAdjust : -60,
+          yAdjust : -10,
+          color : 'darkgrey',
+        },
+        previous : {
+          noSelection: true,
+          xAdjust : -30,
+          yAdjust : -10,
+          color : 'grey',
+        },
+        current : {
+          fontSize : '30px',
+          action : function() {
+            menus.addInitials(this.text);
+            menus.display('initials');
+          },
+        },
+        next : {
+          noSelection: true,
+          xAdjust : -30,
+          yAdjust : -10,
+          color : 'grey',
+        },
+        nexter : {
+          noSelection: true,
+          fontSize : '15px',
+          xAdjust : -60,
+          yAdjust : -10,
+          color : 'darkgrey',
+        },
+      },
+      text : {
+        entries : [
+          {
+            name : 'enterInitials',
+            text : 'Enter your initials',
+            fontSize : '25px',
+          },
+          {
+            name : 'currentScore',
+            text : '',
+            xAdjust : 85,
+            yAdjust : 50,
+            fontSize : '20px',
+          },
+          {
+            name : 'entered',
+            text : '',
+            yAdjust : menuDefaults.entries.y - menuDefaults.text.y,
+            xAdjust : 235,
+            fontSize : '30px',
+          },
+        ],
+      },
+    },
     instructions : {
       order : ['back'],
       entries : {
@@ -184,145 +323,6 @@ var menusProps = {
         entries : [
           {
             text : 'Settings Are Thither',
-          },
-        ],
-      },
-    },
-    cheats : {
-      order : ['laserQTY', 'laserSpeed', 'shipSpeed', 'reset', 'back'],
-      update : function() {
-        let theCheats = menus.screens.cheats.entries;
-        theCheats.laserQTY.update();
-        theCheats.laserSpeed.update();
-        theCheats.shipSpeed.update();
-      },
-      entries : {
-        // TODO god - invincible
-        // TODO demigod - a ton of lives
-        laserQTY : {
-          update : function() {
-            this.text = knobsAndLevers.laser.quantity.setting.render();
-          },
-          action : function() {
-            knobsAndLevers.toggleParameter(knobsAndLevers.laser.quantity);
-            game.activeCheats['laserQty'] = knobsAndLevers.laser.quantity.setting.state == "ON";
-            this.update();
-            menus.display('cheats');
-          },
-        },
-        laserSpeed : {
-          update : function() {
-            this.text = knobsAndLevers.laser.speed.setting.render();
-          },
-          action : function() {
-            knobsAndLevers.toggleParameter(knobsAndLevers.laser.speed);
-            game.activeCheats['laserSpeed'] = knobsAndLevers.laser.speed.setting.state == "ON";
-            this.update();
-            menus.display('cheats');
-          },
-        },
-        shipSpeed : {
-          update : function() {
-            this.text = knobsAndLevers.player.speed.setting.render();
-          },
-          action : function() {
-            knobsAndLevers.toggleParameter(knobsAndLevers.player.speed);
-            game.activeCheats['shipSpeed'] = knobsAndLevers.player.speed.setting.state == "ON";
-            this.update();
-            menus.display('cheats');
-          },
-        },
-        reset : {
-          text : 'RESET',
-          action : function() {
-            knobsAndLevers.resetCheats();
-            menus.screens.cheats.update();
-            menus.display('cheats');
-          },
-        },
-        back : {
-          text : 'BACK',
-          action : function() {
-            menus.display('main');
-          },
-        },
-      },
-      text : {
-        entries : [
-          {
-            text : 'Dear cheater,',
-          },
-          {
-            text : 'Scores will not be recorded',
-            xAdjust : 20,
-          },
-          {
-            text : 'if any of these are set',
-            xAdjust : 20,
-          },
-        ],
-      },
-    },
-    initials : {
-      ignoreMarker : true,
-      order : ['current'],
-      options : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M',
-        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-      entries : {
-        previouser : {
-          noSelection: true,
-          fontSize : '15px',
-          xAdjust : -60,
-          yAdjust : -10,
-          color : 'darkgrey',
-        },
-        previous : {
-          noSelection: true,
-          xAdjust : -30,
-          yAdjust : -10,
-          color : 'grey',
-        },
-        current : {
-          fontSize : '30px',
-          action : function() {
-            menus.addInitials(this.text);
-            menus.display('initials');
-          },
-        },
-        next : {
-          noSelection: true,
-          xAdjust : -30,
-          yAdjust : -10,
-          color : 'grey',
-        },
-        nexter : {
-          noSelection: true,
-          fontSize : '15px',
-          xAdjust : -60,
-          yAdjust : -10,
-          color : 'darkgrey',
-        },
-      },
-      text : {
-        entries : [
-          {
-            name : 'enterInitials',
-            text : 'Enter your initials',
-            fontSize : '25px',
-          },
-          {
-            name : 'currentScore',
-            text : '',
-            xAdjust : 85,
-            yAdjust : 50,
-            fontSize : '20px',
-          },
-          {
-            name : 'entered',
-            text : '',
-            yAdjust : menuDefaults.entries.y - menuDefaults.text.y,
-            xAdjust : 235,
-            fontSize : '30px',
           },
         ],
       },
