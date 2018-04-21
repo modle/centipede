@@ -6,7 +6,6 @@ var init = {
     game.init();
     templates.init();
     metrics.init();
-    players.init();
     spiders.init();
     dom.init();
     sounds.init();
@@ -19,7 +18,6 @@ var init = {
     knobsAndLevers.init();
     menus.init();
     metrics.init();
-    players.init();
     spiders.init();
     texts.init();
     intervalCreatures.init();

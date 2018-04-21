@@ -10,6 +10,9 @@ var main = {
       menus.processMenus();
       return;
     };
+    if (players.players.length == 0) {
+      players.init();
+    };
     game.gameArea.removeBackground();
     main.handleGamePause();
     if (main.processTriggers()) {

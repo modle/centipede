@@ -18,8 +18,6 @@ var players = {
     'upLeft' : ['belowTop', 'insideLeft'],
   },
   init : function() {
-    this.areaHeight = knobsAndLevers.player.areaHeight;
-    this.topLimit = knobsAndLevers.player.topLimit;
     let gamePieceArgs = {
       width: knobsAndLevers.player.width,
       height : knobsAndLevers.player.height,
@@ -29,8 +27,10 @@ var players = {
       extraArgs : {type : "player", speed : {x : 0, y : 0}}
     };
     this.players = [];
-    this.players.push(new Component(gamePieceArgs));
-    console.log("players initialized");
+    while (this.players.length < game.numberOfPlayers) {
+      this.players.push(new Component(gamePieceArgs));
+    };
+    console.log('players initialized', this.players);
   },
   manage : function() {
     this.players.forEach(player => {
