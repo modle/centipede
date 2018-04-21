@@ -45,7 +45,7 @@ var main = {
     return triggered;
   },
   checkPlayerDied : function() {
-    if (player.died) {
+    if (players.died) {
       if (game.delayed === 0) {
         game.setDiedText();
         sounds.playDiedSound();
@@ -97,7 +97,7 @@ var main = {
     intervalCreatures.manage();
     spiders.manage();
     lasers.manage();
-    player.manage();
+    players.manage();
     collisions.check();
   },
   // TODO leaderboard functions only work on chrome

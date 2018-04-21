@@ -1,5 +1,8 @@
 /*jslint white: true */
-var player = {
+// TODO convert gamePiece to a list of players
+
+var players = {
+  players : [],
   activeDirection : undefined,
   boundaries : {},
   died : false,
@@ -25,35 +28,40 @@ var player = {
       y : knobsAndLevers.player.startY,
       extraArgs : {type : "player", speed : {x : 0, y : 0}}
     };
-    this.gamePiece = new Component(gamePieceArgs);
-    console.log("player initialized");
+    this.players = [];
+    this.players.push(new Component(gamePieceArgs));
+    console.log("players initialized");
   },
   manage : function() {
-    this.move();
-    this.update();
+    this.players.forEach(player => {
+      this.move(player);
+      this.update(player);
+    });
   },
-  update : function() {
-    this.gamePiece.update();
+  update : function(player) {
+    player.update();
   },
   reset : function() {
-    this.gamePiece.x = knobsAndLevers.player.startX;
-    this.gamePiece.y = knobsAndLevers.player.startY;
+    this.players.forEach(player => {
+      player.x = knobsAndLevers.player.startX;
+      player.y = knobsAndLevers.player.startY;
+    });
   },
-  move : function() {
-    this.stop();
-    this.setBoundaries();
+  move : function(player) {
+    this.stop(player);
+    this.setBoundaries(player);
     this.determineEligibleDirections();
-    this.moveTheThing(controls.getPositionModifiers(this.boundaries, knobsAndLevers.player.speed.value, this.eligibleDirections));
+    this.moveTheThing(player, controls.getPositionModifiers(this.boundaries, knobsAndLevers.player.speed.value, this.eligibleDirections));
   },
-  stop : function() {
-    this.gamePiece.speedX = 0;
-    this.gamePiece.speedY = 0;
+  stop : function(player) {
+    player.speedX = 0;
+    player.speedY = 0;
   },
-  setBoundaries : function() {
-    this.boundaries.belowTop = this.gamePiece.getTop() > player.topLimit;
-    this.boundaries.insideRight = this.gamePiece.getRight() < game.gameArea.canvas.width;
-    this.boundaries.aboveBottom = this.gamePiece.getBottom() < game.gameArea.canvas.height;
-    this.boundaries.insideLeft = this.gamePiece.getLeft() > 0;
+  setBoundaries : function(player) {
+    this.boundaries.belowTop = player.getTop() > knobsAndLevers.player.topLimit;
+    this.boundaries.insideRight = player.getRight() < game.gameArea.canvas.width;
+    this.boundaries.aboveBottom = player.getBottom() < game.gameArea.canvas.height;
+    this.boundaries.insideLeft = player.getLeft() > 0;
   },
   determineEligibleDirections : function() {
     this.setEligibleDirectionsToDefault();
@@ -68,23 +76,23 @@ var player = {
       this.eligibleDirections[direction] = true;
     });
   },
-  moveTheThing : function(speed) {
+  moveTheThing : function(player, speed) {
     if (!speed) {
       return;
     };
-    this.updatePosition(speed);
-    if (collisions.withMushrooms(this.gamePiece)) {
-      this.revertPosition(speed);
+    this.updatePosition(player, speed);
+    if (collisions.withMushrooms(player)) {
+      this.revertPosition(player, speed);
     };
   },
-  updatePosition : function(modifier) {
-    this.gamePiece.speedX = modifier.x ? modifier.x : this.gamePiece.speedX;
-    this.gamePiece.speedY = modifier.y ? modifier.y : this.gamePiece.speedY;
-    this.gamePiece.newPos();
+  updatePosition : function(player, modifier) {
+    player.speedX = modifier.x ? modifier.x : player.speedX;
+    player.speedY = modifier.y ? modifier.y : player.speedY;
+    player.newPos();
   },
-  revertPosition : function(modifier) {
-    this.gamePiece.speedX = -1 * (modifier.x ? modifier.x : this.gamePiece.speedX);
-    this.gamePiece.speedY = -1 * (modifier.y ? modifier.y : this.gamePiece.speedY);
-    this.gamePiece.newPos();
+  revertPosition : function(player, modifier) {
+    player.speedX = -1 * (modifier.x ? modifier.x : player.speedX);
+    player.speedY = -1 * (modifier.y ? modifier.y : player.speedY);
+    player.newPos();
   },
 };

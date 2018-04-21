@@ -105,7 +105,7 @@ var centipedes = {
     if (centipede.getBottom() > game.gameArea.canvas.height) {
       centipede.reverseDirectionY = true;
       centipede.poisoned = false;
-    } else if (centipede.getTop() < player.topLimit && centipede.distanceMovedFromBottom > 0) {
+    } else if (centipede.getTop() < knobsAndLevers.player.topLimit && centipede.distanceMovedFromBottom > 0) {
       centipede.reverseDirectionY = true;
       centipede.distanceMovedFromBottom = 0;
     };

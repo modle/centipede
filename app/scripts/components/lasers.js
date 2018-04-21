@@ -1,76 +1,50 @@
 /*jslint white: true */
-var lasers = Object.create(displayObjectPrototype, {
-  lasers : {
-    value : [],
-    writable : true,
-    enumerable : true
+var lasers = {
+  lasers : [],
+  manage : function() {
+    this.spawn();
+    this.update();
+    this.clearOutsideCanvas();
   },
-  spawn : {
-    value : function() {
-      if (!this.eligibleToSpawn()) {
-        return;
-      };
-      this.add(this.make());
-      sounds.playAvailableLaserSound();
-    },
-    writable : false,
-    enumerable : true
+  spawn : function() {
+    if (!this.eligibleToSpawn()) {
+      return;
+    };
+    this.add(this.make());
+    sounds.playAvailableLaserSound();
   },
-  eligibleToSpawn : {
-    value : function() {
-      let eligible = this.lasers.length < knobsAndLevers.laser.quantity.value
-        && supporting.everyinterval(
-          game.gameArea.frameNo, knobsAndLevers.laser.interval
-        )
-        && controls.isFiring();
-      return eligible;
-    },
-    writable : false,
-    enumerable : true
+  eligibleToSpawn : function() {
+    let eligible = this.lasers.length < knobsAndLevers.laser.quantity.value
+      && supporting.everyinterval(
+        game.gameArea.frameNo, knobsAndLevers.laser.interval
+      )
+      && controls.isFiring();
+    return eligible;
   },
-  make : {
-    value : function() {
-      let laserArgs = knobsAndLevers.laser.args;
-      laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed.value;
-      if (player.gamePiece == undefined) {
-        throw('player.gamePiece is undefined');
-      };
-      laserArgs.x = player.gamePiece.x + player.gamePiece.width / 2;
-      laserArgs.y = player.gamePiece.y;
-      return new Component(laserArgs);
-    },
-    writable : true,
-    enumerable : true,
+  make : function() {
+    let laserArgs = knobsAndLevers.laser.args;
+    laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed.value;
+    let player = players.players[0];
+    if (player == undefined) {
+      throw('player is undefined');
+    };
+    laserArgs.x = player.x + player.width / 2;
+    laserArgs.y = player.y;
+    return new Component(laserArgs);
   },
-  add : {
-    value : function() {
-      this.lasers.push(this.make());
-    },
-    writable : true,
-    enumerable : true,
+  add : function() {
+    this.lasers.push(this.make());
   },
-  update : {
-    value : function() {
-      for (i = 0; i < this.lasers.length; i += 1) {
-        this.lasers[i].y += this.lasers[i].speedY;
-        this.lasers[i].update();
-      }
-    },
-    writable : false,
-    enumerable : true
+  update : function() {
+    for (i = 0; i < this.lasers.length; i += 1) {
+      this.lasers[i].y += this.lasers[i].speedY;
+      this.lasers[i].update();
+    }
   },
-  clearOutsideCanvas : {
-    value : function() {
-      this.lasers = this.lasers.filter(laser => laser.y > 0);
-    },
-    writable : false,
-    enumerable : true
+  clearOutsideCanvas : function() {
+    this.lasers = this.lasers.filter(laser => laser.y > 0);
   },
-  clear : {
-    value : function() {
-      this.lasers = [];
-    },
-    writable : true,
-    enumerable : true
-  }
-});
+  clear : function() {
+    this.lasers = [];
+  },
+};

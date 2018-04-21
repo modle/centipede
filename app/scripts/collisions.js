@@ -2,7 +2,9 @@
 var collisions = {
   check : function() {
     this.checkLaser(this.getLaserTargets());
-    this.checkPlayerVsEnemies(this.getPlayerEnemies());
+    players.players.forEach(player =>
+      this.checkPlayerVsEnemies(player, this.getPlayerEnemies())
+    );
     this.removeDestroyedTargets();
   },
   getLaserTargets : function() {
@@ -62,19 +64,19 @@ var collisions = {
     targets.push(...intervalCreatures.flies);
     return targets;
   },
-  checkPlayerVsEnemies : function(targets) {
+  checkPlayerVsEnemies : function(player, targets) {
     if (!knobsAndLevers.game.playerCollisionsEnabled) {
       return;
     };
     targets.forEach(target => {
-      if (player.gamePiece.crashWith(target)) {
-        this.killPlayer();
+      if (player.crashWith(target)) {
+        this.killPlayer(player);
         return;
       };
     });
   },
   killPlayer : function() {
-    player.died = true;
+    players.died = true;
     metrics.lives.player1 -= 1;
     if (metrics.lives.player1 <= 0) {
       game.gameOver = true;

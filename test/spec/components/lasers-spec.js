@@ -9,8 +9,17 @@ describe('LASERS SPEC: ', () => {
   beforeEach(function () {
     testObj = Object.assign({}, lasers);
   });
-  it('lasers gets constructed', () => {
-    expect(testObj).toBeTruthy();
+
+  it('manage delegates', () => {
+    spyOn(testObj, 'spawn');
+    spyOn(testObj, 'update');
+    spyOn(testObj, 'clearOutsideCanvas');
+
+    testObj.manage();
+
+    expect(testObj.spawn).toHaveBeenCalled();
+    expect(testObj.update).toHaveBeenCalled();
+    expect(testObj.clearOutsideCanvas).toHaveBeenCalled();
   });
 
   it('spawn returns if lasers are not eligible to spawn', () => {

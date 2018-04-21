@@ -51,7 +51,7 @@ var game = {
   manageDeath : function() {
     this.resetMoreThings();
     texts.diedText.text = "";
-    player.died = false;
+    players.died = false;
   },
   manageGameOver : function() {
     if (this.gameOver) {
@@ -76,7 +76,7 @@ var game = {
     this.resetSomeThings();
     intervalCreatures.clear();
     spiders.clear();
-    player.reset();
+    players.reset();
   },
   resetTheWholeTamale : function() {
     this.gameOver = false;

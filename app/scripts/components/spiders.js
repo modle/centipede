@@ -52,7 +52,7 @@ var spiders = {
     if (spider.speedX < 0) {
       spider.x = game.gameArea.canvas.width - 1;
     };
-    spider.y = supporting.getRandom(player.topLimit - player.areaHeight, game.gameArea.canvas.height);
+    spider.y = supporting.getRandom(knobsAndLevers.player.topLimit - knobsAndLevers.player.areaHeight, game.gameArea.canvas.height);
     spider.directionY = defaults.directionY;
     this.spiders.push(spider);
   },
@@ -95,7 +95,7 @@ var spiders = {
   updateYDirection : function(spider) {
     if (spider.getBottom() > game.gameArea.canvas.height) {
       spider.directionY = -1;
-    } else if (spider.getTop() < game.gameArea.canvas.height - (player.areaHeight * 2)) {
+    } else if (spider.getTop() < game.gameArea.canvas.height - (knobsAndLevers.player.areaHeight * 2)) {
       spider.directionY = 1;
     };
   },
