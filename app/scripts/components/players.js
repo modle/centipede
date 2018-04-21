@@ -47,7 +47,7 @@ var players = {
   },
   reset : function() {
     this.players.forEach(player => {
-      player.x = knobsAndLevers.player.startX;
+      player.x = knobsAndLevers.player.startX[0];
       player.y = knobsAndLevers.player.startY;
     });
   },

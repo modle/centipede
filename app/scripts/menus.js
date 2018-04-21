@@ -141,8 +141,8 @@ menus = {
     if (!this.currentSelection.entry) {
       return;
     };
-    this.selectionMarker.x = this.currentSelection.entry.component.x - knobsAndLevers.player.dimensions.width * 2;
-    this.selectionMarker.y = this.currentSelection.entry.component.y - 15;
+    this.selectionMarker.x = this.currentSelection.entry.component.x - templates.baseMarkerParams.width * 2;
+    this.selectionMarker.y = this.currentSelection.entry.component.y - templates.baseMarkerParams.height;
     this.selectionMarker.update();
   },
   drawTexts : function(texts) {

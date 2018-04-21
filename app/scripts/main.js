@@ -102,6 +102,7 @@ var main = {
     lasers.manage();
     players.manage();
     collisions.check();
+    console.log(players.players[0].width);
   },
   // TODO leaderboard functions only work on chrome
   // either disable the leaderboard menu option when not in chrome

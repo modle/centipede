@@ -156,7 +156,7 @@ var knobsAndLevers = {
   player : {
     colors : ['red', 'purple'],
     defaultLives : 3,
-    dimensions : {width : 15, height : 15},
+    dimensions : {width : 35, height : 35},
     extraArgs : {type : "player"},
     init : function(configs) {
       this.areaHeight = configs.canvas.height * 0.2;

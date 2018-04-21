@@ -31,11 +31,8 @@ function Component(args) {
       this.makeText(ctx);
     } else if (this.type == "centipede") {
       customComponents.makeACentipede(ctx, this.moveVertically, this);
-    // to draw the ship instead of a square
-    // } else if (this.type == "player") {
-    //   let playerImage = new Image();
-    //   playerImage.src = knobsAndLevers.mediaPath + "ship.png";
-    //   ctx.drawImage(playerImage, this.x, this.y);
+    } else if (this.type == "player") {
+      customComponents.drawPlayer(ctx, this);
     } else {
       this.makeARectangle(ctx);
     };
@@ -131,6 +128,11 @@ var customComponents = {
       direction = baseObject.directionX > 0 ? 'right' : 'left';
     };
     return new TriangleVertices(direction, baseObject);
+  },
+  drawPlayer : function(ctx, baseObject) {
+    let playerImage = new Image();
+    playerImage.src = knobsAndLevers.mediaPath + "ship3.png";
+    ctx.drawImage(playerImage, baseObject.x, baseObject.y, baseObject.width, baseObject.height);
   },
 };
 

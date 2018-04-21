@@ -4,9 +4,9 @@ var templates = {
   baseMarkerParams : {},
   init : function() {
     this.baseMarkerParams = {
-      width : knobsAndLevers.player.dimensions.width,
-      height : knobsAndLevers.player.dimensions.height,
-      color : 'red',
+      width : 15,
+      height : 15,
+      extraArgs : {type : 'player'},
     };
     this.marker = new Component(
       Object.assign(this.baseMarkerParams, {
