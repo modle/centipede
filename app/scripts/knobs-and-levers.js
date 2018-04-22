@@ -57,8 +57,8 @@ var knobsAndLevers = {
     hitPoints : 2,
     pointValue : 200,
     interval : {
-      min: 1500,
-      max: 2500,
+      min: 100,
+      max: 1000,
     },
     mushroomCreateInterval : 100,
     args : {
@@ -156,7 +156,7 @@ var knobsAndLevers = {
   player : {
     colors : ['red', 'purple'],
     defaultLives : 3,
-    dimensions : {width : 35, height : 35},
+    dimensions : {width : 30, height : 30},
     extraArgs : {type : "player"},
     init : function(configs) {
       this.areaHeight = configs.canvas.height * 0.2;

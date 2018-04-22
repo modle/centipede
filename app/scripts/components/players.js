@@ -1,6 +1,4 @@
 /*jslint white: true */
-// TODO convert gamePiece to a list of players
-
 var playerConstants = {
   watchPositions : {
     'up' : ['belowTop'],
