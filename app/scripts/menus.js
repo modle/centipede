@@ -106,7 +106,7 @@ menus = {
     if (this.timeSinceMenuMove < this.minTimeToMove) {
       return;
     };
-    let direction = controls.getDirection();
+    let direction = controls.checkMenuDirection();
     if (list.length > 1) {
       if (direction == "up") {
         list.unshift(list.pop());
