@@ -39,7 +39,7 @@ var knobsAndLevers = {
   },
   centipede : {
     baseSpeed : 10,
-    maxNumber : 10,
+    maxNumber : 100,
     pointValue : 20,
     args : {
       color : "blue",

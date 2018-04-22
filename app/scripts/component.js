@@ -30,9 +30,7 @@ function Component(args) {
     ctx.fillStyle = this.color;
     if (this.type == 'text') {
       this.makeText(ctx);
-    } else if (this.type == 'background') {
-      return;
-    } else if (this.type == 'laser') {
+    } else if (['background', 'laser'].includes(this.type)) {
       this.makeARectangle(ctx);
     } else {
       customComponents.drawComponent(ctx, this);

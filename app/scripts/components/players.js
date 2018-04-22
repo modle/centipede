@@ -31,7 +31,6 @@ var players = {
   died : false,
   init : function() {
     while (Object.keys(this.players).length < game.numberOfPlayers) {
-      console.log('making players');
       let player = new Component(this.getPlayerArgs());
       player.name = 'player' + (Object.keys(this.players).length + 1);
       player.eligibleDirections = supporting.clone(playerConstants.eligibleDirections);

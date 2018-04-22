@@ -32,22 +32,14 @@ var mushrooms = {
     color = color ? color : knobsAndLevers.mushrooms.color;
     coordinates.x = supporting.getClosest(game.gameArea.xVertices, coordinates.x);
     coordinates.y = supporting.getClosest(game.gameArea.yVertices, coordinates.y);
-
-    // this works, and should be more efficient than creating the component
-    // and running it through the collisions.withMushrooms check
-    if (!this.willOverlap(coordinates)) {
-      this.mushrooms.push(this.generate(coordinates, color));
+    let mushroom = this.generate(coordinates, color);
+    if (collisions.withMushrooms(mushroom) || this.collidesWithPlayers(mushroom)) {
+      return;
     };
+    this.mushrooms.push(mushroom);
   },
-  willOverlap : function(coordinates) {
-    let scaleFactor = knobsAndLevers.mushrooms.scaleFactor;
-    return this.mushrooms.find(mushroom =>
-      mushroom.hitPoints > 0
-      && mushroom.x - scaleFactor < coordinates.x + 5
-      && mushroom.x - scaleFactor > coordinates.x - 5
-      && mushroom.y - scaleFactor < coordinates.y + 5
-      && mushroom.y - scaleFactor > coordinates.y - 5
-    );
+  collidesWithPlayers : function(mushroom) {
+    return Object.keys(players.players).find(key => players.players[key].crashWith(mushroom));
   },
   generate : function(coordinates, color) {
     let mushroomArgs = {
