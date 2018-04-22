@@ -6,7 +6,6 @@ var players = {
   activeDirection : undefined,
   boundaries : {},
   died : false,
-  eligibleDirections : {},
   watchPositions : {
     'up' : ['belowTop'],
     'right' : ['insideRight'],
@@ -17,16 +16,29 @@ var players = {
     'downLeft' : ['aboveBottom', 'insideLeft'],
     'upLeft' : ['belowTop', 'insideLeft'],
   },
+  defaultEligibleDirections : {
+    'up' : true,
+    'right' : true,
+    'down' : true,
+    'left' : true,
+    'upRight' : true,
+    'downRight' : true,
+    'downLeft' : true,
+    'upLeft' : true,
+  },
   init : function() {
     this.players = [];
     while (this.players.length < game.numberOfPlayers) {
-      this.players.push(new Component(this.getPlayerArgs()));
+      let player = new Component(this.getPlayerArgs());
+      player.name = 'player' + (this.players.length + 1);
+      player.eligibleDirections = supporting.clone(this.defaultEligibleDirections);
+      console.log(player);
+      this.players.push(player);
     };
     console.log('players initialized', this.players);
   },
   getPlayerArgs : function() {
     let defaults = knobsAndLevers.player;
-    console.log(defaults);
     return {
       width: defaults.dimensions.width,
       height : defaults.dimensions.height,
@@ -54,8 +66,8 @@ var players = {
   move : function(player) {
     this.stop(player);
     this.setBoundaries(player);
-    this.determineEligibleDirections();
-    this.moveTheThing(player, controls.getPositionModifiers(this.boundaries, knobsAndLevers.player.speed.value, this.eligibleDirections));
+    this.determineEligibleDirections(player);
+    this.moveTheThing(player);
   },
   stop : function(player) {
     player.speedX = 0;
@@ -67,20 +79,16 @@ var players = {
     this.boundaries.aboveBottom = player.getBottom() < game.gameArea.canvas.height;
     this.boundaries.insideLeft = player.getLeft() > 0;
   },
-  determineEligibleDirections : function() {
-    this.setEligibleDirectionsToDefault();
+  determineEligibleDirections : function(player) {
+    player.eligibleDirections = supporting.clone(this.defaultEligibleDirections);
     Array.from(Object.keys(this.watchPositions)).forEach(direction => {
       this.watchPositions[direction].forEach(playerPosition =>
-        this.eligibleDirections[direction] = this.boundaries[playerPosition] && this.eligibleDirections[direction]
+        player.eligibleDirections[direction] = this.boundaries[playerPosition] && player.eligibleDirections[direction]
       );
     });
   },
-  setEligibleDirectionsToDefault : function() {
-    Array.from(Object.keys(this.watchPositions)).forEach(direction => {
-      this.eligibleDirections[direction] = true;
-    });
-  },
-  moveTheThing : function(player, speed) {
+  moveTheThing : function(player) {
+    let speed = this.determineSpeed(player);
     if (!speed) {
       return;
     };
@@ -88,6 +96,9 @@ var players = {
     if (collisions.withMushrooms(player)) {
       this.revertPosition(player, speed);
     };
+  },
+  determineSpeed : function(player) {
+    return controls.getPositionModifiers(this.boundaries, knobsAndLevers.player.speed.value, player)
   },
   updatePosition : function(player, modifier) {
     player.speedX = modifier.x ? modifier.x : player.speedX;
