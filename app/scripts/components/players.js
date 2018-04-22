@@ -1,11 +1,7 @@
 /*jslint white: true */
 // TODO convert gamePiece to a list of players
 
-var players = {
-  players : [],
-  activeDirection : undefined,
-  boundaries : {},
-  died : false,
+var playerConstants = {
   watchPositions : {
     'up' : ['belowTop'],
     'right' : ['insideRight'],
@@ -16,7 +12,7 @@ var players = {
     'downLeft' : ['aboveBottom', 'insideLeft'],
     'upLeft' : ['belowTop', 'insideLeft'],
   },
-  defaultEligibleDirections : {
+  eligibleDirections : {
     'up' : true,
     'right' : true,
     'down' : true,
@@ -26,12 +22,19 @@ var players = {
     'downLeft' : true,
     'upLeft' : true,
   },
+};
+
+var players = {
+  players : [],
+  activeDirection : undefined,
+  boundaries : {},
+  died : false,
   init : function() {
     this.players = [];
     while (this.players.length < game.numberOfPlayers) {
       let player = new Component(this.getPlayerArgs());
       player.name = 'player' + (this.players.length + 1);
-      player.eligibleDirections = supporting.clone(this.defaultEligibleDirections);
+      player.eligibleDirections = supporting.clone(playerConstants.eligibleDirections);
       console.log(player);
       this.players.push(player);
     };
@@ -80,9 +83,9 @@ var players = {
     this.boundaries.insideLeft = player.getLeft() > 0;
   },
   determineEligibleDirections : function(player) {
-    player.eligibleDirections = supporting.clone(this.defaultEligibleDirections);
-    Array.from(Object.keys(this.watchPositions)).forEach(direction => {
-      this.watchPositions[direction].forEach(playerPosition =>
+    player.eligibleDirections = supporting.clone(playerConstants.eligibleDirections);
+    Array.from(Object.keys(playerConstants.watchPositions)).forEach(direction => {
+      playerConstants.watchPositions[direction].forEach(playerPosition =>
         player.eligibleDirections[direction] = this.boundaries[playerPosition] && player.eligibleDirections[direction]
       );
     });
