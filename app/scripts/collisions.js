@@ -2,7 +2,7 @@
 var collisions = {
   check : function() {
     this.checkLaser(this.getLaserTargets());
-    players.players.forEach(player =>
+    Object.keys(players.players).forEach(player =>
       this.checkPlayerVsEnemies(player, this.getPlayerEnemies())
     );
     this.removeDestroyedTargets();

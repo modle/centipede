@@ -10,7 +10,7 @@ var main = {
       menus.processMenus();
       return;
     };
-    if (players.players.length < game.numberOfPlayers) {
+    if (Object.keys(players.players).length < game.numberOfPlayers) {
       players.init();
     };
     game.gameArea.removeBackground();

@@ -1,30 +1,36 @@
 /*jslint white: true */
 var lasers = {
-  lasers : [],
+  lasers : {player1 : [], player2 : []},
   manage : function() {
-    this.spawn();
-    this.update();
-    this.clearOutsideCanvas();
+    Array.from(Object.keys(this.lasers)).forEach(player => {
+      this.spawn();
+      this.update();
+      this.clearOutsideCanvas();
+    });
   },
-  spawn : function() {
-    if (!this.eligibleToSpawn()) {
+
+
+  spawn : function(player) {
+    if (!this.eligibleToSpawn(player)) {
       return;
     };
-    this.add(this.make());
+    this.add(player);
     sounds.playAvailableLaserSound();
   },
-  eligibleToSpawn : function() {
-    let eligible = this.lasers.length < knobsAndLevers.laser.quantity.value
+  eligibleToSpawn : function(player) {
+    let eligible = this.lasers[player].length < knobsAndLevers.laser.quantity.value
       && supporting.everyinterval(
         game.gameArea.frameNo, knobsAndLevers.laser.interval
       )
-      && controls.isFiring();
+      && controls.isFiring(player);
     return eligible;
   },
-  make : function() {
+  add : function(player) {
+    this.lasers.push(this.make(player));
+  },
+  make : function(player) {
     let laserArgs = knobsAndLevers.laser.args;
     laserArgs.extraArgs.speed.y = -1 * knobsAndLevers.laser.speed.value;
-    let player = players.players[0];
     if (player == undefined) {
       throw('player is undefined');
     };
@@ -32,15 +38,16 @@ var lasers = {
     laserArgs.y = player.y;
     return new Component(laserArgs);
   },
-  add : function() {
-    this.lasers.push(this.make());
-  },
+
+
   update : function() {
     for (i = 0; i < this.lasers.length; i += 1) {
       this.lasers[i].y += this.lasers[i].speedY;
       this.lasers[i].update();
     }
   },
+
+
   clearOutsideCanvas : function() {
     this.lasers = this.lasers.filter(laser => laser.y > 0);
   },

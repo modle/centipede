@@ -25,18 +25,17 @@ var playerConstants = {
 };
 
 var players = {
-  players : [],
+  players : {},
   activeDirection : undefined,
   boundaries : {},
   died : false,
   init : function() {
-    this.players = [];
-    while (this.players.length < game.numberOfPlayers) {
+    while (Object.keys(this.players).length < game.numberOfPlayers) {
+      console.log('making players');
       let player = new Component(this.getPlayerArgs());
-      player.name = 'player' + (this.players.length + 1);
+      player.name = 'player' + (Object.keys(this.players).length + 1);
       player.eligibleDirections = supporting.clone(playerConstants.eligibleDirections);
-      console.log(player);
-      this.players.push(player);
+      this.players[player.name] = player;
     };
     console.log('players initialized', this.players);
   },
@@ -45,14 +44,15 @@ var players = {
     return {
       width: defaults.dimensions.width,
       height : defaults.dimensions.height,
-      color : defaults.colors[this.players.length],
-      x : defaults.startX[this.players.length],
+      color : defaults.colors[Object.keys(this.players).length],
+      x : defaults.startX[Object.keys(this.players).length],
       y : defaults.startY,
       extraArgs : {type : "player", speed : {x : 0, y : 0}}
     };
   },
   manage : function() {
-    this.players.forEach(player => {
+    Object.keys(this.players).forEach(key => {
+      let player = this.players[key];
       this.move(player);
       this.update(player);
     });
