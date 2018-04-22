@@ -20,7 +20,12 @@ var spiders = {
     };
   },
   maxedOut : function() {
+    this.setMax();
     return this.spiders.length >= knobsAndLevers.spider.maxNumber;
+  },
+  setMax : function() {
+    let tier = knobsAndLevers.game.tier;
+    knobsAndLevers.spider.maxNumber = tier.isMaxed ? tier.max : tier.current;
   },
   updateInterval : function() {
     if (this.canUpdate()) {
@@ -47,7 +52,7 @@ var spiders = {
     if (spider.speedX < 0) {
       spider.x = game.gameArea.canvas.width - 1;
     };
-    spider.y = supporting.getRandom(player.topLimit - player.areaHeight, game.gameArea.canvas.height);
+    spider.y = supporting.getRandom(knobsAndLevers.player.topLimit - knobsAndLevers.player.areaHeight, game.gameArea.canvas.height);
     spider.directionY = defaults.directionY;
     this.spiders.push(spider);
   },
@@ -63,7 +68,7 @@ var spiders = {
   removeMushrooms : function(spider) {
     let theMushroom = mushrooms.mushrooms.find(mushroom => spider.crashWith(mushroom));
     // TODO 1d4, ignore if not 4
-    let doRemove = supporting.getRandom(-3, 1);
+    let doRemove = supporting.getRandom(1, 1);
     if (theMushroom) {
       theMushroom.hitPoints = doRemove < 0 || theMushroom.spiderTouched ? theMushroom.hitPoints : 0;
       theMushroom.spiderTouched = true;
@@ -90,7 +95,7 @@ var spiders = {
   updateYDirection : function(spider) {
     if (spider.getBottom() > game.gameArea.canvas.height) {
       spider.directionY = -1;
-    } else if (spider.getTop() < game.gameArea.canvas.height - (player.areaHeight * 2)) {
+    } else if (spider.getTop() < game.gameArea.canvas.height - (knobsAndLevers.player.areaHeight * 2)) {
       spider.directionY = 1;
     };
   },

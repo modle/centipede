@@ -16,6 +16,7 @@ function Component(args) {
   };
   if (args.extraArgs) {
     this.type = args.extraArgs.type;
+    this.image = new Image();
     if (args.extraArgs.speed) {
       this.speedX = args.extraArgs.speed.x;
       this.speedY = args.extraArgs.speed.y;
@@ -27,17 +28,12 @@ function Component(args) {
     };
     let ctx = game.gameArea.context;
     ctx.fillStyle = this.color;
-    if (this.type == "text") {
+    if (this.type == 'text') {
       this.makeText(ctx);
-    } else if (this.type == "centipede") {
-      customComponents.makeACentipede(ctx, this.moveVertically, this);
-    // to draw the ship instead of a square
-    // } else if (this.type == "player") {
-    //   let playerImage = new Image();
-    //   playerImage.src = knobsAndLevers.mediaPath + "ship.png";
-    //   ctx.drawImage(playerImage, this.x, this.y);
-    } else {
+    } else if (['background', 'laser'].includes(this.type)) {
       this.makeARectangle(ctx);
+    } else {
+      customComponents.drawComponent(ctx, this);
     };
   };
   this.stop = function() {
@@ -115,54 +111,29 @@ function Component(args) {
 };
 
 var customComponents = {
-  makeACentipede : function(ctx, isVertical, baseObject) {
-    ctx.beginPath();
-    let vertices = this.getCentipedeVertices(isVertical, baseObject);
-    ctx.moveTo(vertices.x1, vertices.y1);
-    ctx.lineTo(vertices.x2, vertices.y2);
-    ctx.lineTo(vertices.x3, vertices.y3);
-    ctx.fill();
+  drawComponent : function(ctx, obj) {
+    let filename = this.imageFileNameGenerator[obj.type](obj);
+    if (!filename) {
+      throw 'filename error when drawing component';
+    };
+    obj.image.src = knobsAndLevers.mediaPath + filename + '.png';
+    ctx.drawImage(obj.image, obj.x, obj.y, obj.width, obj.height);
   },
-  getCentipedeVertices : function(isVertical, baseObject) {
+  imageFileNameGenerator : {
+    'centipede' : function(obj) {return 'centipede-head-1-' + customComponents.getCentipedeDirection(obj);},
+    'player' : function(obj) {return obj.name ? obj.name : 'player1';},
+    'spider' : function(obj) {return 'spider-1';},
+    'mushroom' : function(obj) {return 'mushroom-' + (obj.poisoned ? 'poisoned-' : '') + obj.hitPoints;},
+    'worm' : function(obj) {return obj.speedX > 0 ? 'worm-2' : 'worm-1';},
+    'fly' : function(obj) {return 'flea-1';},
+  },
+  getCentipedeDirection : function(obj) {
     let direction = '';
-    if (isVertical) {
-      direction = baseObject.directionY > 0 ? 'down' : 'up';
+    if (obj.moveVertically) {
+      direction = obj.directionY > 0 ? 'down' : 'up';
     } else {
-      direction = baseObject.directionX > 0 ? 'right' : 'left';
+      direction = obj.directionX > 0 ? 'right' : 'left';
     };
-    return new TriangleVertices(direction, baseObject);
+    return direction;
   },
-};
-
-function TriangleVertices(direction, dimensions) {
-  with (dimensions) {
-    this.x1 = x;
-    this.y1 = y;
-    this.x2 = x;
-    this.y2 = y;
-    this.x3 = x;
-    this.y3 = y;
-    if (direction == 'up') {
-      this.y1 = y + height;
-      this.x2 = x + width / 2;
-      this.x3 = x + width;
-      this.y3 = y + height;
-    };
-    if (direction == 'down') {
-      this.x2 = x + width / 2;
-      this.y2 = y + height;
-      this.x3 = x + width;
-    };
-    if (direction == 'right') {
-      this.x2 = x + width;
-      this.y2 = y + height / 2;
-      this.y3 = y + height;
-    };
-    if (direction == 'left') {
-      this.x1 = x + width;
-      this.y2 = y + height / 2;
-      this.x3 = x + width;
-      this.y3 = y + height;
-    };
-  };
 };

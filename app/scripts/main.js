@@ -6,9 +6,12 @@ var main = {
     main.updateGamepad();
     if (!game.running) {
       game.gameArea.loadBackground();
-      controls.gamepad.checkState();
+      controls.gamepad.checkState(game.numberOfPlayers);
       menus.processMenus();
       return;
+    };
+    if (Object.keys(players.players).length < game.numberOfPlayers) {
+      players.init();
     };
     game.gameArea.removeBackground();
     main.handleGamePause();
@@ -23,7 +26,6 @@ var main = {
       return;
     };
     controls.gamepad.refreshGamepadData();
-    controls.gamepad.captureAxes();
   },
   handleGamePause : function() {
     if (this.framesToWaitToPauseAgain > 0) {
@@ -45,7 +47,7 @@ var main = {
     return triggered;
   },
   checkPlayerDied : function() {
-    if (player.died) {
+    if (players.died) {
       if (game.delayed === 0) {
         game.setDiedText();
         sounds.playDiedSound();
@@ -97,7 +99,7 @@ var main = {
     intervalCreatures.manage();
     spiders.manage();
     lasers.manage();
-    player.manage();
+    players.manage();
     collisions.check();
   },
   // TODO leaderboard functions only work on chrome

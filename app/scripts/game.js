@@ -7,6 +7,8 @@ var game = {
   delayEndTime : 300,
   keysDown : {},
   activeCheats : {},
+  numberOfPlayers : 1,
+  activePlayers : 1,
   init : function() {
     this.gameArea = new GameArea();
     console.log('game initialized');
@@ -50,7 +52,7 @@ var game = {
   manageDeath : function() {
     this.resetMoreThings();
     texts.diedText.text = "";
-    player.died = false;
+    players.died = false;
   },
   manageGameOver : function() {
     if (this.gameOver) {
@@ -75,12 +77,12 @@ var game = {
     this.resetSomeThings();
     intervalCreatures.clear();
     spiders.clear();
-    player.reset();
+    players.reset();
   },
   resetTheWholeTamale : function() {
     this.gameOver = false;
     this.timeSinceGameOver = 0;
-    metrics.lastScore = metrics.score.value;
+    metrics.lastScore = metrics.score.player1.value;
     mushrooms.clear();
     init.afterGameOver();
     menus.reset();

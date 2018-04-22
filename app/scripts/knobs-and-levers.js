@@ -39,7 +39,7 @@ var knobsAndLevers = {
   },
   centipede : {
     baseSpeed : 10,
-    maxNumber : 10,
+    maxNumber : 100,
     pointValue : 20,
     args : {
       color : "blue",
@@ -53,12 +53,12 @@ var knobsAndLevers = {
     },
   },
   flies : {
-    maxNumber : 1,
+    maxNumber : 0,
     hitPoints : 2,
     pointValue : 200,
     interval : {
-      min: 1500,
-      max: 2500,
+      min: 100,
+      max: 1000,
     },
     mushroomCreateInterval : 100,
     args : {
@@ -92,9 +92,16 @@ var knobsAndLevers = {
     gameOverDelay : 600,
     startLevel : 0,
     maxMushrooms : 50,
-    incrementThingsScore : 10000,
-    tier : 10,
-    maxTier : 10,
+    tier : {
+      incrementScore : 10000,
+      current: 1,
+      max : 5,
+      isMaxed : false,
+      update : function(newTier) {
+        this.current = newTier;
+        this.isMaxed = this.current >= this.max ? true : false;
+      },
+    }
   },
   laser : {
     speed : {
@@ -147,7 +154,19 @@ var knobsAndLevers = {
     },
   },
   player : {
+    colors : ['red', 'purple'],
     defaultLives : 3,
+    dimensions : {width : 30, height : 30},
+    extraArgs : {type : "player"},
+    init : function(configs) {
+      this.areaHeight = configs.canvas.height * 0.2;
+      this.topLimit = knobsAndLevers.canvas.height - this.areaHeight;
+      this.startX = [
+        (configs.canvas.width - this.dimensions.width * 2) * 0.5,
+        (configs.canvas.width + this.dimensions.width * 2) * 0.5,
+      ],
+      this.startY = configs.canvas.height - this.dimensions.height - 1;
+    },
     speed : {
       value : 2,
       default : 2,
@@ -160,21 +179,12 @@ var knobsAndLevers = {
         },
       },
     },
-    width : 15,
-    height : 15,
-    extraArgs : {type : "player"},
-    init : function(configs) {
-      this.areaHeight = configs.canvas.height * 0.2;
-      this.topLimit = knobsAndLevers.canvas.height - this.areaHeight;
-      this.startX = (configs.canvas.width - this.width) * 0.5;
-      this.startY = configs.canvas.height * 0.9;
-    },
     resetCheats : function() {
       knobsAndLevers.resetParameter(this.speed);
     },
   },
   spider : {
-    maxNumber : 1,
+    maxNumber : 0,
     hitPoints : 1,
     directionY : 1,
     points : {
@@ -182,8 +192,8 @@ var knobsAndLevers = {
       range : 400,
     },
     interval : {
-      min: 300,
-      max: 600,
+      min: 800,
+      max: 1500,
     },
     args : {
       color : "fuchsia",
@@ -195,8 +205,8 @@ var knobsAndLevers = {
     },
     init : function(configs) {
       this.initialInterval = supporting.getRandom(this.interval.min, this.interval.max);
-      this.args.width = configs.general.gridSquareSideLength * 0.8;
-      this.args.height = configs.general.gridSquareSideLength * 0.3;
+      this.args.width = configs.general.gridSquareSideLength;
+      this.args.height = configs.general.gridSquareSideLength * 0.5;
       this.args.x = 1;
     },
   },
@@ -225,8 +235,8 @@ var knobsAndLevers = {
     pointValue :200,
     hitPoints : 1,
     interval : {
-      min: 1500,
-      max: 2500,
+      min: 0,
+      max: 0,
     },
     args : {
       color : "orange",
@@ -237,11 +247,11 @@ var knobsAndLevers = {
           if (knobsAndLevers.worms.args.extraArgs.speed.x < 0) {
             knobsAndLevers.worms.args.x = game.gameArea.canvas.width - 1;
           } else {
-            knobsAndLevers.worms.args.x = 1;
+            knobsAndLevers.worms.args.x = 1 - knobsAndLevers.worms.args.width;
           };
         },
         setY : function() {
-          let randomYPos = supporting.getRandom(0, player.topLimit - player.areaHeight);
+          let randomYPos = supporting.getRandom(0, knobsAndLevers.player.topLimit - knobsAndLevers.player.areaHeight);
           knobsAndLevers.worms.args.y = supporting.getClosest(game.gameArea.yVertices, randomYPos);
         },
       }

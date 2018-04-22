@@ -7,7 +7,7 @@ var hud = {
   },
   updateLives : function() {
     metrics.livesMarker.update();
-    texts.livesDisplay.text = metrics.lives;
+    texts.livesDisplay.text = metrics.lives.player1;
     texts.livesDisplay.update();
   },
   updateLevel : function() {
@@ -15,7 +15,7 @@ var hud = {
     texts.level.update();
   },
   updateScore : function() {
-    metrics.score.text = metrics.score.value;
-    metrics.score.update();
+    metrics.score.player1.text = metrics.score.player1.value;
+    metrics.score.player1.update();
   },
 };

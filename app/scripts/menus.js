@@ -33,7 +33,7 @@ menus = {
     } else if (this.show.main) {
       this.leaderboards = main.readLeaderboard();
       this.setLeaderboardTexts();
-    } else if (this.show.playerSelect) {
+    } else if (this.show.playerActivate) {
       this.setGamepadText();
     };
     let screen = this.getCurrentScreen();
@@ -106,7 +106,7 @@ menus = {
     if (this.timeSinceMenuMove < this.minTimeToMove) {
       return;
     };
-    let direction = controls.getDirection();
+    let direction = controls.checkMenuDirection();
     if (list.length > 1) {
       if (direction == "up") {
         list.unshift(list.pop());
@@ -141,8 +141,8 @@ menus = {
     if (!this.currentSelection.entry) {
       return;
     };
-    this.selectionMarker.x = this.currentSelection.entry.component.x - knobsAndLevers.player.width * 2;
-    this.selectionMarker.y = this.currentSelection.entry.component.y - 15;
+    this.selectionMarker.x = this.currentSelection.entry.component.x - templates.baseMarkerParams.width * 2;
+    this.selectionMarker.y = this.currentSelection.entry.component.y - templates.baseMarkerParams.height;
     this.selectionMarker.update();
   },
   drawTexts : function(texts) {
@@ -152,7 +152,7 @@ menus = {
       };
       entry.component.x = menuDefaults.text.x + (entry.xAdjust ? entry.xAdjust : 0);
       entry.component.y = menuDefaults.text.y + (entry.yAdjust ? entry.yAdjust : 0) + menuDefaults.yDivider * index;
-      entry.component.text = entry.text;
+      entry.component.text = entry.text ? entry.text : entry.base;
       if (entry.fontSize) {
         entry.component.fontSize = entry.fontSize;
       };
@@ -167,7 +167,7 @@ menus = {
     if (
       this.timeSinceSelection > this.minTimeToSelect
         &&
-      (controls.keyboard.flowControlButtonPressed() || controls.isFiring())
+      (controls.keyboard.flowControlButtonPressed() || controls.menuSelect())
     ) {
       this.currentSelection.entry.action();
     };
@@ -207,10 +207,17 @@ menus = {
   },
   setGamepadText : function() {
     let gamepadsEnabled = controls.gamepad.enabledGamepadIndices.size;
-    if (gamepadsEnabled == 0) {
-      return;
+    let playerActivateEntries = this.screens.playerActivate.text.entries;
+    playerActivateEntries[2].text = "Active gamepads: " + gamepadsEnabled;
+    if (gamepadsEnabled > 0) {
+      entry = playerActivateEntries[3];
+      game.activePlayers = 1;
+      entry.text = entry.base + 'ACTIVE';
     };
-    let playerSelectEntries = this.screens.playerSelect.text.entries;
-    playerSelectEntries[1].text = "Active gamepads: " + gamepadsEnabled;
+    if (gamepadsEnabled > 1) {
+      entry = playerActivateEntries[4];
+      game.activePlayers = 2;
+      entry.text = entry.base + 'ACTIVE';
+    };
   },
 };

@@ -236,21 +236,21 @@ describe('COLLISIONS SPEC: ', () => {
   });
   it('killPlayer kills player and gameOver when one life', () => {
     game.gameOver = false;
-    metrics.lives = 1;
+    metrics.lives.player1 = 1;
 
     testObj.killPlayer();
 
-    expect(metrics.lives).toEqual(0);
+    expect(metrics.lives.player1).toEqual(0);
     expect(player.died).toBeTruthy();
     expect(game.gameOver).toBeTruthy();
   });
   it('killPlayer kills player and no game over when more than one life', () => {
     game.gameOver = false;
-    metrics.lives = 2;
+    metrics.lives.player1 = 2;
 
     testObj.killPlayer();
 
-    expect(metrics.lives).toEqual(1);
+    expect(metrics.lives.player1).toEqual(1);
     expect(player.died).toBeTruthy();
     expect(game.gameOver).toBeFalsy();
   });

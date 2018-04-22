@@ -28,6 +28,7 @@ var menusProps = {
     instructions : false,
     settings : false,
     playerSelect : false,
+    playerActivate : false,
   },
   timeSinceSelection : 100,
   timeSinceMenuMove : 100,
@@ -38,158 +39,6 @@ var menusProps = {
     entry : undefined,
   },
   screens : {
-    instructions : {
-      order : ['back'],
-      entries : {
-        back : {
-          text : 'BACK',
-          action : function() {
-            menus.display('main');
-          },
-        },
-      },
-      text : {
-        entries : [
-          {
-            text : 'WASD : move',
-          },
-          {
-            text : 'arrow keys or shift : shoot',
-          },
-        ],
-      },
-    },
-    main : {
-      order : [
-        'play',
-        'instructions',
-        'settings',
-        'cheats',
-      ],
-      entries : {
-        play : {
-          text : 'PLAY',
-          action : function() {
-            menus.display('playerSelect');
-          },
-        },
-        instructions : {
-          text : 'INSTRUCTIONS',
-          action : function() {
-            menus.display('instructions');
-          },
-        },
-        settings : {
-          text : 'SETTINGS',
-          action : function() {
-            menus.display('settings');
-          },
-        },
-        cheats : {
-          text : 'CHEATS',
-          action : function() {
-            menus.display('cheats');
-          },
-        },
-      },
-      text : {
-        entries : [],
-      },
-    },
-    playerSelect : {
-      order : [
-        'onePlayer',
-        'back',
-      ],
-      entries : {
-        onePlayer : {
-          text : '1 PLAYER',
-          action : function() {
-            menus.disableMenus();
-            game.running = true;
-            game.paused = false;
-          },
-        },
-        // twoPlayer : {
-        //   text : '2 Players',
-        //   component : undefined,
-        //   position : {
-        //     x : menusPropsDefaults.positions.x,
-        //     y : menusPropsDefaults.positions.y + menusPropsDefaults.positions.yDivider * 0,
-        //   },
-        //   action : function() {
-        //     menus.disableMenus();
-        //     game.paused = false;
-        //   },
-        // },
-        back : {
-          text : 'BACK',
-          action : function() {
-            menus.display('main');
-          },
-        },
-      },
-      text : {
-        entries : [
-          {
-            text : 'Player Select',
-          },
-          {
-            text : 'Active gamepads: 0',
-            xAdjust : 50,
-            yAdjust : 50,
-          },
-        ],
-      },
-    },
-    settings : {
-      order : ['sound', 'back'],
-      update : function() {
-        let theSettings = menus.screens.settings.entries;
-        Array.from(Object.keys(theSettings)).forEach(setting => {
-          if (!theSettings[setting].text) {
-            theSettings[setting].update();
-          };
-        });
-      },
-      entries : {
-        // difficulty
-          // easy - no spiders
-          // hard - 10 flies
-          // impossible - 100 flies
-        // spider aggression
-          // high/normal
-        // centipedes
-          // tiny/normal
-        // can't really do anything with centipede speed until the vertical movement logic gets
-        sound : {
-          update : function() {
-            this.text = knobsAndLevers.game.sounds.setting.render();
-          },
-          action : function() {
-            knobsAndLevers.toggleParameter(knobsAndLevers.game.sounds);
-            this.update();
-            if (knobsAndLevers.game.sounds.value) {
-              sounds.playAvailableLaserSound();
-            };
-            menus.display('settings');
-          },
-        },
-        back : {
-          text : 'BACK',
-          action : function() {
-            menus.display('main');
-          },
-        },
-      },
-      text : {
-        entries : [
-          {
-            text : 'Settings Are Thither',
-          },
-        ],
-      },
-    },
     cheats : {
       order : ['laserQTY', 'laserSpeed', 'shipSpeed', 'reset', 'back'],
       update : function() {
@@ -325,6 +174,209 @@ var menusProps = {
             yAdjust : menuDefaults.entries.y - menuDefaults.text.y,
             xAdjust : 235,
             fontSize : '30px',
+          },
+        ],
+      },
+    },
+    instructions : {
+      order : ['back'],
+      entries : {
+        back : {
+          text : 'BACK',
+          action : function() {
+            menus.display('main');
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            text : 'WASD : move',
+          },
+          {
+            text : 'arrow keys or shift : shoot',
+          },
+        ],
+      },
+    },
+    main : {
+      order : [
+        'play',
+        'instructions',
+        'settings',
+        'cheats',
+      ],
+      entries : {
+        play : {
+          text : 'PLAY',
+          action : function() {
+            menus.display('playerSelect');
+          },
+        },
+        instructions : {
+          text : 'INSTRUCTIONS',
+          action : function() {
+            menus.display('instructions');
+          },
+        },
+        settings : {
+          text : 'SETTINGS',
+          action : function() {
+            menus.display('settings');
+          },
+        },
+        cheats : {
+          text : 'CHEATS',
+          action : function() {
+            menus.display('cheats');
+          },
+        },
+      },
+      text : {
+        entries : [],
+      },
+    },
+    playerActivate : {
+      order : [
+        'check',
+        'start',
+        'back',
+      ],
+      entries : {
+        check : {
+          text : 'CHECK',
+          action : function() {
+            menus.display('playerActivate');
+          },
+        },
+        start : {
+          text : 'START GAME',
+          action : function() {
+            menus.disableMenus();
+            if (game.activePlayers != game.numberOfPlayers) {
+              menus.display('playerActivate');
+            } else {
+              game.running = true;
+              game.paused = false;
+            };
+          },
+        },
+        back : {
+          text : 'BACK',
+          action : function() {
+            menus.display('main');
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            text : '2 player mode requires gamepads',
+          },
+          {
+            text : 'because laziness',
+          },
+          {
+            text : 'Active gamepads: 0',
+            xAdjust : 50,
+            yAdjust : 50,
+          },
+          {
+            base : 'Player 1: ',
+            xAdjust : 50,
+            yAdjust : 100,
+          },
+          {
+            base : 'Player 2: ',
+            xAdjust : 50,
+            yAdjust : 100,
+          },
+        ],
+      },
+    },
+    playerSelect : {
+      order : [
+        'onePlayer',
+        'twoPlayer',
+        'back',
+      ],
+      entries : {
+        onePlayer : {
+          text : '1 PLAYER',
+          action : function() {
+            menus.disableMenus();
+            game.running = true;
+            game.paused = false;
+            game.numberOfPlayers = 1;
+            game.activePlayers = 1;
+          },
+        },
+        twoPlayer : {
+          text : '2 PLAYERS',
+          action : function() {
+            game.numberOfPlayers = 2;
+            menus.display('playerActivate');
+          },
+        },
+        back : {
+          text : 'BACK',
+          action : function() {
+            menus.display('main');
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            text : 'Player Select',
+          },
+        ],
+      },
+    },
+    settings : {
+      order : ['sound', 'back'],
+      update : function() {
+        let theSettings = menus.screens.settings.entries;
+        Array.from(Object.keys(theSettings)).forEach(setting => {
+          if (!theSettings[setting].text) {
+            theSettings[setting].update();
+          };
+        });
+      },
+      entries : {
+        // difficulty
+          // easy - no spiders
+          // hard - 10 flies
+          // impossible - 100 flies
+        // spider aggression
+          // high/normal
+        // centipedes
+          // tiny/normal
+        // can't really do anything with centipede speed until the vertical movement logic gets
+        sound : {
+          update : function() {
+            this.text = knobsAndLevers.game.sounds.setting.render();
+          },
+          action : function() {
+            knobsAndLevers.toggleParameter(knobsAndLevers.game.sounds);
+            this.update();
+            if (knobsAndLevers.game.sounds.value) {
+              sounds.playAvailableLaserSound();
+            };
+            menus.display('settings');
+          },
+        },
+        back : {
+          text : 'BACK',
+          action : function() {
+            menus.display('main');
+          },
+        },
+      },
+      text : {
+        entries : [
+          {
+            text : 'Settings Are Thither',
           },
         ],
       },
