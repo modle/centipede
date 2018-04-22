@@ -205,8 +205,8 @@ var knobsAndLevers = {
     },
     init : function(configs) {
       this.initialInterval = supporting.getRandom(this.interval.min, this.interval.max);
-      this.args.width = configs.general.gridSquareSideLength * 0.8;
-      this.args.height = configs.general.gridSquareSideLength * 0.3;
+      this.args.width = configs.general.gridSquareSideLength;
+      this.args.height = configs.general.gridSquareSideLength * 0.5;
       this.args.x = 1;
     },
   },

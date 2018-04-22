@@ -33,17 +33,11 @@ var collisions = {
   processImpact : function(target) {
     this.damageTarget(target);
     sounds.playImpactSound(target.type);
-    this.updateTargetAppearance(target);
   },
   damageTarget : function(target) {
     target.hitPoints--;
     if (target.hitPoints <= 0) {
       this.processKill(target);
-    };
-  },
-  updateTargetAppearance(target) {
-    if (target.type == 'mushroom') {
-      target.height -= knobsAndLevers.mushrooms.side * 0.25;
     };
   },
   processKill : function(target) {
