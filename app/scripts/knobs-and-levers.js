@@ -235,8 +235,8 @@ var knobsAndLevers = {
     pointValue :200,
     hitPoints : 1,
     interval : {
-      min: 1500,
-      max: 2500,
+      min: 0,
+      max: 0,
     },
     args : {
       color : "orange",
@@ -247,7 +247,7 @@ var knobsAndLevers = {
           if (knobsAndLevers.worms.args.extraArgs.speed.x < 0) {
             knobsAndLevers.worms.args.x = game.gameArea.canvas.width - 1;
           } else {
-            knobsAndLevers.worms.args.x = 1;
+            knobsAndLevers.worms.args.x = 1 - knobsAndLevers.worms.args.width;
           };
         },
         setY : function() {

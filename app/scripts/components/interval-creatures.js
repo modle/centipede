@@ -88,7 +88,7 @@ var intervalCreatures = {
   changeMushrooms : function(creature) {
     mushrooms.mushrooms.forEach(mushroom => {
       if (creature.crashWithMiddle(mushroom)) {
-        mushroom.color = 'purple';
+        mushroom.color = 'black';
         mushroom.poisoned = true;
       };
     });

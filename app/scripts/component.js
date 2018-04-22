@@ -33,6 +33,8 @@ function Component(args) {
       customComponents.makeACentipede(ctx, this.moveVertically, this);
     } else if (this.type == "player") {
       customComponents.drawPlayer(ctx, this);
+    } else if (this.type == "worm") {
+      customComponents.drawWorm(ctx, this);
     } else {
       this.makeARectangle(ctx);
     };
@@ -134,6 +136,12 @@ var customComponents = {
     let filename = baseObject.name ? baseObject.name : 'player1';
     playerImage.src = knobsAndLevers.mediaPath + filename + '.png';
     ctx.drawImage(playerImage, baseObject.x, baseObject.y, baseObject.width, baseObject.height);
+  },
+  drawWorm : function(ctx, baseObject) {
+    let image = new Image();
+    let filename = baseObject.speedX > 0 ? 'worm2' : 'worm';
+    image.src = knobsAndLevers.mediaPath + filename + '.png';
+    ctx.drawImage(image, baseObject.x, baseObject.y, baseObject.width, baseObject.height);
   },
 };
 
