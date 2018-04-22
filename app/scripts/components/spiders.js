@@ -68,7 +68,7 @@ var spiders = {
   removeMushrooms : function(spider) {
     let theMushroom = mushrooms.mushrooms.find(mushroom => spider.crashWith(mushroom));
     // TODO 1d4, ignore if not 4
-    let doRemove = supporting.getRandom(-3, 1);
+    let doRemove = supporting.getRandom(1, 1);
     if (theMushroom) {
       theMushroom.hitPoints = doRemove < 0 || theMushroom.spiderTouched ? theMushroom.hitPoints : 0;
       theMushroom.spiderTouched = true;

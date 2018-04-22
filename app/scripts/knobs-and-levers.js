@@ -53,12 +53,12 @@ var knobsAndLevers = {
     },
   },
   flies : {
-    maxNumber : 1,
+    maxNumber : 0,
     hitPoints : 2,
     pointValue : 200,
     interval : {
-      min: 0,
-      max: 0,
+      min: 1500,
+      max: 2500,
     },
     mushroomCreateInterval : 100,
     args : {
@@ -76,7 +76,7 @@ var knobsAndLevers = {
     },
   },
   game : {
-    playerCollisionsEnabled : true,
+    playerCollisionsEnabled : false,
     sounds : {
       value : true,
       default : true,
@@ -95,7 +95,7 @@ var knobsAndLevers = {
     tier : {
       incrementScore : 10000,
       current: 1,
-      max : 10,
+      max : 5,
       isMaxed : false,
       update : function(newTier) {
         this.current = newTier;
@@ -184,7 +184,7 @@ var knobsAndLevers = {
     },
   },
   spider : {
-    maxNumber : 1,
+    maxNumber : 0,
     hitPoints : 1,
     directionY : 1,
     points : {
@@ -192,8 +192,8 @@ var knobsAndLevers = {
       range : 400,
     },
     interval : {
-      min: 0,
-      max: 0,
+      min: 800,
+      max: 1500,
     },
     args : {
       color : "fuchsia",

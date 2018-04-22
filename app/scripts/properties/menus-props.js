@@ -271,7 +271,10 @@ var menusProps = {
       text : {
         entries : [
           {
-            text : 'Activate players',
+            text : '2 player mode requires gamepads',
+          },
+          {
+            text : 'because laziness',
           },
           {
             text : 'Active gamepads: 0',
@@ -279,13 +282,11 @@ var menusProps = {
             yAdjust : 50,
           },
           {
-            text : 'Player 1: KEYBOARD',
             base : 'Player 1: ',
             xAdjust : 50,
             yAdjust : 100,
           },
           {
-            text : 'Player 2: KEYBOARD',
             base : 'Player 2: ',
             xAdjust : 50,
             yAdjust : 100,

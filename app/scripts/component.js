@@ -131,7 +131,8 @@ var customComponents = {
   },
   drawPlayer : function(ctx, baseObject) {
     let playerImage = new Image();
-    playerImage.src = knobsAndLevers.mediaPath + "ship3.png";
+    let filename = baseObject.name ? baseObject.name : 'player1';
+    playerImage.src = knobsAndLevers.mediaPath + filename + '.png';
     ctx.drawImage(playerImage, baseObject.x, baseObject.y, baseObject.width, baseObject.height);
   },
 };

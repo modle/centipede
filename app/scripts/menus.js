@@ -152,7 +152,7 @@ menus = {
       };
       entry.component.x = menuDefaults.text.x + (entry.xAdjust ? entry.xAdjust : 0);
       entry.component.y = menuDefaults.text.y + (entry.yAdjust ? entry.yAdjust : 0) + menuDefaults.yDivider * index;
-      entry.component.text = entry.text;
+      entry.component.text = entry.text ? entry.text : entry.base;
       if (entry.fontSize) {
         entry.component.fontSize = entry.fontSize;
       };
@@ -208,16 +208,16 @@ menus = {
   setGamepadText : function() {
     let gamepadsEnabled = controls.gamepad.enabledGamepadIndices.size;
     let playerActivateEntries = this.screens.playerActivate.text.entries;
-    playerActivateEntries[1].text = "Active gamepads: " + gamepadsEnabled;
+    playerActivateEntries[2].text = "Active gamepads: " + gamepadsEnabled;
     if (gamepadsEnabled > 0) {
-      entry = playerActivateEntries[2];
+      entry = playerActivateEntries[3];
       game.activePlayers = 1;
-      entry.text = entry.base + 'GAMEPAD';
+      entry.text = entry.base + 'ACTIVE';
     };
     if (gamepadsEnabled > 1) {
-      entry = playerActivateEntries[3];
+      entry = playerActivateEntries[4];
       game.activePlayers = 2;
-      entry.text = entry.base + 'GAMEPAD';
+      entry.text = entry.base + 'ACTIVE';
     };
   },
 };
