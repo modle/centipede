@@ -167,7 +167,7 @@ menus = {
     if (
       this.timeSinceSelection > this.minTimeToSelect
         &&
-      (controls.keyboard.flowControlButtonPressed() || controls.isFiring())
+      (controls.keyboard.flowControlButtonPressed() || controls.menuSelect())
     ) {
       this.currentSelection.entry.action();
     };

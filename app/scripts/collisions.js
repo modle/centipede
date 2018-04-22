@@ -1,14 +1,18 @@
 /*jslint white: true */
 var collisions = {
   check : function() {
-    this.checkLaser(this.getLaserTargets());
+    Object.keys(lasers.lasers).forEach(key => {
+      let targets = this.getLaserTargets();
+      this.checkLaser(key, targets);
+      this.removeUsedLasers(key);
+    });
     Object.keys(players.players).forEach(player =>
       this.checkPlayerVsEnemies(player, this.getPlayerEnemies())
     );
     this.removeDestroyedTargets();
   },
   getLaserTargets : function() {
-    targets = [];
+    let targets = [];
     targets.push(...mushrooms.mushrooms);
     targets.push(...centipedes.centipedes);
     targets.push(...intervalCreatures.worms);
@@ -16,16 +20,15 @@ var collisions = {
     targets.push(...spiders.spiders);
     return targets;
   },
-  checkLaser : function(targets) {
-    lasers.lasers.map(laser =>
-      targets.map(target => {
+  checkLaser : function(player, targets) {
+    lasers.lasers[player].forEach(laser =>
+      targets.forEach(target => {
         if (!laser.remove && laser.crashWith(target)) {
           this.processImpact(target);
           laser.remove = true;
         };
       })
     );
-    this.removeUsedLasers();
   },
   processImpact : function(target) {
     this.damageTarget(target);
@@ -54,8 +57,8 @@ var collisions = {
       centipedes.numberKilled += 1;
     };
   },
-  removeUsedLasers : function() {
-    lasers.lasers = lasers.lasers.filter(laser => !laser.remove);
+  removeUsedLasers : function(player) {
+    lasers.lasers[player] = lasers.lasers[player].filter(laser => !laser.remove);
   },
   getPlayerEnemies : function() {
     targets = [];
