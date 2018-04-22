@@ -239,6 +239,7 @@ var menusProps = {
     playerActivate : {
       order : [
         'check',
+        'start',
         'back',
       ],
       entries : {
@@ -248,10 +249,22 @@ var menusProps = {
             menus.display('playerActivate');
           },
         },
-        back : {
-          text : 'DONE',
+        start : {
+          text : 'START GAME',
           action : function() {
-            menus.display('playerSelect');
+            menus.disableMenus();
+            if (game.activePlayers != game.numberOfPlayers) {
+              menus.display('playerActivate');
+            } else {
+              game.running = true;
+              game.paused = false;
+            };
+          },
+        },
+        back : {
+          text : 'BACK',
+          action : function() {
+            menus.display('main');
           },
         },
       },
@@ -300,14 +313,8 @@ var menusProps = {
         twoPlayer : {
           text : '2 PLAYERS',
           action : function() {
-            menus.disableMenus();
             game.numberOfPlayers = 2;
-            if (game.activePlayers != game.numberOfPlayers) {
-              menus.display('playerActivate');
-            } else {
-              game.running = true;
-              game.paused = false;
-            };
+            menus.display('playerActivate');
           },
         },
         back : {
