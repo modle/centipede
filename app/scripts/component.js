@@ -14,9 +14,19 @@ function Component(args) {
   if (args.fontSize) {
     this.fontSize = args.fontSize;
   };
+  if (args.constructorFunctions) {
+    Object.keys(args.constructorFunctions)
+      .forEach(theFunction => args.constructorFunctions[theFunction](this));
+  };
+  this.loadImages = function(images) {
+    if (!images) {return;};
+    Object.keys(images).forEach(key => images[key].image.src = knobsAndLevers.mediaPath + images[key].filename);
+  };
+  this.name = args.name;
   if (args.extraArgs) {
     this.type = args.extraArgs.type;
-    this.image = new Image();
+    this.images = args.extraArgs.images;
+    this.loadImages(this.images);
     if (args.extraArgs.speed) {
       this.speedX = args.extraArgs.speed.x;
       this.speedY = args.extraArgs.speed.y;
@@ -32,7 +42,7 @@ function Component(args) {
       this.makeText(ctx);
     } else if (['background', 'laser'].includes(this.type)) {
       this.makeARectangle(ctx);
-    } else {
+    } else if (knobsAndLevers.components.imageTypes.includes(this.type)) {
       customComponents.drawComponent(ctx, this);
     };
   };
@@ -112,20 +122,19 @@ function Component(args) {
 
 var customComponents = {
   drawComponent : function(ctx, obj) {
-    let filename = this.imageFileNameGenerator[obj.type](obj);
-    if (!filename) {
-      throw 'filename error when drawing component';
+    let key = this.imageKeys[obj.type](obj);
+    if (!obj.images) {
+      throw 'images is ' + obj.images;
     };
-    obj.image.src = knobsAndLevers.mediaPath + filename + '.png';
-    ctx.drawImage(obj.image, obj.x, obj.y, obj.width, obj.height);
+    ctx.drawImage(obj.images[key].image, obj.x, obj.y, obj.width, obj.height);
   },
-  imageFileNameGenerator : {
-    'centipede' : function(obj) {return 'centipede-head-1-' + customComponents.getCentipedeDirection(obj);},
+  imageKeys : {
+    'centipede' : function(obj) {return customComponents.getCentipedeDirection(obj);},
     'player' : function(obj) {return obj.name ? obj.name : 'player1';},
-    'spider' : function(obj) {return 'spider-1';},
-    'mushroom' : function(obj) {return 'mushroom-' + (obj.poisoned ? 'poisoned-' : '') + obj.hitPoints;},
-    'worm' : function(obj) {return obj.speedX > 0 ? 'worm-2' : 'worm-1';},
-    'fly' : function(obj) {return 'flea-1';},
+    'spider' : function(obj) {return 'one';},
+    'mushroom' : function(obj) {return (obj.poisoned ? 'poisoned' : 'normal') + obj.hitPoints;},
+    'worm' : function(obj) {return obj.speedX > 0 ? 'two' : 'one';},
+    'fly' : function(obj) {return 'one';},
   },
   getCentipedeDirection : function(obj) {
     let direction = '';

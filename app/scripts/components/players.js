@@ -29,23 +29,12 @@ var players = {
   died : false,
   init : function() {
     while (Object.keys(this.players).length < game.numberOfPlayers) {
-      let player = new Component(this.getPlayerArgs());
+      let player = new Component(knobsAndLevers.player.args);
       player.name = 'player' + (Object.keys(this.players).length + 1);
       player.eligibleDirections = supporting.clone(playerConstants.eligibleDirections);
       this.players[player.name] = player;
     };
     console.log('players initialized', this.players);
-  },
-  getPlayerArgs : function() {
-    let defaults = knobsAndLevers.player;
-    return {
-      width: defaults.dimensions.width,
-      height : defaults.dimensions.height,
-      color : defaults.colors[Object.keys(this.players).length],
-      x : defaults.startX[Object.keys(this.players).length],
-      y : defaults.startY,
-      extraArgs : {type : "player", speed : {x : 0, y : 0}}
-    };
   },
   manage : function() {
     Object.keys(this.players).forEach(key => {

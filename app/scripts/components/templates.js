@@ -6,7 +6,7 @@ var templates = {
     this.baseMarkerParams = {
       width : 15,
       height : 15,
-      extraArgs : {type : 'player'},
+      extraArgs : {type : 'player', images : knobsAndLevers.player.args.extraArgs.images},
     };
     this.marker = new Component(
       Object.assign(this.baseMarkerParams, {

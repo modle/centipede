@@ -33,7 +33,6 @@ var intervalCreatures = {
     if (this[creature].length >= knobsAndLevers[creature].maxNumber) {
       return;
     };
-    this.executeConstructorFunctions(creature);
     this.make(creature);
   },
   setMax : function(creature) {
@@ -46,13 +45,6 @@ var intervalCreatures = {
     spawnedCreature.pointValue = supporting.getRandom(pointValue, pointValue + 400);
     spawnedCreature.hitPoints = knobsAndLevers[creature].hitPoints;
     this[creature].push(spawnedCreature);
-  },
-  executeConstructorFunctions : function(creature) {
-    let args = knobsAndLevers[creature].args;
-    if (args.constructorFunctions) {
-      Array.from(Object.keys(args.constructorFunctions))
-        .forEach(theFunction => args.constructorFunctions[theFunction]());
-    };
   },
   clearOutsideCanvas : function(creature) {
     if (this[creature] == false) { return; };

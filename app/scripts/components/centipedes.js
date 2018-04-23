@@ -132,7 +132,6 @@ var centipedes = {
     let theMushroom = this.getTheMushroom(centipede);
     if (theMushroom && theMushroom.poisoned) {
       centipede.poisoned = true;
-      console.log('poisoned mushroom');
     };
     return theMushroom;
   },

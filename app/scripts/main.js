@@ -1,8 +1,12 @@
 /*jslint white: true */
+
+var script = document.createElement('script');
+script.src = 'https://rawgit.com/paulirish/memory-stats.js/master/bookmarklet.js';
+document.head.appendChild(script);
+
 var main = {
   framesToWaitToPauseAgain : 0,
   updateGameState : function() {
-    // this gets executed every interval
     main.updateGamepad();
     if (!game.running) {
       game.gameArea.loadBackground();

@@ -42,15 +42,9 @@ var mushrooms = {
     return Object.keys(players.players).find(key => players.players[key].crashWith(mushroom));
   },
   generate : function(coordinates, color) {
-    let mushroomArgs = {
-      width: knobsAndLevers.mushrooms.side,
-      height : knobsAndLevers.mushrooms.side,
-      color : color,
-      x : coordinates.x + knobsAndLevers.mushrooms.scaleFactor,
-      y : coordinates.y + knobsAndLevers.mushrooms.scaleFactor,
-      extraArgs : {type : "mushroom"}
-    };
-    mushroom = new Component(mushroomArgs);
+    let mushroom = new Component(knobsAndLevers.mushrooms.args);
+    mushroom.x = coordinates.x + knobsAndLevers.mushrooms.scaleFactor,
+    mushroom.y = coordinates.y + knobsAndLevers.mushrooms.scaleFactor,
     mushroom.pointValue = metrics.currentLevel;
     mushroom.hitPoints = knobsAndLevers.mushrooms.hitPoints;
     return mushroom;
