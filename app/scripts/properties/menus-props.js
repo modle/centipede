@@ -337,7 +337,7 @@ var menusProps = {
       order : ['sound', 'back'],
       update : function() {
         let theSettings = menus.screens.settings.entries;
-        Array.from(Object.keys(theSettings)).forEach(setting => {
+        Object.keys(theSettings).forEach(setting => {
           if (!theSettings[setting].text) {
             theSettings[setting].update();
           };

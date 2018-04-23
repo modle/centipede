@@ -24,7 +24,7 @@ menus = {
       main.prepTheCanvas();
     };
     this.timeSinceSelection = 0;
-    Array.from(Object.keys(this.show)).forEach(menu => this.show[menu] = false);
+    Object.keys(this.show).forEach(menu => this.show[menu] = false);
   },
   processMenus : function() {
     this.checkForCheats();
@@ -74,7 +74,7 @@ menus = {
     return screen;
   },
   hasElements : function(object) {
-    return Array.from(Object.keys(object)).length > 0;
+    return Object.keys(object).length > 0;
   },
   drawMenu : function(screen) {
     if (!this.hasElements(screen)) {
@@ -117,7 +117,7 @@ menus = {
     this.timeSinceMenuMove = 0;
   },
   drawEntries : function(entries) {
-    Array.from(Object.keys(entries)).forEach((entry, index) => {
+    Object.keys(entries).forEach((entry, index) => {
       let menuElement = entries[entry];
       if (!menuElement.component) {
         menuElement.component = this.buildDefaultComponent();

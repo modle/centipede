@@ -2,7 +2,7 @@
 var lasers = {
   lasers : {player1 : [], player2 : []},
   manage : function() {
-    Array.from(Object.keys(this.lasers)).forEach(key => {
+    Object.keys(this.lasers).forEach(key => {
       let player = players.players[key];
       if (!player) {
         return;

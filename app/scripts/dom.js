@@ -26,7 +26,7 @@ var dom = {
   getLinksElement : function() {
     let element = document.createElement('div');
     element.className = 'linkButtonWrapper';
-    Array.from(Object.keys(this.links)).forEach( link => {
+    Object.keys(this.links).forEach( link => {
       let aLink = document.createElement('div');
       aLink.className = 'linkButton';
       aLink.onclick = function() { window.open(dom.links[link].url) };

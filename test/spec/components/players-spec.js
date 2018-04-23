@@ -129,7 +129,7 @@ describe('PLAYER SPEC: ', () => {
   it('setEligibleDirectionsToDefault sets all eligibleDirections to true', () => {
     testObj.init();
     testObj.setEligibleDirectionsToDefault();
-    Array.from(Object.keys(testObj.watchPositions)).forEach(direction => {
+    Object.keys(testObj.watchPositions).forEach(direction => {
       expect(testObj.eligibleDirections[direction]).toBe(true);
     });
   });

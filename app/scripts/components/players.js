@@ -70,7 +70,7 @@ var players = {
   },
   determineEligibleDirections : function(player) {
     player.eligibleDirections = supporting.clone(playerConstants.eligibleDirections);
-    Array.from(Object.keys(playerConstants.watchPositions)).forEach(direction => {
+    Object.keys(playerConstants.watchPositions).forEach(direction => {
       playerConstants.watchPositions[direction].forEach(playerPosition =>
         player.eligibleDirections[direction] = this.boundaries[playerPosition] && player.eligibleDirections[direction]
       );

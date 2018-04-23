@@ -10,7 +10,7 @@ describe('MENUS SPEC: ', () => {
     menus.init();
   });
   function resetShowFlags() {
-    Array.from(Object.keys(menus.show)).forEach(menu => menus.show[menu] = false);
+    Object.keys(menus.show).forEach(menu => menus.show[menu] = false);
   };
   it('display resets show object and sets selected menu to active', () => {
     spyOn(menus, 'disableMenus');

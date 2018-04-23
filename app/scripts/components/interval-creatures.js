@@ -10,7 +10,7 @@ var intervalCreatures = {
     console.log('intervalCreatures initialized');
   },
   manage : function() {
-    Array.from(Object.keys(this.intervals)).forEach(creature => {
+    Object.keys(this.intervals).forEach(creature => {
       this.spawnCreatureAtIntervals(creature);
       if (this[creature] == false) {
         return;
