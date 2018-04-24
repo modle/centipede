@@ -2,7 +2,9 @@ menus = {
   leaderboards : undefined,
   currentSelection : undefined,
   init : function() {
+    menusProps.init();
     Object.assign(this, menusProps);
+    console.log(templates.marker);
     this.selectionMarker = Object.assign({}, templates.marker);
     console.log('menus initialized');
   },
@@ -12,7 +14,7 @@ menus = {
   reset : function() {
     game.gameOver = false;
     this.init();
-    this.screens.initials.text.entries[2].text = '';
+    // this.screens.initials.text.entries[2].text = '';
     this.display(metrics.lastScore ? 'initials' : 'main');
   },
   display : function(menu) {
@@ -46,24 +48,49 @@ menus = {
     };
   },
   manageInitials : function() {
-    this.setInitialsMenuEntries();
-    this.timeSinceMenuMove += 1;
-    this.shiftListOrder(this.screens.initials.options);
-    let initialsText = this.screens.initials.text.entries[2].text;
-    this.screens.initials.text.entries[1].text = 'your score: ' + metrics.lastScore;
-    if (initialsText.length >= 3) {
-      main.saveScore(initialsText);
-      metrics.lastScore = 0;
-      this.reset();
+    if (!this.currentSelection.entry || this.timeSinceMenuMove < this.minTimeToMove) {
+      return;
     };
+
+    if (!this.currentSelection.entry.options) {
+      let initialsEntries = this.screens.initials.entries;
+      initialsEntries.previous.text = 'DONE';
+      initialsEntries.previous.xAdjust = 175;
+      initialsEntries.previouser.text = 'DONE';
+      initialsEntries.previouser.xAdjust = 175;
+      initialsEntries.next.text = 'DONE';
+      initialsEntries.next.xAdjust = 175;
+      initialsEntries.nexter.text = 'DONE';
+      initialsEntries.nexter.xAdjust = 175;
+      return;
+    };
+
+    this.screens.initials.text.entries[1].text = 'your score ' + metrics.lastScore;
+    this.shiftListOrder(this.currentSelection.entry.options);
+
+    let order = this.currentSelection.entry.options.slice();
+    let initialsEntries = this.screens.initials.entries;
+    initialsEntries.previous.text = order.pop();
+    initialsEntries.previouser.text = order.pop();
+    initialsEntries[this.currentSelection.name].text = order.shift();
+    initialsEntries.next.text = order.shift();
+    initialsEntries.nexter.text = order.shift();
+
+    let toAdjust = this.currentSelection.entry.xAdjust;
+    initialsEntries.previouser.xAdjust = initialsEntries.previouser.defaultXAdjust + (toAdjust ? toAdjust : 0);
+    initialsEntries.previous.xAdjust = initialsEntries.previous.defaultXAdjust + (toAdjust ? toAdjust : 0);
+    initialsEntries.next.xAdjust = initialsEntries.next.defaultXAdjust + (toAdjust ? toAdjust : 0);
+    initialsEntries.nexter.xAdjust = initialsEntries.nexter.defaultXAdjust + (toAdjust ? toAdjust : 0);
   },
-  setInitialsMenuEntries : function() {
-    let order = this.screens.initials.options.slice();
-    this.screens.initials.entries.previous.text = order.pop();
-    this.screens.initials.entries.previouser.text = order.pop();
-    this.screens.initials.entries.current.text = order.shift();
-    this.screens.initials.entries.next.text = order.shift();
-    this.screens.initials.entries.nexter.text = order.shift();
+  selectNextInitial : function() {
+    let list = this.screens.initials.order;
+    let direction = controls.checkMenuDirection();
+    if (['left'].includes(direction)) {
+      list.unshift(list.pop());
+    } else if (['right'].includes(direction)) {
+      list.push(list.shift());
+    };
+    this.timeSinceMenuMove = 0;
   },
   getCurrentScreen : function() {
     let activeScreen = supporting.getFirstTruthy(this.show);
@@ -99,22 +126,22 @@ menus = {
   },
   setMenuOrder : function(order) {
     this.timeSinceMenuMove += 1;
-    this.shiftListOrder(order);
+    if (this.timeSinceMenuMove > this.minTimeToMove) {
+      this.shiftListOrder(order);
+    };
     this.currentSelection.name = order[0];
   },
   shiftListOrder : function(list) {
-    if (this.timeSinceMenuMove < this.minTimeToMove) {
-      return;
-    };
     let direction = controls.checkMenuDirection();
     if (list.length > 1) {
-      if (direction == "up") {
+      if (['up'].includes(direction)) {
+        this.timeSinceMenuMove = 0;
         list.unshift(list.pop());
-      } else if (direction == "down") {
+      } else if (['down'].includes(direction)) {
         list.push(list.shift());
+        this.timeSinceMenuMove = 0;
       };
     };
-    this.timeSinceMenuMove = 0;
   },
   drawEntries : function(entries) {
     Object.keys(entries).forEach((entry, index) => {
@@ -123,7 +150,7 @@ menus = {
         menuElement.component = this.buildDefaultComponent();
       };
       menuElement.component.x = menuDefaults.entries.x + (menuElement.xAdjust ? menuElement.xAdjust : 0);
-      menuElement.component.y = menuDefaults.entries.y + menuDefaults.yDivider * index;
+      menuElement.component.y = menuDefaults.entries.y + (menuElement.yAdjust ? menuElement.yAdjust : 0) + menuDefaults.yDivider * index;
       menuElement.component.text = menuElement.text;
       if (menuElement.fontSize) {
         menuElement.component.fontSize = menuElement.fontSize;
@@ -133,6 +160,7 @@ menus = {
       };
       if (this.currentSelection.name == entry && !menuElement.noSelection) {
         this.currentSelection.entry = menuElement;
+        this.currentSelection.color = this.selectedEntryColor;
       };
       menuElement.component.update();
     });
@@ -162,14 +190,25 @@ menus = {
   buildDefaultComponent : function() {
     return new Component(knobsAndLevers.text.baseParams);
   },
-  checkForSelection : function() {
+  checkForSubmit : function() {
     this.timeSinceSelection += 1;
     if (
       this.timeSinceSelection > this.minTimeToSelect
         &&
-      (controls.keyboard.flowControlButtonPressed() || controls.menuSelect())
+      controls.submitIsPressed()
+        &&
+      this.currentSelection.entry.submit
     ) {
-      this.currentSelection.entry.action();
+    };
+  },
+  checkForSelection : function() {
+    this.timeSinceSelection += 1;
+    if (this.timeSinceSelection > this.minTimeToSelect) {
+      if (controls.menuSelect()) {
+        this.currentSelection.entry.action();
+      } else if (controls.submitIsPressed() && this.currentSelection.entry.submit) {
+        this.currentSelection.entry.submit();
+      };
     };
   },
   addInitials : function(initial) {

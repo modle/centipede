@@ -93,10 +93,15 @@ var knobsAndLevers = {
       this.args.width = configs.general.gridSquareSideLength * 0.75;
       this.args.height = configs.general.gridSquareSideLength * 0.75;
       this.args.y = -configs.canvas.height / 10;
+      this.interval = supporting.clone(configs.game.interval);
     },
   },
   game : {
     playerCollisionsEnabled : true,
+    interval : {
+      min : 0,
+      max : 0,
+    },
     sounds : {
       value : true,
       default : true,
@@ -268,6 +273,7 @@ var knobsAndLevers = {
       this.args.width = configs.general.gridSquareSideLength;
       this.args.height = configs.general.gridSquareSideLength * 0.5;
       this.args.x = 1;
+      this.interval = supporting.clone(configs.game.interval);
     },
   },
   text : {
@@ -327,6 +333,7 @@ var knobsAndLevers = {
       this.initialInterval = supporting.getRandom(this.interval.min, this.interval.max);
       this.args.width = configs.general.gridSquareSideLength * 1.5;
       this.args.height = configs.general.gridSquareSideLength;
+      this.interval = supporting.clone(configs.game.interval);
     },
   },
 };

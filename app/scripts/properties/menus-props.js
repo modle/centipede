@@ -11,6 +11,9 @@ var menuDefaults = {
 };
 
 var menusProps = {
+  init : function() {
+    this.screens.initials.init();
+  },
   title : {
     entries : [
       {
@@ -22,6 +25,7 @@ var menusProps = {
     ],
   },
   show : {
+    // TODO set main to true to load main menu
     initials : false,
     cheats : false,
     main : true,
@@ -32,8 +36,8 @@ var menusProps = {
   },
   timeSinceSelection : 100,
   timeSinceMenuMove : 100,
-  minTimeToSelect : 90,
-  minTimeToMove : 30,
+  minTimeToSelect : 50,
+  minTimeToMove : 70,
   currentSelection : {
     name : '',
     entry : undefined,
@@ -116,43 +120,101 @@ var menusProps = {
     },
     initials : {
       ignoreMarker : true,
-      order : ['current'],
-      options : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M',
+      order : ['left', 'middle', 'right', 'submit'],
+      options : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
         'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
       entries : {
+
+
         previouser : {
           noSelection: true,
           fontSize : '15px',
-          xAdjust : -60,
+          defaultXAdjust : 7,
+          xAdjust : 7,
           yAdjust : -10,
           color : 'darkgrey',
         },
         previous : {
           noSelection: true,
-          xAdjust : -30,
+          defaultXAdjust : 5,
+          xAdjust : 5,
           yAdjust : -10,
           color : 'grey',
         },
-        current : {
+
+
+        left : {
+          text : 'A',
           fontSize : '30px',
           action : function() {
-            menus.addInitials(this.text);
+            let order = menus.screens.initials.order;
+            menus.selectNextInitial();
             menus.display('initials');
           },
         },
+        middle : {
+          text : 'A',
+          fontSize : '30px',
+          xAdjust : 40,
+          yAdjust : -25,
+          action : function() {
+            menus.selectNextInitial();
+            menus.display('initials');
+          },
+        },
+        right : {
+          text : 'A',
+          fontSize : '30px',
+          xAdjust : 80,
+          yAdjust : -50,
+          action : function() {
+            menus.selectNextInitial();
+            menus.display('initials');
+          },
+        },
+
+
         next : {
           noSelection: true,
-          xAdjust : -30,
-          yAdjust : -10,
+          defaultXAdjust : 5,
+          xAdjust : 5,
+          yAdjust : -50,
           color : 'grey',
         },
         nexter : {
           noSelection: true,
           fontSize : '15px',
-          xAdjust : -60,
-          yAdjust : -10,
+          defaultXAdjust : 7,
+          xAdjust : 7,
+          yAdjust : -50,
           color : 'darkgrey',
         },
+
+
+        submit : {
+          text : 'Done',
+          fontSize : '30px',
+          xAdjust : 175,
+          yAdjust : -125,
+          submit : function() {
+            main.saveScore(menus.screens.initials.getEntries());
+            menus.display('main');
+          },
+          action : function() {
+            menus.selectNextInitial();
+            menus.display('initials');
+          },
+        },
+      },
+      getEntries : function() {
+        let entries = '';
+        ['left', 'middle', 'right'].forEach(entry => entries += this.entries[entry].text);
+        return entries;
+      },
+      init : function() {
+        this.entries.left.options = this.options.slice();
+        this.entries.middle.options = this.options.slice();
+        this.entries.right.options = this.options.slice();
       },
       text : {
         entries : [
@@ -167,13 +229,6 @@ var menusProps = {
             xAdjust : 85,
             yAdjust : 50,
             fontSize : '20px',
-          },
-          {
-            name : 'entered',
-            text : '',
-            yAdjust : menuDefaults.entries.y - menuDefaults.text.y,
-            xAdjust : 235,
-            fontSize : '30px',
           },
         ],
       },

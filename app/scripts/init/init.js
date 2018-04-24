@@ -2,9 +2,9 @@ var init = {
   run : function() {
     console.log('init the things, yo');
     knobsAndLevers.init();
+    templates.init();
     menus.init();
     game.init();
-    templates.init();
     metrics.init();
     spiders.init();
     dom.init();
