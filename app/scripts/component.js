@@ -124,7 +124,10 @@ var customComponents = {
   drawComponent : function(ctx, obj) {
     let key = this.imageKeys[obj.type](obj);
     if (!obj.images) {
-      throw 'images is ' + obj.images;
+      throw 'no images; images is ' + obj.images;
+    };
+    if (!obj.images[key]) {
+      throw 'no key match; images is ' + obj.images;
     };
     ctx.drawImage(obj.images[key].image, obj.x, obj.y, obj.width, obj.height);
   },

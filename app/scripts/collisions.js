@@ -7,7 +7,7 @@ var collisions = {
       this.removeUsedLasers(key);
     });
     Object.keys(players.players).forEach(player =>
-      this.checkPlayerVsEnemies(player, this.getPlayerEnemies())
+      this.checkPlayerVsEnemies(players.players[player], this.getPlayerEnemies())
     );
     this.removeDestroyedTargets();
   },
@@ -67,7 +67,7 @@ var collisions = {
     };
     targets.forEach(target => {
       if (player.crashWith(target)) {
-        this.killPlayer(player);
+        this.killPlayer();
         return;
       };
     });

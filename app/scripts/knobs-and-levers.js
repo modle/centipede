@@ -41,7 +41,7 @@ var knobsAndLevers = {
   },
   centipede : {
     baseSpeed : 10,
-    maxNumber : 100,
+    maxNumber : 10,
     pointValue : 20,
     args : {
       color : "blue",
@@ -96,7 +96,7 @@ var knobsAndLevers = {
     },
   },
   game : {
-    playerCollisionsEnabled : false,
+    playerCollisionsEnabled : true,
     sounds : {
       value : true,
       default : true,
@@ -114,8 +114,8 @@ var knobsAndLevers = {
     maxMushrooms : 50,
     tier : {
       incrementScore : 10000,
-      current: 1,
-      max : 5,
+      current: 20,
+      max : 20,
       isMaxed : false,
       update : function(newTier) {
         this.current = newTier;
@@ -191,7 +191,7 @@ var knobsAndLevers = {
   },
   player : {
     colors : ['red', 'purple'],
-    defaultLives : 3,
+    defaultLives : 1,
     dimensions : {width : 30, height : 30},
     args : {
       width : 30,

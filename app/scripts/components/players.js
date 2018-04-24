@@ -47,7 +47,8 @@ var players = {
     player.update();
   },
   reset : function() {
-    this.players.forEach(player => {
+    Object.keys(this.players).forEach(key => {
+      let player = this.players[key];
       player.x = knobsAndLevers.player.startX[0];
       player.y = knobsAndLevers.player.startY;
     });
