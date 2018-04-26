@@ -48,36 +48,32 @@ menus = {
     if (!this.currentSelection.entry || this.timeSinceMenuMove < this.minTimeToMove) {
       return;
     };
-
-    if (!this.currentSelection.entry.options) {
-      let initialsEntries = this.screens.initials.entries;
-      initialsEntries.previous.text = 'DONE';
-      initialsEntries.previous.xAdjust = 175;
-      initialsEntries.previouser.text = 'DONE';
-      initialsEntries.previouser.xAdjust = 175;
-      initialsEntries.next.text = 'DONE';
-      initialsEntries.next.xAdjust = 175;
-      initialsEntries.nexter.text = 'DONE';
-      initialsEntries.nexter.xAdjust = 175;
-      return;
-    };
-
+    let texts = this.screens.initials.text;
+    this.setTexts(texts);
+    this.setPositions(texts);
+  },
+  setTexts : function(texts) {
     this.screens.initials.text.currentScore.text = 'your score ' + metrics.lastScore;
-    this.shiftListOrder(this.currentSelection.entry.options);
-
-    let order = this.currentSelection.entry.options.slice();
-    let initialsEntries = this.screens.initials.entries;
-    initialsEntries.previous.text = order.pop();
-    initialsEntries.previouser.text = order.pop();
-    initialsEntries[this.currentSelection.name].text = order.shift();
-    initialsEntries.next.text = order.shift();
-    initialsEntries.nexter.text = order.shift();
-
-    let toAdjust = this.currentSelection.entry.xAdjust;
-    initialsEntries.previouser.xAdjust = initialsEntries.previouser.defaultXAdjust + (toAdjust ? toAdjust : 0);
-    initialsEntries.previous.xAdjust = initialsEntries.previous.defaultXAdjust + (toAdjust ? toAdjust : 0);
-    initialsEntries.next.xAdjust = initialsEntries.next.defaultXAdjust + (toAdjust ? toAdjust : 0);
-    initialsEntries.nexter.xAdjust = initialsEntries.nexter.defaultXAdjust + (toAdjust ? toAdjust : 0);
+    this.screens.initials.letterDisplays.forEach(entry =>
+      texts[entry].text = 'DONE'
+    );
+    if (this.currentSelection.entry.options) {
+      this.shiftListOrder(this.currentSelection.entry.options);
+      let order = this.currentSelection.entry.options.slice();
+      texts.previouser.text = order[order.length - 2];
+      texts.previous.text = order[order.length - 1];
+      texts.next.text = order[1];
+      texts.nexter.text = order[2];
+      this.screens.initials.entries[this.currentSelection.name].text = order[0];
+    };
+  },
+  setPositions : function(texts) {
+    let xPosition = this.currentSelection.entry.component.x;
+    let yPosition = this.currentSelection.entry.component.y;
+    this.screens.initials.letterDisplays.forEach(entry => {
+      texts[entry].xOverride = xPosition;
+      texts[entry].yOverride = yPosition;
+    });
   },
   selectNextInitial : function() {
     let list = this.screens.initials.order;
@@ -176,8 +172,8 @@ menus = {
       if (!entry.component) {
         entry.component = this.buildDefaultComponent();
       };
-      entry.component.x = menuDefaults.text.x + (entry.xAdjust ? entry.xAdjust : 0);
-      entry.component.y = menuDefaults.text.y + (entry.yAdjust ? entry.yAdjust : 0) + menuDefaults.yDivider * index;
+      entry.component.x = (entry.xOverride ? entry.xOverride : menuDefaults.text.x) + (entry.xAdjust ? entry.xAdjust : 0);
+      entry.component.y = (entry.yOverride ? entry.yOverride : menuDefaults.text.y) + (entry.yAdjust ? entry.yAdjust : 0) + menuDefaults.yDivider * index;
       entry.component.text = entry.text ? entry.text : entry.base;
       if (entry.fontSize) {
         entry.component.fontSize = entry.fontSize;

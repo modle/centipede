@@ -168,9 +168,9 @@ var menusProps = {
           text : 'because laziness',
         },
         gamepadCount : {
-            text : 'Active gamepads: 0',
-            xAdjust : 50,
-            yAdjust : 50,
+          text : 'Active gamepads: 0',
+          xAdjust : 50,
+          yAdjust : 50,
         },
         player1Check : {
           base : 'Player 1: ',

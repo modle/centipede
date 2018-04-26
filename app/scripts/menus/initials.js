@@ -1,25 +1,10 @@
 var initials = {
   ignoreMarker : true,
-  order : ['left', 'middle', 'right', 'submit'],
+  order : ['left', 'middle', 'right', 'done'],
   options : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+  letterDisplays : ['previouser', 'previous', 'next', 'nexter'],
   entries : {
-    previouser : {
-      noSelection: true,
-      fontSize : '15px',
-      defaultXAdjust : 7,
-      xAdjust : 7,
-      yAdjust : -10,
-      color : 'darkgrey',
-    },
-    previous : {
-      noSelection: true,
-      defaultXAdjust : 5,
-      xAdjust : 5,
-      yAdjust : -10,
-      color : 'grey',
-    },
-
     left : {
       text : 'A',
       fontSize : '30px',
@@ -49,28 +34,11 @@ var initials = {
         menus.display('initials');
       },
     },
-
-    next : {
-      noSelection: true,
-      defaultXAdjust : 5,
-      xAdjust : 5,
-      yAdjust : -50,
-      color : 'grey',
-    },
-    nexter : {
-      noSelection: true,
-      fontSize : '15px',
-      defaultXAdjust : 7,
-      xAdjust : 7,
-      yAdjust : -50,
-      color : 'darkgrey',
-    },
-
-    submit : {
-      text : 'Done',
+    done : {
+      text : 'DONE',
       fontSize : '30px',
       xAdjust : 175,
-      yAdjust : -125,
+      yAdjust : -75,
       submit : function() {
         leaderboard.saveScore(menus.screens.initials.getEntries(), metrics.lastScore);
         menus.display('main');
@@ -101,6 +69,31 @@ var initials = {
       xAdjust : 85,
       yAdjust : 50,
       fontSize : '20px',
+    },
+    previouser : {
+      fontSize : '15px',
+      defaultXAdjust : 7,
+      xOverride : 0,
+      yAdjust : -115,
+      color : 'darkgrey',
+    },
+    previous : {
+      defaultXAdjust : 5,
+      xOverride : 0,
+      yAdjust : -115,
+      color : 'grey',
+    },
+    next : {
+      defaultXAdjust : 5,
+      xOverride : 0,
+      yAdjust : -70,
+      color : 'grey',
+    },
+    nexter : {
+      fontSize : '15px',
+      xOverride : 0,
+      yAdjust : -70,
+      color : 'darkgrey',
     },
   },
 };
