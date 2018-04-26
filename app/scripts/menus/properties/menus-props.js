@@ -11,15 +11,12 @@ var menuDefaults = {
 };
 
 var menusProps = {
-  title : {
-    entries : [
-      {
-        name : 'title',
-        text : 'CENTIPEDE!',
-        yAdjust : -100,
-        fontSize : '50px',
-      },
-    ],
+  commonTexts : {
+    title : {
+      text : 'CENTIPEDE!',
+      yAdjust : -100,
+      fontSize : '50px',
+    },
   },
   show : {
     initials : false,
@@ -99,19 +96,17 @@ var menusProps = {
         },
       },
       text : {
-        entries : [
-          {
-            text : 'Dear cheater,',
-          },
-          {
-            text : 'Scores will not be recorded',
-            xAdjust : 20,
-          },
-          {
-            text : 'if any of these are set',
-            xAdjust : 20,
-          },
-        ],
+        first : {
+          text : 'Dear cheater,',
+        },
+        second : {
+          text : 'Scores will not be recorded',
+          xAdjust : 20,
+        },
+        third : {
+          text : 'if any of these are set',
+          xAdjust : 20,
+        },
       },
     },
     instructions : {
@@ -125,14 +120,12 @@ var menusProps = {
         },
       },
       text : {
-        entries : [
-          {
-            text : 'WASD : move',
-          },
-          {
-            text : 'arrow keys or shift : shoot',
-          },
-        ],
+        move : {
+          text : 'WASD : move',
+        },
+        shoot : {
+          text : 'arrow keys or shift : shoot',
+        },
       },
     },
     playerActivate : {
@@ -168,29 +161,27 @@ var menusProps = {
         },
       },
       text : {
-        entries : [
-          {
-            text : '2 player mode requires gamepads',
-          },
-          {
-            text : 'because laziness',
-          },
-          {
+        first : {
+          text : '2 player mode requires gamepads',
+        },
+        second : {
+          text : 'because laziness',
+        },
+        gamepadCount : {
             text : 'Active gamepads: 0',
             xAdjust : 50,
             yAdjust : 50,
-          },
-          {
-            base : 'Player 1: ',
-            xAdjust : 50,
-            yAdjust : 100,
-          },
-          {
-            base : 'Player 2: ',
-            xAdjust : 50,
-            yAdjust : 100,
-          },
-        ],
+        },
+        player1Check : {
+          base : 'Player 1: ',
+          xAdjust : 50,
+          yAdjust : 100,
+        },
+        player2Check : {
+          base : 'Player 2: ',
+          xAdjust : 50,
+          yAdjust : 100,
+        },
       },
     },
     playerSelect : {
@@ -225,11 +216,9 @@ var menusProps = {
         },
       },
       text : {
-        entries : [
-          {
-            text : 'Player Select',
-          },
-        ],
+        first : {
+          text : 'Player Select',
+        },
       },
     },
     settings : {
@@ -273,11 +262,9 @@ var menusProps = {
         },
       },
       text : {
-        entries : [
-          {
-            text : 'Settings Are Thither',
-          },
-        ],
+        first : {
+          text : 'Settings Are Thither',
+        },
       },
     },
   },

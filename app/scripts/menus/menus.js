@@ -108,7 +108,7 @@ menus = {
     if (screen.update) {
       screen.update();
     };
-    this.drawTexts(menus.title);
+    this.drawTexts(menus.commonTexts);
     this.drawEntries(screen.entries);
     if (screen.order) {
       this.setMenuOrder(screen.order);
@@ -171,7 +171,8 @@ menus = {
     this.selectionMarker.update();
   },
   drawTexts : function(texts) {
-    texts.entries.forEach((entry, index) => {
+    Object.keys(texts).forEach((key, index) => {
+      let entry = texts[key];
       if (!entry.component) {
         entry.component = this.buildDefaultComponent();
       };
@@ -210,16 +211,12 @@ menus = {
   },
   setGamepadText : function() {
     let gamepadsEnabled = controls.gamepad.enabledGamepadIndices.size;
-    let playerActivateEntries = this.screens.playerActivate.text.entries;
-    playerActivateEntries[2].text = "Active gamepads: " + gamepadsEnabled;
-    if (gamepadsEnabled > 0) {
-      entry = playerActivateEntries[3];
-      game.activePlayers = 1;
-      entry.text = entry.base + 'ACTIVE';
-    };
-    if (gamepadsEnabled > 1) {
-      entry = playerActivateEntries[4];
-      game.activePlayers = 2;
+    let playerActivateEntries = this.screens.playerActivate.text;
+    playerActivateEntries.gamepadCount.text = "Active gamepads: " + gamepadsEnabled;
+    if (gamepadsEnabled) {
+      game.activePlayers = gamepadsEnabled;
+      let key = 'player' + gamepadsEnabled + 'Check';
+      entry = playerActivateEntries[key];
       entry.text = entry.base + 'ACTIVE';
     };
   },

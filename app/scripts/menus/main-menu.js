@@ -31,9 +31,7 @@ mainMenu = {
       },
     },
   },
-  text : {
-    entries : [],
-  },
+  text : {},
   init : function() {
     this.setLeaderboardTexts();
   },
@@ -45,17 +43,18 @@ mainMenu = {
     if (!leaderboards) {
       return;
     };
-    this.text.entries = [];
+    this.text = {};
     let entriesSoFar = 0;
     let text = '';
     supporting.fieldToCompare = 'score';
     leaderboards.sort(supporting.compare).forEach((entry, index) => {
-      entriesSoFar = this.text.entries.length;
+      entriesSoFar = Object.keys(this.text).length;
       text = entry.initials + ': ' + entry.score;
       if (index < 10) {
-        this.text.entries.push(this.buildEntry(text, entriesSoFar));
+        this.text[entry.initials + entry.score] = this.buildEntry(text, entriesSoFar);
       };
     });
+    // console.log(this.text.entries);
   },
   buildEntry : function(text, count) {
     return {
