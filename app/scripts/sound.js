@@ -1,4 +1,5 @@
 var sounds = {
+  // TODO abstract non-centipede functionality and move to canvas-libs
   path : 'app/static/media/sounds/',
   init : function() {
     this.tracks = {

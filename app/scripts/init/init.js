@@ -1,19 +1,23 @@
 var init = {
   run : function() {
     console.log('init the things, yo');
+
     knobsAndLevers.init();
-    leaderboard.init();
-    templates.init();
+
+    dom.init();
+    game.init();
     initials.init();
+    intervalCreatures.init();
+    leaderboard.init();
+    main.init();
     mainMenu.init();
     menus.init();
-    game.init();
     metrics.init();
-    spiders.init();
-    dom.init();
+    players.init();
     sounds.init();
+    spiders.init();
     texts.init();
-    intervalCreatures.init();
+
     console.log("game initialized");
   },
   afterGameOver : function() {
@@ -28,6 +32,6 @@ var init = {
     game.running = false;
     console.log("game reset");
   },
-}
+};
 
 init.run();

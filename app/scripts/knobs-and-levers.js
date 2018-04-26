@@ -1,5 +1,4 @@
-
-
+// abstract common knobsAndLevers and move them to canvas-libs
 var knobsAndLevers = {
   init : function() {
     this.general.init(this);
