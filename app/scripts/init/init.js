@@ -3,6 +3,7 @@ var init = {
     console.log('init the things, yo');
     knobsAndLevers.init();
     templates.init();
+    initials.init();
     menus.init();
     game.init();
     metrics.init();

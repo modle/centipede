@@ -2,9 +2,8 @@ menus = {
   leaderboards : undefined,
   currentSelection : undefined,
   init : function() {
-    menusProps.init();
     Object.assign(this, menusProps);
-    console.log(templates.marker);
+    this.screens.initials = initials;
     this.selectionMarker = Object.assign({}, templates.marker);
     console.log('menus initialized');
   },
@@ -14,7 +13,6 @@ menus = {
   reset : function() {
     game.gameOver = false;
     this.init();
-    // this.screens.initials.text.entries[2].text = '';
     this.display(metrics.lastScore ? 'initials' : 'main');
   },
   display : function(menu) {
