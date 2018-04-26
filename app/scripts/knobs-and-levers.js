@@ -39,6 +39,7 @@ var knobsAndLevers = {
     height : 800,
     gridDivisor : 25,
   },
+  targetLeaderboard : 'centipedeLeaderboard',
   centipede : {
     baseSpeed : 10,
     maxNumber : 10,

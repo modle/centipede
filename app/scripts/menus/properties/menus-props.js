@@ -135,43 +135,6 @@ var menusProps = {
         ],
       },
     },
-    main : {
-      order : [
-        'play',
-        'instructions',
-        'settings',
-        'cheats',
-      ],
-      entries : {
-        play : {
-          text : 'PLAY',
-          action : function() {
-            menus.display('playerSelect');
-          },
-        },
-        instructions : {
-          text : 'INSTRUCTIONS',
-          action : function() {
-            menus.display('instructions');
-          },
-        },
-        settings : {
-          text : 'SETTINGS',
-          action : function() {
-            menus.display('settings');
-          },
-        },
-        cheats : {
-          text : 'CHEATS',
-          action : function() {
-            menus.display('cheats');
-          },
-        },
-      },
-      text : {
-        entries : [],
-      },
-    },
     playerActivate : {
       order : [
         'check',

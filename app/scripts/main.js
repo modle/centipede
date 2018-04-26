@@ -101,38 +101,4 @@ var main = {
     players.manage();
     collisions.check();
   },
-  // TODO leaderboard functions only work on chrome
-  // either disable the leaderboard menu option when not in chrome
-  // or figure out firefox storage usage
-  saveScore : function(initials) {
-    console.log('saving score');
-    try {
-      let currentLeaderboard = this.readLeaderboard();
-      let score = {initials : initials, score : metrics.lastScore, when : Date.now()};
-      if (currentLeaderboard) {
-        currentLeaderboard.push(score);
-      } else {
-        currentLeaderboard = [score];
-      };
-      localStorage.setItem('centipedeLeaderboard', JSON.stringify(currentLeaderboard));
-    } catch(e) {
-      console.log('could not save leaderboard to localStorage', e);
-    };
-  },
-  readLeaderboard : function() {
-    try {
-      return JSON.parse(localStorage.getItem('centipedeLeaderboard'));
-    } catch(e) {
-      console.log('could not load leaderBoard from localStorage', e);
-    };
-  },
-  clearLeaderboard : function() {
-    let key = 'centipedeLeaderboard';
-    try {
-      localStorage.removeItem(key);
-      console.log(key, 'removed from local storage');
-    } catch(e) {
-      console.log(key, 'not found in localStorage', e);
-    };
-  },
 };

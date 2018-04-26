@@ -72,7 +72,7 @@ var initials = {
       xAdjust : 175,
       yAdjust : -125,
       submit : function() {
-        main.saveScore(menus.screens.initials.getEntries());
+        leaderboard.saveScore(menus.screens.initials.getEntries(), metrics.lastScore);
         menus.display('main');
       },
       action : function() {
@@ -92,19 +92,15 @@ var initials = {
     this.entries.right.options = this.options.slice();
   },
   text : {
-    entries : [
-      {
-        name : 'enterInitials',
-        text : 'Enter your initials',
-        fontSize : '25px',
-      },
-      {
-        name : 'currentScore',
-        text : '',
-        xAdjust : 85,
-        yAdjust : 50,
-        fontSize : '20px',
-      },
-    ],
+    enterInitials : {
+      text : 'Enter your initials',
+      fontSize : '25px',
+    },
+    currentScore : {
+      text : '',
+      xAdjust : 85,
+      yAdjust : 50,
+      fontSize : '20px',
+    },
   },
 };

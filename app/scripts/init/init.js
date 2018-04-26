@@ -2,8 +2,10 @@ var init = {
   run : function() {
     console.log('init the things, yo');
     knobsAndLevers.init();
+    leaderboard.init();
     templates.init();
     initials.init();
+    mainMenu.init();
     menus.init();
     game.init();
     metrics.init();

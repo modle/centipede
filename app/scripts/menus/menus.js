@@ -1,9 +1,9 @@
 menus = {
-  leaderboards : undefined,
   currentSelection : undefined,
   init : function() {
     Object.assign(this, menusProps);
     this.screens.initials = initials;
+    this.screens.main = mainMenu;
     this.selectionMarker = Object.assign({}, templates.marker);
     console.log('menus initialized');
   },
@@ -31,8 +31,7 @@ menus = {
     if (this.show.initials) {
       this.manageInitials();
     } else if (this.show.main) {
-      this.leaderboards = main.readLeaderboard();
-      this.setLeaderboardTexts();
+      this.screens.main.refresh();
     } else if (this.show.playerActivate) {
       this.setGamepadText();
     };
@@ -63,7 +62,7 @@ menus = {
       return;
     };
 
-    this.screens.initials.text.entries[1].text = 'your score ' + metrics.lastScore;
+    this.screens.initials.text.currentScore.text = 'your score ' + metrics.lastScore;
     this.shiftListOrder(this.currentSelection.entry.options);
 
     let order = this.currentSelection.entry.options.slice();
@@ -207,39 +206,6 @@ menus = {
       } else if (controls.submitIsPressed() && this.currentSelection.entry.submit) {
         this.currentSelection.entry.submit();
       };
-    };
-  },
-  addInitials : function(initial) {
-    let theText = this.screens.initials.text.entries[2].text;
-    if (theText.length < 3) {
-      theText += initial;
-    } else {
-      main.saveScore(theText);
-      this.show.main = true;
-      this.reset();
-    };
-    this.screens.initials.text.entries[2].text = theText;
-  },
-  setLeaderboardTexts : function() {
-    if (!this.leaderboards) {
-      return;
-    };
-    this.screens.main.text.entries = [];
-    let entriesSoFar = 0;
-    let text = '';
-    supporting.fieldToCompare = 'score';
-    this.leaderboards.sort(supporting.compare).forEach((entry, index) => {
-      entriesSoFar = this.screens.main.text.entries.length;
-      text = entry.initials + ': ' + entry.score;
-      if (index < 10) {
-        this.screens.main.text.entries.push(this.buildEntry(text, entriesSoFar));
-      };
-    });
-  },
-  buildEntry : function(text, count) {
-    return {
-      text : text,
-      xAdjust : 175,
     };
   },
   setGamepadText : function() {
