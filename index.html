@@ -3,56 +3,11 @@
 <head>
   <link rel="stylesheet" type="text/css" media="screen" href="app/static/css/style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="app/scripts/load.js"></script>
 </head>
 <body onload="game.start()">
   <div id="canvas-wrapper"></div>
 </body>
 <footer>
-
-  <!-- use rel paths for testing; convert to canvas-libs external source before merging to master -->
-  <script src="../canvas-libs/app/scripts/supporting.js"></script>
-  <script src="../canvas-libs/app/scripts/component.js"></script>
-  <script src="../canvas-libs/app/scripts/controls/gamepad.js"></script>
-  <script src="../canvas-libs/app/scripts/controls/keyboard.js"></script>
-  <script src="../canvas-libs/app/scripts/controls.js"></script>
-  <script src="../canvas-libs/app/scripts/dom.js"></script>
-  <script src="../canvas-libs/app/scripts/gameBase.js"></script>
-  <script src="../canvas-libs/app/scripts/game-area.js"></script>
-  <script src="../canvas-libs/app/scripts/hud.js"></script>
-  <script src="../canvas-libs/app/scripts/leaderboard.js"></script>
-  <script src="../canvas-libs/app/scripts/mainBase.js"></script>
-  <script src="../canvas-libs/app/scripts/menus/initials.js"></script>
-  <script src="../canvas-libs/app/scripts/menus/main-menu.js"></script>
-  <script src="../canvas-libs/app/scripts/menus.js"></script>
-  <script src="../canvas-libs/app/scripts/playerBase.js"></script>
-  <script src="../canvas-libs/app/scripts/sound.js"></script>
-  <script src="../canvas-libs/app/scripts/templates.js"></script>
-  <!-- <script type="text/javascript" src="https://glcdn.githack.com/taciturn-pachyderm/canvas-libs/raw/v2.2.0/app/scripts/controls/gamepad.js"></script>
-  <script type="text/javascript" src="https://glcdn.githack.com/taciturn-pachyderm/canvas-libs/raw/v2.2.0/app/scripts/controls/keyboard.js"></script>
-  <script type="text/javascript" src="https://glcdn.githack.com/taciturn-pachyderm/canvas-libs/raw/v2.2.0/app/scripts/controls.js"></script>
-  <script type="text/javascript" src="https://glcdn.githack.com/taciturn-pachyderm/canvas-libs/raw/v2.2.0/app/scripts/sound.js"></script>
-  <script type="text/javascript" src="https://glcdn.githack.com/taciturn-pachyderm/canvas-libs/raw/v2.2.0/app/scripts/supporting.js"></script> -->
-
-  <script src="app/scripts/collisions.js"></script>
-  <script src="app/scripts/component.js"></script>
-  <script src="app/scripts/components/centipedes.js"></script>
-  <script src="app/scripts/components/interval-creatures.js"></script>
-  <script src="app/scripts/components/lasers.js"></script>
-  <script src="app/scripts/components/metrics.js"></script>
-  <script src="app/scripts/components/mushrooms.js"></script>
-  <script src="app/scripts/components/players.js"></script>
-  <script src="app/scripts/components/texts.js"></script>
-  <script src="app/scripts/components/spiders.js"></script>
-  <script src="app/scripts/game.js"></script>
-  <script src="app/scripts/knobs-and-levers.js"></script>
-  <script src="app/scripts/main.js"></script>
-  <script src="app/scripts/properties/menus-props.js"></script>
-  <script src="app/scripts/sound.js"></script>
-
-
-  <!-- this needs to be loaded last or dependency object will not be available -->
-  <!-- for karma tests, it needs to be a separate directory -->
-  <script src="../canvas-libs/app/scripts/init/init.js"></script>
-  <script src="app/scripts/init/init.js"></script>
 </footer>
 </html>
