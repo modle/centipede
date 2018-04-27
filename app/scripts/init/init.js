@@ -1,6 +1,6 @@
 var init = {
   run : function() {
-    console.log('init the things, yo');
+    console.log('start centipede init');
 
     knobsAndLevers.init();
 
@@ -33,5 +33,3 @@ var init = {
     console.log("game reset");
   },
 };
-
-init.run();

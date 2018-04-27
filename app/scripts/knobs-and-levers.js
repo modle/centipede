@@ -49,10 +49,13 @@ var knobsAndLevers = {
       extraArgs : {
         type : "centipede",
         images : {
-          up : {filename : 'centipede-head-1-up.png'},
-          down : {filename : 'centipede-head-1-down.png'},
-          left : {filename : 'centipede-head-1-left.png'},
-          right : {filename : 'centipede-head-1-right.png'},
+          objects : {
+            up : {filename : 'centipede-head-1-up.png'},
+            down : {filename : 'centipede-head-1-down.png'},
+            left : {filename : 'centipede-head-1-left.png'},
+            right : {filename : 'centipede-head-1-right.png'},
+          },
+          select : function(obj) {return customComponents.getCentipedeDirection(obj);},
         },
       },
     },
@@ -81,8 +84,11 @@ var knobsAndLevers = {
         type : 'fly',
         speed : {x : 0, y : 2},
         images : {
-          one : {filename : 'flea-1.png'},
-          two : {filename : 'flea-2.png'},
+          objects : {
+            one : {filename : 'flea-1.png'},
+            two : {filename : 'flea-2.png'},
+          },
+          select : function(obj) {return 'one';},
         },
       },
       constructorFunctions : {
@@ -179,14 +185,17 @@ var knobsAndLevers = {
       extraArgs : {
         type : 'mushroom',
         images : {
-          normal1 : {filename : 'mushroom-1.png'},
-          normal2 : {filename : 'mushroom-2.png'},
-          normal3 : {filename : 'mushroom-3.png'},
-          normal4 : {filename : 'mushroom-4.png'},
-          poisoned1 : {filename : 'mushroom-poisoned-1.png'},
-          poisoned2 : {filename : 'mushroom-poisoned-2.png'},
-          poisoned3 : {filename : 'mushroom-poisoned-3.png'},
-          poisoned4 : {filename : 'mushroom-poisoned-4.png'},
+          objects : {
+            normal1 : {filename : 'mushroom-1.png'},
+            normal2 : {filename : 'mushroom-2.png'},
+            normal3 : {filename : 'mushroom-3.png'},
+            normal4 : {filename : 'mushroom-4.png'},
+            poisoned1 : {filename : 'mushroom-poisoned-1.png'},
+            poisoned2 : {filename : 'mushroom-poisoned-2.png'},
+            poisoned3 : {filename : 'mushroom-poisoned-3.png'},
+            poisoned4 : {filename : 'mushroom-poisoned-4.png'},
+          },
+          select : function(obj) {return (obj.poisoned ? 'poisoned' : 'normal') + obj.hitPoints;},
         },
       },
     },
@@ -208,8 +217,11 @@ var knobsAndLevers = {
         type : 'player',
         speed : {x : 0, y : 0},
         images : {
-          player1 : {filename : 'player1.png'},
-          player2 : {filename : 'player2.png'},
+          objects : {
+            player1 : {filename : 'player1.png'},
+            player2 : {filename : 'player2.png'},
+          },
+          select : function(obj) {return obj.name ? obj.name : 'player1';},
         },
       },
       constructorFunctions : {
@@ -263,8 +275,11 @@ var knobsAndLevers = {
         type : "spider",
         speed : {x : 1, y : 1},
         images : {
-          one : {filename : 'spider-1.png'},
-          two : {filename : 'spider-2.png'},
+          objects : {
+            one : {filename : 'spider-1.png'},
+            two : {filename : 'spider-2.png'},
+          },
+          select : function(obj) {return 'one';},
         },
       },
     },
@@ -315,8 +330,11 @@ var knobsAndLevers = {
         type : "worm",
         speed : {x : 0.5, y : 0},
         images : {
-          one : {filename : 'worm-1.png'},
-          two : {filename : 'worm-2.png'},
+          objects : {
+            one : {filename : 'worm-1.png'},
+            two : {filename : 'worm-2.png'},
+          },
+          select : function(obj) {return obj.speedX > 0 ? 'two' : 'one';},
         },
       },
       constructorFunctions : {
