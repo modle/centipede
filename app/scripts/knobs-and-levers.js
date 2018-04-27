@@ -49,10 +49,10 @@ var knobsAndLevers = {
       extraArgs : {
         type : "centipede",
         images : {
-          up : { filename : 'centipede-head-1-up.png', image : new Image() },
-          down : { filename : 'centipede-head-1-down.png', image : new Image() },
-          left : { filename : 'centipede-head-1-left.png', image : new Image() },
-          right : { filename : 'centipede-head-1-right.png', image : new Image() },
+          up : {filename : 'centipede-head-1-up.png'},
+          down : {filename : 'centipede-head-1-down.png'},
+          left : {filename : 'centipede-head-1-left.png'},
+          right : {filename : 'centipede-head-1-right.png'},
         },
       },
     },
@@ -60,6 +60,7 @@ var knobsAndLevers = {
       this.args.width = configs.general.gridSquareSideLength;
       this.args.height = configs.general.gridSquareSideLength;
       this.args.x = configs.canvas.width / 2;
+      images.init(this.args.extraArgs.images);
     },
   },
   components : {
@@ -80,8 +81,8 @@ var knobsAndLevers = {
         type : 'fly',
         speed : {x : 0, y : 2},
         images : {
-          one : { filename : 'flea-1.png', image : new Image() },
-          two : { filename : 'flea-2.png', image : new Image() },
+          one : {filename : 'flea-1.png'},
+          two : {filename : 'flea-2.png'},
         },
       },
       constructorFunctions : {
@@ -94,6 +95,7 @@ var knobsAndLevers = {
       this.args.height = configs.general.gridSquareSideLength * 0.75;
       this.args.y = -configs.canvas.height / 10;
       this.interval = supporting.clone(configs.game.interval);
+      images.init(this.args.extraArgs.images);
     },
   },
   game : {
@@ -177,14 +179,14 @@ var knobsAndLevers = {
       extraArgs : {
         type : 'mushroom',
         images : {
-          normal1 : { filename : 'mushroom-1.png', image : new Image() },
-          normal2 : { filename : 'mushroom-2.png', image : new Image() },
-          normal3 : { filename : 'mushroom-3.png', image : new Image() },
-          normal4 : { filename : 'mushroom-4.png', image : new Image() },
-          poisoned1 : { filename : 'mushroom-poisoned-1.png', image : new Image() },
-          poisoned2 : { filename : 'mushroom-poisoned-2.png', image : new Image() },
-          poisoned3 : { filename : 'mushroom-poisoned-3.png', image : new Image() },
-          poisoned4 : { filename : 'mushroom-poisoned-4.png', image : new Image() },
+          normal1 : {filename : 'mushroom-1.png'},
+          normal2 : {filename : 'mushroom-2.png'},
+          normal3 : {filename : 'mushroom-3.png'},
+          normal4 : {filename : 'mushroom-4.png'},
+          poisoned1 : {filename : 'mushroom-poisoned-1.png'},
+          poisoned2 : {filename : 'mushroom-poisoned-2.png'},
+          poisoned3 : {filename : 'mushroom-poisoned-3.png'},
+          poisoned4 : {filename : 'mushroom-poisoned-4.png'},
         },
       },
     },
@@ -192,6 +194,7 @@ var knobsAndLevers = {
       this.scaleFactor = configs.general.gridSquareSideLength * 0.1;
       this.args.width = configs.general.gridSquareSideLength * 0.8;
       this.args.height = configs.general.gridSquareSideLength * 0.8;
+      images.init(this.args.extraArgs.images);
     },
   },
   player : {
@@ -205,8 +208,8 @@ var knobsAndLevers = {
         type : 'player',
         speed : {x : 0, y : 0},
         images : {
-          player1 : { filename : 'player1.png', image : new Image() },
-          player2 : { filename : 'player2.png', image : new Image() },
+          player1 : {filename : 'player1.png'},
+          player2 : {filename : 'player2.png'},
         },
       },
       constructorFunctions : {
@@ -224,6 +227,7 @@ var knobsAndLevers = {
       ],
       this.startY = configs.canvas.height - this.dimensions.height - 1;
       this.args.y = this.startY;
+      images.init(this.args.extraArgs.images);
     },
     speed : {
       value : 2,
@@ -259,8 +263,8 @@ var knobsAndLevers = {
         type : "spider",
         speed : {x : 1, y : 1},
         images : {
-          one : { filename : 'spider-1.png', image : new Image() },
-          two : { filename : 'spider-2.png', image : new Image() },
+          one : {filename : 'spider-1.png'},
+          two : {filename : 'spider-2.png'},
         },
       },
     },
@@ -274,6 +278,7 @@ var knobsAndLevers = {
       this.args.height = configs.general.gridSquareSideLength * 0.5;
       this.args.x = 1;
       this.interval = supporting.clone(configs.game.interval);
+      images.init(this.args.extraArgs.images);
     },
   },
   text : {
@@ -310,8 +315,8 @@ var knobsAndLevers = {
         type : "worm",
         speed : {x : 0.5, y : 0},
         images : {
-          one : { filename : 'worm-1.png', image : new Image() },
-          two : { filename : 'worm-2.png', image : new Image() },
+          one : {filename : 'worm-1.png'},
+          two : {filename : 'worm-2.png'},
         },
       },
       constructorFunctions : {
@@ -334,6 +339,7 @@ var knobsAndLevers = {
       this.args.width = configs.general.gridSquareSideLength * 1.5;
       this.args.height = configs.general.gridSquareSideLength;
       this.interval = supporting.clone(configs.game.interval);
+      images.init(this.args.extraArgs.images);
     },
   },
 };

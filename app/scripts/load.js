@@ -1,9 +1,9 @@
 
-var canvasPath = '../canvas-libs/app/scripts/';
-// var canvasPath = 'https://glcdn.githack.com/taciturn-pachyderm/canvas-libs/raw/v2.2.0/app/scripts/';
-var mainPath = 'app/scripts/';
+var libsPath = '../canvas-libs/app/scripts/';
+// var libsPath = 'https://glcdn.githack.com/taciturn-pachyderm/canvas-libs/raw/v2.2.0/app/scripts/';
+var scriptsPath = 'app/scripts/';
 
-var canvasFiles = [
+var libs = [
   'supporting.js',
   'component.js',
   'controls/gamepad.js',
@@ -13,6 +13,7 @@ var canvasFiles = [
   'gameBase.js',
   'game-area.js',
   'hud.js',
+  'images.js',
   'leaderboard.js',
   'mainBase.js',
   'menus/initials.js',
@@ -23,7 +24,7 @@ var canvasFiles = [
   'templates.js',
 ];
 
-var mainFiles = [
+var scripts = [
   'collisions.js',
   'component.js',
   'components/centipedes.js',
@@ -41,11 +42,11 @@ var mainFiles = [
   'sound.js',
 ];
 
-var canvasInitFiles = [
+var initLibs = [
   'init/init.js',
 ];
 
-var mainInitFiles = [
+var initScripts = [
   'init/init.js',
 ];
 
@@ -57,9 +58,9 @@ function loadScript (path, file) {
   console.log(script.src, 'added to', targetDomObject);
 };
 
-canvasFiles.forEach(file => loadScript(canvasPath, file));
-mainFiles.forEach(file => loadScript(mainPath, file));
-canvasInitFiles.forEach(file => loadScript(canvasPath, file));
-mainInitFiles.forEach(file => loadScript(mainPath, file));
+libs.forEach(file => loadScript(libsPath, file));
+scripts.forEach(file => loadScript(scriptsPath, file));
+initLibs.forEach(file => loadScript(libsPath, file));
+initScripts.forEach(file => loadScript(scriptsPath, file));
 
 console.log(document[targetDomObject]);
