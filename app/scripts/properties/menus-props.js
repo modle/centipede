@@ -11,15 +11,12 @@ var menuDefaults = {
 };
 
 var menusProps = {
-  title : {
-    entries : [
-      {
-        name : 'title',
-        text : 'CENTIPEDE!',
-        yAdjust : -100,
-        fontSize : '50px',
-      },
-    ],
+  commonTexts : {
+    title : {
+      text : 'CENTIPEDE!',
+      yAdjust : -100,
+      fontSize : '50px',
+    },
   },
   show : {
     initials : false,
@@ -32,8 +29,8 @@ var menusProps = {
   },
   timeSinceSelection : 100,
   timeSinceMenuMove : 100,
-  minTimeToSelect : 90,
-  minTimeToMove : 30,
+  minTimeToSelect : 50,
+  minTimeToMove : 70,
   currentSelection : {
     name : '',
     entry : undefined,
@@ -99,83 +96,17 @@ var menusProps = {
         },
       },
       text : {
-        entries : [
-          {
-            text : 'Dear cheater,',
-          },
-          {
-            text : 'Scores will not be recorded',
-            xAdjust : 20,
-          },
-          {
-            text : 'if any of these are set',
-            xAdjust : 20,
-          },
-        ],
-      },
-    },
-    initials : {
-      ignoreMarker : true,
-      order : ['current'],
-      options : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M',
-        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-      entries : {
-        previouser : {
-          noSelection: true,
-          fontSize : '15px',
-          xAdjust : -60,
-          yAdjust : -10,
-          color : 'darkgrey',
+        first : {
+          text : 'Dear cheater,',
         },
-        previous : {
-          noSelection: true,
-          xAdjust : -30,
-          yAdjust : -10,
-          color : 'grey',
+        second : {
+          text : 'Scores will not be recorded',
+          xAdjust : 20,
         },
-        current : {
-          fontSize : '30px',
-          action : function() {
-            menus.addInitials(this.text);
-            menus.display('initials');
-          },
+        third : {
+          text : 'if any of these are set',
+          xAdjust : 20,
         },
-        next : {
-          noSelection: true,
-          xAdjust : -30,
-          yAdjust : -10,
-          color : 'grey',
-        },
-        nexter : {
-          noSelection: true,
-          fontSize : '15px',
-          xAdjust : -60,
-          yAdjust : -10,
-          color : 'darkgrey',
-        },
-      },
-      text : {
-        entries : [
-          {
-            name : 'enterInitials',
-            text : 'Enter your initials',
-            fontSize : '25px',
-          },
-          {
-            name : 'currentScore',
-            text : '',
-            xAdjust : 85,
-            yAdjust : 50,
-            fontSize : '20px',
-          },
-          {
-            name : 'entered',
-            text : '',
-            yAdjust : menuDefaults.entries.y - menuDefaults.text.y,
-            xAdjust : 235,
-            fontSize : '30px',
-          },
-        ],
       },
     },
     instructions : {
@@ -189,51 +120,12 @@ var menusProps = {
         },
       },
       text : {
-        entries : [
-          {
-            text : 'WASD : move',
-          },
-          {
-            text : 'arrow keys or shift : shoot',
-          },
-        ],
-      },
-    },
-    main : {
-      order : [
-        'play',
-        'instructions',
-        'settings',
-        'cheats',
-      ],
-      entries : {
-        play : {
-          text : 'PLAY',
-          action : function() {
-            menus.display('playerSelect');
-          },
+        move : {
+          text : 'WASD : move',
         },
-        instructions : {
-          text : 'INSTRUCTIONS',
-          action : function() {
-            menus.display('instructions');
-          },
+        shoot : {
+          text : 'arrow keys or shift : shoot',
         },
-        settings : {
-          text : 'SETTINGS',
-          action : function() {
-            menus.display('settings');
-          },
-        },
-        cheats : {
-          text : 'CHEATS',
-          action : function() {
-            menus.display('cheats');
-          },
-        },
-      },
-      text : {
-        entries : [],
       },
     },
     playerActivate : {
@@ -269,29 +161,27 @@ var menusProps = {
         },
       },
       text : {
-        entries : [
-          {
-            text : '2 player mode requires gamepads',
-          },
-          {
-            text : 'because laziness',
-          },
-          {
-            text : 'Active gamepads: 0',
-            xAdjust : 50,
-            yAdjust : 50,
-          },
-          {
-            base : 'Player 1: ',
-            xAdjust : 50,
-            yAdjust : 100,
-          },
-          {
-            base : 'Player 2: ',
-            xAdjust : 50,
-            yAdjust : 100,
-          },
-        ],
+        first : {
+          text : '2 player mode requires gamepads',
+        },
+        second : {
+          text : 'because laziness',
+        },
+        gamepadCount : {
+          text : 'Active gamepads: 0',
+          xAdjust : 50,
+          yAdjust : 50,
+        },
+        player1Check : {
+          base : 'Player 1: ',
+          xAdjust : 50,
+          yAdjust : 100,
+        },
+        player2Check : {
+          base : 'Player 2: ',
+          xAdjust : 50,
+          yAdjust : 100,
+        },
       },
     },
     playerSelect : {
@@ -326,11 +216,9 @@ var menusProps = {
         },
       },
       text : {
-        entries : [
-          {
-            text : 'Player Select',
-          },
-        ],
+        first : {
+          text : 'Player Select',
+        },
       },
     },
     settings : {
@@ -374,11 +262,9 @@ var menusProps = {
         },
       },
       text : {
-        entries : [
-          {
-            text : 'Settings Are Thither',
-          },
-        ],
+        first : {
+          text : 'Settings Are Thither',
+        },
       },
     },
   },

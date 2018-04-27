@@ -1,5 +1,6 @@
 /*jslint white: true */
 var collisions = {
+  // TODO abstract non-centipede functionality and move to canvas-libs
   check : function() {
     Object.keys(lasers.lasers).forEach(key => {
       let targets = this.getLaserTargets();
@@ -9,7 +10,7 @@ var collisions = {
     Object.keys(players.players).forEach(player =>
       this.checkPlayerVsEnemies(players.players[player], this.getPlayerEnemies())
     );
-    this.removeDestroyedTargets();
+    this.removeDestroyedTargets(targets);
   },
   getLaserTargets : function() {
     let targets = [];
