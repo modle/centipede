@@ -25,7 +25,7 @@ var sounds = {
     return soundArray;
   },
   manageSounds : function() {
-    if (!knobsAndLevers.game.sounds.value) {
+    if (!knobsAndLevers.game.sounds.value || !game.running) {
       return;
     };
     this.manageCentipedeSounds();

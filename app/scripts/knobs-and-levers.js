@@ -350,6 +350,11 @@ var knobsAndLevers = {
         },
       },
       constructorFunctions : {
+        setImageType : function(worm) {
+          worm.imageType = Math.round(supporting.roll(10)) == 10 ? 1 : 2;
+          worm.width = worm.imageType == 1 ? worm.width * 5 : worm.width;
+          worm.height = worm.imageType == 1 ? worm.height * 5 : worm.height;
+        },
         setX : function(worm) {
           worm.speedX = supporting.getRandom(-1, 1) < 0 ? -1 : 1;
           if (worm.speedX < 0) {
@@ -361,10 +366,6 @@ var knobsAndLevers = {
         setY : function(worm) {
           let randomYPos = supporting.getRandom(0, knobsAndLevers.player.topLimit - knobsAndLevers.player.areaHeight);
           worm.y = supporting.getClosest(game.gameArea.yVertices, randomYPos);
-        },
-        setImageType : function(worm) {
-          worm.imageType = Math.round(supporting.getRandom(0.5, 1.5));
-          console.log(worm.imageType);
         },
       },
     },
