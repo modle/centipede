@@ -18,10 +18,10 @@ var init = {
     spiders.init();
     texts.init();
 
-    console.log("game initialized");
+    console.log("centipede game initialized");
   },
   afterGameOver : function() {
-    console.log('reset the things, yo');
+    console.log('reset everything');
     knobsAndLevers.init();
     menus.init();
     metrics.init();

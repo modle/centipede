@@ -31,6 +31,7 @@ var knobsAndLevers = {
   general : {
     init : function(configs) {
       this.gridSquareSideLength = Math.floor(configs.canvas.width / configs.canvas.gridDivisor);
+      console.log('general defaults initialized');
     },
   },
   canvas : {
@@ -64,6 +65,7 @@ var knobsAndLevers = {
       this.args.height = configs.general.gridSquareSideLength;
       this.args.x = configs.canvas.width / 2;
       images.init(this.args.extraArgs.images);
+      console.log('centipede defaults initialized');
     },
   },
   components : {
@@ -102,6 +104,7 @@ var knobsAndLevers = {
       this.args.y = -configs.canvas.height / 10;
       this.interval = supporting.clone(configs.game.interval);
       images.init(this.args.extraArgs.images);
+      console.log('flies defaults initialized');
     },
   },
   game : {
@@ -127,8 +130,8 @@ var knobsAndLevers = {
     maxMushrooms : 50,
     tier : {
       incrementScore : 10000,
-      current: 20,
-      max : 20,
+      current: 1,
+      max : 5,
       isMaxed : false,
       update : function(newTier) {
         this.current = newTier;
@@ -169,6 +172,7 @@ var knobsAndLevers = {
     init : function(configs) {
       this.args.width = configs.general.gridSquareSideLength / 10;
       this.args.height = configs.general.gridSquareSideLength * 0.5;
+      console.log('laser defaults initialized');
     },
     resetCheats : function() {
       knobsAndLevers.resetParameter(this.speed);
@@ -204,6 +208,7 @@ var knobsAndLevers = {
       this.args.width = configs.general.gridSquareSideLength * 0.8;
       this.args.height = configs.general.gridSquareSideLength * 0.8;
       images.init(this.args.extraArgs.images);
+      console.log('mushroom defaults initialized');
     },
   },
   player : {
@@ -294,6 +299,7 @@ var knobsAndLevers = {
       this.args.x = 1;
       this.interval = supporting.clone(configs.game.interval);
       images.init(this.args.extraArgs.images);
+      console.log('spider defaults initialized');
     },
   },
   text : {
@@ -314,6 +320,7 @@ var knobsAndLevers = {
       this.baseBackgroundParams.height = configs.general.gridSquareSideLength;
       this.baseBackgroundParams.width = configs.canvas.width;
       this.gameInfoHeight = configs.general.gridSquareSideLength * 1.3;
+      console.log('text defaults initialized');
     },
   },
   worms : {
@@ -331,10 +338,15 @@ var knobsAndLevers = {
         speed : {x : 0.5, y : 0},
         images : {
           objects : {
-            one : {filename : 'worm-1.png'},
-            two : {filename : 'worm-2.png'},
+            left1 : {filename : 'worm-left-1.png', image : {}},
+            right1 : {filename : 'worm-right-1.png', image : {}},
+            left2 : {filename : 'worm-left-2.png', image : {}},
+            right2 : {filename : 'worm-right-2.png', image : {}},
           },
-          select : function(obj) {return obj.speedX > 0 ? 'two' : 'one';},
+          select : function(obj) {
+            let imageKey = (obj.speedX > 0 ? 'right' : 'left') + obj.imageType;
+            return this.objects[imageKey].image;
+          },
         },
       },
       constructorFunctions : {
@@ -350,6 +362,10 @@ var knobsAndLevers = {
           let randomYPos = supporting.getRandom(0, knobsAndLevers.player.topLimit - knobsAndLevers.player.areaHeight);
           worm.y = supporting.getClosest(game.gameArea.yVertices, randomYPos);
         },
+        setImageType : function(worm) {
+          worm.imageType = Math.round(supporting.getRandom(0.5, 1.5));
+          console.log(worm.imageType);
+        },
       },
     },
     init : function(configs) {
@@ -358,6 +374,7 @@ var knobsAndLevers = {
       this.args.height = configs.general.gridSquareSideLength;
       this.interval = supporting.clone(configs.game.interval);
       images.init(this.args.extraArgs.images);
+      console.log('worm defaults initialized');
     },
   },
 };
