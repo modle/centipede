@@ -46,7 +46,6 @@ var mushrooms = {
     mushroom.x = coordinates.x + knobsAndLevers.mushrooms.scaleFactor,
     mushroom.y = coordinates.y + knobsAndLevers.mushrooms.scaleFactor,
     mushroom.pointValue = metrics.currentLevel;
-    mushroom.hitPoints = knobsAndLevers.mushrooms.hitPoints;
     return mushroom;
   },
   update : function() {

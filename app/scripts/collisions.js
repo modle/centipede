@@ -39,6 +39,20 @@ var collisions = {
     target.hitPoints--;
     if (target.hitPoints <= 0) {
       this.processKill(target);
+      return;
+    };
+    if (target.type == 'worm') {
+      this.changeSize(target);
+    };
+  },
+  changeSize : function(target) {
+    if (target.imageType == 'crazy') {
+      let widthBefore = target.width;
+      let heightBefore = target.height;
+      target.width = target.defaultWidth * target.hitPoints;
+      target.height = target.defaultHeight * target.hitPoints;
+      target.x += (widthBefore - target.width) / 2;
+      target.y += (heightBefore - target.height) / 2;
     };
   },
   processKill : function(target) {

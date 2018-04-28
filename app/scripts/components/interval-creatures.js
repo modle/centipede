@@ -10,58 +10,57 @@ var intervalCreatures = {
     console.log('intervalCreatures initialized');
   },
   manage : function() {
-    Object.keys(this.intervals).forEach(creature => {
-      this.spawnCreatureAtIntervals(creature);
-      if (this[creature] == false) {
+    Object.keys(this.intervals).forEach(type => {
+      this.spawnCreatureAtIntervals(type);
+      if (this[type] == false) {
         return;
       };
-      this[creature] = this.clearOutsideCanvas(creature);
-      this.update(creature);
+      this[type] = this.clearOutsideCanvas(type);
+      this.update(type);
     });
   },
-  spawnCreatureAtIntervals(creature) {
-    if (supporting.everyinterval(game.gameArea.frameNo, this.intervals[creature])) {
-      this.intervals[creature] = supporting.getRandom(knobsAndLevers[creature].interval.min, knobsAndLevers[creature].interval.max);
-      this.spawn(creature);
-      if (creature == 'flies') {
+  spawnCreatureAtIntervals(type) {
+    if (supporting.everyinterval(game.gameArea.frameNo, this.intervals[type])) {
+      this.intervals[type] = supporting.getRandom(knobsAndLevers[type].interval.min, knobsAndLevers[type].interval.max);
+      this.spawn(type);
+      if (type == 'flies') {
         knobsAndLevers.flies.mushroomCreateInterval = supporting.getRandom(75, 150);
       };
     };
   },
-  spawn : function(creature) {
-    this.setMax(creature);
-    if (this[creature].length >= knobsAndLevers[creature].maxNumber) {
+  spawn : function(type) {
+    this.setMax(type);
+    if (this[type].length >= knobsAndLevers[type].maxNumber) {
       return;
     };
-    this.make(creature);
+    this.make(type);
   },
-  setMax : function(creature) {
+  setMax : function(type) {
     let tier = knobsAndLevers.game.tier;
-    knobsAndLevers[creature].maxNumber = tier.isMaxed ? tier.max : tier.current;
+    knobsAndLevers[type].maxNumber = tier.isMaxed ? tier.max : tier.current;
   },
-  make : function(creature) {
-    let spawnedCreature = new Component(knobsAndLevers[creature].args);
-    let pointValue = knobsAndLevers[creature].pointValue;
+  make : function(type) {
+    let spawnedCreature = new Component(knobsAndLevers[type].args);
+    let pointValue = knobsAndLevers[type].pointValue;
     spawnedCreature.pointValue = supporting.getRandom(pointValue, pointValue + 400);
-    spawnedCreature.hitPoints = knobsAndLevers[creature].hitPoints;
-    this[creature].push(spawnedCreature);
+    this[type].push(spawnedCreature);
   },
-  clearOutsideCanvas : function(creature) {
-    if (this[creature] == false) { return; };
-    return this[creature].filter(target => {
-      return target.x < game.gameArea.canvas.width
+  clearOutsideCanvas : function(type) {
+    if (this[type] == false) { return; };
+    return this[type].filter(target => {
+      return target.x < game.gameArea.canvas.width + 10
         && target.x > 0 - target.width
         && target.y < game.gameArea.canvas.height
     });
   },
-  update : function(creatureType) {
-    this[creatureType].forEach(creature => {
+  update : function(type) {
+    this[type].forEach(creature => {
       creature.newPos();
       creature.update();
-      if (creatureType == 'flies') {
+      if (type == 'flies') {
         this.dropMushrooms(creature);
       };
-      if (creatureType == 'worms') {
+      if (type == 'worms') {
         this.changeMushrooms(creature);
       };
     });

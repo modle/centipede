@@ -45,9 +45,9 @@ var knobsAndLevers = {
     maxNumber : 10,
     pointValue : 20,
     args : {
-      color : "blue",
       y : 0,
       extraArgs : {
+        hitPoints : 1,
         type : "centipede",
         images : {
           objects : {
@@ -56,7 +56,10 @@ var knobsAndLevers = {
             left : {filename : 'centipede-head-1-left.png'},
             right : {filename : 'centipede-head-1-right.png'},
           },
-          select : function(obj) {return customComponents.getCentipedeDirection(obj);},
+          select : function(obj) {
+            let key = customComponents.getCentipedeDirection(obj);
+            return this.objects[key].image;
+          },
         },
       },
     },
@@ -73,7 +76,6 @@ var knobsAndLevers = {
   },
   flies : {
     maxNumber : 0,
-    hitPoints : 2,
     pointValue : 200,
     interval : {
       min: 100,
@@ -81,8 +83,8 @@ var knobsAndLevers = {
     },
     mushroomCreateInterval : 100,
     args : {
-      color : 'green',
       extraArgs : {
+        hitPoints : 2,
         type : 'fly',
         speed : {x : 0, y : 2},
         images : {
@@ -90,7 +92,10 @@ var knobsAndLevers = {
             one : {filename : 'flea-1.png'},
             two : {filename : 'flea-2.png'},
           },
-          select : function(obj) {return 'one';},
+          select : function(obj) {
+            let key = 'one';
+            return this.objects[key].image;
+          },
         },
       },
       constructorFunctions : {
@@ -182,11 +187,10 @@ var knobsAndLevers = {
   mushrooms : {
     initialAmount : 50,
     scaleFactor : 1,
-    hitPoints : 4,
     side : 0,
-    color : 'teal',
     args : {
       extraArgs : {
+        hitPoints : 4,
         type : 'mushroom',
         images : {
           objects : {
@@ -199,7 +203,10 @@ var knobsAndLevers = {
             poisoned3 : {filename : 'mushroom-poisoned-3.png'},
             poisoned4 : {filename : 'mushroom-poisoned-4.png'},
           },
-          select : function(obj) {return (obj.poisoned ? 'poisoned' : 'normal') + obj.hitPoints;},
+          select : function(obj) {
+            let key = (obj.poisoned ? 'poisoned' : 'normal') + obj.hitPoints;
+            return this.objects[key].image;
+          },
         },
       },
     },
@@ -212,21 +219,23 @@ var knobsAndLevers = {
     },
   },
   player : {
-    colors : ['red', 'purple'],
     defaultLives : 1,
     dimensions : {width : 30, height : 30},
     args : {
-      width : 30,
-      height : 30,
+      width : 20,
+      height : 20,
       extraArgs : {
         type : 'player',
         speed : {x : 0, y : 0},
         images : {
           objects : {
-            player1 : {filename : 'player1.png'},
-            player2 : {filename : 'player2.png'},
+            player1 : {filename : 'player1.png', image : {}},
+            player2 : {filename : 'player2.png', image : {}},
           },
-          select : function(obj) {return obj.name ? obj.name : 'player1';},
+          select : function(obj) {
+            let key = obj.name ? obj.name : 'player1';
+            return this.objects[key].image;
+          },
         },
       },
       constructorFunctions : {
@@ -234,17 +243,6 @@ var knobsAndLevers = {
           player.x = knobsAndLevers.player.startX[Object.keys(players.players).length];
         },
       },
-    },
-    init : function(configs) {
-      this.areaHeight = configs.canvas.height * 0.2;
-      this.topLimit = knobsAndLevers.canvas.height - this.areaHeight;
-      this.startX = [
-        (configs.canvas.width - this.dimensions.width * 2) * 0.5,
-        (configs.canvas.width + this.dimensions.width * 2) * 0.5,
-      ],
-      this.startY = configs.canvas.height - this.dimensions.height - 1;
-      this.args.y = this.startY;
-      images.init(this.args.extraArgs.images);
     },
     speed : {
       value : 2,
@@ -258,13 +256,23 @@ var knobsAndLevers = {
         },
       },
     },
+    init : function(configs) {
+      this.areaHeight = configs.canvas.height * 0.2;
+      this.topLimit = configs.canvas.height - this.areaHeight;
+      this.startX = [
+        (configs.canvas.width - this.dimensions.width * 2) * 0.5,
+        (configs.canvas.width + this.dimensions.width * 2) * 0.5,
+      ],
+      this.startY = configs.canvas.height - this.dimensions.height - 1;
+      this.args.y = this.startY;
+      images.init(this.args.extraArgs.images);
+    },
     resetCheats : function() {
       knobsAndLevers.resetParameter(this.speed);
     },
   },
   spider : {
     maxNumber : 0,
-    hitPoints : 1,
     directionY : 1,
     points : {
       base : 500,
@@ -275,8 +283,8 @@ var knobsAndLevers = {
       max: 1500,
     },
     args : {
-      color : "fuchsia",
       extraArgs : {
+        hitPoints : 1,
         type : "spider",
         speed : {x : 1, y : 1},
         images : {
@@ -284,7 +292,10 @@ var knobsAndLevers = {
             one : {filename : 'spider-1.png'},
             two : {filename : 'spider-2.png'},
           },
-          select : function(obj) {return 'one';},
+          select : function(obj) {
+            let key = 'one';
+            return this.objects[key].image;
+          },
         },
       },
     },
@@ -326,45 +337,51 @@ var knobsAndLevers = {
   worms : {
     maxNumber: 1,
     pointValue :200,
-    hitPoints : 1,
     interval : {
       min: 0,
       max: 0,
     },
     args : {
-      color : "orange",
       extraArgs : {
+        hitPoints : 1,
         type : "worm",
         speed : {x : 0.5, y : 0},
         images : {
           objects : {
-            left1 : {filename : 'worm-left-1.png', image : {}},
-            right1 : {filename : 'worm-right-1.png', image : {}},
-            left2 : {filename : 'worm-left-2.png', image : {}},
-            right2 : {filename : 'worm-right-2.png', image : {}},
+            leftcrazy : {filename : 'worm-left-crazy.png', image : {}},
+            rightcrazy : {filename : 'worm-right-crazy.png', image : {}},
+            leftnormal : {filename : 'worm-left-normal.png', image : {}},
+            rightnormal : {filename : 'worm-right-normal.png', image : {}},
           },
           select : function(obj) {
-            let imageKey = (obj.speedX > 0 ? 'right' : 'left') + obj.imageType;
-            return this.objects[imageKey].image;
+            let key = (obj.speedX > 0 ? 'right' : 'left') + obj.imageType;
+            return this.objects[key].image;
           },
         },
       },
       constructorFunctions : {
         setImageType : function(worm) {
-          worm.imageType = Math.round(supporting.roll(10)) == 10 ? 1 : 2;
-          worm.width = worm.imageType == 1 ? worm.width * 5 : worm.width;
-          worm.height = worm.imageType == 1 ? worm.height * 5 : worm.height;
+          let result = supporting.roll(sides = 10);
+          worm.imageType = result.crit ? 'crazy' : 'normal';
+          if (worm.imageType == 'crazy') {
+            worm.hitPoints *= result.value;
+            worm.width *= result.value;
+            worm.height *= result.value;
+          };
         },
         setX : function(worm) {
-          worm.speedX = supporting.getRandom(-1, 1) < 0 ? -1 : 1;
-          if (worm.speedX < 0) {
-            worm.x = game.gameArea.canvas.width - 1;
+          let speedMultiplier = worm.imageType == 'crazy' ? 0.5 : 1;
+          let theRoll = supporting.roll(sides = 2);
+          if (theRoll.crit) {
+            worm.speedX = -speedMultiplier;
+            worm.x = game.gameArea.canvas.width;
           } else {
+            worm.speedX = speedMultiplier;
             worm.x = 1 - worm.width;
           };
         },
         setY : function(worm) {
-          let randomYPos = supporting.getRandom(0, knobsAndLevers.player.topLimit - knobsAndLevers.player.areaHeight);
+          let randomYPos = supporting.getRandom(0, knobsAndLevers.player.topLimit - knobsAndLevers.player.areaHeight * 2);
           worm.y = supporting.getClosest(game.gameArea.yVertices, randomYPos);
         },
       },
@@ -372,7 +389,9 @@ var knobsAndLevers = {
     init : function(configs) {
       this.initialInterval = supporting.getRandom(this.interval.min, this.interval.max);
       this.args.width = configs.general.gridSquareSideLength * 1.5;
+      this.args.defaultWidth = this.args.width;
       this.args.height = configs.general.gridSquareSideLength;
+      this.args.defaultHeight = this.args.height;
       this.interval = supporting.clone(configs.game.interval);
       images.init(this.args.extraArgs.images);
       console.log('worm defaults initialized');

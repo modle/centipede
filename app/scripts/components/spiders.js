@@ -47,7 +47,6 @@ var spiders = {
     let spider = new Component(defaults.args);
     let points = defaults.points;
     spider.pointValue = supporting.getRandom(points.base, points.base + points.range);
-    spider.hitPoints = defaults.hitPoints;
     spider.speedX = supporting.getRandom(-1, 1);
     if (spider.speedX < 0) {
       spider.x = game.gameArea.canvas.width - 1;
@@ -68,9 +67,9 @@ var spiders = {
   removeMushrooms : function(spider) {
     let theMushroom = mushrooms.mushrooms.find(mushroom => spider.crashWith(mushroom));
     // TODO 1d4, ignore if not 4
-    let doRemove = supporting.getRandom(1, 1);
+    let doRemove = supporting.roll(4) == 4 ? true : false;
     if (theMushroom) {
-      theMushroom.hitPoints = doRemove < 0 || theMushroom.spiderTouched ? theMushroom.hitPoints : 0;
+      theMushroom.hitPoints = (doRemove || theMushroom.spiderTouched) ? 0 : theMushroom.hitPoints;
       theMushroom.spiderTouched = true;
     };
   },
