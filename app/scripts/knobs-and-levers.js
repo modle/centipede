@@ -50,15 +50,16 @@ var knobsAndLevers = {
         hitPoints : 1,
         type : "centipede",
         images : {
+          last : 0,
           objects : {
-            up : {filename : 'centipede-head-1-up.png'},
-            down : {filename : 'centipede-head-1-down.png'},
-            left : {filename : 'centipede-head-1-left.png'},
-            right : {filename : 'centipede-head-1-right.png'},
+            up : [{filename : 'centipede-head-1-up.png'}],
+            down : [{filename : 'centipede-head-1-down.png'}],
+            left : [{filename : 'centipede-head-1-left.png'}],
+            right : [{filename : 'centipede-head-1-right.png'}],
           },
           select : function(obj) {
             let key = customComponents.getCentipedeDirection(obj);
-            return this.objects[key].image;
+            return this.objects[key][this.last].image;
           },
         },
       },
@@ -88,13 +89,14 @@ var knobsAndLevers = {
         type : 'fly',
         speed : {x : 0, y : 2},
         images : {
+          last : 0,
           objects : {
-            one : {filename : 'flea-1.png'},
-            two : {filename : 'flea-2.png'},
+            one : [{filename : 'flea-1.png'}],
+            two : [{filename : 'flea-2.png'}],
           },
           select : function(obj) {
             let key = 'one';
-            return this.objects[key].image;
+            return this.objects[key][this.last].image;
           },
         },
       },
@@ -193,19 +195,20 @@ var knobsAndLevers = {
         hitPoints : 4,
         type : 'mushroom',
         images : {
+          last : 0,
           objects : {
-            normal1 : {filename : 'mushroom-1.png'},
-            normal2 : {filename : 'mushroom-2.png'},
-            normal3 : {filename : 'mushroom-3.png'},
-            normal4 : {filename : 'mushroom-4.png'},
-            poisoned1 : {filename : 'mushroom-poisoned-1.png'},
-            poisoned2 : {filename : 'mushroom-poisoned-2.png'},
-            poisoned3 : {filename : 'mushroom-poisoned-3.png'},
-            poisoned4 : {filename : 'mushroom-poisoned-4.png'},
+            normal1 : [{filename : 'mushroom-1.png'}],
+            normal2 : [{filename : 'mushroom-2.png'}],
+            normal3 : [{filename : 'mushroom-3.png'}],
+            normal4 : [{filename : 'mushroom-4.png'}],
+            poisoned1 : [{filename : 'mushroom-poisoned-1.png'}],
+            poisoned2 : [{filename : 'mushroom-poisoned-2.png'}],
+            poisoned3 : [{filename : 'mushroom-poisoned-3.png'}],
+            poisoned4 : [{filename : 'mushroom-poisoned-4.png'}],
           },
           select : function(obj) {
             let key = (obj.poisoned ? 'poisoned' : 'normal') + obj.hitPoints;
-            return this.objects[key].image;
+            return this.objects[key][this.last].image;
           },
         },
       },
@@ -228,13 +231,14 @@ var knobsAndLevers = {
         type : 'player',
         speed : {x : 0, y : 0},
         images : {
+          last : 0,
           objects : {
-            player1 : {filename : 'player1.png', image : {}},
-            player2 : {filename : 'player2.png', image : {}},
+            player1 : [{filename : 'player1.png'}],
+            player2 : [{filename : 'player2.png'}],
           },
           select : function(obj) {
             let key = obj.name ? obj.name : 'player1';
-            return this.objects[key].image;
+            return this.objects[key][this.last].image;
           },
         },
       },
@@ -288,13 +292,14 @@ var knobsAndLevers = {
         type : "spider",
         speed : {x : 1, y : 1},
         images : {
+          last : 0,
           objects : {
-            one : {filename : 'spider-1.png'},
-            two : {filename : 'spider-2.png'},
+            one : [{filename : 'spider-1.png'}],
+            two : [{filename : 'spider-2.png'}],
           },
           select : function(obj) {
             let key = 'one';
-            return this.objects[key].image;
+            return this.objects[key][this.last].image;
           },
         },
       },
@@ -347,15 +352,16 @@ var knobsAndLevers = {
         type : "worm",
         speed : {x : 0.5, y : 0},
         images : {
+          last : 0,
           objects : {
-            leftcrazy : {filename : 'worm-left-crazy.png', image : {}},
-            rightcrazy : {filename : 'worm-right-crazy.png', image : {}},
-            leftnormal : {filename : 'worm-left-normal.png', image : {}},
-            rightnormal : {filename : 'worm-right-normal.png', image : {}},
+            leftcrazy : [{filename : 'worm-left-crazy.png'}],
+            rightcrazy : [{filename : 'worm-right-crazy.png'}],
+            leftnormal : [{filename : 'worm-left-normal.png'}],
+            rightnormal : [{filename : 'worm-right-normal.png'}],
           },
           select : function(obj) {
             let key = (obj.speedX > 0 ? 'right' : 'left') + obj.imageType;
-            return this.objects[key].image;
+            return this.objects[key][this.last].image;
           },
         },
       },
