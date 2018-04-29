@@ -11,7 +11,7 @@ describe('SPIDERS SPEC: ', () => {
     knobsAndLevers.init();
   });
   it('init sets interval from knobsAndLevers', () => {
-    let expected = knobsAndLevers.spider.initialInterval;
+    let expected = knobsAndLevers.spiders.initialInterval;
 
     testObj.init();
 
@@ -66,7 +66,7 @@ describe('SPIDERS SPEC: ', () => {
 
   it('maxedOut returns true if spiders array >= max', () => {
     testObj.spiders = [];
-    while (testObj.spiders.length < knobsAndLevers.spider.maxNumber) {
+    while (testObj.spiders.length < knobsAndLevers.spiders.maxNumber) {
       testObj.spiders.push({});
     };
 
@@ -135,7 +135,7 @@ describe('SPIDERS SPEC: ', () => {
   });
 
   it('update delegates to spider management functions when spiders array not empty', () => {
-    testObj.spiders = [new Component(knobsAndLevers.spider.args)];
+    testObj.spiders = [new Component(knobsAndLevers.spiders.args)];
     spyOn(testObj, 'removeMushrooms');
     spyOn(testObj, 'updateSpeed');
     spyOn(testObj, 'updatePos');

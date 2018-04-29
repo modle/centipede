@@ -7,7 +7,7 @@ var knobsAndLevers = {
     this.player.init(this);
     this.laser.init(this);
     this.mushrooms.init(this);
-    this.spider.init(this);
+    this.spiders.init(this);
     this.text.init(this);
     this.worms.init(this);
     console.log('knobsAndLevers initialized');
@@ -112,7 +112,7 @@ var knobsAndLevers = {
     },
   },
   game : {
-    playerCollisionsEnabled : false,
+    playerCollisionsEnabled : true,
     interval : {
       min : 0,
       max : 0,
@@ -262,7 +262,7 @@ var knobsAndLevers = {
       knobsAndLevers.resetParameter(this.speed);
     },
   },
-  spider : {
+  spiders : {
     maxNumber : 0,
     pointValue : 400,
     interval : {

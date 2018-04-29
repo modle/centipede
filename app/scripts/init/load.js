@@ -43,7 +43,6 @@ var scripts = [
   'components/mushrooms.js',
   'components/players.js',
   'components/texts.js',
-  'components/spiders.js',
   'game.js',
   'init/init.js',
   'knobs-and-levers.js',

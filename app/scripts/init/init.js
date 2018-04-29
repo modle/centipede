@@ -15,7 +15,6 @@ var init = {
     metrics.init();
     players.init();
     sounds.init();
-    spiders.init();
     texts.init();
 
     console.log("centipede game initialized");
@@ -25,7 +24,6 @@ var init = {
     knobsAndLevers.init();
     menus.init();
     metrics.init();
-    spiders.init();
     texts.init();
     gameObjects.init();
     game.paused = true;

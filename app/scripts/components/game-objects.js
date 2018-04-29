@@ -2,12 +2,12 @@
 var gameObjects = {
   worms : [],
   flies : [],
-  spider : [],
+  spiders : [],
   init : function() {
     this.intervals = {
       flies : knobsAndLevers.flies.initialInterval,
       worms : knobsAndLevers.worms.initialInterval,
-      spider : knobsAndLevers.spider.initialInterval,
+      spiders : knobsAndLevers.spiders.initialInterval,
     };
     console.log('gameObjects initialized');
   },
@@ -57,25 +57,23 @@ var gameObjects = {
   },
   update : function(type) {
     this[type].forEach(creature => {
-      if (type == 'spider') {
-        this.setSpeed(creature);
+      if (type == 'spiders') {
+        this.setSpeed(creature, type);
         this.setDirection(creature);
+        this.removeMushrooms(creature);
       };
-      creature.newPos();
-      creature.update();
       if (type == 'flies') {
         this.dropMushrooms(creature);
-      };
-      if (type == 'spider') {
-        this.removeMushrooms(creature);
       };
       if (type == 'worms') {
         this.changeMushrooms(creature);
       };
+      creature.newPos();
+      creature.update();
     });
   },
-  setSpeed : function(creature) {
-    let speedLimits = knobsAndLevers[creature.type].speedLimits;
+  setSpeed : function(creature, type) {
+    let speedLimits = knobsAndLevers[type].speedLimits;
     creature.speedX = Math.sign(creature.speedX) * (supporting.roll(10).crit ? speedLimits.max : speedLimits.min);
     creature.speedY = creature.directionY * (supporting.roll(10).crit ? speedLimits.max : speedLimits.min);
   },
@@ -115,5 +113,6 @@ var gameObjects = {
   clear : function() {
     this.worms = [];
     this.flies = [];
+    this.spiders = [];
   },
 };
