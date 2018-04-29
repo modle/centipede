@@ -95,7 +95,7 @@ var centipedes = {
     this.centipedes.map(centipede => centipede.updated = false);
   },
   moveDownwardInitially : function(centipede) {
-    if (centipede.y < game.gameArea.firstMushroomLayer - 1) {
+    if (centipede.y < game.gameArea.gridStart - 1) {
       centipede.moveVertically = true;
       centipede.updated = true;
     };

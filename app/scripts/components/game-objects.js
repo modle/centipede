@@ -85,7 +85,7 @@ var gameObjects = {
     };
   },
   dropMushrooms : function(creature) {
-    if (this.eligibleToDrop() && creature.y <= game.gameArea.canvas.height * 0.90 && creature.y >= game.gameArea.firstMushroomLayer) {
+    if (this.eligibleToDrop() && creature.y <= game.gameArea.canvas.height * 0.90 && creature.y >= game.gameArea.gridStart) {
       mushrooms.make({x : creature.x, y : creature.y});
     };
   },

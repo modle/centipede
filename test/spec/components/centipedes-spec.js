@@ -99,7 +99,7 @@ describe('CENTIPEDES SPEC: ', () => {
     spyOn(testObj, 'reverseHorizontalAtNextLayer');
 
     testObj.centipedes = [
-      {moveVertically : false, updated : false, y : game.gameArea.firstMushroomLayer - 2},
+      {moveVertically : false, updated : false, y : game.gameArea.gridStart - 2},
     ];
 
     testObj.determineDirections();
@@ -122,9 +122,9 @@ describe('CENTIPEDES SPEC: ', () => {
     knobsAndLevers.init();
     game.init();
     testObj.centipedes = [
-      {moveVertically : false, updated : false, y : game.gameArea.firstMushroomLayer - 2},
-      {moveVertically : false, updated : true, y : game.gameArea.firstMushroomLayer - 2},
-      {moveVertically : false, updated : false, y : game.gameArea.firstMushroomLayer},
+      {moveVertically : false, updated : false, y : game.gameArea.gridStart - 2},
+      {moveVertically : false, updated : true, y : game.gameArea.gridStart - 2},
+      {moveVertically : false, updated : false, y : game.gameArea.gridStart},
     ];
 
     testObj.centipedes.filter(centipede => !centipede.updated).map(centipede => {
@@ -306,7 +306,7 @@ describe('CENTIPEDES SPEC: ', () => {
       },
       {
         crashWith : crashWith,
-        y : game.gameArea.firstMushroomLayer,
+        y : game.gameArea.gridStart,
         distanceMovedX : distanceMovedX,
         moveVertically : moveVertically,
         expected : false,
