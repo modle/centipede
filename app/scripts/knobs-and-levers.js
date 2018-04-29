@@ -338,8 +338,8 @@ var knobsAndLevers = {
         speed : {x : 0.5, y : 0},
       },
       sprites : {
-        leftcrazy : {activeIndex : 0, files : ['worm-1-left-crazy.png'], images : []},
-        rightcrazy : {activeIndex : 0, files : ['worm-1-right-crazy.png'], images : []},
+        leftcrazy : {activeIndex : 0, files : ['worm-1-crazy.png', 'worm-2-crazy.png'], images : []},
+        rightcrazy : {activeIndex : 0, files : ['worm-1-crazy.png', 'worm-2-crazy.png'], images : []},
         leftnormal : {activeIndex : 0, files : ['worm-1-left-normal.png', 'worm-2-left-normal.png'], images : []},
         rightnormal : {activeIndex : 0, files : ['worm-1-right-normal.png', 'worm-2-right-normal.png'], images : []},
       },
