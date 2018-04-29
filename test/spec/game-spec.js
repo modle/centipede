@@ -153,14 +153,14 @@ describe('GAME SPEC: ', () => {
   });
   it('resetMoreThings resets more things', () => {
     spyOn(testObj, 'resetSomeThings');
-    spyOn(intervalCreatures, 'clear');
+    spyOn(gameObjects, 'clear');
     spyOn(spiders, 'clear');
     spyOn(player, 'reset');
 
     testObj.resetMoreThings();
 
     expect(testObj.resetSomeThings).toHaveBeenCalled();
-    expect(intervalCreatures.clear).toHaveBeenCalled();
+    expect(gameObjects.clear).toHaveBeenCalled();
     expect(spiders.clear).toHaveBeenCalled();
     expect(player.reset).toHaveBeenCalled();
   });

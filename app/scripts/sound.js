@@ -53,7 +53,7 @@ var sounds = {
   },
   manageFlySounds : function() {
     let sound = this.tracks['fly'];
-    if (intervalCreatures.flies != false) {
+    if (gameObjects.flies != false) {
       if (!sound.played) {
         this.playSound(sound);
       };
@@ -63,7 +63,7 @@ var sounds = {
     };
   },
   manageWormSounds : function() {
-    if (intervalCreatures.worms != false) {
+    if (gameObjects.worms != false) {
       this.playSound(this.getSound('worm'));
     } else {
       this.stopSound('worm');

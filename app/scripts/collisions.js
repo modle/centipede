@@ -16,8 +16,8 @@ var collisions = {
     let targets = [];
     targets.push(...mushrooms.mushrooms);
     targets.push(...centipedes.centipedes);
-    targets.push(...intervalCreatures.worms);
-    targets.push(...intervalCreatures.flies);
+    targets.push(...gameObjects.worms);
+    targets.push(...gameObjects.flies);
     targets.push(...spiders.spiders);
     return targets;
   },
@@ -73,7 +73,7 @@ var collisions = {
     targets = [];
     targets.push(...centipedes.centipedes);
     targets.push(...spiders.spiders);
-    targets.push(...intervalCreatures.flies);
+    targets.push(...gameObjects.flies);
     return targets;
   },
   checkPlayerVsEnemies : function(player, targets) {
@@ -101,8 +101,8 @@ var collisions = {
   removeDestroyedTargets : function(targets) {
     mushrooms.mushrooms = mushrooms.mushrooms.filter(mushroom => mushroom.hitPoints > 0);
     centipedes.centipedes = centipedes.centipedes.filter(centipede => centipede.hitPoints > 0);
-    intervalCreatures.worms = intervalCreatures.worms.filter(worm => worm.hitPoints > 0);
-    intervalCreatures.flies = intervalCreatures.flies.filter(fly => fly.hitPoints > 0);
+    gameObjects.worms = gameObjects.worms.filter(worm => worm.hitPoints > 0);
+    gameObjects.flies = gameObjects.flies.filter(fly => fly.hitPoints > 0);
     spiders.spiders = spiders.spiders.filter(spider => spider.hitPoints > 0);
   },
 }

@@ -9,7 +9,7 @@ describe('INTERVAL CREATURES SPEC: ', () => {
   beforeEach(function () {
     knobsAndLevers.init();
     game.init();
-    testObj = Object.assign({}, intervalCreatures);
+    testObj = Object.assign({}, gameObjects);
     testObj.init();
     testObj.worms = [];
     testObj.flies = [];
@@ -21,7 +21,7 @@ describe('INTERVAL CREATURES SPEC: ', () => {
     spyOn(testObj, 'dropMushrooms');
     testObj.intervals['worms'] = 10;
   };
-  it('manage calls intervalCreatures.clearOutsideCanvas', () => {
+  it('manage calls gameObjects.clearOutsideCanvas', () => {
     mockTestObj();
     testObj.worms.push('a worm');
 
@@ -29,7 +29,7 @@ describe('INTERVAL CREATURES SPEC: ', () => {
 
     expect(testObj.clearOutsideCanvas).toHaveBeenCalled();
   });
-  it('manage calls intervalCreatures.update', () => {
+  it('manage calls gameObjects.update', () => {
     mockTestObj();
     testObj.worms.push('a worm');
 
@@ -58,7 +58,7 @@ describe('INTERVAL CREATURES SPEC: ', () => {
 
     expect(supporting.getRandom).not.toHaveBeenCalled();
   });
-  it('manage calls intervalCreatures.spawnCreatureAtIntervals', () => {
+  it('manage calls gameObjects.spawnCreatureAtIntervals', () => {
     mockTestObj();
 
     testObj.manage();

@@ -7,7 +7,7 @@ var init = {
     dom.init();
     game.init();
     initials.init();
-    intervalCreatures.init();
+    gameObjects.init();
     leaderboard.init();
     main.init();
     mainMenu.init();
@@ -27,7 +27,7 @@ var init = {
     metrics.init();
     spiders.init();
     texts.init();
-    intervalCreatures.init();
+    gameObjects.init();
     game.paused = true;
     game.running = false;
     console.log("game reset");

@@ -89,7 +89,7 @@ describe('SOUND SPEC: ', () => {
     expect(testObj.playSound).not.toHaveBeenCalled();
   });
   it('manageFlySounds calls fly sound play', () => {
-    intervalCreatures.flies = [{}];
+    gameObjects.flies = [{}];
     let testSound = {};
     testObj.tracks.fly = testSound;
     spyOn(testObj, 'playSound');
@@ -100,7 +100,7 @@ describe('SOUND SPEC: ', () => {
     expect(testObj.tracks['fly'].played).toBeTruthy();
   });
   it('manageFlySounds does not call fly sound play if played is true', () => {
-    intervalCreatures.flies = [{}];
+    gameObjects.flies = [{}];
     spyOn(testObj.tracks['fly'], 'play');
     testObj.tracks['fly'].played = true;
 
@@ -110,7 +110,7 @@ describe('SOUND SPEC: ', () => {
     expect(testObj.tracks['fly'].played).toBeTruthy();
   });
   it('manageFlySounds sets played to false when fly is not present', () => {
-    intervalCreatures.flies = [];
+    gameObjects.flies = [];
     spyOn(testObj.tracks['fly'], 'play');
 
     testObj.manageFlySounds();
@@ -119,7 +119,7 @@ describe('SOUND SPEC: ', () => {
     expect(testObj.tracks['fly'].played).toBeFalsy();
   });
   it('manageWormSounds calls worm sound play', () => {
-    intervalCreatures.worms.push({});
+    gameObjects.worms.push({});
     spyOn(testObj, 'playSound');
 
     testObj.manageWormSounds();
@@ -127,7 +127,7 @@ describe('SOUND SPEC: ', () => {
     expect(testObj.playSound).toHaveBeenCalled();
   });
   it('manageWormSounds calls worm sound stop when no worms', () => {
-    intervalCreatures.worms = [];
+    gameObjects.worms = [];
     spyOn(testObj, 'playSound');
     spyOn(testObj, 'stopSound');
 

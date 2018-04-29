@@ -11,7 +11,7 @@ var main = {
       metrics.manage();
       mushrooms.manage();
       centipedes.manage();
-      intervalCreatures.manage();
+      gameObjects.manage();
       spiders.manage();
       lasers.manage();
       players.manage();

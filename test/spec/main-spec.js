@@ -305,7 +305,7 @@ describe('MAIN SPEC: ', () => {
   it('manageGameObjects calls delegate functions', () => {
     spyOn(mushrooms, 'manage');
     spyOn(centipedes, 'manage');
-    spyOn(intervalCreatures, 'manage');
+    spyOn(gameObjects, 'manage');
     spyOn(spiders, 'manage');
     spyOn(lasers, 'manage');
     spyOn(player, 'manage');
@@ -316,7 +316,7 @@ describe('MAIN SPEC: ', () => {
 
     expect(mushrooms.manage).toHaveBeenCalled();
     expect(centipedes.manage).toHaveBeenCalled();
-    expect(intervalCreatures.manage).toHaveBeenCalled();
+    expect(gameObjects.manage).toHaveBeenCalled();
     expect(spiders.manage).toHaveBeenCalled();
     expect(lasers.manage).toHaveBeenCalled();
     expect(player.manage).toHaveBeenCalled();

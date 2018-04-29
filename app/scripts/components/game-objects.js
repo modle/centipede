@@ -1,5 +1,5 @@
 /*jslint white: true */
-var intervalCreatures = {
+var gameObjects = {
   worms : [],
   flies : [],
   init : function() {
@@ -7,7 +7,7 @@ var intervalCreatures = {
       flies : knobsAndLevers.flies.initialInterval,
       worms : knobsAndLevers.worms.initialInterval,
     };
-    console.log('intervalCreatures initialized');
+    console.log('gameObjects initialized');
   },
   manage : function() {
     Object.keys(this.intervals).forEach(type => {
