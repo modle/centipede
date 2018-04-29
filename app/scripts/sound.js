@@ -47,7 +47,7 @@ var sounds = {
     };
   },
   manageSpiderSounds : function() {
-    if (spiders.spiders != false) {
+    if (gameObjects.spiders != false) {
       this.playSound(this.getSound('spider'));
     };
   },

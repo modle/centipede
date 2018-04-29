@@ -232,8 +232,6 @@ var knobsAndLevers = {
       },
       constructorFunctions : {
         setX : function(player) {
-          console.log(player);
-          console.log(players.player);
           player.x = knobsAndLevers.player.startX[Object.keys(players.players).length];
         },
       },
@@ -266,16 +264,13 @@ var knobsAndLevers = {
   },
   spider : {
     maxNumber : 0,
-    directionY : 1,
-    points : {
-      base : 500,
-      range : 400,
-    },
+    pointValue : 400,
     interval : {
-      min: 800,
-      max: 1500,
+      min : 10,
+      max : 20,
     },
     args : {
+      directionY : 1,
       extraArgs : {
         animationInterval : 50,
         hitPoints : 1,
@@ -287,6 +282,21 @@ var knobsAndLevers = {
       },
       getSpriteKey : function(obj) {
         return 'one';
+      },
+      constructorFunctions : {
+        setY : function(spider) {
+          spider.y = supporting.getRandom(knobsAndLevers.player.topLimit - knobsAndLevers.player.areaHeight, game.gameArea.canvas.height);
+        },
+        setX : function(spider) {
+          let theRoll = supporting.roll(sides = 2);
+          if (theRoll.crit) {
+            spider.speedX = -1;
+            spider.x = game.gameArea.canvas.width;
+          } else {
+            spider.speedX = 1;
+            spider.x = 1 - spider.width;
+          };
+        },
       },
     },
     speedLimits : {
@@ -324,8 +334,8 @@ var knobsAndLevers = {
     },
   },
   worms : {
-    maxNumber: 1,
-    pointValue :200,
+    maxNumber : 1,
+    pointValue : 200,
     interval : {
       min: 0,
       max: 0,

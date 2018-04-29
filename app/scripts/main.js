@@ -12,7 +12,6 @@ var main = {
       mushrooms.manage();
       centipedes.manage();
       gameObjects.manage();
-      spiders.manage();
       lasers.manage();
       players.manage();
       collisions.check();

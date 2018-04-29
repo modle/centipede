@@ -2,10 +2,12 @@
 var gameObjects = {
   worms : [],
   flies : [],
+  spider : [],
   init : function() {
     this.intervals = {
       flies : knobsAndLevers.flies.initialInterval,
       worms : knobsAndLevers.worms.initialInterval,
+      spider : knobsAndLevers.spider.initialInterval,
     };
     console.log('gameObjects initialized');
   },
@@ -55,19 +57,38 @@ var gameObjects = {
   },
   update : function(type) {
     this[type].forEach(creature => {
+      if (type == 'spider') {
+        this.setSpeed(creature);
+        this.setDirection(creature);
+      };
       creature.newPos();
       creature.update();
       if (type == 'flies') {
         this.dropMushrooms(creature);
+      };
+      if (type == 'spider') {
+        this.removeMushrooms(creature);
       };
       if (type == 'worms') {
         this.changeMushrooms(creature);
       };
     });
   },
-  dropMushrooms : function(fly) {
-    if (this.eligibleToDrop() && fly.y <= game.gameArea.canvas.height * 0.90 && fly.y >= game.gameArea.firstMushroomLayer) {
-      mushrooms.make({x : fly.x, y : fly.y});
+  setSpeed : function(creature) {
+    let speedLimits = knobsAndLevers[creature.type].speedLimits;
+    creature.speedX = Math.sign(creature.speedX) * (supporting.roll(10).crit ? speedLimits.max : speedLimits.min);
+    creature.speedY = creature.directionY * (supporting.roll(10).crit ? speedLimits.max : speedLimits.min);
+  },
+  setDirection : function(creature) {
+    if (creature.getBottom() > game.gameArea.canvas.height) {
+      creature.directionY = -1;
+    } else if (creature.getTop() < game.gameArea.canvas.height - (knobsAndLevers.player.areaHeight * 2)) {
+      creature.directionY = 1;
+    };
+  },
+  dropMushrooms : function(creature) {
+    if (this.eligibleToDrop() && creature.y <= game.gameArea.canvas.height * 0.90 && creature.y >= game.gameArea.firstMushroomLayer) {
+      mushrooms.make({x : creature.x, y : creature.y});
     };
   },
   eligibleToDrop : function() {
@@ -75,6 +96,13 @@ var gameObjects = {
       game.gameArea.frameNo,
       knobsAndLevers.flies.mushroomCreateInterval
     );
+  },
+  removeMushrooms : function(creature) {
+    let theMushroom = mushrooms.mushrooms.find(mushroom => creature.crashWith(mushroom));
+    if (theMushroom) {
+      theMushroom.hitPoints = (supporting.roll(sides = 4).crit || theMushroom.creatureTouched) ? 0 : theMushroom.hitPoints;
+      theMushroom.creatureTouched = true;
+    };
   },
   changeMushrooms : function(creature) {
     mushrooms.mushrooms.forEach(mushroom => {

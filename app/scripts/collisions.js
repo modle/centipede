@@ -18,7 +18,7 @@ var collisions = {
     targets.push(...centipedes.centipedes);
     targets.push(...gameObjects.worms);
     targets.push(...gameObjects.flies);
-    targets.push(...spiders.spiders);
+    targets.push(...gameObjects.spider);
     return targets;
   },
   checkLaser : function(player, targets) {
@@ -72,7 +72,6 @@ var collisions = {
   getPlayerEnemies : function() {
     targets = [];
     targets.push(...centipedes.centipedes);
-    targets.push(...spiders.spiders);
     targets.push(...gameObjects.flies);
     return targets;
   },
@@ -103,6 +102,6 @@ var collisions = {
     centipedes.centipedes = centipedes.centipedes.filter(centipede => centipede.hitPoints > 0);
     gameObjects.worms = gameObjects.worms.filter(worm => worm.hitPoints > 0);
     gameObjects.flies = gameObjects.flies.filter(fly => fly.hitPoints > 0);
-    spiders.spiders = spiders.spiders.filter(spider => spider.hitPoints > 0);
+    gameObjects.spider = gameObjects.spider.filter(spider => spider.hitPoints > 0);
   },
-}
+};
