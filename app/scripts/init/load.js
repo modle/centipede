@@ -36,7 +36,6 @@ var libs = [
 
 var scripts = [
   'collisions.js',
-  'component.js',
   'components/centipedes.js',
   'components/interval-creatures.js',
   'components/lasers.js',

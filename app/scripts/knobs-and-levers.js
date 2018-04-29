@@ -47,17 +47,24 @@ var knobsAndLevers = {
     args : {
       y : 0,
       extraArgs : {
+        animationInterval : 50,
         hitPoints : 1,
         type : 'centipede',
-        images : {
+        sprites : {
           objects : {
-            up : [{filename : 'centipede-head-1-up.png'}],
-            down : [{filename : 'centipede-head-1-down.png'}],
-            left : [{filename : 'centipede-head-1-left.png'}],
-            right : [{filename : 'centipede-head-1-right.png'}],
+            up : {activeIndex : 0, files : ['centipede-head-1-up.png', 'centipede-head-2-up.png'], images : []},
+            down : {activeIndex : 0, files : ['centipede-head-1-down.png', 'centipede-head-2-down.png'], images : []},
+            left : {activeIndex : 0, files : ['centipede-head-1-left.png', 'centipede-head-2-left.png'], images : []},
+            right : {activeIndex : 0, files : ['centipede-head-1-right.png', 'centipede-head-2-right.png'], images : []},
           },
           getKey : function(obj) {
-            return customComponents.getCentipedeDirection(obj);
+            let direction = '';
+            if (obj.moveVertically) {
+              direction = obj.directionY > 0 ? 'down' : 'up';
+            } else {
+              direction = obj.directionX > 0 ? 'right' : 'left';
+            };
+            return direction;
           },
         },
       },
@@ -66,7 +73,7 @@ var knobsAndLevers = {
       this.args.width = configs.general.gridSquareSideLength;
       this.args.height = configs.general.gridSquareSideLength;
       this.args.x = configs.canvas.width / 2;
-      images.init(this.args.extraArgs.images);
+      images.init(this.args.extraArgs.sprites);
       console.log('centipede defaults initialized');
     },
   },
@@ -83,13 +90,13 @@ var knobsAndLevers = {
     mushroomCreateInterval : 100,
     args : {
       extraArgs : {
+        animationInterval : 50,
         hitPoints : 2,
         type : 'fly',
         speed : {x : 0, y : 2},
-        images : {
-          animationInterval : 50,
+        sprites : {
           objects : {
-            one : [{filename : 'flea-1.png'}, {filename : 'flea-2.png'}],
+            one : {activeIndex : 0, files : ['flea-1.png', 'flea-2.png'], images : []},
           },
           getKey : function(obj) {
             return 'one';
@@ -106,7 +113,7 @@ var knobsAndLevers = {
       this.args.height = configs.general.gridSquareSideLength * 0.75;
       this.args.y = -configs.canvas.height / 10;
       this.interval = supporting.clone(configs.game.interval);
-      images.init(this.args.extraArgs.images);
+      images.init(this.args.extraArgs.sprites);
       console.log('flies defaults initialized');
     },
   },
@@ -190,16 +197,16 @@ var knobsAndLevers = {
       extraArgs : {
         hitPoints : 4,
         type : 'mushroom',
-        images : {
+        sprites : {
           objects : {
-            normal1 : [{filename : 'mushroom-1.png'}],
-            normal2 : [{filename : 'mushroom-2.png'}],
-            normal3 : [{filename : 'mushroom-3.png'}],
-            normal4 : [{filename : 'mushroom-4.png'}],
-            poisoned1 : [{filename : 'mushroom-poisoned-1.png'}],
-            poisoned2 : [{filename : 'mushroom-poisoned-2.png'}],
-            poisoned3 : [{filename : 'mushroom-poisoned-3.png'}],
-            poisoned4 : [{filename : 'mushroom-poisoned-4.png'}],
+            normal1 : {files : ['mushroom-1.png'], images : []},
+            normal2 : {files : ['mushroom-2.png'], images : []},
+            normal3 : {files : ['mushroom-3.png'], images : []},
+            normal4 : {files : ['mushroom-4.png'], images : []},
+            poisoned1 : {files : ['mushroom-poisoned-1.png'], images : []},
+            poisoned2 : {files : ['mushroom-poisoned-2.png'], images : []},
+            poisoned3 : {files : ['mushroom-poisoned-3.png'], images : []},
+            poisoned4 : {files : ['mushroom-poisoned-4.png'], images : []},
           },
           getKey : function(obj) {
             return (obj.poisoned ? 'poisoned' : 'normal') + obj.hitPoints;
@@ -211,7 +218,7 @@ var knobsAndLevers = {
       this.scaleFactor = configs.general.gridSquareSideLength * 0.1;
       this.args.width = configs.general.gridSquareSideLength * 0.8;
       this.args.height = configs.general.gridSquareSideLength * 0.8;
-      images.init(this.args.extraArgs.images);
+      images.init(this.args.extraArgs.sprites);
       console.log('mushroom defaults initialized');
     },
   },
@@ -224,10 +231,10 @@ var knobsAndLevers = {
       extraArgs : {
         type : 'player',
         speed : {x : 0, y : 0},
-        images : {
+        sprites : {
           objects : {
-            player1 : [{filename : 'player1.png'}],
-            player2 : [{filename : 'player2.png'}],
+            player1 : {files : ['player1.png'], images : []},
+            player2 : {files : ['player2.png'], images : []},
           },
           getKey : function(obj) {
             return obj.name ? obj.name : 'player1';
@@ -261,7 +268,7 @@ var knobsAndLevers = {
       ],
       this.startY = configs.canvas.height - this.dimensions.height - 1;
       this.args.y = this.startY;
-      images.init(this.args.extraArgs.images);
+      images.init(this.args.extraArgs.sprites);
     },
     resetCheats : function() {
       knobsAndLevers.resetParameter(this.speed);
@@ -280,13 +287,13 @@ var knobsAndLevers = {
     },
     args : {
       extraArgs : {
+        animationInterval : 50,
         hitPoints : 1,
         type : 'spider',
         speed : {x : 1, y : 1},
-        images : {
-          animationInterval : 50,
+        sprites : {
           objects : {
-            one : [{filename : 'spider-1.png'}, {filename : 'spider-2.png'}],
+            one : {activeIndex : 0, files : ['spider-1.png', 'spider-2.png'], images : []},
           },
           getKey : function(obj) {
             return 'one';
@@ -304,7 +311,7 @@ var knobsAndLevers = {
       this.args.height = configs.general.gridSquareSideLength * 0.5;
       this.args.x = 1;
       this.interval = supporting.clone(configs.game.interval);
-      images.init(this.args.extraArgs.images);
+      images.init(this.args.extraArgs.sprites);
       console.log('spider defaults initialized');
     },
   },
@@ -338,16 +345,16 @@ var knobsAndLevers = {
     },
     args : {
       extraArgs : {
+        animationInterval : 50,
         hitPoints : 1,
         type : 'worm',
         speed : {x : 0.5, y : 0},
-        images : {
-          animationInterval : 50,
+        sprites : {
           objects : {
-            leftcrazy : [{filename : 'worm-1-left-crazy.png'}],
-            rightcrazy : [{filename : 'worm-1-right-crazy.png'}],
-            leftnormal : [{filename : 'worm-1-left-normal.png'}, {filename : 'worm-2-left-normal.png'}],
-            rightnormal : [{filename : 'worm-1-right-normal.png'}, {filename : 'worm-2-right-normal.png'}],
+            leftcrazy : {activeIndex : 0, files : ['worm-1-left-crazy.png'], images : []},
+            rightcrazy : {activeIndex : 0, files : ['worm-1-right-crazy.png'], images : []},
+            leftnormal : {activeIndex : 0, files : ['worm-1-left-normal.png', 'worm-2-left-normal.png'], images : []},
+            rightnormal : {activeIndex : 0, files : ['worm-1-right-normal.png', 'worm-2-right-normal.png'], images : []},
           },
           getKey : function(obj) {
             return (obj.speedX > 0 ? 'right' : 'left') + obj.imageType;
@@ -388,7 +395,7 @@ var knobsAndLevers = {
       this.args.height = configs.general.gridSquareSideLength;
       this.args.defaultHeight = this.args.height;
       this.interval = supporting.clone(configs.game.interval);
-      images.init(this.args.extraArgs.images);
+      images.init(this.args.extraArgs.sprites);
       console.log('worm defaults initialized');
     },
   },
