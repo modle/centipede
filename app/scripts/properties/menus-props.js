@@ -37,6 +37,7 @@ var menusProps = {
   },
   screens : {
     cheats : {
+      activeIndex : 0,
       order : ['laserQTY', 'laserSpeed', 'shipSpeed', 'reset', 'back'],
       update : function() {
         let theCheats = menus.screens.cheats.entries;
@@ -110,6 +111,7 @@ var menusProps = {
       },
     },
     instructions : {
+      activeIndex : 0,
       order : ['back'],
       entries : {
         back : {
@@ -129,6 +131,7 @@ var menusProps = {
       },
     },
     playerActivate : {
+      activeIndex : 0,
       order : [
         'check',
         'start',
@@ -185,6 +188,7 @@ var menusProps = {
       },
     },
     playerSelect : {
+      activeIndex : 0,
       order : [
         'onePlayer',
         'twoPlayer',
@@ -222,6 +226,7 @@ var menusProps = {
       },
     },
     settings : {
+      activeIndex : 0,
       order : ['sound', 'back'],
       update : function() {
         let theSettings = menus.screens.settings.entries;
