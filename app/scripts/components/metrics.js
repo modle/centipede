@@ -1,24 +1,14 @@
-/*jslint white: true */
 var metrics = {
   floatingPoints : [],
   floatingPointCycleDuration : 50,
   lives : {player1 : 0, player2 : 0},
   extraLivesGained : 0,
   currentLevel : {},
-  score : {},
+  score : {player1 : 0, player2 : 0},
   lastScore : 0,
   init : function() {
     this.currentLevel = knobsAndLevers.game.startLevel;
-    let scoreParams = Object.assign({}, knobsAndLevers.text.baseParams);
-    scoreParams.x = 100;
-    scoreParams.y = knobsAndLevers.text.gameInfoHeight;
-    this.score.player1 = new Component(scoreParams);
-    this.score.player1.value = 0;
-    scoreParams.x = 200;
-    this.score.player2 = new Component(scoreParams);
-    this.score.player2.value = 0;
     this.lives.player1 = knobsAndLevers.player.defaultLives;
-    this.lives.player2 = knobsAndLevers.player.defaultLives;
     this.livesMarker = Object.assign({}, templates.marker);
     console.log("metrics initialized");
   },
@@ -27,15 +17,15 @@ var metrics = {
     this.manageTier();
   },
   changeScore : function(change) {
-    this.score.player1.value += change;
-    this.score.player1.value = this.score.player1.value < 0 ? 0 : this.score.player1.value;
+    this.score.player1 += change;
+    this.score.player1 = this.score.player1 < 0 ? 0 : this.score.player1;
   },
   manageTier : function() {
     this.setTier();
     this.manageLives();
   },
   setTier : function() {
-    let newTier = Math.floor((this.score.player1.value + 1) / knobsAndLevers.game.tier.incrementScore) + 1;
+    let newTier = Math.floor((this.score.player1 + 1) / knobsAndLevers.game.tier.incrementScore) + 1;
     if (!newTier) {
       throw('problem calculating tier');
     };
@@ -79,8 +69,7 @@ var metrics = {
     this.lives.player1 = knobsAndLevers.player.defaultLives;
     this.lives.player2 = knobsAndLevers.player.defaultLives;
     this.currentLevel = 1;
-    this.lastScore = this.score.player1.value;
-    this.score.player1.value = 0;
-    this.score.player2.value = 0;
+    this.lastScore = this.score.player1;
+    this.score.player1 = 0;
   },
 };

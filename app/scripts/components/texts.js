@@ -1,58 +1,71 @@
-/*jslint white: true */
 var texts = {
+  textParams : {},
   init : function() {
-    this.livesDisplay = new Component(this.getLivesParams());
-    this.level = new Component(this.getLevelParams());
-    this.pausedMessage = new Component(this.getPausedMessageParams());
-    this.diedText = new Component(this.getDiedTextParams());
-    this.gameOver = new Component(this.getGameOverTextParams());
+    this.setTextParams();
+    this.buildBackgrounds(this.textParams);
+    this.createElements();
     console.log("texts initialized");
   },
-  copyBaseMessageParams : function() {
-    return Object.assign({}, knobsAndLevers.text.baseParams);
+  setTextParams : function() {
+    this.textParams = {
+      level : Object.assign(this.getDefaults(), {
+        x : knobsAndLevers.canvas.width * 0.6,
+        y : this.getDefaults().gameInfoHeight,
+      }),
+      lives : Object.assign(this.getDefaults(), {
+        x : 720,
+        y : this.getDefaults().gameInfoHeight,
+      }),
+      score : Object.assign(this.getDefaults(), {
+        x : 100,
+        y : this.getDefaults().gameInfoHeight,
+      }),
+      died : Object.assign(this.getDefaults(), {
+        fontSize : (knobsAndLevers.general.gridSquareSideLength * 1.5) + "px",
+        y : knobsAndLevers.canvas.height * 0.75,
+        backgroundMultipliers : {
+          y : 1.01,
+          height : 1.8,
+        },
+      }),
+      paused : Object.assign(this.getDefaults(), {
+        y : knobsAndLevers.canvas.height * 0.9,
+        backgroundMultipliers : {
+          y : 1.01,
+          height : 1,
+        },
+      }),
+      gameOver : Object.assign(this.getDefaults(), {
+        fontSize : '50px',
+        y : knobsAndLevers.canvas.height * 0.5,
+        backgroundMultipliers : {
+          y : 1.05,
+          height : 3,
+        },
+      }),
+    };
   },
-  copyBaseTextBackgroundParams : function() {
-    return Object.assign({}, knobsAndLevers.text.baseBackgroundParams);
+  getDefaults : function() {
+    return supporting.clone(knobsAndLevers.text.baseParams);
   },
-  getLevelParams : function() {
-    let levelParams = this.copyBaseMessageParams();
-    levelParams.x = game.gameArea.canvas.width * 0.6;
-    levelParams.y = knobsAndLevers.text.gameInfoHeight;
-    return levelParams;
+  buildBackgrounds : function(params) {
+    Object.keys(params).forEach(key => {
+      let multipliers = params[key].backgroundMultipliers;
+      if (!multipliers) {
+        return;
+      };
+      let defaults = supporting.clone(knobsAndLevers.text.baseBackgroundParams);
+      defaults.height *= multipliers.height;
+      defaults.y = (params[key].y - defaults.height) * multipliers.y;
+      params[key].background = new Component(defaults);
+    });
   },
-  getLivesParams : function() {
-    let livesParams = this.copyBaseMessageParams();
-    livesParams.x = 720;
-    livesParams.y = knobsAndLevers.text.gameInfoHeight;
-    return livesParams;
+  createElements : function() {
+    this.lives = new Component(this.textParams.lives);
+    this.score = new Component(this.textParams.score);
+    this.level = new Component(this.textParams.level);
+    this.pausedMessage = new Component(this.textParams.paused);
+    this.diedText = new Component(this.textParams.died);
+    this.gameOver = new Component(this.textParams.gameOver);
   },
-  getDiedTextParams : function() {
-    let diedTextParams = this.copyBaseMessageParams();
-    diedTextParams.fontSize = (knobsAndLevers.general.gridSquareSideLength * 1.5) + "px";
-    diedTextParams.y = game.gameArea.canvas.height * 0.75;
-    let backgroundParams = this.copyBaseTextBackgroundParams();
-    backgroundParams.height *= 1.5;
-    backgroundParams.y = (diedTextParams.y - backgroundParams.height) * 1.01;
-    diedTextParams.background = new Component(backgroundParams);
-    return diedTextParams;
-  },
-  getPausedMessageParams : function() {
-    let pausedMessageTextParams = this.copyBaseMessageParams();
-    pausedMessageTextParams.y = game.gameArea.canvas.height * 0.9;
-    let backgroundParams = this.copyBaseTextBackgroundParams();
-    backgroundParams.y = (pausedMessageTextParams.y - backgroundParams.height) * 1.01;
-    pausedMessageTextParams.background = new Component(backgroundParams);
-    return pausedMessageTextParams;
-  },
-  getGameOverTextParams : function() {
-    let gameOverTextParams = this.copyBaseMessageParams();
-    gameOverTextParams.fontSize = "50px";
-    gameOverTextParams.color = "navy";
-    gameOverTextParams.y = game.gameArea.canvas.height * 0.5;
-    let backgroundParams = this.copyBaseTextBackgroundParams();
-    backgroundParams.height *= 3;
-    backgroundParams.y = (gameOverTextParams.y - backgroundParams.height) * 1.05;
-    gameOverTextParams.background = new Component(backgroundParams);
-    return gameOverTextParams;
-  }
-}
+};

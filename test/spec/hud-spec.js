@@ -26,14 +26,14 @@ describe('HUD SPEC: ', () => {
     metrics.init();
     metrics.lives.player1 = 10;
     let expected = metrics.lives.player1;
-    spyOn(texts.livesDisplay, 'update');
+    spyOn(texts.lives, 'update');
     spyOn(metrics.livesMarker, 'update');
 
     testObj.updateLives();
 
-    expect(texts.livesDisplay.text).toEqual(expected);
+    expect(texts.lives.text).toEqual(expected);
     expect(metrics.livesMarker.update).toHaveBeenCalled();
-    expect(texts.livesDisplay.update).toHaveBeenCalled();
+    expect(texts.lives.update).toHaveBeenCalled();
   });
   xit('updateLevel updates level', () => {
     metrics.init();

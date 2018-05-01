@@ -318,18 +318,18 @@ var knobsAndLevers = {
       fontSize : "20px",
       color : "black",
       extraArgs : {type:"text"},
+      gameInfoHeight : 40,
     },
     baseBackgroundParams : {
       color : "lightgrey",
       x : 0,
       extraArgs : {type:"background"},
     },
-    gameInfoHeight : 40,
     init : function(configs) {
       this.baseParams.x = configs.canvas.width * 0.25;
       this.baseBackgroundParams.height = configs.general.gridSquareSideLength;
       this.baseBackgroundParams.width = configs.canvas.width;
-      this.gameInfoHeight = configs.general.gridSquareSideLength * 1.3;
+      this.baseParams.gameInfoHeight = configs.general.gridSquareSideLength * 1.3;
       console.log('text defaults initialized');
     },
   },
