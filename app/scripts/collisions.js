@@ -17,7 +17,7 @@ var collisions = {
     targets.push(...mushrooms.mushrooms);
     targets.push(...centipedes.centipedes);
     targets.push(...gameObjects.worms);
-    targets.push(...gameObjects.flies);
+    targets.push(...gameObjects.fleas);
     targets.push(...gameObjects.spiders);
     return targets;
   },
@@ -72,7 +72,7 @@ var collisions = {
   getPlayerEnemies : function() {
     targets = [];
     targets.push(...centipedes.centipedes);
-    targets.push(...gameObjects.flies);
+    targets.push(...gameObjects.fleas);
     targets.push(...gameObjects.spiders);
     return targets;
   },
@@ -102,7 +102,7 @@ var collisions = {
     mushrooms.mushrooms = mushrooms.mushrooms.filter(mushroom => mushroom.hitPoints > 0);
     centipedes.centipedes = centipedes.centipedes.filter(centipede => centipede.hitPoints > 0);
     gameObjects.worms = gameObjects.worms.filter(worm => worm.hitPoints > 0);
-    gameObjects.flies = gameObjects.flies.filter(fly => fly.hitPoints > 0);
+    gameObjects.fleas = gameObjects.fleas.filter(flea => flea.hitPoints > 0);
     gameObjects.spiders = gameObjects.spiders.filter(spider => spider.hitPoints > 0);
   },
 };

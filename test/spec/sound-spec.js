@@ -32,7 +32,7 @@ describe('SOUND SPEC: ', () => {
   it('manageSounds delegates to sound manage functions', () => {
     spyOn(testObj, 'manageCentipedeSounds');
     spyOn(testObj, 'manageSpiderSounds');
-    spyOn(testObj, 'manageFlySounds');
+    spyOn(testObj, 'manageFleaSounds');
     spyOn(testObj, 'manageWormSounds');
     knobsAndLevers.game.sounds.value = true;
 
@@ -40,7 +40,7 @@ describe('SOUND SPEC: ', () => {
 
     expect(testObj.manageCentipedeSounds).toHaveBeenCalled();
     expect(testObj.manageSpiderSounds).toHaveBeenCalled();
-    expect(testObj.manageFlySounds).toHaveBeenCalled();
+    expect(testObj.manageFleaSounds).toHaveBeenCalled();
     expect(testObj.manageWormSounds).toHaveBeenCalled();
   });
   it('buildManySounds builds expected number of sounds', () => {
@@ -88,35 +88,35 @@ describe('SOUND SPEC: ', () => {
 
     expect(testObj.playSound).not.toHaveBeenCalled();
   });
-  it('manageFlySounds calls fly sound play', () => {
-    gameObjects.flies = [{}];
+  it('manageFleaSounds calls flea sound play', () => {
+    gameObjects.fleas = [{}];
     let testSound = {};
-    testObj.tracks.fly = testSound;
+    testObj.tracks.flea = testSound;
     spyOn(testObj, 'playSound');
 
-    testObj.manageFlySounds();
+    testObj.manageFleaSounds();
 
     expect(testObj.playSound).toHaveBeenCalledWith(testSound);
-    expect(testObj.tracks['fly'].played).toBeTruthy();
+    expect(testObj.tracks['flea'].played).toBeTruthy();
   });
-  it('manageFlySounds does not call fly sound play if played is true', () => {
-    gameObjects.flies = [{}];
-    spyOn(testObj.tracks['fly'], 'play');
-    testObj.tracks['fly'].played = true;
+  it('manageFleaSounds does not call flea sound play if played is true', () => {
+    gameObjects.fleas = [{}];
+    spyOn(testObj.tracks['flea'], 'play');
+    testObj.tracks['flea'].played = true;
 
-    testObj.manageFlySounds();
+    testObj.manageFleaSounds();
 
-    expect(testObj.tracks['fly'].play).not.toHaveBeenCalled();
-    expect(testObj.tracks['fly'].played).toBeTruthy();
+    expect(testObj.tracks['flea'].play).not.toHaveBeenCalled();
+    expect(testObj.tracks['flea'].played).toBeTruthy();
   });
-  it('manageFlySounds sets played to false when fly is not present', () => {
-    gameObjects.flies = [];
-    spyOn(testObj.tracks['fly'], 'play');
+  it('manageFleaSounds sets played to false when flea is not present', () => {
+    gameObjects.fleas = [];
+    spyOn(testObj.tracks['flea'], 'play');
 
-    testObj.manageFlySounds();
+    testObj.manageFleaSounds();
 
-    expect(testObj.tracks['fly'].play).not.toHaveBeenCalled();
-    expect(testObj.tracks['fly'].played).toBeFalsy();
+    expect(testObj.tracks['flea'].play).not.toHaveBeenCalled();
+    expect(testObj.tracks['flea'].played).toBeFalsy();
   });
   it('manageWormSounds calls worm sound play', () => {
     gameObjects.worms.push({});
@@ -204,13 +204,13 @@ describe('SOUND SPEC: ', () => {
     spyOn(testObj.tracks['centipede'], 'stop');
     spyOn(testObj.tracks['spider'], 'stop');
     spyOn(testObj.tracks['worm'], 'stop');
-    spyOn(testObj.tracks['fly'], 'stop');
+    spyOn(testObj.tracks['flea'], 'stop');
 
     testObj.stopAllSounds();
 
     expect(testObj.tracks['centipede'].stop).toHaveBeenCalled();
     expect(testObj.tracks['spider'].stop).toHaveBeenCalled();
     expect(testObj.tracks['worm'].stop).toHaveBeenCalled();
-    expect(testObj.tracks['fly'].stop).toHaveBeenCalled();
+    expect(testObj.tracks['flea'].stop).toHaveBeenCalled();
   });
 });

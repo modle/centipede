@@ -13,7 +13,7 @@ describe('KNOBS AND LEVERS SPEC: ', () => {
   it('init should call parameter init functions', () => {
     spyOn(testObj.general, 'init');
     spyOn(testObj.centipede, 'init');
-    spyOn(testObj.flies, 'init');
+    spyOn(testObj.fleas, 'init');
     spyOn(testObj.player, 'init');
     spyOn(testObj.laser, 'init');
     spyOn(testObj.mushrooms, 'init');
@@ -25,7 +25,7 @@ describe('KNOBS AND LEVERS SPEC: ', () => {
 
     expect(testObj.general.init).toHaveBeenCalled();
     expect(testObj.centipede.init).toHaveBeenCalled();
-    expect(testObj.flies.init).toHaveBeenCalled();
+    expect(testObj.fleas.init).toHaveBeenCalled();
     expect(testObj.player.init).toHaveBeenCalled();
     expect(testObj.laser.init).toHaveBeenCalled();
     expect(testObj.mushrooms.init).toHaveBeenCalled();
@@ -47,13 +47,13 @@ describe('KNOBS AND LEVERS SPEC: ', () => {
     expect(testObj.centipede.args.height).toBeTruthy();
     expect(testObj.centipede.args.x).toBeTruthy();
   });
-  it('flies.init initializes flies parameters', () => {
-    testObj.flies.init(knobsAndLevers);
+  it('fleas.init initializes fleas parameters', () => {
+    testObj.fleas.init(knobsAndLevers);
 
-    expect(testObj.flies.initialInterval).toBeDefined();
-    expect(testObj.flies.args.width).toBeTruthy();
-    expect(testObj.flies.args.height).toBeTruthy();
-    expect(testObj.flies.args.y).not.toBeUndefined();
+    expect(testObj.fleas.initialInterval).toBeDefined();
+    expect(testObj.fleas.args.width).toBeTruthy();
+    expect(testObj.fleas.args.height).toBeTruthy();
+    expect(testObj.fleas.args.y).not.toBeUndefined();
   });
   it('player.init initializes player parameters', () => {
     testObj.player.init(knobsAndLevers);
@@ -99,9 +99,9 @@ describe('KNOBS AND LEVERS SPEC: ', () => {
     expect(testObj.worms.args.width).toBeTruthy();
     expect(testObj.worms.args.height).toBeTruthy();
   });
-  it('flies.args.constructorFunctions.setX should set knobsAndLevers.flies.args.x', () => {
+  it('fleas.args.constructorFunctions.setX should set knobsAndLevers.fleas.args.x', () => {
     knobsAndLevers.init();
-    knobsAndLevers.flies.args.constructorFunctions.setX();
-    expect(knobsAndLevers.flies.args.x).toBeDefined();
+    knobsAndLevers.fleas.args.constructorFunctions.setX();
+    expect(knobsAndLevers.fleas.args.x).toBeDefined();
   });
 });

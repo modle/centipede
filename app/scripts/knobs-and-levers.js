@@ -3,7 +3,7 @@ var knobsAndLevers = {
   init : function() {
     this.general.init(this);
     this.centipede.init(this);
-    this.flies.init(this);
+    this.fleas.init(this);
     this.player.init(this);
     this.lasers.init(this);
     this.mushrooms.init(this);
@@ -86,9 +86,9 @@ var knobsAndLevers = {
     },
   },
   components : {
-    imageTypes : ['centipede', 'fly', 'worm', 'mushroom', 'spider', 'player'],
+    imageTypes : ['centipede', 'flea', 'worm', 'mushroom', 'spider', 'player'],
   },
-  flies : {
+  fleas : {
     maxNumber : 0,
     pointValue : 200,
     interval : {
@@ -100,7 +100,7 @@ var knobsAndLevers = {
       extraArgs : {
         animationInterval : 50,
         hitPoints : 2,
-        type : 'fly',
+        type : 'flea',
         speed : {x : 0, y : 2},
       },
       sprites : {
@@ -110,7 +110,7 @@ var knobsAndLevers = {
         return 'one';
       },
       constructorFunctions : {
-        setX : function(fly) { fly.x = supporting.getRandom(0, knobsAndLevers.canvas.width) },
+        setX : function(flea) { flea.x = supporting.getRandom(0, knobsAndLevers.canvas.width) },
       }
     },
     init : function(configs) {
@@ -119,7 +119,7 @@ var knobsAndLevers = {
       this.args.height = configs.general.gridSquareSideLength * 0.75;
       this.args.y = -configs.canvas.height / 10;
       this.interval = supporting.clone(configs.game.interval);
-      console.log('flies defaults initialized');
+      console.log('fleas defaults initialized');
     },
   },
   game : {

@@ -12,7 +12,7 @@ describe('INTERVAL CREATURES SPEC: ', () => {
     testObj = Object.assign({}, gameObjects);
     testObj.init();
     testObj.worms = [];
-    testObj.flies = [];
+    testObj.fleas = [];
   });
   function mockTestObj() {
     spyOn(testObj, 'spawnCreatureAtIntervals');
@@ -80,9 +80,9 @@ describe('INTERVAL CREATURES SPEC: ', () => {
     spyOn(testObj, 'eligibleToDrop').and.returnValue(true);
     spyOn(mushrooms, 'make').and.returnValue({});
     mushrooms.mushrooms = [];
-    let fly = {x : 5, y : 100};
+    let flea = {x : 5, y : 100};
 
-    testObj.dropMushrooms(fly);
+    testObj.dropMushrooms(flea);
 
     expect(testObj.eligibleToDrop).toHaveBeenCalled();
     expect(mushrooms.make).toHaveBeenCalled();
@@ -90,7 +90,7 @@ describe('INTERVAL CREATURES SPEC: ', () => {
 
   it('eligibleToDrop returns false if not valid interval', () => {
     game.frameNo = 1;
-    knobsAndLevers.flies.mushroomCreateInterval = 2;
+    knobsAndLevers.fleas.mushroomCreateInterval = 2;
 
     let canDrop = testObj.eligibleToDrop();
     expect(canDrop).toBeFalsy();
@@ -146,32 +146,32 @@ describe('INTERVAL CREATURES SPEC: ', () => {
 
     expect(testObj.worms.length).toBe(0);
   });
-  it('clearOutsideCanvas clears flies with y greater than canvas height', () => {
-    testObj.flies = [{}];
-    testObj.flies[0].y = game.gameArea.canvas.height + 1;
+  it('clearOutsideCanvas clears fleas with y greater than canvas height', () => {
+    testObj.fleas = [{}];
+    testObj.fleas[0].y = game.gameArea.canvas.height + 1;
 
-    testObj.flies = testObj.clearOutsideCanvas('flies');
+    testObj.fleas = testObj.clearOutsideCanvas('fleas');
 
-    expect(testObj.flies.length).toBe(0);
+    expect(testObj.fleas.length).toBe(0);
   });
-  it('clearOutsideCanvas does not clear flies with y less than canvas height', () => {
-    testObj.flies = [{}]
-    expect(testObj.flies.length).toBe(1);
+  it('clearOutsideCanvas does not clear fleas with y less than canvas height', () => {
+    testObj.fleas = [{}]
+    expect(testObj.fleas.length).toBe(1);
 
-    testObj.flies[0].y = game.gameArea.canvas.height * 2;
-    testObj.flies[0].x = game.gameArea.canvas.width * 2;
+    testObj.fleas[0].y = game.gameArea.canvas.height * 2;
+    testObj.fleas[0].x = game.gameArea.canvas.width * 2;
 
-    testObj.clearOutsideCanvas('flies');
+    testObj.clearOutsideCanvas('fleas');
 
-    expect(testObj.flies.length).toBe(1);
+    expect(testObj.fleas.length).toBe(1);
   });
-  it('clearOutsideCanvas does not clear flies with y less than canvas height', () => {
-    testObj.flies = [];
-    expect(testObj.flies.length).toBe(0);
+  it('clearOutsideCanvas does not clear fleas with y less than canvas height', () => {
+    testObj.fleas = [];
+    expect(testObj.fleas.length).toBe(0);
 
-    testObj.clearOutsideCanvas('flies');
+    testObj.clearOutsideCanvas('fleas');
 
-    expect(testObj.flies.length).toBe(0);
+    expect(testObj.fleas.length).toBe(0);
   });
   it('clear results in empty worms list', () => {
     testObj.worms = [{}];
@@ -180,11 +180,11 @@ describe('INTERVAL CREATURES SPEC: ', () => {
 
     expect(testObj.worms.length).toBe(0);
   });
-  it('clear results in empty flies list', () => {
-    testObj.flies = [{}];
+  it('clear results in empty fleas list', () => {
+    testObj.fleas = [{}];
 
     testObj.clear();
 
-    expect(testObj.flies.length).toBe(0);
+    expect(testObj.fleas.length).toBe(0);
   });
 });

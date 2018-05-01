@@ -239,8 +239,8 @@ var menusProps = {
       entries : {
         // difficulty
           // easy - no spiders
-          // hard - 10 flies
-          // impossible - 100 flies
+          // hard - 10 fleas
+          // impossible - 100 fleas
         // spider aggression
           // high/normal
         // centipedes

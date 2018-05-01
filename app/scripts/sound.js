@@ -5,7 +5,7 @@ var sounds = {
     this.tracks = {
       centipede : this.buildSound("centipede", 0.5),
       spider : this.buildSound("spider", 0.3),
-      fly : this.buildSound("fly", 0.3),
+      flea : this.buildSound("flea", 0.3),
       worm : this.buildSound("worm", 0.5, "loop"),
       playerDied : this.buildSound("player-died", 0.5),
       tierChange : this.buildSound("tier-change", 0.3),
@@ -30,7 +30,7 @@ var sounds = {
     };
     this.manageCentipedeSounds();
     this.manageSpiderSounds();
-    this.manageFlySounds();
+    this.manageFleaSounds();
     this.manageWormSounds();
   },
   manageCentipedeSounds : function() {
@@ -51,9 +51,9 @@ var sounds = {
       this.playSound(this.getSound('spider'));
     };
   },
-  manageFlySounds : function() {
-    let sound = this.tracks['fly'];
-    if (gameObjects.flies != false) {
+  manageFleaSounds : function() {
+    let sound = this.tracks['flea'];
+    if (gameObjects.fleas != false) {
       if (!sound.played) {
         this.playSound(sound);
       };
@@ -98,7 +98,7 @@ var sounds = {
     this.stopSound('centipede');
     this.stopSound('spider');
     this.stopSound('worm');
-    this.stopSound('fly');
+    this.stopSound('flea');
     this.stopSound('tierChange');
   },
 };

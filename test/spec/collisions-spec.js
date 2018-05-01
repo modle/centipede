@@ -35,7 +35,7 @@ describe('COLLISIONS SPEC: ', () => {
     mushrooms.mushrooms = [];
     centipedes.centipedes = [];
     gameObjects.worms = [];
-    gameObjects.flies = ['anObj'];
+    gameObjects.fleas = ['anObj'];
     spiders.spiders = ['anObj'];
 
     targets = testObj.getLaserTargets();
@@ -182,7 +182,7 @@ describe('COLLISIONS SPEC: ', () => {
 
   it('getPlayerEnemies combines multiple enemy Arrays', () => {
     centipedes.centipedes = [];
-    gameObjects.flies = ['anObj'];
+    gameObjects.fleas = ['anObj'];
     spiders.spiders = ['anObj'];
 
     targets = testObj.getPlayerEnemies();
@@ -289,7 +289,7 @@ describe('COLLISIONS SPEC: ', () => {
     mushrooms.mushrooms = [{hitPoints : 0}, {hitPoints : 1}];
     centipedes.centipedes = [{hitPoints : 0}, {hitPoints : 1}];
     gameObjects.worms = [{hitPoints : 0}, {hitPoints : 1}];
-    gameObjects.flies = [{hitPoints : 0}, {hitPoints : 1}];
+    gameObjects.fleas = [{hitPoints : 0}, {hitPoints : 1}];
     spiders.spiders = [{hitPoints : 0}, {hitPoints : 1}];
 
     testObj.removeDestroyedTargets();
@@ -297,7 +297,7 @@ describe('COLLISIONS SPEC: ', () => {
     expect(mushrooms.mushrooms.length).toEqual(1);
     expect(centipedes.centipedes.length).toEqual(1);
     expect(gameObjects.worms.length).toEqual(1);
-    expect(gameObjects.flies.length).toEqual(1);
+    expect(gameObjects.fleas.length).toEqual(1);
     expect(spiders.spiders.length).toEqual(1);
   });
 });

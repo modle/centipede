@@ -1,11 +1,11 @@
 /*jslint white: true */
 var gameObjects = {
   worms : [],
-  flies : [],
+  fleas : [],
   spiders : [],
   init : function() {
     this.intervals = {
-      flies : knobsAndLevers.flies.initialInterval,
+      fleas : knobsAndLevers.fleas.initialInterval,
       worms : knobsAndLevers.worms.initialInterval,
       spiders : knobsAndLevers.spiders.initialInterval,
     };
@@ -25,8 +25,8 @@ var gameObjects = {
     if (supporting.everyinterval(game.gameArea.frameNo, this.intervals[type])) {
       this.intervals[type] = supporting.getRandom(knobsAndLevers[type].interval.min, knobsAndLevers[type].interval.max);
       this.spawn(type);
-      if (type == 'flies') {
-        knobsAndLevers.flies.mushroomCreateInterval = supporting.getRandom(75, 150);
+      if (type == 'fleas') {
+        knobsAndLevers.fleas.mushroomCreateInterval = supporting.getRandom(75, 150);
       };
     };
   },
@@ -62,7 +62,7 @@ var gameObjects = {
         this.setDirection(creature);
         this.removeMushrooms(creature);
       };
-      if (type == 'flies') {
+      if (type == 'fleas') {
         this.dropMushrooms(creature);
       };
       if (type == 'worms') {
@@ -92,7 +92,7 @@ var gameObjects = {
   eligibleToDrop : function() {
     return supporting.everyinterval(
       game.gameArea.frameNo,
-      knobsAndLevers.flies.mushroomCreateInterval
+      knobsAndLevers.fleas.mushroomCreateInterval
     );
   },
   removeMushrooms : function(creature) {
@@ -112,7 +112,7 @@ var gameObjects = {
   },
   clear : function() {
     this.worms = [];
-    this.flies = [];
+    this.fleas = [];
     this.spiders = [];
   },
 };
