@@ -67,6 +67,17 @@ var knobsAndLevers = {
         return direction;
       },
     },
+    defaults : {
+      directionX : 1,
+      directionY : 1,
+      distanceMovedX : 0,
+      distanceMovedY : 0,
+      distanceMovedFromBottom : 0,
+      reverseDirectionX : false,
+      reverseDirectionY : false,
+      moveVertically : true,
+      updated : false,
+    },
     init : function(configs) {
       this.args.width = configs.general.gridSquareSideLength;
       this.args.height = configs.general.gridSquareSideLength;

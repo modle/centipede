@@ -48,18 +48,9 @@ var centipedes = {
     knobsAndLevers.centipede.args.x = this.positions[this.centipedes.length % this.positions.length];
   },
   make : function() {
-    centipede = new Component(knobsAndLevers.centipede.args);
-    centipede.directionX = 1;
-    centipede.directionY = 1;
-    centipede.distanceMovedX = 0;
-    centipede.distanceMovedY = 0;
-    centipede.distanceMovedFromBottom = 0;
-    centipede.reverseDirectionX = false;
-    centipede.reverseDirectionY = false;
-    centipede.moveVertically = true;
+    let centipede = Object.assign(new Component(knobsAndLevers.centipede.args), knobsAndLevers.centipede.defaults);
     let pointValue = knobsAndLevers.centipede.pointValue;
     centipede.pointValue = supporting.getRandom(pointValue, pointValue + 20);
-    centipede.updated = false;
     return centipede;
   },
   cannotAdd : function(centipede) {
