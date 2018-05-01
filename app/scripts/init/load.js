@@ -29,9 +29,11 @@ var libs = [
   'menus/initials.js',
   'menus/main-menu.js',
   'menus.js',
+  'metrics.js',
   'playerBase.js',
   'sound.js',
   'templates.js',
+  'texts.js',
 ];
 
 var scripts = [
@@ -39,10 +41,8 @@ var scripts = [
   'components/centipedes.js',
   'components/game-objects.js',
   'components/lasers.js',
-  'components/metrics.js',
   'components/mushrooms.js',
   'components/players.js',
-  'components/texts.js',
   'game.js',
   'init/init.js',
   'knobs-and-levers.js',
