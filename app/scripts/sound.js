@@ -1,26 +1,30 @@
 var sounds = {
   // TODO abstract non-centipede functionality and move to canvas-libs
   path : 'app/static/media/sounds/',
+  tracks : {
+    centipede : {filename : 'centipede.mp3', volume : 0.5, qty : 1, pool : []},
+    spider : {filename : 'spider.mp3', volume : 0.3, qty : 1, pool : []},
+    flea : {filename : 'flea.mp3', volume : 0.3, qty : 1, pool : []},
+    worm : {filename : 'worm.mp3', volume : 0.3, qty : 1, pool : []},
+    playerDied : {filename : 'player-died.mp3', volume : 0.3, qty : 1, pool : []},
+    tierChange : {filename : 'tier-change.mp3', volume : 0.3, qty : 1, pool : []},
+    laserPool : {filename : 'laser.mp3', volume : 0.3, qty : 20, pool : []},
+    impactPool : {filename : 'laser-impact.mp3', volume : 0.3, qty : knobsAndLevers.lasers.quantity.value, pool : []},
+  },
   init : function() {
-    this.tracks = {
-      centipede : this.buildSound("centipede", 0.5),
-      spider : this.buildSound("spider", 0.3),
-      flea : this.buildSound("flea", 0.3),
-      worm : this.buildSound("worm", 0.5, "loop"),
-      playerDied : this.buildSound("player-died", 0.5),
-      tierChange : this.buildSound("tier-change", 0.3),
-      laserPool : this.buildManySounds("laser", 20),
-      impactPool : this.buildManySounds("laser-impact", knobsAndLevers.lasers.quantity.value),
-    };
+    Object.keys(this.tracks).forEach(key => {
+      let type = this.tracks[key];
+      type.pool = this.buildManySounds(type.filename, type.volume, type.qty);
+    });
     console.log("sounds initialized");
   },
-  buildSound : function(filename, volume, loop) {
-    return new Sound(this.path + filename + ".mp3", volume, loop);
+  buildSound : function(filename, volume) {
+    return new Sound(this.path + filename, volume);
   },
-  buildManySounds : function(type, poolSize) {
+  buildManySounds : function(type, volume, qty) {
     let soundArray = [];
-    while (soundArray.length < poolSize) {
-      soundArray.push(this.buildSound(type, 0.5));
+    while (soundArray.length < qty) {
+      soundArray.push(this.buildSound(type, volume));
     };
     return soundArray;
   },
@@ -39,7 +43,12 @@ var sounds = {
     };
   },
   getSound : function(type) {
-    return this.tracks[type];
+    return this.getAvailableSound(this.tracks[type].pool);
+  },
+  getAvailableSound : function(availableSounds) {
+    let sound = availableSounds.pop();
+    availableSounds.unshift(sound);
+    return sound;
   },
   playSound : function(sound) {
     if (knobsAndLevers.game.sounds.value) {
@@ -52,7 +61,7 @@ var sounds = {
     };
   },
   manageFleaSounds : function() {
-    let sound = this.tracks['flea'];
+    let sound = this.getSound('flea');
     if (gameObjects.fleas != false) {
       if (!sound.played) {
         this.playSound(sound);
@@ -66,26 +75,18 @@ var sounds = {
     if (gameObjects.worms != false) {
       this.playSound(this.getSound('worm'));
     } else {
-      this.stopSound('worm');
+      this.stopSound(this.tracks['worm'].pool);
     };
   },
-  stopSound : function(type) {
-    this.tracks[type].stop();
+  stopSound : function(pool) {
+    pool.forEach(sound => sound.stop());
   },
   playAvailableLaserSound : function() {
-    this.playSound(this.getSoundFromPool('laserPool'));
-  },
-  getSoundFromPool : function(pool) {
-    return this.getAvailableSound(this.tracks[pool]);
-  },
-  getAvailableSound : function(availableSounds) {
-    let sound = availableSounds.pop();
-    availableSounds.unshift(sound);
-    return sound;
+    this.playSound(this.getSound('laserPool'));
   },
   playImpactSound : function(type) {
     if (type !== 'mushroom') {
-      this.playSound(this.getSoundFromPool('impactPool'));
+      this.playSound(this.getSound('impactPool'));
     };
   },
   playDiedSound : function() {
@@ -95,10 +96,6 @@ var sounds = {
     this.playSound(this.getSound('tierChange'));
   },
   stopAllSounds : function() {
-    this.stopSound('centipede');
-    this.stopSound('spider');
-    this.stopSound('worm');
-    this.stopSound('flea');
-    this.stopSound('tierChange');
+    Object.keys(this.tracks).forEach(key => this.stopSound(this.tracks[key].pool));
   },
 };
