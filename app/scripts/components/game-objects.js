@@ -45,6 +45,7 @@ var gameObjects = {
     let spawnedCreature = new Component(knobsAndLevers[type].args);
     let pointValue = knobsAndLevers[type].pointValue;
     spawnedCreature.pointValue = supporting.getRandom(pointValue, pointValue + 400);
+    spawnedCreature.sound = sounds.getSound(type);
     this[type].push(spawnedCreature);
   },
   clearOutsideCanvas : function(type) {

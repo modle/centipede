@@ -33,7 +33,7 @@ var collisions = {
   },
   processImpact : function(target) {
     this.damageTarget(target);
-    sounds.playImpactSound(target.type);
+    sounds.playSound('impact');
   },
   damageTarget : function(target) {
     target.hitPoints--;

@@ -51,6 +51,7 @@ var centipedes = {
     let centipede = Object.assign(new Component(knobsAndLevers.centipede.args), knobsAndLevers.centipede.defaults);
     let pointValue = knobsAndLevers.centipede.pointValue;
     centipede.pointValue = supporting.getRandom(pointValue, pointValue + 20);
+    centipede.sound = sounds.getSound('centipede');
     return centipede;
   },
   cannotAdd : function(centipede) {

@@ -19,7 +19,7 @@ var lasers = {
       return;
     };
     this.add(player);
-    sounds.playAvailableLaserSound();
+    sounds.playSound('laser');
   },
   eligibleToSpawn : function(player) {
     let eligible = this.lasers[player.name].length < knobsAndLevers.lasers.quantity.value
