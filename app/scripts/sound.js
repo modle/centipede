@@ -10,7 +10,7 @@ var sounds = {
       playerDied : this.buildSound("player-died", 0.5),
       tierChange : this.buildSound("tier-change", 0.3),
       laserPool : this.buildManySounds("laser", 20),
-      impactPool : this.buildManySounds("laser-impact", knobsAndLevers.laser.quantity.value),
+      impactPool : this.buildManySounds("laser-impact", knobsAndLevers.lasers.quantity.value),
     };
     console.log("sounds initialized");
   },

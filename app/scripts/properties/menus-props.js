@@ -50,22 +50,22 @@ var menusProps = {
         // TODO demigod - a ton of lives
         laserQTY : {
           update : function() {
-            this.text = knobsAndLevers.laser.quantity.setting.render();
+            this.text = knobsAndLevers.lasers.quantity.setting.render();
           },
           action : function() {
-            knobsAndLevers.toggleParameter(knobsAndLevers.laser.quantity);
-            game.activeCheats['laserQty'] = knobsAndLevers.laser.quantity.setting.state == "ON";
+            knobsAndLevers.toggleParameter(knobsAndLevers.lasers.quantity);
+            game.activeCheats['laserQty'] = knobsAndLevers.lasers.quantity.setting.state == "ON";
             this.update();
             menus.display('cheats');
           },
         },
         laserSpeed : {
           update : function() {
-            this.text = knobsAndLevers.laser.speed.setting.render();
+            this.text = knobsAndLevers.lasers.speed.setting.render();
           },
           action : function() {
-            knobsAndLevers.toggleParameter(knobsAndLevers.laser.speed);
-            game.activeCheats['laserSpeed'] = knobsAndLevers.laser.speed.setting.state == "ON";
+            knobsAndLevers.toggleParameter(knobsAndLevers.lasers.speed);
+            game.activeCheats['laserSpeed'] = knobsAndLevers.lasers.speed.setting.state == "ON";
             this.update();
             menus.display('cheats');
           },

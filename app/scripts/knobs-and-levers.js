@@ -5,7 +5,7 @@ var knobsAndLevers = {
     this.centipede.init(this);
     this.flies.init(this);
     this.player.init(this);
-    this.laser.init(this);
+    this.lasers.init(this);
     this.mushrooms.init(this);
     this.spiders.init(this);
     this.text.init(this);
@@ -13,7 +13,7 @@ var knobsAndLevers = {
     console.log('knobsAndLevers initialized');
   },
   resetCheats : function() {
-    this.laser.resetCheats();
+    this.lasers.resetCheats();
     this.player.resetCheats();
     this.game.activeCheats = {};
     console.log('cheats reset');
@@ -143,7 +143,7 @@ var knobsAndLevers = {
       },
     }
   },
-  laser : {
+  lasers : {
     speed : {
       value : 10,
       default : 5,

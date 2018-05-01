@@ -11,7 +11,7 @@ describe('COLLISIONS SPEC: ', () => {
     knobsAndLevers.init();
   });
   function createAnObjectFromLaserArgs() {
-    let laserArgs = knobsAndLevers.laser.args;
+    let laserArgs = knobsAndLevers.lasers.args;
     laserArgs.x = 10;
     laserArgs.y = 10;
     laserArgs.width = 10;
