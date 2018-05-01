@@ -11,33 +11,11 @@ var sounds = {
     impact : {filename : 'laser-impact.mp3', volume : 0.3, qty : knobsAndLevers.lasers.quantity.value, pool : [], index : 0},
   },
   init : function() {
+    Object.assign(this, soundsBase);
     Object.keys(this.tracks).forEach(key => {
       let type = this.tracks[key];
       type.pool = this.buildManySounds(type.filename, type.volume, type.qty);
     });
     console.log("sounds initialized");
-  },
-  buildManySounds : function(file, volume, qty) {
-    let soundArray = [];
-    while (soundArray.length < qty) {
-      soundArray.push(new Sound(this.path + file, volume));
-    };
-    return soundArray;
-  },
-  playSound : function(type) {
-    if (knobsAndLevers.game.sounds.value) {
-      this.getSound(type).play();
-    };
-  },
-  getSound : function(type) {
-    let target = this.tracks[type];
-    target.index = (target.index + 1) % target.pool.length;
-    return target.pool[target.index];
-  },
-  stopAllSounds : function() {
-    Object.keys(this.tracks).forEach(key => this.stopSound(this.tracks[key].pool));
-  },
-  stopSound : function(pool) {
-    pool.forEach(sound => sound.stop());
   },
 };

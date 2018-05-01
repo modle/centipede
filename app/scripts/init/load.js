@@ -32,6 +32,7 @@ var libs = [
   'metrics.js',
   'playerBase.js',
   'sound.js',
+  'soundsBase.js',
   'templates.js',
   'texts.js',
 ];
@@ -48,7 +49,7 @@ var scripts = [
   'knobs-and-levers.js',
   'main.js',
   'properties/menus-props.js',
-  'sound.js',
+  'sounds.js',
 ];
 
 var runners = [
