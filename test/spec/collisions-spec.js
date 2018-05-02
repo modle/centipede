@@ -11,7 +11,7 @@ describe('COLLISIONS SPEC: ', () => {
     knobsAndLevers.init();
   });
   function createAnObjectFromLaserArgs() {
-    let laserArgs = knobsAndLevers.laser.args;
+    let laserArgs = knobsAndLevers.lasers.args;
     laserArgs.x = 10;
     laserArgs.y = 10;
     laserArgs.width = 10;
@@ -34,8 +34,8 @@ describe('COLLISIONS SPEC: ', () => {
   it('getLaserTargets combines multiple target Arrays', () => {
     mushrooms.mushrooms = [];
     centipedes.centipedes = [];
-    intervalCreatures.worms = [];
-    intervalCreatures.flies = ['anObj'];
+    gameObjects.worms = [];
+    gameObjects.fleas = ['anObj'];
     spiders.spiders = ['anObj'];
 
     targets = testObj.getLaserTargets();
@@ -150,14 +150,14 @@ describe('COLLISIONS SPEC: ', () => {
 
   it('processKill delegates to metrics functions', () => {
     spyOn(metrics, 'addNewFloatingPoint');
-    spyOn(metrics, 'changeScore');
+    spyOn(metrics, 'manageScore');
     spyOn(testObj, 'handleCentipedeKill');
 
     target = {type : 'notACentipede', getMiddleX : function(){}, getMiddleY : function(){}};
     testObj.processKill(target);
 
     expect(metrics.addNewFloatingPoint).toHaveBeenCalled();
-    expect(metrics.changeScore).toHaveBeenCalled();
+    expect(metrics.manageScore).toHaveBeenCalled();
     expect(testObj.handleCentipedeKill).toHaveBeenCalled();
   });
 
@@ -182,7 +182,7 @@ describe('COLLISIONS SPEC: ', () => {
 
   it('getPlayerEnemies combines multiple enemy Arrays', () => {
     centipedes.centipedes = [];
-    intervalCreatures.flies = ['anObj'];
+    gameObjects.fleas = ['anObj'];
     spiders.spiders = ['anObj'];
 
     targets = testObj.getPlayerEnemies();
@@ -236,21 +236,21 @@ describe('COLLISIONS SPEC: ', () => {
   });
   it('killPlayer kills player and gameOver when one life', () => {
     game.gameOver = false;
-    metrics.lives = 1;
+    metrics.lives.player1 = 1;
 
     testObj.killPlayer();
 
-    expect(metrics.lives).toEqual(0);
+    expect(metrics.lives.player1).toEqual(0);
     expect(player.died).toBeTruthy();
     expect(game.gameOver).toBeTruthy();
   });
   it('killPlayer kills player and no game over when more than one life', () => {
     game.gameOver = false;
-    metrics.lives = 2;
+    metrics.lives.player1 = 2;
 
     testObj.killPlayer();
 
-    expect(metrics.lives).toEqual(1);
+    expect(metrics.lives.player1).toEqual(1);
     expect(player.died).toBeTruthy();
     expect(game.gameOver).toBeFalsy();
   });
@@ -288,16 +288,16 @@ describe('COLLISIONS SPEC: ', () => {
   it('removeDestroyedTargets removes destroyed targets', () => {
     mushrooms.mushrooms = [{hitPoints : 0}, {hitPoints : 1}];
     centipedes.centipedes = [{hitPoints : 0}, {hitPoints : 1}];
-    intervalCreatures.worms = [{hitPoints : 0}, {hitPoints : 1}];
-    intervalCreatures.flies = [{hitPoints : 0}, {hitPoints : 1}];
+    gameObjects.worms = [{hitPoints : 0}, {hitPoints : 1}];
+    gameObjects.fleas = [{hitPoints : 0}, {hitPoints : 1}];
     spiders.spiders = [{hitPoints : 0}, {hitPoints : 1}];
 
     testObj.removeDestroyedTargets();
 
     expect(mushrooms.mushrooms.length).toEqual(1);
     expect(centipedes.centipedes.length).toEqual(1);
-    expect(intervalCreatures.worms.length).toEqual(1);
-    expect(intervalCreatures.flies.length).toEqual(1);
+    expect(gameObjects.worms.length).toEqual(1);
+    expect(gameObjects.fleas.length).toEqual(1);
     expect(spiders.spiders.length).toEqual(1);
   });
 });

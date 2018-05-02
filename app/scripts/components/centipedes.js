@@ -2,65 +2,88 @@
 var centipedes = {
   // TODO rename this to segments?
   centipedes : [],
+  positions : [],
   numberSpawned : 0,
   numberKilled : 0,
-  manage : function() {
-    if (this.eligibleToSpawn()) {
+  spawnPoints : 1,
+  init : function() {
+    Object.assign(this, gameObjectsBase);
+    supporting.applyOverrides(this);
+    console.log('centipedes initialized');
+  },
+  functionOverrides : {
+    manage : function() {
       this.spawn();
-    }
-    this.update();
-  },
-  eligibleToSpawn : function() {
-    let eligible =
-      game.gameArea.frameNo == 1
-        || this.numberSpawned < knobsAndLevers.centipede.maxNumber + metrics.currentLevel;
-    return eligible;
-  },
-  spawn : function() {
-    let centipede = this.make();
-    for (i = 0; i < this.centipedes.length; i += 1) {
-      if (this.centipedes[i].crashWith(centipede)) {
+      this.update();
+    },
+    spawn : function() {
+      this.determineSpawnPositions();
+      if (!this.eligibleToSpawn()) {
         return;
       };
+      this.setXPosition();
+      let centipede = this.make();
+      if (this.cannotAdd(centipede)) {
+        return;
+      };
+      this.add(centipede);
+    },
+    make : function() {
+      let centipede = Object.assign(new Component(knobsAndLevers.centipede.args), knobsAndLevers.centipede.defaults);
+      let pointValue = knobsAndLevers.centipede.pointValue;
+      centipede.pointValue = supporting.getRandom(pointValue, pointValue + 20);
+      centipede.sound = sounds.getSound('centipede');
+      return centipede;
+    },
+    add : function(centipede) {
+      this.centipedes.push(centipede);
+      this.numberSpawned++;
+    },
+    update : function() {
+      this.resetCentipedeUpdateFlag();
+      this.determineDirections();
+      this.updateDirections();
+      this.updateCoordinates();
+      for (i = 0; i < this.centipedes.length; i += 1) {
+        this.centipedes[i].update();
+      };
+    },
+    clear : function() {
+      this.centipedes = [];
+      this.numberSpawned = 0;
+      this.numberKilled = 0;
+    },
+  },
+  determineSpawnPositions : function() {
+    if (!game.levelIsOver()) {
+      return;
     };
-    this.add(centipede);
+    this.buildCentipedeStructure();
   },
-  make : function() {
-    centipede = new Component(knobsAndLevers.centipede.args);
-    centipede.directionX = 1;
-    centipede.directionY = 1;
-    centipede.distanceMovedX = 0;
-    centipede.distanceMovedY = 0;
-    centipede.distanceMovedFromBottom = 0;
-    centipede.reverseDirectionX = false;
-    centipede.reverseDirectionY = false;
-    centipede.moveVertically = true;
-    let pointValue = knobsAndLevers.centipede.pointValue;
-    centipede.pointValue = supporting.getRandom(pointValue, pointValue + 20);
-    centipede.hitPoints = 1;
-    centipede.updated = false;
-    return centipede;
-  },
-  add : function(centipede) {
-    this.centipedes.push(centipede);
-    this.numberSpawned++;
-  },
-  update : function() {
-    this.resetCentipedeUpdateFlag();
-    this.determineDirections();
-    this.updateDirections();
-    this.updateCoordinates();
-    for (i = 0; i < this.centipedes.length; i += 1) {
-      this.centipedes[i].update();
+  buildCentipedeStructure : function() {
+    let tier = knobsAndLevers.game.tier;
+    this.segments = tier.current * 2 + knobsAndLevers.centipede.maxNumber;
+    this.positions = [];
+    let upperLimit = tier.isMaxed ? tier.max : tier.current;
+    while (this.positions.length < supporting.getRandom(1, upperLimit)) {
+      this.positions.push(this.determineHorizontalPosition());
     };
   },
-  clear : function() {
-    this.centipedes = [];
-    this.numberSpawned = 0;
-    this.numberKilled = 0;
+  determineHorizontalPosition : function() {
+    let baseRange = game.gameArea.canvas.width;
+    return supporting.getRandom(baseRange * 0.2, baseRange * 0.8);
+  },
+  eligibleToSpawn : function() {
+    return this.numberSpawned < this.segments;
+  },
+  setXPosition : function() {
+    knobsAndLevers.centipede.args.x = this.positions[this.centipedes.length % this.positions.length];
+  },
+  cannotAdd : function(centipede) {
+    return this.centipedes.find(checkCentipede => checkCentipede.crashWith(centipede));
   },
   determineDirections : function() {
-    this.centipedes.filter(centipede => !centipede.updated).map(centipede => {
+    this.centipedes.filter(centipede => !centipede.updated).forEach(centipede => {
       this.moveDownwardInitially(centipede);
       this.checkYDirectionInPlayerArea(centipede);
       this.checkHorizonalCollisions(centipede);
@@ -71,7 +94,7 @@ var centipedes = {
     this.centipedes.map(centipede => centipede.updated = false);
   },
   moveDownwardInitially : function(centipede) {
-    if (centipede.y < game.gameArea.firstMushroomLayer - 1) {
+    if (centipede.y < game.gameArea.gridStart - 1) {
       centipede.moveVertically = true;
       centipede.updated = true;
     };
@@ -79,7 +102,8 @@ var centipedes = {
   checkYDirectionInPlayerArea : function(centipede) {
     if (centipede.getBottom() > game.gameArea.canvas.height) {
       centipede.reverseDirectionY = true;
-    } else if (centipede.getTop() < player.topLimit && centipede.distanceMovedFromBottom > 0) {
+      centipede.poisoned = false;
+    } else if (centipede.getTop() < knobsAndLevers.player.topLimit && centipede.distanceMovedFromBottom > 0) {
       centipede.reverseDirectionY = true;
       centipede.distanceMovedFromBottom = 0;
     };
@@ -103,23 +127,18 @@ var centipedes = {
     return hasCollided;
   },
   hasCollidedWithMushroom : function(centipede) {
-    for (j = 0; j < mushrooms.mushrooms.length; j += 1) {
-      if (
-        centipede.crashWithSidesOnly(mushrooms.mushrooms[j])
-        && Math.abs(centipede.y - mushrooms.mushrooms[j].y) < 5
-        && centipede.distanceMovedX > game.gameArea.gridSquareSideLength
-      ) {
-        this.centipedes.filter(centipede => !centipede.updated).map(centipede => {
-          if (centipede.y < game.gameArea.firstMushroomLayer - 1) {
-            centipede.moveVertically = true;
-            centipede.updated = true;
-          };
-          this.reverseHorizontalAtNextLayer(centipede);
-        });
-        return true;
-      };
+    let theMushroom = this.getTheMushroom(centipede);
+    if (theMushroom && theMushroom.poisoned) {
+      centipede.poisoned = true;
     };
-    return false;
+    return theMushroom;
+  },
+  getTheMushroom : function(centipede) {
+    return mushrooms.mushrooms.find(mushroom =>
+      centipede.crashWith(mushroom)
+        &&
+      centipede.distanceMovedX > game.gameArea.gridSquareSideLength
+    );
   },
   reverseHorizontalAtNextLayer : function(centipede) {
     if (centipede.distanceMovedY >= game.gameArea.gridSquareSideLength) {
@@ -128,6 +147,7 @@ var centipedes = {
       centipede.distanceMovedY = 0;
       centipede.updated = true;
     };
+    centipede.moveVertically = centipede.poisoned ? true : centipede.moveVertically;
   },
   updateDirections : function() {
     for (i = 0; i < this.centipedes.length; i += 1) {

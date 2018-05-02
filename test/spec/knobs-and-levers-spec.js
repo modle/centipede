@@ -13,11 +13,11 @@ describe('KNOBS AND LEVERS SPEC: ', () => {
   it('init should call parameter init functions', () => {
     spyOn(testObj.general, 'init');
     spyOn(testObj.centipede, 'init');
-    spyOn(testObj.flies, 'init');
+    spyOn(testObj.fleas, 'init');
     spyOn(testObj.player, 'init');
     spyOn(testObj.laser, 'init');
     spyOn(testObj.mushrooms, 'init');
-    spyOn(testObj.spider, 'init');
+    spyOn(testObj.spiders, 'init');
     spyOn(testObj.text, 'init');
     spyOn(testObj.worms, 'init');
 
@@ -25,11 +25,11 @@ describe('KNOBS AND LEVERS SPEC: ', () => {
 
     expect(testObj.general.init).toHaveBeenCalled();
     expect(testObj.centipede.init).toHaveBeenCalled();
-    expect(testObj.flies.init).toHaveBeenCalled();
+    expect(testObj.fleas.init).toHaveBeenCalled();
     expect(testObj.player.init).toHaveBeenCalled();
     expect(testObj.laser.init).toHaveBeenCalled();
     expect(testObj.mushrooms.init).toHaveBeenCalled();
-    expect(testObj.spider.init).toHaveBeenCalled();
+    expect(testObj.spiders.init).toHaveBeenCalled();
     expect(testObj.text.init).toHaveBeenCalled();
     expect(testObj.worms.init).toHaveBeenCalled();
   });
@@ -47,13 +47,13 @@ describe('KNOBS AND LEVERS SPEC: ', () => {
     expect(testObj.centipede.args.height).toBeTruthy();
     expect(testObj.centipede.args.x).toBeTruthy();
   });
-  it('flies.init initializes flies parameters', () => {
-    testObj.flies.init(knobsAndLevers);
+  it('fleas.init initializes fleas parameters', () => {
+    testObj.fleas.init(knobsAndLevers);
 
-    expect(testObj.flies.initialInterval).toBeDefined();
-    expect(testObj.flies.args.width).toBeTruthy();
-    expect(testObj.flies.args.height).toBeTruthy();
-    expect(testObj.flies.args.y).not.toBeUndefined();
+    expect(testObj.fleas.initialInterval).toBeDefined();
+    expect(testObj.fleas.args.width).toBeTruthy();
+    expect(testObj.fleas.args.height).toBeTruthy();
+    expect(testObj.fleas.args.y).not.toBeUndefined();
   });
   it('player.init initializes player parameters', () => {
     testObj.player.init(knobsAndLevers);
@@ -75,14 +75,13 @@ describe('KNOBS AND LEVERS SPEC: ', () => {
     expect(testObj.mushrooms.scaleFactor).toBeTruthy();
     expect(testObj.mushrooms.side).toBeTruthy();
   });
-  it('spider.init initializes spider parameters', () => {
-    testObj.spider.init(knobsAndLevers);
+  it('spiders.init initializes spider parameters', () => {
+    testObj.spiders.init(knobsAndLevers);
 
-    expect(testObj.spider.initialInterval).toBeTruthy();
-    expect(testObj.spider.args.width).toBeTruthy();
-    expect(testObj.spider.args.height).toBeTruthy();
-    expect(testObj.spider.args.x).toBeTruthy();
-    expect(testObj.spider.args.y).toBeTruthy();
+    expect(testObj.spiders.initialInterval).toBeTruthy();
+    expect(testObj.spiders.args.width).toBeTruthy();
+    expect(testObj.spiders.args.height).toBeTruthy();
+    expect(testObj.spiders.args.x).toBeTruthy();
   });
   it('text.init initializes text parameters', () => {
     testObj.text.init(knobsAndLevers);
@@ -99,11 +98,10 @@ describe('KNOBS AND LEVERS SPEC: ', () => {
     expect(testObj.worms.initialInterval).toBeTruthy();
     expect(testObj.worms.args.width).toBeTruthy();
     expect(testObj.worms.args.height).toBeTruthy();
-    expect(testObj.worms.args.x).toBeTruthy();
   });
-  it('flies.args.constructorFunctions.setX should set knobsAndLevers.flies.args.x', () => {
+  it('fleas.args.constructorFunctions.setX should set knobsAndLevers.fleas.args.x', () => {
     knobsAndLevers.init();
-    knobsAndLevers.flies.args.constructorFunctions.setX();
-    expect(knobsAndLevers.flies.args.x).toBeDefined();
+    knobsAndLevers.fleas.args.constructorFunctions.setX();
+    expect(knobsAndLevers.fleas.args.x).toBeDefined();
   });
 });

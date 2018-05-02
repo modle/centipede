@@ -7,10 +7,13 @@ describe('MAIN SPEC: ', () => {
     console.log(spec + ' SPEC complete');
   });
   it('updateGameState calls delegate functions', () => {
+    game.init();
     game.running = true;
+
+    spyOn(game.gameArea, 'loadBackground');
     spyOn(controls.gamepad, 'checkState');
     spyOn(menus, 'processMenus');
-    spyOn(main, 'updateGamepad');
+    spyOn(game.gameArea, 'removeBackground');
     spyOn(main, 'handleGamePause');
     spyOn(main, 'processTriggers').and.returnValue(false);
     spyOn(main, 'prepTheCanvas');
@@ -18,9 +21,11 @@ describe('MAIN SPEC: ', () => {
 
     main.updateGameState();
 
+    expect(game.gameArea.loadBackground).not.toHaveBeenCalled();
     expect(controls.gamepad.checkState).not.toHaveBeenCalled();
     expect(menus.processMenus).not.toHaveBeenCalled();
-    expect(main.updateGamepad).toHaveBeenCalled();
+
+    expect(game.gameArea.removeBackground).toHaveBeenCalled();
     expect(main.handleGamePause).toHaveBeenCalled();
     expect(main.processTriggers).toHaveBeenCalled();
     expect(main.prepTheCanvas).toHaveBeenCalled();
@@ -28,9 +33,11 @@ describe('MAIN SPEC: ', () => {
   });
   it('updateGameState returns after process triggers if true', () => {
     game.running = true;
+    game.init();
+    spyOn(game.gameArea, 'loadBackground');
     spyOn(controls.gamepad, 'checkState');
     spyOn(menus, 'processMenus');
-    spyOn(main, 'updateGamepad');
+    spyOn(game.gameArea, 'removeBackground');
     spyOn(main, 'handleGamePause');
     spyOn(main, 'processTriggers').and.returnValue(true);
     spyOn(main, 'prepTheCanvas');
@@ -38,9 +45,11 @@ describe('MAIN SPEC: ', () => {
 
     main.updateGameState();
 
+    expect(game.gameArea.loadBackground).not.toHaveBeenCalled();
     expect(controls.gamepad.checkState).not.toHaveBeenCalled();
     expect(menus.processMenus).not.toHaveBeenCalled();
-    expect(main.updateGamepad).toHaveBeenCalled();
+
+    expect(game.gameArea.removeBackground).toHaveBeenCalled();
     expect(main.handleGamePause).toHaveBeenCalled();
     expect(main.processTriggers).toHaveBeenCalled();
     expect(main.prepTheCanvas).not.toHaveBeenCalled();
@@ -296,7 +305,7 @@ describe('MAIN SPEC: ', () => {
   it('manageGameObjects calls delegate functions', () => {
     spyOn(mushrooms, 'manage');
     spyOn(centipedes, 'manage');
-    spyOn(intervalCreatures, 'manage');
+    spyOn(gameObjects, 'manage');
     spyOn(spiders, 'manage');
     spyOn(lasers, 'manage');
     spyOn(player, 'manage');
@@ -307,7 +316,7 @@ describe('MAIN SPEC: ', () => {
 
     expect(mushrooms.manage).toHaveBeenCalled();
     expect(centipedes.manage).toHaveBeenCalled();
-    expect(intervalCreatures.manage).toHaveBeenCalled();
+    expect(gameObjects.manage).toHaveBeenCalled();
     expect(spiders.manage).toHaveBeenCalled();
     expect(lasers.manage).toHaveBeenCalled();
     expect(player.manage).toHaveBeenCalled();

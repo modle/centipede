@@ -24,16 +24,16 @@ describe('HUD SPEC: ', () => {
     texts.init();
     templates.init();
     metrics.init();
-    metrics.lives = 10;
-    let expected = metrics.lives;
-    spyOn(texts.livesDisplay, 'update');
+    metrics.lives.player1 = 10;
+    let expected = metrics.lives.player1;
+    spyOn(texts.lives, 'update');
     spyOn(metrics.livesMarker, 'update');
 
     testObj.updateLives();
 
-    expect(texts.livesDisplay.text).toEqual(expected);
+    expect(texts.lives.text).toEqual(expected);
     expect(metrics.livesMarker.update).toHaveBeenCalled();
-    expect(texts.livesDisplay.update).toHaveBeenCalled();
+    expect(texts.lives.update).toHaveBeenCalled();
   });
   xit('updateLevel updates level', () => {
     metrics.init();
@@ -49,13 +49,13 @@ describe('HUD SPEC: ', () => {
   });
   it('updateScore updates score', () => {
     metrics.init();
-    metrics.score.value = 10;
-    let expected = metrics.score.value;
-    spyOn(metrics.score, 'update');
+    metrics.score.player1.value = 10;
+    let expected = metrics.score.player1.value;
+    spyOn(metrics.score.player1, 'update');
 
     testObj.updateScore();
 
-    expect(metrics.score.text).toEqual(expected);
-    expect(metrics.score.update).toHaveBeenCalled();
+    expect(metrics.score.player1.text).toEqual(expected);
+    expect(metrics.score.player1.update).toHaveBeenCalled();
   });
 });

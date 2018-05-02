@@ -10,59 +10,48 @@ describe('CENTIPEDES SPEC: ', () => {
     testObj = Object.assign({}, centipedes);
   });
   it('manage delegates to spawn when eligible and update', () => {
-    spyOn(testObj, 'eligibleToSpawn').and.returnValue(true);
     spyOn(testObj, 'spawn');
     spyOn(testObj, 'update');
 
     testObj.manage();
 
-    expect(testObj.eligibleToSpawn).toHaveBeenCalled();
     expect(testObj.spawn).toHaveBeenCalled();
     expect(testObj.update).toHaveBeenCalled();
   });
-  it('manage delegates to update but not spawn when spawn ineligible', () => {
-    spyOn(testObj, 'eligibleToSpawn').and.returnValue(false);
-    spyOn(testObj, 'spawn');
-    spyOn(testObj, 'update');
-
-    testObj.manage();
-
-    expect(testObj.eligibleToSpawn).toHaveBeenCalled();
-    expect(testObj.spawn).not.toHaveBeenCalled();
-    expect(testObj.update).toHaveBeenCalled();
-  });
   it('eligibleToSpawn returns false unless spawn conditions are met', () => {
+    testObj.numberSpawned = 2;
+    testObj.segments = 2;
     let expected = false;
-    game.init();
-    game.gameArea.frameNo = 2;
-    testObj.numberSpawned = knobsAndLevers.centipede.maxNumber + metrics.currentLevel;
 
     let actual = testObj.eligibleToSpawn();
 
     expect(actual).toBe(expected);
   });
   it('spawn adds two centipedes to centipedes array', () => {
-    let expected = {crashWith : function(){return false;}, x : 0, y : 0, width : 10, height : 10};
-    spyOn(testObj, 'make').and.returnValue(expected);
-    testObj.centipedes = [];
+    spyOn(testObj, 'determineSpawnPositions');
+    spyOn(testObj, 'eligibleToSpawn').and.returnValue(true);
+    spyOn(testObj, 'setXPosition');
+    spyOn(testObj, 'make').and.returnValue({});
+    spyOn(testObj, 'cannotAdd').and.returnValue(false);
+    spyOn(testObj, 'add');
 
     testObj.spawn();
     testObj.spawn();
 
-    expect(testObj.centipedes.length).toBe(2);
-    expect(testObj.centipedes[0]).toBe(expected);
-    expect(testObj.centipedes[1]).toBe(expected);
+    expect(testObj.add).toHaveBeenCalledTimes(2);
   });
   it('spawn does not add centipede to centipedes array when it collides with an existing centipede', () => {
-    let expected = {crashWith : function(){return true;}, x : 0, y : 0, width : 10, height : 10};
-    spyOn(testObj, 'make').and.returnValue(expected);
-    testObj.centipedes = [];
+    spyOn(testObj, 'determineSpawnPositions');
+    spyOn(testObj, 'eligibleToSpawn').and.returnValue(true);
+    spyOn(testObj, 'setXPosition');
+    spyOn(testObj, 'make').and.returnValue({});
+    spyOn(testObj, 'cannotAdd').and.returnValue(true);
+    spyOn(testObj, 'add');
 
     testObj.spawn();
     testObj.spawn();
 
-    expect(testObj.centipedes.length).toBe(1);
-    expect(testObj.centipedes[0]).toBe(expected);
+    expect(testObj.add).toHaveBeenCalledTimes(0);
   });
   it('make returns a centipede', () => {
     metrics.init();
@@ -110,7 +99,7 @@ describe('CENTIPEDES SPEC: ', () => {
     spyOn(testObj, 'reverseHorizontalAtNextLayer');
 
     testObj.centipedes = [
-      {moveVertically : false, updated : false, y : game.gameArea.firstMushroomLayer - 2},
+      {moveVertically : false, updated : false, y : game.gameArea.gridStart - 2},
     ];
 
     testObj.determineDirections();
@@ -133,9 +122,9 @@ describe('CENTIPEDES SPEC: ', () => {
     knobsAndLevers.init();
     game.init();
     testObj.centipedes = [
-      {moveVertically : false, updated : false, y : game.gameArea.firstMushroomLayer - 2},
-      {moveVertically : false, updated : true, y : game.gameArea.firstMushroomLayer - 2},
-      {moveVertically : false, updated : false, y : game.gameArea.firstMushroomLayer},
+      {moveVertically : false, updated : false, y : game.gameArea.gridStart - 2},
+      {moveVertically : false, updated : true, y : game.gameArea.gridStart - 2},
+      {moveVertically : false, updated : false, y : game.gameArea.gridStart},
     ];
 
     testObj.centipedes.filter(centipede => !centipede.updated).map(centipede => {
@@ -297,26 +286,29 @@ describe('CENTIPEDES SPEC: ', () => {
     knobsAndLevers.init();
     game.init();
     mushrooms.mushrooms = [{y : 1}];
+    let crashWith = function(){return true;};
+    let moveVertically = true;
+    let distanceMovedX = game.gameArea.gridSquareSideLength + 1;
     testObj.centipedes = [
       {
-        crashWithSidesOnly : function(){return true;},
+        crashWith : crashWith,
         y : 0,
-        distanceMovedX : game.gameArea.gridSquareSideLength + 1,
-        moveVertically : true,
+        distanceMovedX : distanceMovedX,
+        moveVertically : moveVertically,
         expected : true,
       },
       {
-        crashWithSidesOnly : function(){return false;},
+        crashWith : crashWith,
         y : 0,
-        distanceMovedX : game.gameArea.gridSquareSideLength + 1,
-        moveVertically : true,
+        distanceMovedX : distanceMovedX,
+        moveVertically : moveVertically,
         expected : false,
       },
       {
-        crashWithSidesOnly : function(){return false;},
-        y : game.gameArea.firstMushroomLayer,
-        distanceMovedX : game.gameArea.gridSquareSideLength + 1,
-        moveVertically : true,
+        crashWith : crashWith,
+        y : game.gameArea.gridStart,
+        distanceMovedX : distanceMovedX,
+        moveVertically : moveVertically,
         expected : false,
       },
     ];
@@ -324,8 +316,8 @@ describe('CENTIPEDES SPEC: ', () => {
     testObj.centipedes.forEach(centipede => {
       let expected = centipede.expected;
       let actual = testObj.hasCollidedWithMushroom(centipede);
-      expect(actual).toBe(expected);
-    })
+      expect(actual).toBeTruthy;
+    });
 
   });
   it('reverseHorizontalAtNextLayer does stuff', () => {

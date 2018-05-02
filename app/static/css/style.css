@@ -47,3 +47,9 @@ canvas {
   font-family: "Press Start";
   src: url("css/fonts/prstart.ttf");
 }
+
+#stats {
+  position: fixed;
+  bottom: 0;
+  left : 0;
+}

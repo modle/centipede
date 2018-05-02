@@ -9,8 +9,17 @@ describe('LASERS SPEC: ', () => {
   beforeEach(function () {
     testObj = Object.assign({}, lasers);
   });
-  it('lasers gets constructed', () => {
-    expect(testObj).toBeTruthy();
+
+  it('manage delegates', () => {
+    spyOn(testObj, 'spawn');
+    spyOn(testObj, 'update');
+    spyOn(testObj, 'clearOutsideCanvas');
+
+    testObj.manage();
+
+    expect(testObj.spawn).toHaveBeenCalled();
+    expect(testObj.update).toHaveBeenCalled();
+    expect(testObj.clearOutsideCanvas).toHaveBeenCalled();
   });
 
   it('spawn returns if lasers are not eligible to spawn', () => {
@@ -39,13 +48,13 @@ describe('LASERS SPEC: ', () => {
 
   it('eligibleToSpawn returns false if lasers is at max', () => {
     testObj.lasers = [];
-    while (testObj.lasers.length < knobsAndLevers.laser.quantity.value) {
+    while (testObj.lasers.length < knobsAndLevers.lasers.quantity.value) {
       testObj.lasers.push({});
     };
     spyOn(supporting, 'everyinterval').and.returnValue(true);
     spyOn(controls, 'isFiring').and.returnValue(true);
 
-    expect(testObj.lasers.length).toBe(knobsAndLevers.laser.quantity.value);
+    expect(testObj.lasers.length).toBe(knobsAndLevers.lasers.quantity.value);
 
     let spawnEligibility = testObj.eligibleToSpawn();
 
@@ -58,7 +67,7 @@ describe('LASERS SPEC: ', () => {
     spyOn(supporting, 'everyinterval').and.returnValue(true);
     spyOn(controls, 'isFiring').and.returnValue(true);
 
-    expect(testObj.lasers.length).toBeLessThan(knobsAndLevers.laser.quantity.value);
+    expect(testObj.lasers.length).toBeLessThan(knobsAndLevers.lasers.quantity.value);
 
     let spawnEligibility = testObj.eligibleToSpawn();
 
@@ -82,7 +91,7 @@ describe('LASERS SPEC: ', () => {
     player.init();
 
     let laser = testObj.make();
-    expect(laser.speedY).toBe(-knobsAndLevers.laser.speed.value);
+    expect(laser.speedY).toBe(-knobsAndLevers.lasers.speed.value);
     expect(laser.x).toBe(player.gamePiece.x + player.gamePiece.width / 2);
     expect(laser.y).toBe(player.gamePiece.y);
   })
