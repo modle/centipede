@@ -92,8 +92,8 @@ var knobsAndLevers = {
     maxNumber : 0,
     pointValue : 200,
     interval : {
-      min: 100,
-      max: 1000,
+      min: 1500,
+      max: 2500,
     },
     mushroomCreateInterval : 100,
     args : {
@@ -144,7 +144,7 @@ var knobsAndLevers = {
     startLevel : 0,
     maxMushrooms : 50,
     tier : {
-      incrementScore : 2000,
+      incrementScore : 10000,
       current: 1,
       max : 5,
       isMaxed : false,
@@ -156,7 +156,7 @@ var knobsAndLevers = {
   },
   lasers : {
     speed : {
-      value : 10,
+      value : 5,
       default : 5,
       setting : {
         value : 15,
@@ -168,7 +168,7 @@ var knobsAndLevers = {
       },
     },
     quantity : {
-      value : 10,
+      value : 1,
       default : 1,
       setting : {
         value : 5,
@@ -225,7 +225,7 @@ var knobsAndLevers = {
     },
   },
   player : {
-    defaultLives : 1,
+    defaultLives : 3,
     dimensions : {width : 30, height : 30},
     args : {
       width : 20,
@@ -277,8 +277,8 @@ var knobsAndLevers = {
     maxNumber : 0,
     pointValue : 400,
     interval : {
-      min : 10,
-      max : 20,
+      min : 500,
+      max : 1000,
     },
     args : {
       directionY : 1,
@@ -348,8 +348,8 @@ var knobsAndLevers = {
     maxNumber : 1,
     pointValue : 200,
     interval : {
-      min: 0,
-      max: 0,
+      min: 1500,
+      max: 2500,
     },
     args : {
       extraArgs : {
