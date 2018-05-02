@@ -7,9 +7,8 @@
  *    init/runner.js accomplishes this.
 */
 
-
-var libsPath = '../canvas-libs/app/scripts/';
-// var libsPath = 'https://glcdn.githack.com/taciturn-pachyderm/canvas-libs/raw/v2.2.0/app/scripts/';
+// var libsPath = '../canvas-libs/app/scripts/';
+var libsPath = 'libs/app/scripts/';
 var scriptsPath = 'app/scripts/';
 
 var libs = [
@@ -63,7 +62,7 @@ function loadScript (path, file) {
   var script = document.createElement("script");
   script.src = path + file;
   document[targetDomObject].appendChild(script);
-  console.log(script.src, 'added to', targetDomObject);
+  // console.log(script.src, 'added to', targetDomObject);
 };
 
 libs.forEach(file => loadScript(libsPath, file));
