@@ -30,7 +30,7 @@ var libs = [
   'menus/main-menu.js',
   'menus.js',
   'metrics.js',
-  'playerBase.js',
+  'playersBase.js',
   'sound.js',
   'soundsBase.js',
   'supporting.js',
