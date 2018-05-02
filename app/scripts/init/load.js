@@ -13,7 +13,7 @@ var libsPath = '../canvas-libs/app/scripts/';
 var scriptsPath = 'app/scripts/';
 
 var libs = [
-  'supporting.js',
+  'collisionsBase.js',
   'component.js',
   'controls/gamepad.js',
   'controls/keyboard.js',
@@ -33,6 +33,7 @@ var libs = [
   'playerBase.js',
   'sound.js',
   'soundsBase.js',
+  'supporting.js',
   'templates.js',
   'texts.js',
 ];

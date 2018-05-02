@@ -50,7 +50,7 @@ var lasers = {
 
 
   clearOutsideCanvas : function(playerName) {
-    this.lasers[playerName] = this.lasers[playerName].filter(laser => laser.y > 0);
+    this.lasers[playerName] = this.lasers[playerName].filter(laser => laser.y > 0 && !laser.remove);
   },
 
 

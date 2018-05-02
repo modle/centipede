@@ -372,6 +372,7 @@ var knobsAndLevers = {
           let result = supporting.roll(sides = 10);
           worm.imageType = result.crit ? 'crazy' : 'normal';
           if (worm.imageType == 'crazy') {
+            worm.sizeMod = true;
             worm.hitPoints *= result.value;
             worm.width *= result.value;
             worm.height *= result.value;

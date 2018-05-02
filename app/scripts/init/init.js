@@ -16,6 +16,7 @@ var init = {
     players.init();
     sounds.init();
     texts.init();
+    collisions.init();
 
     console.log("centipede game initialized");
   },
