@@ -17,6 +17,10 @@ var init = {
     sounds.init();
     texts.init();
     collisions.init();
+    centipedes.init();
+    lasers.init();
+    gameObjects.init();
+    mushrooms.init();
 
     console.log("centipede game initialized");
   },

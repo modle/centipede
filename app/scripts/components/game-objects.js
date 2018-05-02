@@ -4,6 +4,8 @@ var gameObjects = {
   fleas : [],
   spiders : [],
   init : function() {
+    Object.assign(this, gameObjectsBase);
+    supporting.applyOverrides(this);
     this.intervals = {
       fleas : knobsAndLevers.fleas.initialInterval,
       worms : knobsAndLevers.worms.initialInterval,
@@ -11,15 +13,61 @@ var gameObjects = {
     };
     console.log('gameObjects initialized');
   },
-  manage : function() {
-    Object.keys(this.intervals).forEach(type => {
-      this.spawnCreatureAtIntervals(type);
-      if (this[type] == false) {
+  functionOverrides : {
+    manage : function() {
+      Object.keys(this.intervals).forEach(type => {
+        this.spawnCreatureAtIntervals(type);
+        if (this[type] == false) {
+          return;
+        };
+        this[type] = this.clearOutsideCanvas(type);
+        this.update(type);
+      });
+    },
+    spawn : function(type) {
+      this.setMax(type);
+      if (this[type].length >= knobsAndLevers[type].maxNumber) {
         return;
       };
-      this[type] = this.clearOutsideCanvas(type);
-      this.update(type);
-    });
+      this.make(type);
+    },
+    make : function(type) {
+      let spawnedCreature = new Component(knobsAndLevers[type].args);
+      let pointValue = knobsAndLevers[type].pointValue;
+      spawnedCreature.pointValue = supporting.getRandom(pointValue, pointValue + 400);
+      spawnedCreature.sound = sounds.getSound(type);
+      this[type].push(spawnedCreature);
+    },
+    clearOutsideCanvas : function(type) {
+      if (this[type] == false) { return; };
+      return this[type].filter(target => {
+        return target.x < game.gameArea.canvas.width + 10
+          && target.x > 0 - target.width
+          && target.y < game.gameArea.canvas.height
+      });
+    },
+    update : function(type) {
+      this[type].forEach(creature => {
+        if (type == 'spiders') {
+          this.setSpeed(creature, type);
+          this.setDirection(creature);
+          this.removeMushrooms(creature);
+        };
+        if (type == 'fleas') {
+          this.dropMushrooms(creature);
+        };
+        if (type == 'worms') {
+          this.changeMushrooms(creature);
+        };
+        creature.newPos();
+        creature.update();
+      });
+    },
+    clear : function() {
+      this.worms = [];
+      this.fleas = [];
+      this.spiders = [];
+    },
   },
   spawnCreatureAtIntervals(type) {
     if (supporting.everyinterval(game.gameArea.frameNo, this.intervals[type])) {
@@ -30,48 +78,9 @@ var gameObjects = {
       };
     };
   },
-  spawn : function(type) {
-    this.setMax(type);
-    if (this[type].length >= knobsAndLevers[type].maxNumber) {
-      return;
-    };
-    this.make(type);
-  },
   setMax : function(type) {
     let tier = knobsAndLevers.game.tier;
     knobsAndLevers[type].maxNumber = tier.isMaxed ? tier.max : tier.current;
-  },
-  make : function(type) {
-    let spawnedCreature = new Component(knobsAndLevers[type].args);
-    let pointValue = knobsAndLevers[type].pointValue;
-    spawnedCreature.pointValue = supporting.getRandom(pointValue, pointValue + 400);
-    spawnedCreature.sound = sounds.getSound(type);
-    this[type].push(spawnedCreature);
-  },
-  clearOutsideCanvas : function(type) {
-    if (this[type] == false) { return; };
-    return this[type].filter(target => {
-      return target.x < game.gameArea.canvas.width + 10
-        && target.x > 0 - target.width
-        && target.y < game.gameArea.canvas.height
-    });
-  },
-  update : function(type) {
-    this[type].forEach(creature => {
-      if (type == 'spiders') {
-        this.setSpeed(creature, type);
-        this.setDirection(creature);
-        this.removeMushrooms(creature);
-      };
-      if (type == 'fleas') {
-        this.dropMushrooms(creature);
-      };
-      if (type == 'worms') {
-        this.changeMushrooms(creature);
-      };
-      creature.newPos();
-      creature.update();
-    });
   },
   setSpeed : function(creature, type) {
     let speedLimits = knobsAndLevers[type].speedLimits;
@@ -110,10 +119,5 @@ var gameObjects = {
         mushroom.poisoned = true;
       };
     });
-  },
-  clear : function() {
-    this.worms = [];
-    this.fleas = [];
-    this.spiders = [];
   },
 };

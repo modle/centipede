@@ -20,6 +20,7 @@ var libs = [
   'controls.js',
   'dom.js',
   'gameBase.js',
+  'gameObjectsBase.js',
   'game-area.js',
   'hud.js',
   'images.js',

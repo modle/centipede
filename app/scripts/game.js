@@ -2,6 +2,7 @@ var game = {
   init : function() {
     Object.assign(this, gameBase);
     this.gameArea.init(knobsAndLevers);
+    supporting.applyOverrides(this);
     console.log('game initialized');
   },
   gameResets : {
@@ -17,7 +18,9 @@ var game = {
       init.afterGameOver();
     },
   },
-  gameLevelCheck : function() {
-    return centipedes.numberSpawned == centipedes.numberKilled && this.gameArea.frameNo;
+  functionOverrides : {
+    gameLevelCheck : function() {
+      return centipedes.numberSpawned == centipedes.numberKilled && this.gameArea.frameNo;
+    },
   },
 };

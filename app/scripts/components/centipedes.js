@@ -6,21 +6,53 @@ var centipedes = {
   numberSpawned : 0,
   numberKilled : 0,
   spawnPoints : 1,
-  manage : function() {
-    this.spawn();
-    this.update();
+  init : function() {
+    Object.assign(this, gameObjectsBase);
+    supporting.applyOverrides(this);
+    console.log('centipedes initialized');
   },
-  spawn : function() {
-    this.determineSpawnPositions();
-    if (!this.eligibleToSpawn()) {
-      return;
-    };
-    this.setXPosition();
-    let centipede = this.make();
-    if (this.cannotAdd(centipede)) {
-      return;
-    };
-    this.add(centipede);
+  functionOverrides : {
+    manage : function() {
+      this.spawn();
+      this.update();
+    },
+    spawn : function() {
+      this.determineSpawnPositions();
+      if (!this.eligibleToSpawn()) {
+        return;
+      };
+      this.setXPosition();
+      let centipede = this.make();
+      if (this.cannotAdd(centipede)) {
+        return;
+      };
+      this.add(centipede);
+    },
+    make : function() {
+      let centipede = Object.assign(new Component(knobsAndLevers.centipede.args), knobsAndLevers.centipede.defaults);
+      let pointValue = knobsAndLevers.centipede.pointValue;
+      centipede.pointValue = supporting.getRandom(pointValue, pointValue + 20);
+      centipede.sound = sounds.getSound('centipede');
+      return centipede;
+    },
+    add : function(centipede) {
+      this.centipedes.push(centipede);
+      this.numberSpawned++;
+    },
+    update : function() {
+      this.resetCentipedeUpdateFlag();
+      this.determineDirections();
+      this.updateDirections();
+      this.updateCoordinates();
+      for (i = 0; i < this.centipedes.length; i += 1) {
+        this.centipedes[i].update();
+      };
+    },
+    clear : function() {
+      this.centipedes = [];
+      this.numberSpawned = 0;
+      this.numberKilled = 0;
+    },
   },
   determineSpawnPositions : function() {
     if (!game.levelIsOver()) {
@@ -47,33 +79,8 @@ var centipedes = {
   setXPosition : function() {
     knobsAndLevers.centipede.args.x = this.positions[this.centipedes.length % this.positions.length];
   },
-  make : function() {
-    let centipede = Object.assign(new Component(knobsAndLevers.centipede.args), knobsAndLevers.centipede.defaults);
-    let pointValue = knobsAndLevers.centipede.pointValue;
-    centipede.pointValue = supporting.getRandom(pointValue, pointValue + 20);
-    centipede.sound = sounds.getSound('centipede');
-    return centipede;
-  },
   cannotAdd : function(centipede) {
     return this.centipedes.find(checkCentipede => checkCentipede.crashWith(centipede));
-  },
-  add : function(centipede) {
-    this.centipedes.push(centipede);
-    this.numberSpawned++;
-  },
-  update : function() {
-    this.resetCentipedeUpdateFlag();
-    this.determineDirections();
-    this.updateDirections();
-    this.updateCoordinates();
-    for (i = 0; i < this.centipedes.length; i += 1) {
-      this.centipedes[i].update();
-    };
-  },
-  clear : function() {
-    this.centipedes = [];
-    this.numberSpawned = 0;
-    this.numberKilled = 0;
   },
   determineDirections : function() {
     this.centipedes.filter(centipede => !centipede.updated).forEach(centipede => {

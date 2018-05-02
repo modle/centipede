@@ -3,9 +3,7 @@ var collisions = {
   // TODO abstract non-centipede functionality and move to canvas-libs
   init : function() {
     Object.assign(this, collisionsBase);
-    Object.keys(this.functionOverrides).forEach(element => {
-      this[element] = this.functionOverrides[element];
-    });
+    supporting.applyOverrides(this);
     console.log('collisions initialized');
   },
   functionOverrides : {

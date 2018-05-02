@@ -3,9 +3,7 @@ players = {
   init : function() {
     Object.assign(this, playersBase);
     this.buildPlayers(game.numberOfPlayers, knobsAndLevers.player.args);
-    Object.keys(this.functionOverrides).forEach(element => {
-      this[element] = this.functionOverrides[element];
-    });
+    supporting.applyOverrides(this);
     console.log('players initialized');
   },
   functionOverrides : {
@@ -15,8 +13,8 @@ players = {
       this.boundaries.aboveBottom = player.getBottom() < game.gameArea.canvas.height;
       this.boundaries.insideLeft = player.getLeft() > 0;
     },
-  },
-  collidedWithBarrier : function(player) {
-    return collisions.withMushrooms(player);
+    collidedWithBarrier : function(player) {
+      return collisions.withMushrooms(player);
+    },
   },
 };

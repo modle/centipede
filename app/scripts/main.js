@@ -1,9 +1,7 @@
 var main = {
   init : function() {
     Object.assign(this, mainBase);
-    Object.keys(this.functionOverrides).forEach(element => {
-      this[element] = this.functionOverrides[element];
-    });
+    supporting.applyOverrides(this);
     console.log('main initialized');
   },
   functionOverrides : {
