@@ -9,7 +9,7 @@ var mushrooms = {
   functionOverrides : {
     manage : function() {
       if (game.gameArea.frameNo == 1) {
-        this.spawn(knobsAndLevers.mushrooms.initialAmount);
+        this.spawn(dials.mushrooms.initialAmount);
       };
       this.update();
     },
@@ -19,17 +19,17 @@ var mushrooms = {
         coordinates = this.getCoordinates();
         // while it is possible this will be an infinite loop
         // it is unlikely so long as maxMushrooms is reasonable
-        if (coordinates.y > knobsAndLevers.player.topLimit) {
+        if (coordinates.y > dials.player.topLimit) {
           continue;
         };
-        this.make(coordinates, knobsAndLevers.mushrooms.color);
+        this.make(coordinates, dials.mushrooms.color);
       };
     },
     make : function(coordinates, color) {
       if (coordinates.x == undefined || coordinates.y == undefined) {
         throw new Error('coordinate error: x: ' + coordinates.x + ', y: ' + coordinates.y);
       };
-      color = color ? color : knobsAndLevers.mushrooms.color;
+      color = color ? color : dials.mushrooms.color;
       coordinates.x = supporting.getClosest(game.gameArea.xVertices, coordinates.x);
       coordinates.y = supporting.getClosest(game.gameArea.yVertices, coordinates.y);
       let mushroom = this.generate(coordinates, color);
@@ -39,9 +39,9 @@ var mushrooms = {
       this.mushrooms.push(mushroom);
     },
     generate : function(coordinates, color) {
-      let mushroom = new Component(knobsAndLevers.mushrooms.args);
-      mushroom.x = coordinates.x + knobsAndLevers.mushrooms.scaleFactor,
-      mushroom.y = coordinates.y + knobsAndLevers.mushrooms.scaleFactor,
+      let mushroom = new Component(dials.mushrooms.args);
+      mushroom.x = coordinates.x + dials.mushrooms.scaleFactor,
+      mushroom.y = coordinates.y + dials.mushrooms.scaleFactor,
       mushroom.pointValue = metrics.currentLevel;
       return mushroom;
     },

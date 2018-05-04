@@ -119,7 +119,7 @@ describe('CENTIPEDES SPEC: ', () => {
     );
   });
   it('moveDownwardInitially sets moveVertically and updated to true if above first mushroom layer', () => {
-    knobsAndLevers.init();
+    dials.init();
     game.init();
     testObj.centipedes = [
       {moveVertically : false, updated : false, y : game.gameArea.gridStart - 2},
@@ -159,10 +159,10 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(testObj.centipedes[0].reverseDirectionY).toBe(true);
   });
   it('checkYDirectionInPlayerArea sets reverseDirectionY when hitting playerTopLimit while moving up', () => {
-    knobsAndLevers.init();
+    dials.init();
     game.init();
     player.init();
-    let top = knobsAndLevers.player.topLimit - 10;
+    let top = dials.player.topLimit - 10;
     let bottom = top + 20;
     testObj.centipedes = [
       {
@@ -181,7 +181,7 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(testObj.centipedes[0].reverseDirectionY).toBe(true);
   });
   it('checkHorizontalCollisions does not set moveVertically to true if no collisions', () => {
-    knobsAndLevers.init();
+    dials.init();
     game.init();
     spyOn(testObj, 'hasCollidedWithWall').and.returnValue(false);
     spyOn(testObj, 'hasCollidedWithMushroom').and.returnValue(false);
@@ -198,7 +198,7 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(centipede.updated).toBe(true);
   });
   it('checkHorizontalCollisions sets moveVertically to true if wall collisions', () => {
-    knobsAndLevers.init();
+    dials.init();
     game.init();
     spyOn(testObj, 'hasCollidedWithWall').and.returnValue(true);
     spyOn(testObj, 'hasCollidedWithMushroom').and.returnValue(false);
@@ -218,7 +218,7 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(centipede.moveVertically).toBe(true);
   });
   it('checkHorizontalCollisions sets moveVertically to true if mushroom collisions but not wall collisions', () => {
-    knobsAndLevers.init();
+    dials.init();
     game.init();
     spyOn(testObj, 'hasCollidedWithWall').and.returnValue(false);
     spyOn(testObj, 'hasCollidedWithMushroom').and.returnValue(true);
@@ -238,7 +238,7 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(centipede.moveVertically).toBe(true);
   });
   it('checkHorizontalCollisions does not update if distanceMovedY is not 0', () => {
-    knobsAndLevers.init();
+    dials.init();
     game.init();
     spyOn(testObj, 'hasCollidedWithWall').and.returnValue(false);
     spyOn(testObj, 'hasCollidedWithMushroom').and.returnValue(false);
@@ -255,7 +255,7 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(centipede.updated).toBe(false);
   });
   it('hasCollidedWithWall should return false if inside canvas sides and has moved horizontally', () => {
-    knobsAndLevers.init();
+    dials.init();
     game.init();
     let centipede = {
       getLeft : function(){return 10;},
@@ -269,7 +269,7 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(actual).toBe(expected);
   });
   it('hasCollidedWithWall should return true if outside canvas sides and has moved horizontally', () => {
-    knobsAndLevers.init();
+    dials.init();
     game.init();
     let centipede = {
       getLeft : function(){return 10;},
@@ -283,7 +283,7 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(actual).toBe(expected);
   });
   it('hasCollidedWithMushrooms does a whole bunch of crap I do not want to test', () => {
-    knobsAndLevers.init();
+    dials.init();
     game.init();
     mushrooms.mushrooms = [{y : 1}];
     let crashWith = function(){return true;};
@@ -321,7 +321,7 @@ describe('CENTIPEDES SPEC: ', () => {
 
   });
   it('reverseHorizontalAtNextLayer does stuff', () => {
-    knobsAndLevers.init();
+    dials.init();
     game.init();
     centipede = {
       updated : false,
@@ -338,7 +338,7 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(centipede.reverseDirectionX).toBe(true);
   });
   it('updateDirections does stuff', () => {
-    knobsAndLevers.init();
+    dials.init();
     game.init();
     testObj.centipedes = [
       {
@@ -371,7 +371,7 @@ describe('CENTIPEDES SPEC: ', () => {
     expect(testObj.centipedes[1].reverseDirectionX).toBe(false);
   });
   it('updateCoordinates does stuff', () => {
-    knobsAndLevers.init();
+    dials.init();
     game.init();
     let defaults = {
       moveVertically : true,

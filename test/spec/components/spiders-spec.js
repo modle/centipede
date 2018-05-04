@@ -8,10 +8,10 @@ describe('SPIDERS SPEC: ', () => {
   });
   beforeEach(function () {
     testObj = Object.assign({}, spiders);
-    knobsAndLevers.init();
+    dials.init();
   });
-  it('init sets interval from knobsAndLevers', () => {
-    let expected = knobsAndLevers.spiders.initialInterval;
+  it('init sets interval from dials', () => {
+    let expected = dials.spiders.initialInterval;
 
     testObj.init();
 
@@ -66,7 +66,7 @@ describe('SPIDERS SPEC: ', () => {
 
   it('maxedOut returns true if spiders array >= max', () => {
     testObj.spiders = [];
-    while (testObj.spiders.length < knobsAndLevers.spiders.maxNumber) {
+    while (testObj.spiders.length < dials.spiders.maxNumber) {
       testObj.spiders.push({});
     };
 
@@ -135,7 +135,7 @@ describe('SPIDERS SPEC: ', () => {
   });
 
   it('update delegates to spider management functions when spiders array not empty', () => {
-    testObj.spiders = [new Component(knobsAndLevers.spiders.args)];
+    testObj.spiders = [new Component(dials.spiders.args)];
     spyOn(testObj, 'removeMushrooms');
     spyOn(testObj, 'updateSpeed');
     spyOn(testObj, 'updatePos');
@@ -213,7 +213,7 @@ describe('SPIDERS SPEC: ', () => {
     game.init();
     let expected = -1;
     let spider = {
-      y : knobsAndLevers.canvas.height,
+      y : dials.canvas.height,
       height : 1,
       directionY : -expected,
       getBottom : function(){return game.gameArea.canvas.height + 10},

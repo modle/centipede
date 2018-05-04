@@ -12,7 +12,7 @@ describe('GAME SPEC: ', () => {
     testObj.init();
     spyOn(testObj.gameArea, 'start');
     spyOn(testObj.gameArea, 'stop');
-    knobsAndLevers.init();
+    dials.init();
     game.init();
   });
   it('start calls isMobile', () => {

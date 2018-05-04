@@ -29,8 +29,8 @@ var centipedes = {
       this.add(centipede);
     },
     make : function() {
-      let centipede = Object.assign(new Component(knobsAndLevers.centipede.args), knobsAndLevers.centipede.defaults);
-      let pointValue = knobsAndLevers.centipede.pointValue;
+      let centipede = Object.assign(new Component(dials.centipede.args), dials.centipede.defaults);
+      let pointValue = dials.centipede.pointValue;
       centipede.pointValue = supporting.getRandom(pointValue, pointValue + 20);
       centipede.sound = sounds.getSound('centipede');
       return centipede;
@@ -61,8 +61,8 @@ var centipedes = {
     this.buildCentipedeStructure();
   },
   buildCentipedeStructure : function() {
-    let tier = knobsAndLevers.game.tier;
-    this.segments = tier.current * 2 + knobsAndLevers.centipede.maxNumber;
+    let tier = dials.game.tier;
+    this.segments = tier.current * 2 + dials.centipede.maxNumber;
     this.positions = [];
     let upperLimit = tier.isMaxed ? tier.max : tier.current;
     while (this.positions.length < supporting.getRandom(1, upperLimit)) {
@@ -77,7 +77,7 @@ var centipedes = {
     return this.numberSpawned < this.segments;
   },
   setXPosition : function() {
-    knobsAndLevers.centipede.args.x = this.positions[this.centipedes.length % this.positions.length];
+    dials.centipede.args.x = this.positions[this.centipedes.length % this.positions.length];
   },
   cannotAdd : function(centipede) {
     return this.centipedes.find(checkCentipede => checkCentipede.crashWith(centipede));
@@ -103,7 +103,7 @@ var centipedes = {
     if (centipede.getBottom() > game.gameArea.canvas.height) {
       centipede.reverseDirectionY = true;
       centipede.poisoned = false;
-    } else if (centipede.getTop() < knobsAndLevers.player.topLimit && centipede.distanceMovedFromBottom > 0) {
+    } else if (centipede.getTop() < dials.player.topLimit && centipede.distanceMovedFromBottom > 0) {
       centipede.reverseDirectionY = true;
       centipede.distanceMovedFromBottom = 0;
     };

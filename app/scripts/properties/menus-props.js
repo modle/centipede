@@ -50,33 +50,33 @@ var menusProps = {
         // TODO demigod - a ton of lives
         laserQTY : {
           update : function() {
-            this.text = knobsAndLevers.lasers.quantity.setting.render();
+            this.text = dials.lasers.quantity.setting.render();
           },
           action : function() {
-            knobsAndLevers.toggleParameter(knobsAndLevers.lasers.quantity);
-            game.activeCheats['laserQty'] = knobsAndLevers.lasers.quantity.setting.state == "ON";
+            dials.toggleParameter(dials.lasers.quantity);
+            game.activeCheats['laserQty'] = dials.lasers.quantity.setting.state == "ON";
             this.update();
             menus.display('cheats');
           },
         },
         laserSpeed : {
           update : function() {
-            this.text = knobsAndLevers.lasers.speed.setting.render();
+            this.text = dials.lasers.speed.setting.render();
           },
           action : function() {
-            knobsAndLevers.toggleParameter(knobsAndLevers.lasers.speed);
-            game.activeCheats['laserSpeed'] = knobsAndLevers.lasers.speed.setting.state == "ON";
+            dials.toggleParameter(dials.lasers.speed);
+            game.activeCheats['laserSpeed'] = dials.lasers.speed.setting.state == "ON";
             this.update();
             menus.display('cheats');
           },
         },
         shipSpeed : {
           update : function() {
-            this.text = knobsAndLevers.player.speed.setting.render();
+            this.text = dials.player.speed.setting.render();
           },
           action : function() {
-            knobsAndLevers.toggleParameter(knobsAndLevers.player.speed);
-            game.activeCheats['shipSpeed'] = knobsAndLevers.player.speed.setting.state == "ON";
+            dials.toggleParameter(dials.player.speed);
+            game.activeCheats['shipSpeed'] = dials.player.speed.setting.state == "ON";
             this.update();
             menus.display('cheats');
           },
@@ -84,7 +84,7 @@ var menusProps = {
         reset : {
           text : 'RESET',
           action : function() {
-            knobsAndLevers.resetCheats();
+            dials.resetCheats();
             menus.screens.cheats.update();
             menus.display('cheats');
           },
@@ -248,12 +248,12 @@ var menusProps = {
         // can't really do anything with centipede speed until the vertical movement logic gets
         sound : {
           update : function() {
-            this.text = knobsAndLevers.game.sounds.setting.render();
+            this.text = dials.game.sounds.setting.render();
           },
           action : function() {
-            knobsAndLevers.toggleParameter(knobsAndLevers.game.sounds);
+            dials.toggleParameter(dials.game.sounds);
             this.update();
-            if (knobsAndLevers.game.sounds.value) {
+            if (dials.game.sounds.value) {
               sounds.playAvailableLaserSound();
             };
             menus.display('settings');

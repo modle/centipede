@@ -1,7 +1,7 @@
 var game = {
   init : function() {
     Object.assign(this, gameBase);
-    this.gameArea.init(knobsAndLevers);
+    this.gameArea.init(dials);
     supporting.applyOverrides(this);
     console.log('game initialized');
   },

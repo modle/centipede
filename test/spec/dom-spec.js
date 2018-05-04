@@ -8,7 +8,7 @@ describe('DOM SPEC: ', () => {
   });
   beforeEach(function () {
     testObj = Object.assign({}, dom);
-    knobsAndLevers.init();
+    dials.init();
   });
   it('dom gets constructed', () => {
     expect(testObj).toBeTruthy();

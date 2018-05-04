@@ -42,7 +42,7 @@ describe('PLAYER SPEC: ', () => {
   });
   it('reset resets position and calls removeMushroomsFromStartingArea', () => {
     testObj.init();
-    let expected = {x : knobsAndLevers.gamePieceStartX, y : knobsAndLevers.gamePieceStartY};
+    let expected = {x : dials.gamePieceStartX, y : dials.gamePieceStartY};
     testObj.gamePiece.x = expected.x - 1;
     testObj.gamePiece.y = expected.y - 1;
     spyOn(testObj, 'removeMushroomsFromStartingArea');
