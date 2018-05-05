@@ -151,8 +151,7 @@ var menusProps = {
             if (game.activePlayers != game.numberOfPlayers) {
               menus.display('playerActivate');
             } else {
-              game.running = true;
-              game.paused = false;
+              game.run();
             };
           },
         },
@@ -199,8 +198,7 @@ var menusProps = {
           text : '1 PLAYER',
           action : function() {
             menus.disableMenus();
-            game.running = true;
-            game.paused = false;
+            game.run();
             game.numberOfPlayers = 1;
             game.activePlayers = 1;
           },

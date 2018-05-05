@@ -20,7 +20,11 @@ var game = {
   },
   functionOverrides : {
     gameLevelCheck : function() {
-      return centipedes.numberSpawned == centipedes.numberKilled && this.gameArea.frameNo;
+      let levelEnded =
+        (centipedes.numberSpawned > 0 || metrics.currentLevel == 0) &&
+        centipedes.numberSpawned == centipedes.numberKilled &&
+        this.gameArea.frameNo > 0;
+      return levelEnded;
     },
   },
 };
