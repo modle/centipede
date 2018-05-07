@@ -258,7 +258,7 @@ describe('MENUS SPEC: ', () => {
 
   it('drawTexts calls text.component.update when text components are present', () => {
     let testScreen = Object.assign({}, menus.screens.instructions.text);
-    let testComponent = new Component(knobsAndLevers.text.baseParams);
+    let testComponent = new Component(dials.text.baseParams);
     spyOn(testComponent, 'update');
     spyOn(menus, 'buildDefaultComponent').and.returnValue(testComponent);
 
@@ -267,7 +267,7 @@ describe('MENUS SPEC: ', () => {
     expect(testScreen.entries[0].component.update).toHaveBeenCalledTimes(2);
   });
   it('drawTexts does not set fontSize if not on overridden on text object', () => {
-    let testComponent = new Component(knobsAndLevers.text.baseParams);
+    let testComponent = new Component(dials.text.baseParams);
     spyOn(testComponent, 'update');
     let testMenu = {
       text : {
@@ -286,7 +286,7 @@ describe('MENUS SPEC: ', () => {
     menus.drawTexts(testMenu.text);
 
     expect(testMenu.text.entries[0].component.fontSize)
-      .toBe(knobsAndLevers.text.baseParams.fontSize);
+      .toBe(dials.text.baseParams.fontSize);
     expect(testMenu.text.entries[0].component.update).toHaveBeenCalledTimes(1);
   });
   it('drawTexts does nothing if entries is empty', () => {

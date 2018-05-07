@@ -34,7 +34,7 @@ describe('SOUND SPEC: ', () => {
     spyOn(testObj, 'manageSpiderSounds');
     spyOn(testObj, 'manageFleaSounds');
     spyOn(testObj, 'manageWormSounds');
-    knobsAndLevers.game.sounds.value = true;
+    dials.game.sounds.value = true;
 
     testObj.manageSounds();
 

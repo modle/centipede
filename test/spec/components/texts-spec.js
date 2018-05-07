@@ -8,7 +8,7 @@ describe('TEXTS SPEC: ', () => {
   });
   beforeEach(function () {
     testObj = Object.assign({}, texts);
-    testParams = knobsAndLevers.text.baseParams;
+    testParams = dials.text.baseParams;
     testParams.x = 0;
     testParams.y = 0;
     testComponent = new Component(testParams);

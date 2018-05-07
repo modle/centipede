@@ -8,7 +8,7 @@ describe('MUSHROOMS SPEC: ', () => {
   });
   beforeEach(function () {
     testObj = Object.assign({}, mushrooms);
-    knobsAndLevers.init();
+    dials.init();
     game.init();
   });
   it('manage calls spawn and update on frame 1', () => {
@@ -64,7 +64,7 @@ describe('MUSHROOMS SPEC: ', () => {
   });
 
   it('update calls update on mushroom objects', () => {
-    knobsAndLevers.mushrooms.scaleFactor = 0.1
+    dials.mushrooms.scaleFactor = 0.1
     let coordinates = {hitPoints: 5, x: 5, y: 5};
     testObj.mushrooms = [{hitPoints: 5, x: 5.1, y: 5.1}];
 

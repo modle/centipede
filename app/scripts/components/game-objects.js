@@ -7,9 +7,9 @@ var gameObjects = {
     Object.assign(this, gameObjectsBase);
     supporting.applyOverrides(this);
     this.intervals = {
-      fleas : knobsAndLevers.fleas.initialInterval,
-      worms : knobsAndLevers.worms.initialInterval,
-      spiders : knobsAndLevers.spiders.initialInterval,
+      fleas : dials.fleas.initialInterval,
+      worms : dials.worms.initialInterval,
+      spiders : dials.spiders.initialInterval,
     };
     console.log('gameObjects initialized');
   },
@@ -26,14 +26,14 @@ var gameObjects = {
     },
     spawn : function(type) {
       this.setMax(type);
-      if (this[type].length >= knobsAndLevers[type].maxNumber) {
+      if (this[type].length >= dials[type].maxNumber) {
         return;
       };
       this.make(type);
     },
     make : function(type) {
-      let spawnedCreature = new Component(knobsAndLevers[type].args);
-      let pointValue = knobsAndLevers[type].pointValue;
+      let spawnedCreature = new Component(dials[type].args);
+      let pointValue = dials[type].pointValue;
       spawnedCreature.pointValue = supporting.getRandom(pointValue, pointValue + 400);
       spawnedCreature.sound = sounds.getSound(type);
       this[type].push(spawnedCreature);
@@ -71,26 +71,26 @@ var gameObjects = {
   },
   spawnCreatureAtIntervals(type) {
     if (supporting.everyinterval(game.gameArea.frameNo, this.intervals[type])) {
-      this.intervals[type] = supporting.getRandom(knobsAndLevers[type].interval.min, knobsAndLevers[type].interval.max);
+      this.intervals[type] = supporting.getRandom(dials[type].interval.min, dials[type].interval.max);
       this.spawn(type);
       if (type == 'fleas') {
-        knobsAndLevers.fleas.mushroomCreateInterval = supporting.getRandom(75, 150);
+        dials.fleas.mushroomCreateInterval = supporting.getRandom(75, 150);
       };
     };
   },
   setMax : function(type) {
-    let tier = knobsAndLevers.game.tier;
-    knobsAndLevers[type].maxNumber = tier.isMaxed ? tier.max : tier.current;
+    let tier = dials.game.tier;
+    dials[type].maxNumber = tier.isMaxed ? tier.max : tier.current;
   },
   setSpeed : function(creature, type) {
-    let speedLimits = knobsAndLevers[type].speedLimits;
+    let speedLimits = dials[type].speedLimits;
     creature.speedX = Math.sign(creature.speedX) * (supporting.roll(10).crit ? speedLimits.max : speedLimits.min);
     creature.speedY = creature.directionY * (supporting.roll(10).crit ? speedLimits.max : speedLimits.min);
   },
   setDirection : function(creature) {
     if (creature.getBottom() > game.gameArea.canvas.height) {
       creature.directionY = -1;
-    } else if (creature.getTop() < game.gameArea.canvas.height - (knobsAndLevers.player.areaHeight * 2)) {
+    } else if (creature.getTop() < game.gameArea.canvas.height - (dials.player.areaHeight * 2)) {
       creature.directionY = 1;
     };
   },
@@ -102,7 +102,7 @@ var gameObjects = {
   eligibleToDrop : function() {
     return supporting.everyinterval(
       game.gameArea.frameNo,
-      knobsAndLevers.fleas.mushroomCreateInterval
+      dials.fleas.mushroomCreateInterval
     );
   },
   removeMushrooms : function(creature) {

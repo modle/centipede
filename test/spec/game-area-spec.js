@@ -7,7 +7,7 @@ describe('GAME AREA SPEC: ', () => {
     console.log(spec + ' SPEC complete');
   });
   beforeEach(function () {
-    knobsAndLevers.init();
+    dials.init();
     gameArea = new GameArea();
   });
   it('gameArea gets constructed', () => {
@@ -22,11 +22,11 @@ describe('GAME AREA SPEC: ', () => {
     expect(gameArea.getYVertices).toHaveBeenCalled();
   });
   it('getXVertices returns a reasonable array of vertices', () => {
-    let expectedNumVertices = knobsAndLevers.canvas.width / knobsAndLevers.general.gridSquareSideLength;
+    let expectedNumVertices = dials.canvas.width / dials.general.gridSquareSideLength;
     expect(gameArea.getXVertices().length).toBe(expectedNumVertices);
   });
   it('getYVertices returns a reasonable array of vertices', () => {
-    let expectedNumVertices = (knobsAndLevers.canvas.height - knobsAndLevers.general.gridSquareSideLength - 1) / knobsAndLevers.general.gridSquareSideLength;
+    let expectedNumVertices = (dials.canvas.height - dials.general.gridSquareSideLength - 1) / dials.general.gridSquareSideLength;
     expect(gameArea.getYVertices().length).toBe(Math.floor(expectedNumVertices));
   });
   it('clear calls context.clearRect', () => {

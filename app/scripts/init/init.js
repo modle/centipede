@@ -2,7 +2,7 @@ var init = {
   run : function() {
     console.log('start centipede init');
 
-    knobsAndLevers.init();
+    dials.init();
 
     dom.init();
     game.init();
@@ -26,7 +26,7 @@ var init = {
   },
   afterGameOver : function() {
     console.log('reset everything');
-    knobsAndLevers.init();
+    dials.init();
     menus.init();
     metrics.init();
     texts.init();

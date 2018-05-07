@@ -8,7 +8,7 @@ describe('HUD SPEC: ', () => {
   });
   beforeEach(function () {
     testObj = Object.assign({}, hud);
-    knobsAndLevers.init();
+    dials.init();
     game.init();
   });
   it('update updates things', () => {

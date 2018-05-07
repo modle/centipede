@@ -7,7 +7,7 @@ describe('INTERVAL CREATURES SPEC: ', () => {
     console.log(spec + ' SPEC complete');
   });
   beforeEach(function () {
-    knobsAndLevers.init();
+    dials.init();
     game.init();
     testObj = Object.assign({}, gameObjects);
     testObj.init();
@@ -90,7 +90,7 @@ describe('INTERVAL CREATURES SPEC: ', () => {
 
   it('eligibleToDrop returns false if not valid interval', () => {
     game.frameNo = 1;
-    knobsAndLevers.fleas.mushroomCreateInterval = 2;
+    dials.fleas.mushroomCreateInterval = 2;
 
     let canDrop = testObj.eligibleToDrop();
     expect(canDrop).toBeFalsy();
@@ -98,7 +98,7 @@ describe('INTERVAL CREATURES SPEC: ', () => {
 
   it('spawn once creates one worm', () => {
     testObj.worms = []
-    knobsAndLevers.worms.maxNumber = 1;
+    dials.worms.maxNumber = 1;
     spyOn(testObj, 'executeConstructorFunctions');
     spyOn(testObj, 'make');
 
@@ -108,11 +108,11 @@ describe('INTERVAL CREATURES SPEC: ', () => {
     expect(testObj.make).toHaveBeenCalled();
   });
   it('spawn more than max worms does not create more than max worms', () => {
-    for (let i = 0; i < knobsAndLevers.worms.maxNumber + 100; i++) {
+    for (let i = 0; i < dials.worms.maxNumber + 100; i++) {
       testObj.spawn('worms');
     };
 
-    expect(testObj.worms.length).toBe(knobsAndLevers.worms.maxNumber);
+    expect(testObj.worms.length).toBe(dials.worms.maxNumber);
   });
   it('update calls component.newPos', () => {
     testObj.worms = [{newPos : function(){}, update : function(){}}];

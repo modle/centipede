@@ -8,10 +8,10 @@ describe('COLLISIONS SPEC: ', () => {
   });
   beforeEach(function () {
     testObj = Object.assign({}, collisions);
-    knobsAndLevers.init();
+    dials.init();
   });
   function createAnObjectFromLaserArgs() {
-    let laserArgs = knobsAndLevers.lasers.args;
+    let laserArgs = dials.lasers.args;
     laserArgs.x = 10;
     laserArgs.y = 10;
     laserArgs.width = 10;
@@ -137,7 +137,7 @@ describe('COLLISIONS SPEC: ', () => {
 
 
   it('updateTargetAppearance adjusts height of target when target type is mushroom', () => {
-    let baseHeight = knobsAndLevers.mushroomSide;
+    let baseHeight = dials.mushroomSide;
     let target1 = {type : 'mushroom', height : baseHeight};
     let target2 = {type : 'somethingElse', height : baseHeight};
 
@@ -191,7 +191,7 @@ describe('COLLISIONS SPEC: ', () => {
   });
 
   it('checkPlayerVsEnemies does not process if playerCollisions are disabled', () => {
-    knobsAndLevers.game.playerCollisionsEnabled = false;
+    dials.game.playerCollisionsEnabled = false;
     game.gameOver = false;
     player.init();
     spyOn(player.gamePiece, 'crashWith').and.returnValue(true);
@@ -205,7 +205,7 @@ describe('COLLISIONS SPEC: ', () => {
     expect(game.gameOver).toBeFalsy();
   });
   it('checkPlayerVsEnemies calls killsPlayer if crashWith', () => {
-    knobsAndLevers.game.playerCollisionsEnabled = true;
+    dials.game.playerCollisionsEnabled = true;
     game.gameOver = false;
     player.init();
     spyOn(player.gamePiece, 'crashWith').and.returnValue(true);
@@ -220,7 +220,7 @@ describe('COLLISIONS SPEC: ', () => {
     expect(game.gameOver).toBeFalsy();
   });
   it('checkGamePieceVsEnemy handles 0 length target list', () => {
-    knobsAndLevers.game.playerCollisionsEnabled = true;
+    dials.game.playerCollisionsEnabled = true;
     game.gameOver = false;
     player.init();
     spyOn(player.gamePiece, 'crashWith').and.callThrough();

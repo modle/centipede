@@ -8,7 +8,7 @@ describe('COMPONENT SPEC: ', () => {
   });
   beforeEach(function () {
     component = constructComponent({});
-    knobsAndLevers.init();
+    dials.init();
     game.init();
   });
   function constructComponent(args) {

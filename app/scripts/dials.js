@@ -1,5 +1,5 @@
-// abstract common knobsAndLevers and move them to canvas-libs
-var knobsAndLevers = {
+// abstract common dials and move them to canvas-libs
+var dials = {
   init : function() {
     this.general.init(this);
     this.centipede.init(this);
@@ -10,7 +10,7 @@ var knobsAndLevers = {
     this.spiders.init(this);
     this.text.init(this);
     this.worms.init(this);
-    console.log('knobsAndLevers initialized');
+    console.log('dials initialized');
   },
   resetCheats : function() {
     this.lasers.resetCheats();
@@ -88,12 +88,17 @@ var knobsAndLevers = {
   components : {
     imageTypes : ['centipede', 'flea', 'worm', 'mushroom', 'spider', 'player'],
   },
+  dom : {
+    blogUrl : 'http://blog.matthewodle.com/category/centipede/',
+    sourceUrl : 'https://gitlab.com/taciturn-pachyderm/centipede',
+    gifLocation : 'app/static/media/images/background.gif',
+  },
   fleas : {
     maxNumber : 0,
     pointValue : 200,
     interval : {
-      min: 100,
-      max: 1000,
+      min: 1500,
+      max: 2500,
     },
     mushroomCreateInterval : 100,
     args : {
@@ -110,7 +115,7 @@ var knobsAndLevers = {
         return 'one';
       },
       constructorFunctions : {
-        setX : function(flea) { flea.x = supporting.getRandom(0, knobsAndLevers.canvas.width) },
+        setX : function(flea) { flea.x = supporting.getRandom(0, dials.canvas.width) },
       }
     },
     init : function(configs) {
@@ -125,8 +130,8 @@ var knobsAndLevers = {
   game : {
     playerCollisionsEnabled : true,
     interval : {
-      min : 0,
-      max : 0,
+      min : 1000,
+      max : 2500,
     },
     sounds : {
       value : true,
@@ -144,7 +149,7 @@ var knobsAndLevers = {
     startLevel : 0,
     maxMushrooms : 50,
     tier : {
-      incrementScore : 2000,
+      incrementScore : 10000,
       current: 1,
       max : 5,
       isMaxed : false,
@@ -156,7 +161,7 @@ var knobsAndLevers = {
   },
   lasers : {
     speed : {
-      value : 10,
+      value : 5,
       default : 5,
       setting : {
         value : 15,
@@ -168,7 +173,7 @@ var knobsAndLevers = {
       },
     },
     quantity : {
-      value : 10,
+      value : 1,
       default : 1,
       setting : {
         value : 5,
@@ -190,8 +195,8 @@ var knobsAndLevers = {
       console.log('laser defaults initialized');
     },
     resetCheats : function() {
-      knobsAndLevers.resetParameter(this.speed);
-      knobsAndLevers.resetParameter(this.quantity);
+      dials.resetParameter(this.speed);
+      dials.resetParameter(this.quantity);
     },
   },
   mushrooms : {
@@ -225,7 +230,7 @@ var knobsAndLevers = {
     },
   },
   player : {
-    defaultLives : 1,
+    defaultLives : 3,
     dimensions : {width : 30, height : 30},
     args : {
       width : 20,
@@ -243,7 +248,7 @@ var knobsAndLevers = {
       },
       constructorFunctions : {
         setX : function(player) {
-          player.x = knobsAndLevers.player.startX[Object.keys(players.players).length];
+          player.x = dials.player.startX[Object.keys(players.players).length];
         },
       },
     },
@@ -270,15 +275,15 @@ var knobsAndLevers = {
       this.args.y = this.startY;
     },
     resetCheats : function() {
-      knobsAndLevers.resetParameter(this.speed);
+      dials.resetParameter(this.speed);
     },
   },
   spiders : {
     maxNumber : 0,
     pointValue : 400,
     interval : {
-      min : 10,
-      max : 20,
+      min : 500,
+      max : 1000,
     },
     args : {
       directionY : 1,
@@ -296,7 +301,7 @@ var knobsAndLevers = {
       },
       constructorFunctions : {
         setY : function(spider) {
-          spider.y = supporting.getRandom(knobsAndLevers.player.topLimit - knobsAndLevers.player.areaHeight, game.gameArea.canvas.height);
+          spider.y = supporting.getRandom(dials.player.topLimit - dials.player.areaHeight, game.gameArea.canvas.height);
         },
         setX : function(spider) {
           let theRoll = supporting.roll(sides = 2);
@@ -348,8 +353,8 @@ var knobsAndLevers = {
     maxNumber : 1,
     pointValue : 200,
     interval : {
-      min: 0,
-      max: 0,
+      min: 1500,
+      max: 2500,
     },
     args : {
       extraArgs : {
@@ -390,7 +395,7 @@ var knobsAndLevers = {
           };
         },
         setY : function(worm) {
-          let randomYPos = supporting.getRandom(0, knobsAndLevers.player.topLimit - knobsAndLevers.player.areaHeight * 2);
+          let randomYPos = supporting.getRandom(0, dials.player.topLimit - dials.player.areaHeight * 2);
           worm.y = supporting.getClosest(game.gameArea.yVertices, randomYPos);
         },
       },
