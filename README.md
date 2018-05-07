@@ -6,7 +6,7 @@
 
 # [Video](https://www.youtube.com/watch?v=LNqIR2k6KcA)
 
-[![Gameplay gif](https://gitlab.com/taciturn-pachyderm/centipede/raw/7f2d2fb9b77cdd4a35750e8f0c05e1dcb8e1bf89/app/static/media/images/centipede.gif)](https://www.youtube.com/watch?v=LNqIR2k6KcA)
+[![Gameplay gif](https://gitlab.com/taciturn-pachyderm/centipede/raw/cc6af3202fee075d4ae181cca4c7af03c6c152ec/app/static/media/images/background.gif)](https://www.youtube.com/watch?v=LNqIR2k6KcA)
 
 [![Menu gif](https://gitlab.com/taciturn-pachyderm/centipede/raw/7f2d2fb9b77cdd4a35750e8f0c05e1dcb8e1bf89/app/static/media/images/centipede-menu.gif)](https://www.youtube.com/watch?v=LNqIR2k6KcA)
 
