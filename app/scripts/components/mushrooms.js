@@ -42,7 +42,7 @@ var mushrooms = {
       let mushroom = new Component(dials.mushrooms.args);
       mushroom.x = coordinates.x + dials.mushrooms.scaleFactor,
       mushroom.y = coordinates.y + dials.mushrooms.scaleFactor,
-      mushroom.pointValue = metrics.currentLevel;
+      mushroom.pointValue = metrics.currentLevel + 1;
       return mushroom;
     },
     update : function() {
