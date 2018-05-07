@@ -130,8 +130,8 @@ var dials = {
   game : {
     playerCollisionsEnabled : true,
     interval : {
-      min : 0,
-      max : 0,
+      min : 1000,
+      max : 2500,
     },
     sounds : {
       value : true,
