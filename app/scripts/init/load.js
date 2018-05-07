@@ -66,6 +66,7 @@ function loadScript (path, file) {
 
 libs.forEach(file => loadScript(libsPath, file));
 scripts.forEach(file => loadScript(scriptsPath, file));
-runners.forEach(file => loadScript(scriptsPath, file));
-
+setTimeout(function() {
+  runners.forEach(file => loadScript(scriptsPath, file));
+}, 500);
 console.log(document[targetDomObject]);
