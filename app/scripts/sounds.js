@@ -8,7 +8,7 @@ var sounds = {
     died : {filename : 'player-died.mp3', volume : 0.3, qty : 1, pool : [], index : 0},
     tierChange : {filename : 'tier-change.mp3', volume : 0.3, qty : 1, pool : [], index : 0},
     laser : {filename : 'laser.mp3', volume : 0.3, qty : 20, pool : [], index : 0},
-    impact : {filename : 'laser-impact.mp3', volume : 0.3, qty : dials.lasers.quantity.value, pool : [], index : 0},
+    impact : {filename : 'laser-impact.mp3', volume : 0.3, qty : 20, pool : [], index : 0},
   },
   init : function() {
     Object.assign(this, soundsBase);
