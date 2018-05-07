@@ -7,7 +7,7 @@
  *    init/runner.js accomplishes this.
 */
 
-var libsPath = '../canvas-libs/app/scripts/';
+var libsPath = 'canvas-libs/app/scripts/';
 var scriptsPath = 'app/scripts/';
 
 var libs = [
