@@ -7,6 +7,8 @@
  *    init/runner.js accomplishes this.
 */
 
+const libsVersion = 'v3.1.0';
+
 var libsPath = 'canvas-libs/app/scripts/';
 var scriptsPath = 'app/scripts/';
 
