@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+git clone -b v3.1.0 https://gitlab.com/taciturn-pachyderm/canvas-libs
+
 unameOutput="$(uname -o)"
 echo "${unameOutput}"
 
@@ -9,4 +11,3 @@ elif [ "${unameOutput}" == "GNU/Linux" ]; then
     nohup xdg-open index.html
 fi
 rm nohup.out
-
