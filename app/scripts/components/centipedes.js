@@ -55,7 +55,7 @@ var centipedes = {
     },
   },
   determineSpawnPositions : function() {
-    if (!game.levelIsOver()) {
+    if (this.numberSpawned) {
       return;
     };
     this.buildCentipedeStructure();
